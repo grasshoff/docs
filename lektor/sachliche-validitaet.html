@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Sachliche Validität</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="sachliche-validitaet_files/libs/clipboard/clipboard.min.js"></script>
+<script src="sachliche-validitaet_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="sachliche-validitaet_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="sachliche-validitaet_files/libs/quarto-html/popper.min.js"></script>
+<script src="sachliche-validitaet_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="sachliche-validitaet_files/libs/quarto-html/anchor.min.js"></script>
+<link href="sachliche-validitaet_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="sachliche-validitaet_files/libs/quarto-html/quarto-syntax-highlighting-d5b4e69c7e37b49c6591bcc5116dd748.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="sachliche-validitaet_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="sachliche-validitaet_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="sachliche-validitaet_files/libs/bootstrap/bootstrap-1ab80c03d7dc77deb349c715e29d9545.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="sachliche-validitaet_files/libs/quarto-diagram/mermaid.min.js"></script>
+<script src="sachliche-validitaet_files/libs/quarto-diagram/mermaid-init.js"></script>
+<link href="sachliche-validitaet_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Inhaltsverzeichnis</h2>
+   
+  <ul class="collapse">
+  <li><a href="#ein-satz-im-durchgang" id="toc-ein-satz-im-durchgang" class="nav-link active" data-scroll-target="#ein-satz-im-durchgang"><span class="header-section-number">1</span> Ein Satz im Durchgang</a></li>
+  <li><a href="#grundbegriffe" id="toc-grundbegriffe" class="nav-link" data-scroll-target="#grundbegriffe"><span class="header-section-number">2</span> Grundbegriffe</a></li>
+  <li><a href="#zerlegung-der-regelkatalog" id="toc-zerlegung-der-regelkatalog" class="nav-link" data-scroll-target="#zerlegung-der-regelkatalog"><span class="header-section-number">3</span> Zerlegung: der Regelkatalog</a></li>
+  <li><a href="#prüfungen-der-zerlegung-p1-bis-p3" id="toc-prüfungen-der-zerlegung-p1-bis-p3" class="nav-link" data-scroll-target="#prüfungen-der-zerlegung-p1-bis-p3"><span class="header-section-number">4</span> Prüfungen der Zerlegung: P1 bis P3</a></li>
+  <li><a href="#das-urteil" id="toc-das-urteil" class="nav-link" data-scroll-target="#das-urteil"><span class="header-section-number">5</span> Das Urteil</a></li>
+  <li><a href="#bedingung-5-verträglichkeit-mit-den-früheren-sätzen" id="toc-bedingung-5-verträglichkeit-mit-den-früheren-sätzen" class="nav-link" data-scroll-target="#bedingung-5-verträglichkeit-mit-den-früheren-sätzen"><span class="header-section-number">6</span> Bedingung 5: Verträglichkeit mit den früheren Sätzen</a></li>
+  <li><a href="#namensverknüpfung-ohne-mustervergleich" id="toc-namensverknüpfung-ohne-mustervergleich" class="nav-link" data-scroll-target="#namensverknüpfung-ohne-mustervergleich"><span class="header-section-number">7</span> Namensverknüpfung ohne Mustervergleich</a></li>
+  <li><a href="#fachterminologie" id="toc-fachterminologie" class="nav-link" data-scroll-target="#fachterminologie"><span class="header-section-number">8</span> Fachterminologie</a></li>
+  <li><a href="#resolution" id="toc-resolution" class="nav-link" data-scroll-target="#resolution"><span class="header-section-number">9</span> Resolution</a></li>
+  <li><a href="#meta-validierung" id="toc-meta-validierung" class="nav-link" data-scroll-target="#meta-validierung"><span class="header-section-number">10</span> Meta-Validierung</a></li>
+  <li><a href="#schnittstelle" id="toc-schnittstelle" class="nav-link" data-scroll-target="#schnittstelle"><span class="header-section-number">11</span> Schnittstelle</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Andere Formate</h2><ul><li><a href="sachliche-validitaet.pdf"><i class="bi bi-file-pdf"></i>Typst</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Sachliche Validität</h1>
+<p class="subtitle lead">Referenz der satzweisen Prüfung in ai-lektorat</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">24. September 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled" title="In einem Satz">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Hinweis</span>In einem Satz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ein Satz ist <strong>sachlich validiert</strong>, wenn jede seiner tragenden Aussagen aus Belegen folgt, keine widerlegt ist und der Satz nichts sagt, was einem früheren Satz des Aufsatzes oder einem Register widerspricht. Jeder andere Satz ist <strong>nicht validiert</strong>. Ein drittes Urteil gibt es nur für Sätze ohne Sachgehalt, etwa Fragen oder Aufforderungen.</p>
+</div>
+</div>
+<p>Die Prüfung ist ein Rechtfertigungsverfahren. Sie behauptet nicht, dass ein nicht validierter Satz falsch ist. Sie hält fest, ob die vorhandenen Belege den Satz tragen. „Nicht validiert“ ist die kontradiktorische Negation von „sachlich validiert“; einen Zwischenwert wie „offen“ gibt es nicht. Die Anforderung an das Verfahren ist asymmetrisch: kein falsches „validiert“, und möglichst wenige wahre Sätze, die unbegründet bleiben.</p>
+<section id="ein-satz-im-durchgang" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="ein-satz-im-durchgang"><span class="header-section-number">1</span> Ein Satz im Durchgang</h2>
+<p>Rechtsklick auf einen Satz im Lektorat-Viewer (Port 5114) oder im Famulus Notebook (Port 5118) öffnet das Menü „Gründe der sachlichen Validität“. Das Popup zeigt das Urteil, die Zerlegung, die Beweise und die Lücken.</p>
+<div class="cell" data-fig-width="5.5" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
+  satz["Satz s"] --&gt; za["Zerlegung A"]
+  za --&gt; knf["Normalform: Klauseln mit Rollen"]
+  knf --&gt; grund["Grundklauseln W(s)"]
+  grund --&gt; res["Resolution je Klausel"]
+  res --&gt; urteil["gewichtetes Urteil"]
+  knf --&gt; bank["Grundsatzbank"]
+  bank --&gt; k5["Bedingung 5: Konfliktmuster"]
+  k5 --&gt; urteil
+  za -.-&gt; zb["Zerlegung B"]
+  zb -.-&gt; urteil
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<ol type="1">
+<li>Ein Modell zerlegt den Satz nach dem Regelkatalog R1–R15 in Klauseln (Zerlegung A). Jede Klausel trägt eine Rolle.</li>
+<li>Belege aus den Registern und Quellen werden zu Grundklauseln. Zusammen mit den Hintergrundregeln bilden sie die Belegbasis <span class="math inline">W(s)</span>.</li>
+<li>Für jede Klausel entscheidet die Resolution, ob sie aus <span class="math inline">W(s)</span> folgt, ob sie widerlegt ist oder ob sie eine Lücke bleibt.</li>
+<li>Die Grundsätze des Satzes gehen in die Grundsatzbank. Konfliktmuster prüfen sie gegen alle früheren Sätze und gegen die Register.</li>
+<li>Kann der Satz validiert werden, zerlegt ein zweiter, unabhängiger Aufruf ihn noch einmal (Zerlegung B). Das Urteil gilt nur, wenn A und B in den tragenden Klauseln übereinstimmen.</li>
+</ol>
+</section>
+<section id="grundbegriffe" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="grundbegriffe"><span class="header-section-number">2</span> Grundbegriffe</h2>
+<p>Ein <strong>Literal</strong> ist ein Atom <span class="math inline">R(c_1, \dots, c_k; \tau)</span> oder seine Negation. <span class="math inline">R</span> ist ein Prädikat aus dem Register <code>standards/validity-relations.yaml</code> (<code>Bestand</code>, <code>Art</code>, <code>Ort</code>, <code>Inventar</code>, <code>Wert</code>, <code>Zustand</code>, <code>StehtIn</code>, <code>Existiert</code>, <code>Literatur</code>, <code>Erschienen</code>, <code>Datiert</code>, <code>Brief</code>, <code>Frei</code>). Die <span class="math inline">c_j</span> sind kanonische Konstanten, <span class="math inline">\tau</span> ist der Zeitindex.</p>
+<p>Eine <strong>Klausel</strong> ist eine Disjunktion von Literalen. Die meisten Klauseln haben ein Literal; mehrgliedrige entstehen aus „oder“, aus Bereichen und aus ungefähren Angaben. Die <strong>Normalform</strong> eines Satzes ist die Konjunktion seiner Klauseln.</p>
+<p>Die <strong>Belegbasis</strong> ist <span class="math display">
+W(s) = F(s) \cup H|_{s}
+</span> <span class="math inline">H|_s</span> sind die Hintergrundregeln, die auf die Terme von <span class="math inline">s</span> passen (Disjunktheit von Beständen, Funktionalität von Merkmalen, Vollständigkeit erklärter Inventare). <span class="math inline">F(s)</span> sind die Befunde aus den Quellen: Register, Messläufe, Objektakten, PDAI-Datenbanken, die Bibliographie des Aufsatzes und Referenzwerke. Dass ein Eintrag fehlt, ist kein negatives Literal; es gibt keine Negation durch Fehlschlag.</p>
+<p>Relativ zu <span class="math inline">W</span> hat eine Klausel <span class="math inline">K</span> einen von vier Zuständen:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Zustand</th>
+<th>Bedingung</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>begründet</td>
+<td><span class="math inline">W \cup \neg K \vdash \square</span></td>
+</tr>
+<tr class="even">
+<td>widerlegt</td>
+<td><span class="math inline">W \vdash \neg l</span> für jedes Literal <span class="math inline">l</span> von <span class="math inline">K</span></td>
+</tr>
+<tr class="odd">
+<td>Konflikt</td>
+<td>beides, oder <span class="math inline">W</span> ist in den Atomen von <span class="math inline">K</span> unverträglich</td>
+</tr>
+<tr class="even">
+<td>Lücke</td>
+<td>weder begründet noch widerlegt</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="zerlegung-der-regelkatalog" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="zerlegung-der-regelkatalog"><span class="header-section-number">3</span> Zerlegung: der Regelkatalog</h2>
+<p>Die Zerlegungsanweisung liegt in <code>skills/apparatus/validitaet/SKILL.md</code> (Version 1.4). Sie übersetzt Satzformen in Klauseln:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Regel</th>
+<th>Satzform</th>
+<th>Ergebnis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>R1</td>
+<td>Hauptprädikation</td>
+<td>Kernklausel</td>
+</tr>
+<tr class="even">
+<td>R2</td>
+<td>Kennzeichnung, Attribut, Apposition</td>
+<td>je eine Identifizierungsklausel</td>
+</tr>
+<tr class="odd">
+<td>R3</td>
+<td>Koordination mit „und“</td>
+<td>getrennte Klauseln</td>
+</tr>
+<tr class="even">
+<td>R4</td>
+<td>„oder“, „zwischen a und b“</td>
+<td>mehrgliedrige Klausel, Intervall</td>
+</tr>
+<tr class="odd">
+<td>R5</td>
+<td>„nicht“, „kein“, „ohne“</td>
+<td>negiertes Literal</td>
+</tr>
+<tr class="even">
+<td>R6</td>
+<td>„fünf Messreihen“</td>
+<td><code>Wert(gegenstand, merkmal, zahl)</code></td>
+</tr>
+<tr class="odd">
+<td>R7</td>
+<td>Datum, Messlauf</td>
+<td>Zeitindex <span class="math inline">\tau</span></td>
+</tr>
+<tr class="even">
+<td>R8</td>
+<td>„laut Manifest“, Zitierangabe</td>
+<td>Quellenangabe</td>
+</tr>
+<tr class="odd">
+<td>R9</td>
+<td>„weil“, „daher“</td>
+<td>beide Teilsätze, Zusammenhang als <code>Frei</code></td>
+</tr>
+<tr class="even">
+<td>R10</td>
+<td>Frage, Aufforderung, Wertung, innerer Verweis</td>
+<td>Nicht-Sachgehalt</td>
+</tr>
+<tr class="odd">
+<td>R11</td>
+<td>definite Kennzeichnung</td>
+<td><code>Existiert(c)</code> als Voraussetzung</td>
+</tr>
+<tr class="even">
+<td>R12</td>
+<td>„etwa“, „rund“, „mehr als“</td>
+<td>Vergleichsprädikat mit Toleranz</td>
+</tr>
+<tr class="odd">
+<td>R13</td>
+<td>Datierungen</td>
+<td>EDTF-Intervall</td>
+</tr>
+<tr class="even">
+<td>R14</td>
+<td>Personen</td>
+<td>Nennung für die Namensverknüpfung</td>
+</tr>
+<tr class="odd">
+<td>R15</td>
+<td>Fachtermini</td>
+<td>Gebrauchsrolle für die Terminologie</td>
+</tr>
+</tbody>
+</table>
+<p>Zwei Regeln haben sich im Betrieb als heikel erwiesen:</p>
+<ul>
+<li><strong>R6.</strong> Das Merkmal muss nach seiner Bedeutung genau das zählen, was der Satz zählt. „Bestand · fünf Sammlungen“ zählt die Sammlungen, die eine Karte zeigt, und nicht die Manifeste. Passt kein Merkmal, entsteht ein <code>Frei</code>-Literal.</li>
+<li><strong>R15.</strong> Die Gebrauchsrolle ist die Rolle, die <em>dieser Satz</em> dem Terminus durch sein Prädikat zuweist. Wahrheitsträger ist, wem ein Wahrheitswert zugesprochen wird, nie der Wahrheitswert selbst: in „ihre Wahrheit“ ist „Wahrheit“ eine Eigenschaft, die Behauptung ist der Träger.</li>
+</ul>
+</section>
+<section id="prüfungen-der-zerlegung-p1-bis-p3" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="prüfungen-der-zerlegung-p1-bis-p3"><span class="header-section-number">4</span> Prüfungen der Zerlegung: P1 bis P3</h2>
+<p>Die Zerlegung eines Modells ist selbst ein Glied der Rechtfertigung. Sie wird geprüft, bevor ein Urteil gilt.</p>
+<p><strong>P1 Termtreue.</strong> Jeder Term des Satzes (Kennung, Sammlung, Zahl, Jahr, Datum, Zitat) ist Argument, Bedingung oder Zeitindex eines Literals, oder er steht im Wortlaut einer R10-Einordnung. Jede Negation ist abgebildet. Jeder Wortlaut ist Teilausdruck des Satzes.</p>
+<p><strong>P2 Keine Fremdterme.</strong> Jedes Argument steht im Satz, im Kontext oder im Register; jedes Prädikat steht im Register.</p>
+<p><strong>P3 Gegenableitung.</strong> Eine zweite, unabhängige Zerlegung B stimmt in den tragenden Klauseln (Rollen Kern und Identifizierung) überein und ordnet dieselben Terme als Nicht-Sachgehalt ein. P3 wird nur geprüft, wenn der Satz nach A validiert wäre oder keinen Sachgehalt hätte. Ein nicht validierter Satz braucht keine zweite Bestätigung seines Urteils.</p>
+</section>
+<section id="das-urteil" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="das-urteil"><span class="header-section-number">5</span> Das Urteil</h2>
+<p>Jede Rolle hat ein Gewicht <span class="math inline">w</span>: Kern 1,0, Identifizierung 0,8, Quellenangabe 0,6, Verknüpfung 0,4, Voraussetzung 0,2. Der <strong>Begründungsgrad</strong> ist <span class="math display">
+\delta(s) = \frac{\sum_K w(\mathrm{rolle}_K)\,[K \text{ begründet}]}{\sum_K w(\mathrm{rolle}_K)}.
+</span></p>
+<p>Ein Satz ist <strong>sachlich validiert</strong> genau dann, wenn</p>
+<ol type="1">
+<li>P1, P2 und P3 erfüllt sind,</li>
+<li>die ganze Normalform mit <span class="math inline">W(s)</span> verträglich ist,</li>
+<li>jede Kernklausel begründet ist,</li>
+<li>keine Klausel widerlegt ist und keine tragende Klausel im Konflikt steht, und <span class="math inline">\delta(s) \ge \theta = 0{,}6</span>,</li>
+<li>der Satz mit allem verträglich ist, was der Aufsatz vorher behauptet hat (Bedingung 5, nächster Abschnitt).</li>
+</ol>
+<p>Ist eine dieser Bedingungen verletzt, ist der Satz <strong>nicht validiert</strong>, und die Begründung nennt die verletzte Bedingung. Enthält die Zerlegung keine Klausel und sind P1 bis P3 erfüllt, lautet das Urteil <strong>keine Sachaussage</strong>.</p>
+<p>Die Gewichte und <span class="math inline">\theta</span> stehen in <code>standards/validity-rules.yaml</code>. Eine Nebenklausel darf unbegründet bleiben, solange <span class="math inline">\delta</span> die Schwelle erreicht; eine Kernklausel nie.</p>
+</section>
+<section id="bedingung-5-verträglichkeit-mit-den-früheren-sätzen" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="bedingung-5-verträglichkeit-mit-den-früheren-sätzen"><span class="header-section-number">6</span> Bedingung 5: Verträglichkeit mit den früheren Sätzen</h2>
+<p><span class="math display">
+W(s) \cup \Sigma_{&lt;s} \,\cup \{K\} \nvdash \square
+</span></p>
+<p><span class="math inline">\Sigma_{&lt;s}</span> sind die Grundsätze aller früheren Sätze des Aufsatzes. Sie liegen in einer DuckDB-Grundsatzbank (<code>grundsaetze.duckdb</code>): Atome mit Zahl- und Zeitintervallen, Ereignisse, Personennennungen und Terminusverwendungen. Jeder Satz hat eine Ordnung aus Absatz und Stelle; nur Paare mit einem früheren Satz zählen.</p>
+<p>Statt einer allgemeinen Suche nach Widersprüchen prüft das Verfahren negative binäre Horn-Muster <span class="math inline">\neg A(\bar x) \lor \neg B(\bar y)</span>. Jedes Muster ist ein indizierter SQL-Verbund.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Muster</th>
+<th>Unverträglich ist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>K-POL</td>
+<td>eine Aussage und ihre Negation</td>
+</tr>
+<tr class="even">
+<td>K-FUN</td>
+<td>zwei verschiedene Werte eines funktionalen Merkmals mit gleichem Schlüssel</td>
+</tr>
+<tr class="odd">
+<td>K-DIS</td>
+<td>zwei Herkunftsbestände ohne gemeinsamen Pfad</td>
+</tr>
+<tr class="even">
+<td>K-ANZ</td>
+<td>ein Teil größer als sein Ganzes, ein Anteil ungleich Zähler durch Nenner</td>
+</tr>
+<tr class="odd">
+<td>K-EREIG</td>
+<td>zwei disjunkte Datierungen eines einmaligen Ereignisses</td>
+</tr>
+<tr class="even">
+<td>K-ORD</td>
+<td>Tod vor Geburt, eine Lebensspanne über 125 Jahre</td>
+</tr>
+<tr class="odd">
+<td>K-LEB</td>
+<td>ein datiertes Ereignis außerhalb der Lebenszeit eines Beteiligten</td>
+</tr>
+<tr class="even">
+<td>K-ZUK</td>
+<td>ein vergangenes Ereignis nach dem Datum des Aufsatzes</td>
+</tr>
+<tr class="odd">
+<td>K-SCHR</td>
+<td>ein Personenname, dessen Nahschreibung eindeutig einen Menschen bezeichnet</td>
+</tr>
+<tr class="even">
+<td>K-TERM</td>
+<td>ein Terminus in einer Rolle, die sein Wörterbucheintrag ausschließt</td>
+</tr>
+</tbody>
+</table>
+<p>Zahlen werden als Intervalle nach der angegebenen Genauigkeit verglichen („16 000“ deckt 15 500 bis 16 500, „etwa“ <span class="math inline">\pm 10\,\%</span>), Daten als EDTF-Intervalle. Verschiedene Bedingungen (Sprache, Zustand, Abfrage) werden nicht verglichen: 325 702 lateinische und 137 400 deutsche Sätze von <code>kepler-prim</code> widersprechen einander nicht.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ein Befund blockiert erst, wenn beide Zerlegungen ihn tragen">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Hinweis</span>Ein Befund blockiert erst, wenn beide Zerlegungen ihn tragen
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Jede Grundaussage, auf der ein Befund ruht, muss auch in der Gegenableitung B ihres Satzes stehen. Ein Befund, den nur Zerlegung A trägt, kann ein Zerlegungsfehler sein; er erscheint als Hinweis beim Satz und hält das Urteil nicht auf. Fehlt einem früheren Satz die Gegenableitung, wird sie nachgeholt. Die Bestätigungen stehen in den Tabellen <code>gegenableitung</code> und <code>bestaetigt</code> der Grundsatzbank.</p>
+</div>
+</div>
+<p>Die Bestätigung fängt Fehler auf, die nur in einer Zerlegung auftreten. Irren A und B gleich, hilft sie nicht; dann ist die Zerlegungsanweisung zu schärfen, wie bei R6 und R15 geschehen.</p>
+</section>
+<section id="namensverknüpfung-ohne-mustervergleich" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="namensverknüpfung-ohne-mustervergleich"><span class="header-section-number">7</span> Namensverknüpfung ohne Mustervergleich</h2>
+<p>Personennamen werden nicht über reguläre Ausdrücke erkannt, sondern verknüpft:</p>
+<ol type="1">
+<li>gleicher Normalschlüssel mit einem Register- oder Bibliographieeintrag, auch nach Abtrennen einer Genitivendung (Keplers → Kepler);</li>
+<li>sonst Nahschreibung: Jaro-Winkler <span class="math inline">\ge 0{,}92</span> und Damerau-Levenshtein <span class="math inline">\le 2</span>, gleicher Anfangsbuchstabe;</li>
+<li>Referenzwerk: Wikidata-Suche nach Menschen (<code>haswbstatement:P31=Q5</code>), zwischengespeichert.</li>
+</ol>
+<p>„Abweichend“ heißt eine Schreibung nur, wenn ein Referenzwerk geprüft wurde und die nahe Form nachweislich einen Menschen bezeichnet, entweder durch die Bibliographie des Aufsatzes oder durch einen eindeutigen Wikidata-Treffer. Sonst bleibt es bei „nahe, ungeprüft“, und es gibt keinen Befund. Ein bge-m3-Kosinus ab 0,85 ergibt nur einen Hinweis.</p>
+</section>
+<section id="fachterminologie" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="fachterminologie"><span class="header-section-number">8</span> Fachterminologie</h2>
+<p>Jeder Fachterminus eines Aufsatzes wird <strong>einmal</strong> bestimmt, im Hintergrund. Eine Warteschlange (<code>termin_jobs</code>) und ein Arbeitsfaden im Viewer erzeugen je Terminus einen Wörterbucheintrag: welche Gebrauchsrollen der Aufsatz dem Terminus geben darf und welche ausgeschlossen sind, jede mit Grund. Jede spätere Prüfung liest den Eintrag nur und vergleicht die Rolle im Satz mit einem Join (K-TERM).</p>
+<ul>
+<li><strong>Verbindlich</strong> ist ein aktiver LWgrammar-Eintrag oder eine aktive Gebrauchsregel, etwa R-GG-001: nur Aussagen sind wahr oder falsch; Sachverhalte und Tatsachen sind Teile der Welt.</li>
+<li>Ohne verbindlichen Bestand bestimmt das Modell den Eintrag aus dem Fachgebrauch und aus den Sätzen des Aufsatzes (<code>skills/apparatus/terminus/SKILL.md</code>). Setzt der Aufsatz selbst fest, als was er einen Terminus gebraucht, ist diese Rolle zulässig.</li>
+<li>Der Eintrag geht als Kandidatsinn an LWgrammar zurück. Solche Kandidaten sind bei der nächsten Bestimmung Material, keine Vorgabe; sonst bestätigte sich ein früherer Eintrag selbst.</li>
+</ul>
+</section>
+<section id="resolution" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="resolution"><span class="header-section-number">9</span> Resolution</h2>
+<p>Die Folgerung prüft eine Einheitspropagation mit zwei beobachteten Literalen je Klausel und Begründungszeigern <span class="citation" data-cites="chaff">(<a href="#ref-chaff" role="doc-biblioref">Moskewicz u.&nbsp;a. 2001</a>)</span>. Für Horn-Klauseln entscheidet sie in linearer Zeit <span class="citation" data-cites="dowling">(<a href="#ref-dowling" role="doc-biblioref">Dowling und Gallier 1984</a>)</span>. Nur ein Rest, der nicht Horn ist, geht an DPLL <span class="citation" data-cites="dll">(<a href="#ref-dll" role="doc-biblioref">Davis u.&nbsp;a. 1962</a>)</span>, und nur bei unverträglicher Basis wird mit Resolution saturiert <span class="citation" data-cites="robinson">(<a href="#ref-robinson" role="doc-biblioref">Robinson 1965</a>)</span>. Der Beweis wird aus den Begründungszeigern rückwärts als lineare Eingaberesolution gelesen und im Popup gezeigt.</p>
+<p>Die Laufzeit liegt fast ganz bei der Zerlegung durch das Modell. Im Audit des Famulus-Aufsatzes (557 Sätze) kostete die Resolution über alle Sätze zusammen unter einer Sekunde, die übrigen lokalen Prüfungen im Median rund 60 ms je Satz. Das Audit mit den Zeiten jedes Satzes erzeugt <code>scripts/validity_audit.py</code> (Typst, lettreai).</p>
+</section>
+<section id="meta-validierung" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="meta-validierung"><span class="header-section-number">10</span> Meta-Validierung</h2>
+<p>Das Verfahren kann sich irren. Eine <strong>Meldung</strong> sagt: ein validierter Satz ist falsch, oder ein nicht validierter Satz ist wahr und belegt. Meldet der Eigentümer, verliert der Satz sofort das Urteil „validiert“. Die Diagnose (<code>viewer/validity/meta.py</code>) führt die Meldung auf genau eine Fehlerstelle zurück:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Fehlerstelle</th>
+<th>Beispiel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Zerlegungslücke</td>
+<td>eine Aussage des Satzes fehlt in der Normalform</td>
+</tr>
+<tr class="even">
+<td>Rollenfehler</td>
+<td>eine Kernaussage steht als Voraussetzung</td>
+</tr>
+<tr class="odd">
+<td>Regelfehler in H</td>
+<td>eine Namensgleichung setzt Verschiedenes gleich</td>
+</tr>
+<tr class="even">
+<td>Registerfehler</td>
+<td>ein Prädikat liest das falsche Belegfeld</td>
+</tr>
+<tr class="odd">
+<td>Quellenfehler</td>
+<td>ein Beleg ist selbst falsch</td>
+</tr>
+<tr class="even">
+<td>Quellenlücke</td>
+<td>der Beleg für eine wahre Aussage fehlt</td>
+</tr>
+</tbody>
+</table>
+<p>Jede Fehlerstelle erzeugt einen Regelkandidaten, einen Patch an <code>validity-rules.yaml</code>, <code>validity-relations.yaml</code>, <code>evidence-sources.yaml</code> oder <code>SKILL.md</code>. Der Kandidat besteht das Gate nur, wenn der gemeldete Satz das erwartete Urteil erhält, die Goldens (<code>tests/validity_goldens.yaml</code>) keine falsch-positiven Urteile bekommen, das Mutations-Gate bei null falsch-positiven Urteilen bleibt und alle gespeicherten Urteile neu berechnet werden, wobei jede Änderung aufgelistet wird. Übernommen wird nur nach Bestätigung durch den Eigentümer, als neue Version mit Historie.</p>
+</section>
+<section id="schnittstelle" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="schnittstelle"><span class="header-section-number">11</span> Schnittstelle</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Endpunkt</th>
+<th>Zweck</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>POST /api/validity/split</code></td>
+<td>Absätze in Sätze zerlegen</td>
+</tr>
+<tr class="even">
+<td><code>POST /api/validity/check</code></td>
+<td>einen Satz prüfen</td>
+</tr>
+<tr class="odd">
+<td><code>GET /api/validity/sentence</code></td>
+<td>gespeichertes Urteil mit Gründen</td>
+</tr>
+<tr class="even">
+<td><code>GET /api/validity/summary</code></td>
+<td>Urteile eines Aufsatzes</td>
+</tr>
+<tr class="odd">
+<td><code>POST /api/validity/run</code></td>
+<td>Prüflauf über einen Aufsatz, mit Ereignisstrom</td>
+</tr>
+<tr class="even">
+<td><code>GET /api/validity/bank</code></td>
+<td>Stand der Grundsatzbank</td>
+</tr>
+<tr class="odd">
+<td><code>GET /api/validity/terms/status</code></td>
+<td>Stand der Terminuseinträge</td>
+</tr>
+<tr class="even">
+<td><code>POST /api/validity/override</code></td>
+<td>Autor-Beleg zu einer Klausel</td>
+</tr>
+<tr class="odd">
+<td><code>POST /api/validity/dispute</code></td>
+<td>Meldung eines Fehlurteils</td>
+</tr>
+<tr class="even">
+<td><code>POST /api/validity/disputes/{id}/decide</code></td>
+<td>Regelkandidat übernehmen oder ablehnen</td>
+</tr>
+</tbody>
+</table>
+<p>Kommandozeile: <code>python -m ai_lektorat.viewer.validity.run --paper &lt;name&gt;</code> prüft einen Aufsatz, <code>--recompute</code> rechnet alle Urteile aus den gespeicherten Zerlegungen neu und holt fehlende Gegenableitungen nach, <code>--termini</code> arbeitet die Terminuseinträge ab.</p>
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Literatur</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-dll" class="csl-entry" role="listitem">
+Davis, Martin, George Logemann, und Donald Loveland. 1962. <span>„A Machine Program for Theorem-Proving“</span>. <em>Communications of the ACM</em> 5 (7): 394–97. <a href="https://doi.org/10.1145/368273.368557">https://doi.org/10.1145/368273.368557</a>.
+</div>
+<div id="ref-dowling" class="csl-entry" role="listitem">
+Dowling, William F., und Jean H. Gallier. 1984. <span>„Linear-Time Algorithms for Testing the Satisfiability of Propositional Horn Formulae“</span>. <em>The Journal of Logic Programming</em> 1 (3): 267–84. <a href="https://doi.org/10.1016/0743-1066(84)90014-1">https://doi.org/10.1016/0743-1066(84)90014-1</a>.
+</div>
+<div id="ref-chaff" class="csl-entry" role="listitem">
+Moskewicz, Matthew W., Conor F. Madigan, Ying Zhao, Lintao Zhang, und Sharad Malik. 2001. <span>„Chaff: Engineering an Efficient SAT Solver“</span>. <em>Proceedings of the 38th Design Automation Conference</em>. <a href="https://doi.org/10.1109/dac.2001.935565">https://doi.org/10.1109/dac.2001.935565</a>.
+</div>
+<div id="ref-robinson" class="csl-entry" role="listitem">
+Robinson, J. A. 1965. <span>„A Machine-Oriented Logic Based on the Resolution Principle“</span>. <em>Journal of the ACM</em> 12 (1): 23–41. <a href="https://doi.org/10.1145/321250.321253">https://doi.org/10.1145/321250.321253</a>.
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Kopiert");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Kopiert");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
