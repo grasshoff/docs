@@ -163,10 +163,21 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./referenz.html"> 
 <span class="menu-text">Famulus-Referenz</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./landkarte.html"> 
-<span class="menu-text">Landkarte</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-landkarte" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Landkarte</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-landkarte">    
+        <li>
+    <a class="dropdown-item" href="./landkarte.html">
+ <span class="dropdown-text">Landkarte der Workspaces</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./kollektionen.html">
+ <span class="dropdown-text">Kollektionen</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -192,6 +203,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#speicher" id="toc-speicher" class="nav-link" data-scroll-target="#speicher">Speicher</a></li>
   <li><a href="#was-noch-nicht-gemessen-ist" id="toc-was-noch-nicht-gemessen-ist" class="nav-link" data-scroll-target="#was-noch-nicht-gemessen-ist">Was noch nicht gemessen ist</a></li>
   <li><a href="#entscheidung-vom-8.-oktober-2026" id="toc-entscheidung-vom-8.-oktober-2026" class="nav-link" data-scroll-target="#entscheidung-vom-8.-oktober-2026">Entscheidung vom 8. Oktober 2026</a></li>
+  <li><a href="#entscheidung-vom-20.-oktober-2026" id="toc-entscheidung-vom-20.-oktober-2026" class="nav-link" data-scroll-target="#entscheidung-vom-20.-oktober-2026">Entscheidung vom 20. Oktober 2026</a></li>
   </ul>
 </nav>
     </div>
@@ -234,7 +246,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Zu einem Wort (einem Verb, einer Wendung) gibt die Ähnlichkeitssuche die Lemmata des Index zurück, die ihm in der Bedeutung nahestehen, mit ihrer Häufigkeit und ihren Fundstellen. Sie ist <strong>spezifiziert und gemessen, aber noch nicht gebaut</strong>: Der Filter fragt die Embeddings heute nicht ab. Die Messung sagt, welches Embedding dafür nicht taugt und dass bisher keines die Aufgabe gut löst.</p>
+<p>Zu einem Wort (einem Verb, einer Wendung) gibt die Ähnlichkeitssuche die Lemmata des Index zurück, die ihm in der Bedeutung nahestehen, mit ihrer Häufigkeit und ihren Fundstellen. Sie ist <strong>spezifiziert und gemessen, aber noch nicht gebaut</strong>: Der Filter fragt die Embeddings heute nicht ab. Die Messung sagt, welches Embedding dafür nicht taugt und dass bisher keines die Aufgabe gut löst. Der Vektorspeicher der Collections (Chroma mit <code>bge-m3</code> und EmbeddingGemma 2) ist seit dem 20. Oktober 2026 entfernt; den Abruf von Sätzen trägt BM25 (siehe <a href="#entscheidung-vom-20.-oktober-2026">Entscheidung vom 20. Oktober 2026</a>).</p>
 </div>
 </div>
 <section id="ein-beispiel-vorweg" class="level2">
@@ -515,7 +527,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="speicher" class="level2">
 <h2 class="anchored" data-anchor-id="speicher">Speicher</h2>
-<p>Wo die Vektoren liegen, entscheidet über Latenz und Genauigkeit. Die Pilotzeilen tragen EmbeddingGemma-Vektoren (768 Dimensionen, 13.626 Sätze), die Produktionszeilen die bge-m3-Vektoren (1024 Dimensionen) der Collection kepler-prim.</p>
+<p>Die folgende Messung ging der Entscheidung vom 20. Oktober 2026 voraus; die Chroma-Speicher, die sie misst, gibt es nicht mehr. Wo die Vektoren liegen, entschied über Latenz und Genauigkeit. Die Pilotzeilen tragen EmbeddingGemma-Vektoren (768 Dimensionen, 13.626 Sätze), die Produktionszeilen die bge-m3-Vektoren (1024 Dimensionen) der Collection kepler-prim.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -533,7 +545,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">1,0</td>
 </tr>
 <tr class="even">
-<td>Chroma (HNSW)</td>
+<td>Chroma (HNSW, entfernt)</td>
 <td>Pilot</td>
 <td style="text-align: right;">2,1 ms</td>
 <td style="text-align: right;">0,987</td>
@@ -557,14 +569,14 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">1,0</td>
 </tr>
 <tr class="even">
-<td>Chroma (HNSW)</td>
+<td>Chroma (HNSW, entfernt)</td>
 <td>Produktion</td>
 <td style="text-align: right;">3,9 ms</td>
 <td style="text-align: right;">0,906</td>
 </tr>
 </tbody>
 </table>
-<p>Chroma antwortet im Produktionsmaßstab in 3,9 ms, findet aber nur 90,6 % der exakten zehn nächsten Nachbarn. Für eine Wortliste von einigen Zehntausend Lemmata genügt eine Brute-Force-Suche. DuckDB und vss wurden nur im Pilotmaßstab gemessen. Ihre Werte für den vollen Maßstab sind eine Hochrechnung und nicht verifiziert.</p>
+<p>Chroma antwortete im Produktionsmaßstab in 3,9 ms, fand aber nur 90,6 % der exakten zehn nächsten Nachbarn. Für eine Wortliste von einigen Zehntausend Lemmata genügt eine Brute-Force-Suche. DuckDB und vss wurden nur im Pilotmaßstab gemessen. Ihre Werte für den vollen Maßstab sind eine Hochrechnung und nicht verifiziert.</p>
 </section>
 <section id="was-noch-nicht-gemessen-ist" class="level2">
 <h2 class="anchored" data-anchor-id="was-noch-nicht-gemessen-ist">Was noch nicht gemessen ist</h2>
@@ -610,7 +622,84 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="entscheidung-vom-8.-oktober-2026" class="level2">
 <h2 class="anchored" data-anchor-id="entscheidung-vom-8.-oktober-2026">Entscheidung vom 8. Oktober 2026</h2>
+<p><em>Abgelöst durch die Entscheidung vom 20. Oktober 2026.</em></p>
 <p>Latein bleibt <code>bge-m3</code> (<code>EXPECTED_EMBEDDING_MODEL</code>, Collection <code>{coll}_sentences</code>). Jede andere Sprache nimmt EmbeddingGemma 2 (<code>embeddinggemma-2:270m-bf16-text</code>, bf16, mit den Suchpräfixen, Collection <code>{coll}_sentences_gemma</code>). GLiNER2.5 wird nicht mehr geladen. Ein fertiger <code>bge-m3</code>-Speicher wird nicht mit <code>--rebuild</code> neu gebaut; sonst gälte er als veraltet. Neue Sätze einer anderen Sprache schreibt der nächste Bau oder ein Seitendelta in die Gemma-Collection. Fehlt sie, bleibt die Anfrage bei <code>bge-m3</code>.</p>
+</section>
+<section id="entscheidung-vom-20.-oktober-2026" class="level2">
+<h2 class="anchored" data-anchor-id="entscheidung-vom-20.-oktober-2026">Entscheidung vom 20. Oktober 2026</h2>
+<p>Der Vektorspeicher ist entfernt (Entscheidung des Besitzers): Chroma, <code>bge-m3</code> und EmbeddingGemma 2 werden für die Collections weder gebaut noch abgefragt, und die Stufe <code>chroma_build</code> gibt es in <code>pdai-complete</code> nicht mehr. An seine Stelle tritt ein BM25-Index in der Korpusdatei <code>&lt;c&gt;_corpus.duckdb</code> (corpus/2) über den Satztext und den lemmatisierten Satz (<code>lemma_text</code>); für Deutsch und Französisch kommt ein Index über Zeichen-4-Gramme der Wörter hinzu, dessen Rangfolge mit der Wortrangfolge durch Reciprocal Rank Fusion verbunden wird (<code>ai_lemma_index.stanza.pipeline.bm25_hits</code>). Beschrieben und gemessen ist die neue Datenschicht in <em>The Famulus data layer</em> (<code>publication/arxiv/papers/famulus-data-layer</code>).</p>
+<p>Vor dem Entfernen wurden 200 Sätze aus vier Collections von <code>gemini-3.8-flash</code> paraphrasiert, und jedes Verfahren sollte den Quellsatz aus seiner Paraphrase wiederfinden:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Verfahren</th>
+<th style="text-align: right;">Recall@10</th>
+<th style="text-align: right;">Recall@50</th>
+<th style="text-align: right;">la</th>
+<th style="text-align: right;">de</th>
+<th style="text-align: right;">en</th>
+<th style="text-align: right;">fr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Vektorspeicher, bge-m3 (entfernt)</td>
+<td style="text-align: right;">0,890</td>
+<td style="text-align: right;">0,895</td>
+<td style="text-align: right;">1,00</td>
+<td style="text-align: right;">0,86</td>
+<td style="text-align: right;">0,90</td>
+<td style="text-align: right;">0,82</td>
+</tr>
+<tr class="even">
+<td>Vektorspeicher, EmbeddingGemma 2 (entfernt)</td>
+<td style="text-align: right;">0,085</td>
+<td style="text-align: right;">0,085</td>
+<td style="text-align: right;">0,00</td>
+<td style="text-align: right;">0,14</td>
+<td style="text-align: right;">0,06</td>
+<td style="text-align: right;">0,14</td>
+</tr>
+<tr class="odd">
+<td>BM25, Wörter</td>
+<td style="text-align: right;">0,725</td>
+<td style="text-align: right;">0,795</td>
+<td style="text-align: right;">0,96</td>
+<td style="text-align: right;">0,62</td>
+<td style="text-align: right;">0,84</td>
+<td style="text-align: right;">0,76</td>
+</tr>
+<tr class="even">
+<td>BM25, Lemmata</td>
+<td style="text-align: right;">0,560</td>
+<td style="text-align: right;">0,645</td>
+<td style="text-align: right;">0,54</td>
+<td style="text-align: right;">0,46</td>
+<td style="text-align: right;">0,82</td>
+<td style="text-align: right;">0,76</td>
+</tr>
+<tr class="odd">
+<td>BM25, Wörter + 4-Gramme (de, fr), in Betrieb</td>
+<td style="text-align: right;">0,725</td>
+<td style="text-align: right;">0,830</td>
+<td style="text-align: right;">0,94</td>
+<td style="text-align: right;">0,74</td>
+<td style="text-align: right;">0,84</td>
+<td style="text-align: right;">0,80</td>
+</tr>
+</tbody>
+</table>
+<p>Wiederfinden des Quellsatzes aus seiner Paraphrase (200 Sätze, je 50 Latein, Deutsch, Englisch, Französisch; Paraphrasen von gemini-3.8-flash); die Sprachspalten sind Recall@50.</p>
+<p>Der Verlust ist benannt, nicht verdeckt: Unter den besten 50 findet BM25 den Quellsatz bei 0,830 der Proben, der <code>bge-m3</code>-Speicher bei 0,895; unter den besten 10 bei 0,725 gegen 0,890. Am größten ist er im Deutschen (0,74 gegen 0,86). Die Probe misst das Wiederfinden eines bekannten Satzes, nicht den Recall aller Sätze, die eine Aussage ausdrücken. Die Ähnlichkeitssuche über Lemmata, die diese Seite spezifiziert, ist davon nicht berührt: Sie ist nicht gebaut, und ein Embedding für sie wäre wieder über das <a href="./pruefverfahren-aehnlichkeit.html">Prüfverfahren</a> zu wählen.</p>
 
 
 </section>

@@ -160,10 +160,21 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./referenz.html"> 
 <span class="menu-text">Famulus-Referenz</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./landkarte.html"> 
-<span class="menu-text">Landkarte</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-landkarte" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Landkarte</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-landkarte">    
+        <li>
+    <a class="dropdown-item" href="./landkarte.html">
+ <span class="dropdown-text">Landkarte der Workspaces</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./kollektionen.html">
+ <span class="dropdown-text">Kollektionen</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -744,39 +755,12 @@ ul.task-list li input[type="checkbox"] {
 <p>Ohne Register (Wäfler, Kepler, Copernicus) hat ein Name keine Personen-Id. Er trifft die Lemmaklassen seiner Namensschlüssel. Ein Namensvetter lässt sich dort nicht von der Person trennen.</p>
 <section id="aehnlich" class="level3">
 <h3 class="anchored" data-anchor-id="aehnlich">Ähnliche Ausdrücke</h3>
-<p>Ähnliche Wendungen, Verben und Sätze sucht dieses Blatt über Embeddings. Es steht noch nicht: Der Filter fragt die Embeddings heute nicht ab, und bis es steht, sucht ein Fachausdruck über den Terminus. Ein Satz ohne Sprachcode gilt als Latein.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Sprache des Satzes</th>
-<th>Modell</th>
-<th>Speicher</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Latein</td>
-<td><code>bge-m3</code>, 1024 Dimensionen, ohne Präfix</td>
-<td><code>{coll}_sentences</code></td>
-</tr>
-<tr class="even">
-<td>jede andere Sprache</td>
-<td>EmbeddingGemma 2, <code>embeddinggemma-2:270m-bf16-text</code>, 768 Dimensionen. Anfrage <code>task: search result \| query:</code>, Text <code>title: none \| text:</code></td>
-<td><code>{coll}_sentences_gemma</code></td>
-</tr>
-</tbody>
-</table>
-<p>GLiNER2.5 ist seit dem 8. Oktober 2026 aus der PDAI-Pipeline. Ein fertiger <code>bge-m3</code>-Speicher wird nicht neu gebaut. Fehlt die Gemma-Collection, sucht eine nicht-lateinische Anfrage weiter dort. Das Gold ist noch <code>vorgeschlagen</code>. Die Messung steht in <a href="./aehnlichkeitssuche.html">Ähnlichkeitssuche</a>.</p>
+<p>Ähnliche Wendungen, Verben und Sätze sollte dieses Blatt über Embeddings suchen. Es steht nicht: Der Filter fragt keine Embeddings ab, und ein Fachausdruck sucht über den Terminus. Die Vektorspeicher, auf die es zielte (<code>bge-m3</code> in <code>{coll}_sentences</code> für Latein, EmbeddingGemma 2 in <code>{coll}_sentences_gemma</code> für die anderen Sprachen), sind seit dem 20. Oktober 2026 entfernt; den Abruf von Sätzen trägt BM25 in der Korpusdatei <code>&lt;c&gt;_corpus.duckdb</code>. GLiNER2.5 ist seit dem 8. Oktober 2026 aus der PDAI-Pipeline. Die Messungen und die Entscheidung stehen in <a href="./aehnlichkeitssuche.html">Ähnlichkeitssuche</a>.</p>
 </section>
 </section>
 <section id="der-fast-index" class="level2">
 <h2 class="anchored" data-anchor-id="der-fast-index">Der Fast Index</h2>
-<p>Bevor gesucht wird, wird jeder Wert der Frage klassifiziert (<code>evidenzraum/fastindex.py</code>). Die Suche vergleicht danach keine Zeichenketten mehr.</p>
+<p>Bevor gesucht wird, wird jeder Wert der Frage klassifiziert (<code>evidenzraum/fastindex.py</code>). Die Suche vergleicht danach keine Zeichenketten mehr. Die Tabellen, die er liest, liegen in den zwei Dateien der Collection: die Tabellen des Evidenzraums (<code>fx_*</code>) und die Satzdatensätze (<code>sr_*</code>) in der Famulus-Datei <code>&lt;c&gt;_famulus.duckdb</code>, die Satz- und Tokentabellen (<code>stz_*</code>, <code>stz_deps</code> als Sicht) in der Korpusdatei <code>&lt;c&gt;_corpus.duckdb</code>; welche Datei gilt, entscheidet <code>ai_lemma_index.stores</code>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Person</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Zeit</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Lemma</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Terminus</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false" href="">Satzrolle</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-6" role="tab" aria-controls="tabset-1-6" aria-selected="false" href="">Geschlossen</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-7" role="tab" aria-controls="tabset-1-7" aria-selected="false" href="">Name ohne Register</a></li></ul>
 <div class="tab-content">

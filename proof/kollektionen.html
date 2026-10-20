@@ -218,7 +218,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">19. Oktober 2026</p>
+      <p class="date">20. Oktober 2026</p>
     </div>
   </div>
   
@@ -241,24 +241,24 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Von 28 Sammlungen mit einer Stanza-Datenbank haben 14 eine Schemakarte, 11 ein Sidecar der Evidenzobjekte, 5 Einträge im Register der Einzeldinge und 1 einen FNF-Index; jede Schicht wird je Sammlung gebaut, und was hier fehlt, ist eine benannte Lücke, kein stiller Rückgriff auf eine andere Sammlung.</p>
+<p>Von 28 Sammlungen mit einer Korpusdatei haben 14 eine Schemakarte, 15 ein Sidecar der Evidenzobjekte, 10 Einträge im Register der Einzeldinge und 1 einen FNF-Index; jede Schicht wird je Sammlung gebaut, und was hier fehlt, ist eine benannte Lücke, kein stiller Rückgriff auf eine andere Sammlung.</p>
 </div>
 </div>
 <section id="das-gesamtbild" class="level2">
 <h2 class="anchored" data-anchor-id="das-gesamtbild">Das Gesamtbild</h2>
-<p>Gelesen am 2026-10-19 unter <code>/Volumes/PDAI-1/pdai-collections</code>: jede Sammlung, deren Ordner eine <code>&lt;sammlung&gt;_stanza.duckdb</code> trägt, mit einer kurzlebigen Nur-Lese-Verbindung je Datenbank.</p>
+<p>Gelesen am 2026-10-20 unter <code>/Volumes/PDAI-1/pdai-collections</code>: jede Sammlung, deren Ordner eine Korpusdatei trägt (<code>&lt;sammlung&gt;_corpus.duckdb</code> nach der Umstellung, sonst <code>&lt;sammlung&gt;_stanza.duckdb</code>), mit einer kurzlebigen Nur-Lese-Verbindung je Datenbank. Welche Datei eine Rolle trägt, entscheidet <code>ai_lemma_index.stores</code> aus dem verzeichneten Stand der Sammlung; nach der Umstellung liegen Sidecar, Satzdatensätze, Dossier-Projektion und Haupt-DB in <code>&lt;sammlung&gt;_famulus.duckdb</code>.</p>
 <ul>
 <li><strong>Schemakarte</strong> (14): 4 Korrespondenzen (<code>eulerOO-IVA</code>, <code>hevelius</code>, <code>karman-nachlass</code>, <code>pirckheimer</code>) und 10 Dokumentsammlungen (<code>braheOO</code>, <code>copernicus-prim</code>, <code>enestroem</code>, <code>eulerOO</code>, <code>karman-context</code>, <code>kepler-prim</code>, <code>kepler-sec</code>, <code>kirch</code>, <code>waefler-prim</code>, <code>waefler-sec</code>). Die Karte trägt im Block <code>profil</code> die Fakten der Sammlung (Träger, Sprachen, Epoche, Fach); ohne Karte bleibt eine Sammlung von den Schichten der Evidenz ausgeschlossen: <code>causality</code>, <code>classical-philology</code>, <code>copernicus-sec</code>, <code>grasshoff</code>, <code>greek-astronomy</code>, <code>hartmann</code>, <code>kepleriana-munich-2024</code>, <code>medieval-sec</code>, <code>natural-philosophy</code>, <code>neugebauer</code>, <code>pirckheimer-sec</code>, <code>tractatus-typoskripte</code>, <code>wittgenstein-mechanik</code>, <code>wittgenstein-mechanik-sec</code>.</li>
-<li><strong>Sidecar</strong> (11): <code>_fql.duckdb</code> für Briefe, <code>_fx.duckdb</code> für Dokumente; <code>braheOO</code>, <code>copernicus-prim</code>, <code>eulerOO-IVA</code>, <code>hevelius</code>, <code>karman-context</code>, <code>karman-nachlass</code>, <code>kepler-prim</code>, <code>kepler-sec</code>, <code>pirckheimer</code>, <code>waefler-prim</code>, <code>waefler-sec</code>.</li>
-<li><strong>Satz-Sidecar</strong> <code>_satz.duckdb</code> (0): keine.</li>
-<li><strong>Dossiers</strong> (2): <code>karman-context</code>, <code>karman-nachlass</code>.</li>
-<li><strong>Register der Einzeldinge</strong> (<code>ind_quelle</code>, 5): <code>eulerOO-IVA</code>, <code>hevelius</code>, <code>karman-nachlass</code>, <code>kepleriana-munich-2024</code>, <code>pirckheimer</code>.</li>
-<li><strong>Bereitschaftsprüfung</strong> des Evidenzraums (5): <code>eulerOO-IVA</code>, <code>hevelius</code>, <code>karman-context</code>, <code>karman-nachlass</code>, <code>pirckheimer</code>.</li>
+<li><strong>Sidecar</strong> (15): FQL-Tabellen für Briefe, Evidenzraum für Dokumente (Famulus-Datei, sonst <code>_fql.duckdb</code> bzw. <code>_fx.duckdb</code>); <code>braheOO</code>, <code>copernicus-prim</code>, <code>enestroem</code>, <code>eulerOO</code>, <code>eulerOO-IVA</code>, <code>hartmann</code>, <code>hevelius</code>, <code>karman-context</code>, <code>karman-nachlass</code>, <code>kepler-prim</code>, <code>kepler-sec</code>, <code>kepleriana-munich-2024</code>, <code>pirckheimer</code>, <code>waefler-prim</code>, <code>waefler-sec</code>.</li>
+<li><strong>Satzdatensätze</strong> <code>sr_*</code> (Famulus-Datei, sonst <code>_satz.duckdb</code>; 12): <code>braheOO</code>, <code>copernicus-prim</code>, <code>enestroem</code>, <code>eulerOO</code>, <code>eulerOO-IVA</code>, <code>hartmann</code>, <code>hevelius</code>, <code>karman-context</code>, <code>karman-nachlass</code>, <code>kepler-prim</code>, <code>kepler-sec</code>, <code>kepleriana-munich-2024</code>.</li>
+<li><strong>Dossiers</strong> (7): <code>enestroem</code>, <code>eulerOO</code>, <code>eulerOO-IVA</code>, <code>hevelius</code>, <code>karman-context</code>, <code>karman-nachlass</code>, <code>pirckheimer</code>.</li>
+<li><strong>Register der Einzeldinge</strong> (<code>ind_quelle</code>, 10): <code>copernicus-prim</code>, <code>enestroem</code>, <code>eulerOO</code>, <code>eulerOO-IVA</code>, <code>hevelius</code>, <code>karman-context</code>, <code>karman-nachlass</code>, <code>kepler-sec</code>, <code>kepleriana-munich-2024</code>, <code>pirckheimer</code>.</li>
+<li><strong>Bereitschaftsprüfung</strong> des Evidenzraums (9): <code>copernicus-prim</code>, <code>enestroem</code>, <code>eulerOO</code>, <code>eulerOO-IVA</code>, <code>hevelius</code>, <code>karman-context</code>, <code>karman-nachlass</code>, <code>kepler-sec</code>, <code>pirckheimer</code>.</li>
 <li><strong>FNF-Index</strong> (1): <code>karman-nachlass</code>.</li>
-<li><strong>Abbildungen</strong> (<code>figures.xml</code>, 2): <code>hartmann</code>, <code>karman-context</code>.</li>
-<li><strong>status.json</strong> (Gesamturteil der Sammlung): not_ready 1, partial 3, search_ready 24.</li>
+<li><strong>Abbildungen</strong> (<code>figures.xml</code>, 7): <code>copernicus-prim</code>, <code>enestroem</code>, <code>eulerOO</code>, <code>eulerOO-IVA</code>, <code>hartmann</code>, <code>karman-context</code>, <code>kepler-sec</code>.</li>
+<li><strong>status.json</strong> (Gesamturteil der Sammlung): partial 1, search_ready 27.</li>
 </ul>
-<p>14 Sammlungen haben eine Stanza-Datenbank, aber keine Schemakarte; für sie ist keine Aussage über Briefe, Dokumente oder Evidenzobjekte begründet, bis ihre Karte angelegt ist.</p>
+<p>14 Sammlungen haben eine Korpusdatei, aber keine Schemakarte; für sie ist keine Aussage über Briefe, Dokumente oder Evidenzobjekte begründet, bis ihre Karte angelegt ist.</p>
 </section>
 <section id="die-tabelle" class="level2">
 <h2 class="anchored" data-anchor-id="die-tabelle">Die Tabelle</h2>
@@ -295,23 +295,23 @@ ul.task-list li input[type="checkbox"] {
 <td><code>braheOO</code></td>
 <td style="text-align: center;">ja</td>
 <td>dokumente</td>
-<td style="text-align: right;">136.196</td>
+<td style="text-align: right;">145.934</td>
 <td>fx</td>
 <td style="text-align: right;">14 Dok.</td>
 <td style="text-align: right;">293.238</td>
 <td style="text-align: right;">–</td>
-<td>partial</td>
+<td>search_ready</td>
 </tr>
 <tr class="even">
 <td><code>causality</code></td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
-<td style="text-align: right;">6.250</td>
+<td style="text-align: right;">6.259</td>
 <td>–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td>search_ready</td>
+<td>partial</td>
 </tr>
 <tr class="odd">
 <td><code>classical-philology</code></td>
@@ -328,18 +328,18 @@ ul.task-list li input[type="checkbox"] {
 <td><code>copernicus-prim</code></td>
 <td style="text-align: center;">ja</td>
 <td>dokumente</td>
-<td style="text-align: right;">79.908</td>
+<td style="text-align: right;">80.090</td>
 <td>fx</td>
 <td style="text-align: right;">10 Dok.</td>
-<td style="text-align: right;">124.302</td>
-<td style="text-align: right;">–</td>
+<td style="text-align: right;">127.266</td>
+<td style="text-align: right;">6.129</td>
 <td>search_ready</td>
 </tr>
 <tr class="odd">
 <td><code>copernicus-sec</code></td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
-<td style="text-align: right;">152.725</td>
+<td style="text-align: right;">188.596</td>
 <td>–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
@@ -350,40 +350,40 @@ ul.task-list li input[type="checkbox"] {
 <td><code>enestroem</code></td>
 <td style="text-align: center;">ja</td>
 <td>dokumente</td>
-<td style="text-align: right;">317.103</td>
-<td>–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td>not_ready</td>
+<td style="text-align: right;">325.936</td>
+<td>fx</td>
+<td style="text-align: right;">767 Dok.</td>
+<td style="text-align: right;">657.566</td>
+<td style="text-align: right;">413</td>
+<td>search_ready</td>
 </tr>
 <tr class="odd">
 <td><code>eulerOO</code></td>
 <td style="text-align: center;">ja</td>
 <td>dokumente</td>
-<td style="text-align: right;">160.739</td>
-<td>–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
+<td style="text-align: right;">161.130</td>
+<td>fx</td>
+<td style="text-align: right;">84 Dok.</td>
+<td style="text-align: right;">250.571</td>
+<td style="text-align: right;">995</td>
 <td>search_ready</td>
 </tr>
 <tr class="even">
 <td><code>eulerOO-IVA</code></td>
 <td style="text-align: center;">ja</td>
 <td>korrespondenz</td>
-<td style="text-align: right;">153.669</td>
+<td style="text-align: right;">162.730</td>
 <td>fql</td>
 <td style="text-align: right;">3.393 Briefe</td>
-<td style="text-align: right;">178.169</td>
-<td style="text-align: right;">311</td>
+<td style="text-align: right;">178.814</td>
+<td style="text-align: right;">1.492</td>
 <td>search_ready</td>
 </tr>
 <tr class="odd">
 <td><code>grasshoff</code></td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
-<td style="text-align: right;">46.890</td>
+<td style="text-align: right;">47.527</td>
 <td>–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
@@ -394,7 +394,7 @@ ul.task-list li input[type="checkbox"] {
 <td><code>greek-astronomy</code></td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
-<td style="text-align: right;">2.018</td>
+<td style="text-align: right;">2.059</td>
 <td>–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
@@ -406,9 +406,9 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: center;">nein</td>
 <td>–</td>
 <td style="text-align: right;">1.095</td>
-<td>–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
+<td>fql</td>
+<td style="text-align: right;">da Briefe</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">–</td>
 <td>search_ready</td>
 </tr>
@@ -416,65 +416,65 @@ ul.task-list li input[type="checkbox"] {
 <td><code>hevelius</code></td>
 <td style="text-align: center;">ja</td>
 <td>korrespondenz</td>
-<td style="text-align: right;">29.380</td>
+<td style="text-align: right;">29.936</td>
 <td>fql</td>
 <td style="text-align: right;">2.970 Briefe</td>
-<td style="text-align: right;">54.789</td>
-<td style="text-align: right;">729</td>
+<td style="text-align: right;">55.345</td>
+<td style="text-align: right;">728</td>
 <td>search_ready</td>
 </tr>
 <tr class="odd">
 <td><code>karman-context</code></td>
 <td style="text-align: center;">ja</td>
 <td>dokumente</td>
-<td style="text-align: right;">417</td>
+<td style="text-align: right;">523.923</td>
 <td>fx</td>
-<td style="text-align: right;">1 Dok.</td>
-<td style="text-align: right;">789</td>
-<td style="text-align: right;">–</td>
+<td style="text-align: right;">77 Dok.</td>
+<td style="text-align: right;">851.173</td>
+<td style="text-align: right;">3.647</td>
 <td>search_ready</td>
 </tr>
 <tr class="even">
 <td><code>karman-nachlass</code></td>
 <td style="text-align: center;">ja</td>
 <td>korrespondenz</td>
-<td style="text-align: right;">663.972</td>
+<td style="text-align: right;">668.346</td>
 <td>fql</td>
 <td style="text-align: right;">15.976 Briefe</td>
-<td style="text-align: right;">1.206.532</td>
-<td style="text-align: right;">18.306</td>
-<td>partial</td>
+<td style="text-align: right;">1.210.906</td>
+<td style="text-align: right;">18.304</td>
+<td>search_ready</td>
 </tr>
 <tr class="odd">
 <td><code>kepler-prim</code></td>
 <td style="text-align: center;">ja</td>
 <td>dokumente</td>
-<td style="text-align: right;">459.698</td>
+<td style="text-align: right;">458.419</td>
 <td>fx</td>
 <td style="text-align: right;">27 Dok.</td>
 <td style="text-align: right;">637.959</td>
 <td style="text-align: right;">–</td>
-<td>partial</td>
+<td>search_ready</td>
 </tr>
 <tr class="even">
 <td><code>kepler-sec</code></td>
 <td style="text-align: center;">ja</td>
 <td>dokumente</td>
-<td style="text-align: right;">118.245</td>
+<td style="text-align: right;">122.267</td>
 <td>fx</td>
-<td style="text-align: right;">18 Dok.</td>
-<td style="text-align: right;">60.982</td>
-<td style="text-align: right;">–</td>
+<td style="text-align: right;">25 Dok.</td>
+<td style="text-align: right;">197.003</td>
+<td style="text-align: right;">4.364</td>
 <td>search_ready</td>
 </tr>
 <tr class="odd">
 <td><code>kepleriana-munich-2024</code></td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
-<td style="text-align: right;">970</td>
-<td>–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
+<td style="text-align: right;">992</td>
+<td>fql</td>
+<td style="text-align: right;">da Briefe</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">95</td>
 <td>search_ready</td>
 </tr>
@@ -482,7 +482,7 @@ ul.task-list li input[type="checkbox"] {
 <td><code>kirch</code></td>
 <td style="text-align: center;">ja</td>
 <td>dokumente</td>
-<td style="text-align: right;">140.905</td>
+<td style="text-align: right;">140.999</td>
 <td>–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
@@ -493,7 +493,7 @@ ul.task-list li input[type="checkbox"] {
 <td><code>medieval-sec</code></td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
-<td style="text-align: right;">144.850</td>
+<td style="text-align: right;">144.831</td>
 <td>–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
@@ -606,29 +606,33 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="aufbauschichten">Aufbauschichten</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
-<col style="width: 9%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Sammlung</th>
 <th style="text-align: right;">Satz</th>
 <th style="text-align: right;">Dossiers (XML)</th>
+<th style="text-align: right;">Dossier-Fakten</th>
+<th style="text-align: right;">Querverweise</th>
 <th style="text-align: right;">LWgrammar</th>
 <th style="text-align: right;">Begriffe</th>
 <th style="text-align: right;">Haupt-DB (Briefe)</th>
 <th style="text-align: right;">Nennungen</th>
 <th style="text-align: right;">Abbildungen</th>
-<th style="text-align: center;">Chroma</th>
+<th style="text-align: center;">corpus/2 (BM25)</th>
 <th style="text-align: center;">FNF</th>
 <th>Bereitschaft</th>
 </tr>
@@ -636,14 +640,16 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><code>braheOO</code></td>
+<td style="text-align: right;">da</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">da</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
@@ -651,12 +657,14 @@ ul.task-list li input[type="checkbox"] {
 <td><code>causality</code></td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
@@ -667,24 +675,28 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
 <td style="text-align: right;">506</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
 <tr class="even">
 <td><code>copernicus-prim</code></td>
+<td style="text-align: right;">80.090</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
+<td style="text-align: right;">da</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">37</td>
 <td style="text-align: right;">4</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: right;">414 in 10 Dok.</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
-<td>–</td>
+<td>; 1 Lücke</td>
 </tr>
 <tr class="odd">
 <td><code>copernicus-sec</code></td>
@@ -695,48 +707,56 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
 <tr class="even">
 <td><code>enestroem</code></td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
+<td style="text-align: right;">325.936</td>
+<td style="text-align: right;">762</td>
+<td style="text-align: right;">2.463</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">52</td>
 <td style="text-align: right;">6</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: right;">3.410 in 766 Dok.</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
-<td>–</td>
+<td>; 1 Lücke</td>
 </tr>
 <tr class="odd">
 <td><code>eulerOO</code></td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
+<td style="text-align: right;">161.130</td>
+<td style="text-align: right;">2.099</td>
+<td style="text-align: right;">5.663</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">74</td>
-<td style="text-align: right;">8</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: right;">2.873 in 84 Dok.</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
-<td>–</td>
+<td>; 1 Lücke</td>
 </tr>
 <tr class="even">
 <td><code>eulerOO-IVA</code></td>
+<td style="text-align: right;">154.314</td>
+<td style="text-align: right;">801</td>
+<td style="text-align: right;">2.733</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: right;">2.487 in 7 Dok.</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
-<td>erfuellt 12; 2 Lücken</td>
+<td>erfuellt 11, veraltet 1; 2 Lücken</td>
 </tr>
 <tr class="odd">
 <td><code>grasshoff</code></td>
@@ -747,7 +767,9 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
@@ -760,27 +782,33 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
 <tr class="odd">
 <td><code>hartmann</code></td>
+<td style="text-align: right;">da</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">da</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">394 in 1 Dok.</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
 <tr class="even">
 <td><code>hevelius</code></td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
+<td style="text-align: right;">29.936</td>
+<td style="text-align: right;">524</td>
+<td style="text-align: right;">948</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">449</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">534</td>
@@ -792,71 +820,83 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td><code>karman-context</code></td>
+<td style="text-align: right;">417</td>
+<td style="text-align: right;">3.315</td>
+<td style="text-align: right;">5.951</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: right;">1</td>
 <td style="text-align: right;">–</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">114 in 1 Dok.</td>
+<td style="text-align: right;">3.267 in 71 Dok.</td>
 <td style="text-align: center;">ja</td>
 <td style="text-align: center;">nein</td>
-<td>erfuellt 2</td>
+<td>erfuellt 1, luecke 1; 1 Lücke</td>
 </tr>
 <tr class="even">
 <td><code>karman-nachlass</code></td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">18.232</td>
+<td style="text-align: right;">da</td>
+<td style="text-align: right;">18.187</td>
+<td style="text-align: right;">39.920</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">73</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">15.976</td>
 <td style="text-align: right;">599.054</td>
 <td style="text-align: right;">–</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">ja</td>
-<td style="text-align: center;">ja</td>
-<td>erfuellt 11, luecke 1, nicht_anwendbar 1, veraltet 1; 4 Lücken</td>
+<td>erfuellt 12, luecke 1, nicht_anwendbar 1; 3 Lücken</td>
 </tr>
 <tr class="odd">
 <td><code>kepler-prim</code></td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
+<td style="text-align: right;">da</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">168</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">–</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">485.192</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
 <tr class="even">
 <td><code>kepler-sec</code></td>
+<td style="text-align: right;">122.267</td>
+<td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: right;">388 in 7 Dok.</td>
 <td style="text-align: center;">nein</td>
-<td>–</td>
+<td style="text-align: center;">nein</td>
+<td>; 1 Lücke</td>
 </tr>
 <tr class="odd">
 <td><code>kepleriana-munich-2024</code></td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
+<td style="text-align: right;">da</td>
+<td style="text-align: right;">da</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">59</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: center;">nein</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
 <tr class="even">
 <td><code>kirch</code></td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">56</td>
@@ -877,7 +917,9 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: center;">nein</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
@@ -885,12 +927,14 @@ ul.task-list li input[type="checkbox"] {
 <td><code>natural-philosophy</code></td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
@@ -903,20 +947,24 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
 <tr class="even">
 <td><code>pirckheimer</code></td>
 <td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">248</td>
+<td style="text-align: right;">37</td>
 <td style="text-align: right;">34</td>
 <td style="text-align: right;">13</td>
 <td style="text-align: right;">da</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
 <td>erfuellt 5, luecke 5, nicht_pruefbar 1; 8 Lücken</td>
 </tr>
@@ -929,7 +977,9 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
@@ -942,7 +992,9 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
@@ -950,12 +1002,14 @@ ul.task-list li input[type="checkbox"] {
 <td><code>waefler-prim</code></td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
 <td style="text-align: right;">7</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
@@ -963,12 +1017,14 @@ ul.task-list li input[type="checkbox"] {
 <td><code>waefler-sec</code></td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
 <td style="text-align: right;">17</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
@@ -981,7 +1037,9 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
@@ -994,7 +1052,9 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: center;">ja</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: center;">–</td>
 <td style="text-align: center;">nein</td>
 <td>–</td>
 </tr>
@@ -1004,7 +1064,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="wie-die-seite-entsteht" class="level2">
 <h2 class="anchored" data-anchor-id="wie-die-seite-entsteht">Wie die Seite entsteht</h2>
-<p><code>scripts/kollektionsmatrix.py</code> liest die Platte und schreibt <code>reports/kollektionen.json</code>; diese Seite ist allein aus dem JSON gerendert (<code>--nur-schreiben</code>). Der Test <code>tests/test_kollektionsmatrix.py</code> schlägt fehl, wenn Seite und Rendering auseinanderlaufen. Spalten: Sätze <code>stz_sentences</code>; Träger im Sidecar <code>fq_letters</code> oder <code>fq_documents</code>; Evidenzobjekte <code>fx_objekt</code>; Register die Einzeldinge mit einer <code>ind_quelle</code> der Sammlung; Satz <code>sr_sentence</code>; LWgrammar <code>lw_headword</code>; Begriffe <code>concepts</code>; Haupt-DB <code>letters</code>; Nennungen die Zeilen von <code>entity_mentions.parquet</code>; Abbildungen die <code>&lt;figur&gt;</code> der <code>figures.xml</code>; Bereitschaft die Urteile von <code>quality/evidenzraum/bereitschaft.json</code> über Facetten und Träger.</p>
+<p><code>scripts/kollektionsmatrix.py</code> liest die Platte und schreibt <code>reports/kollektionen.json</code>; diese Seite ist allein aus dem JSON gerendert (<code>--nur-schreiben</code>). Der Test <code>tests/test_kollektionsmatrix.py</code> schlägt fehl, wenn Seite und Rendering auseinanderlaufen. Spalten: Sätze <code>stz_sentences</code>; Träger im Sidecar <code>fq_letters</code> oder <code>fq_documents</code>; Evidenzobjekte <code>fx_objekt</code>; Register die Einzeldinge mit einer <code>ind_quelle</code> der Sammlung; Satz <code>sr_sentence</code>; Dossier-Fakten <code>do_fakt</code> und Querverweise <code>do_querverweis</code> der Dossier-Projektion; LWgrammar <code>lw_headword</code>; Begriffe <code>concepts</code>; Haupt-DB <code>letters</code>; Nennungen die Zeilen von <code>entity_mentions.parquet</code>; Abbildungen die <code>&lt;figur&gt;</code> der <code>figures.xml</code>; corpus/2 (BM25) die Korpusdatei mit BM25-Index nach <code>artifacts.corpus_db</code> von <code>status.json</code> (<code>–</code>: das Audit ist älter als die Umstellung; den Vektorspeicher Chroma gibt es seit dem 20. Oktober 2026 nicht mehr); Bereitschaft die Urteile von <code>quality/evidenzraum/bereitschaft.json</code> über Facetten und Träger.</p>
 
 
 </section>

@@ -364,7 +364,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td><code>pdai/index/ai-lemma-index</code></td>
 <td><code>ai_lemma_index</code></td>
-<td>Stanza-Korpus, Lemmaindex, NER, Gazetteer, Vektoren, LWgrammar-Speicher, FQL-Sidecar, <strong>Register der Einzeldinge</strong></td>
+<td>Korpusdatei (corpus/2: Stanza-Korpus, Lemmatabelle, BM25), Famulus-Datei und Speicherpfade (<code>stores</code>), NER, Gazetteer, LWgrammar-Speicher, FQL-Sidecar, <strong>Register der Einzeldinge</strong></td>
 </tr>
 <tr class="odd">
 <td><code>development/famulus-proof</code></td>
@@ -561,31 +561,35 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td><code>vector/</code></td>
-<td>chroma_build, chroma_store</td>
+<td>chroma_build, chroma_store — entfernt am 20. Oktober 2026 mit dem Vektorspeicher; BM25 in der Korpusdatei ersetzt ihn</td>
 </tr>
 <tr class="even">
+<td><code>stores/</code></td>
+<td>(seit 20. Oktober 2026) pfade, schreiben, sperre, umstellen, verbindung, zusammenfuehren: welche Datei eine Rolle trägt, Veröffentlichung durch Tausch, Sperre je Collection</td>
+</tr>
+<tr class="odd">
 <td><code>lwgrammar/</code></td>
 <td>lwgrammar_compile, lwgrammar_store</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>sidecar/</code></td>
 <td>fql_build</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>collection/</code></td>
 <td>complete, audit, gate_harness, bib_build</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>register/</code></td>
 <td>Einzeldinge: falten, bloecke, formen, entscheiden, aufbau, projektion, nennungen, binden, zeit, store, cli</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>llm.py</code></td>
 <td>der eine LLM-Client der Indexierung (Ollama, Gemini über REST), Cache in DuckDB</td>
 </tr>
 </tbody>
 </table>
-<p>Die Module des ursprünglichen Lemma-Indexers (<code>aggregate</code>, <code>perpage</code>, <code>search</code>, <code>fastsearch</code>, …) liegen weiter auf oberster Ebene. Die schweren Abhängigkeiten sind Extras (<code>[nlp]</code>, <code>[vector]</code>, <code>[cloud]</code>); famulus-proof und der Lektor installieren nur die Basis.</p>
+<p>Die Module des ursprünglichen Lemma-Indexers (<code>aggregate</code>, <code>perpage</code>, <code>search</code>, <code>fastsearch</code>, …) liegen weiter auf oberster Ebene. Die schweren Abhängigkeiten sind Extras (<code>[nlp]</code>, <code>[cloud]</code>; <code>[vector]</code> mit chromadb ist mit dem Vektorspeicher entfallen); famulus-proof und der Lektor installieren nur die Basis.</p>
 </section>
 <section id="famulus-proof-als-eine-begründungsbibliothek" class="level3">
 <h3 class="anchored" data-anchor-id="famulus-proof-als-eine-begründungsbibliothek">famulus-proof als eine Begründungsbibliothek</h3>
@@ -680,8 +684,8 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<p>Am 15. Oktober 2026 kam der <a href="./satzrecord.html">Satzrecord</a> dazu (<code>famulus_proof.satzrecord</code>): ein Sidecar <code>{coll}_satz.duckdb</code> mit den vollen Seiten-, Absatz- und Satzdatensätzen und den beim Bau berechneten Schlüsseln (<code>sr_attr</code>). Die Filterung liest diese Schlüssel; die Zeichenkettenvergleiche des Entscheidungsbaums (<code>evidenzraum/baum.py</code>) sind entfernt. Am 18. Oktober wurde die Zielentfaltung an den Filter gebunden: <code>rules/enfolding.yaml</code> ruft <code>constraint-raum</code>, dann <code>fundlage</code> (<code>evidenzraum/fundlage.py</code>: Bindung, Kanalplan, Kandidaten mit Gebrauchslesart), dann die Normalisierung mit Anfrageformen (<code>rules/formen.yaml</code>); der Planer rechnet mit Budget (<code>rules/unfold.yaml</code>), die Lesart liest regelgeleitet mit Cache (<code>entfaltung/lesartcache.py</code>), der Verfasser ist eine Leiter von Gründen (<code>rules/verfasser.yaml</code>), das Urteil ist graduiert (<code>validiert-mit-rest</code>, <code>rules/kritische_fragen.yaml</code>).</p>
-<p>Die Tabellen <code>fx_*</code> baut <code>evidenzraum/bau.py</code> (<code>scripts/build_fq_index.py</code>) im Sidecar einer Korrespondenz, für eine Collection ohne Sidecar (Wäfler) in einer eigenen Datenbank; sie lösen den flachen Briefindex <code>fq_index</code> ab. Neun Collections haben eine Karte mit Schemabaum: Kármán, Hevelius, Euler IVA, Pirckheimer, Wäfler primär und sekundär, Kepler primär und sekundär, Copernicus primär.</p>
+<p>Am 15. Oktober 2026 kam der <a href="./satzrecord.html">Satzrecord</a> dazu (<code>famulus_proof.satzrecord</code>): ein Sidecar <code>{coll}_satz.duckdb</code> mit den vollen Seiten-, Absatz- und Satzdatensätzen und den beim Bau berechneten Schlüsseln (<code>sr_attr</code>); seit dem 20. Oktober 2026 sind diese Tabellen (<code>sr_*</code>, <code>fnf_*</code>) Teil der Famulus-Datei <code>{coll}_famulus.duckdb</code>. Die Filterung liest diese Schlüssel; die Zeichenkettenvergleiche des Entscheidungsbaums (<code>evidenzraum/baum.py</code>) sind entfernt. Am 18. Oktober wurde die Zielentfaltung an den Filter gebunden: <code>rules/enfolding.yaml</code> ruft <code>constraint-raum</code>, dann <code>fundlage</code> (<code>evidenzraum/fundlage.py</code>: Bindung, Kanalplan, Kandidaten mit Gebrauchslesart), dann die Normalisierung mit Anfrageformen (<code>rules/formen.yaml</code>); der Planer rechnet mit Budget (<code>rules/unfold.yaml</code>), die Lesart liest regelgeleitet mit Cache (<code>entfaltung/lesartcache.py</code>), der Verfasser ist eine Leiter von Gründen (<code>rules/verfasser.yaml</code>), das Urteil ist graduiert (<code>validiert-mit-rest</code>, <code>rules/kritische_fragen.yaml</code>).</p>
+<p>Die Tabellen <code>fx_*</code> baut <code>evidenzraum/bau.py</code> (<code>scripts/build_fq_index.py</code>) im Sidecar einer Korrespondenz, für eine Collection ohne Sidecar (Wäfler) in einer eigenen Datenbank; sie lösen den flachen Briefindex <code>fq_index</code> ab. Seit dem 20. Oktober 2026 übergibt der Bau sie bei umgestellten Collections an die Famulus-Datei <code>{coll}_famulus.duckdb</code> (<code>ai_lemma_index.stores.schreiben.uebernehmen</code>), neben den FQL-Tabellen <code>fq_*</code>; sie werden nicht mehr in eine Datei geschrieben, die ein anderer Bau ersetzt. Neun Collections haben eine Karte mit Schemabaum: Kármán, Hevelius, Euler IVA, Pirckheimer, Wäfler primär und sekundär, Kepler primär und sekundär, Copernicus primär.</p>
 </section>
 <section id="noch-nicht-zusammengeführt" class="level3">
 <h3 class="anchored" data-anchor-id="noch-nicht-zusammengeführt">Noch nicht zusammengeführt</h3>
