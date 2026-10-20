@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>19&nbsp; Reference – PDAI Structured-XML OCR System</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../cure/case-copernicus.html" rel="next">
+<link href="../cure/learn.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d790f1a89f3916965f720a191022e3fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-89a676d4ad20e24d423491e1503c3133.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../cure/index.html">Improving collections</a></li><li class="breadcrumb-item"><a href="../cure/reference.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Reference</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <span>PDAI Structured-XML OCR System</span> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Overview: Collection Layout and Metadata</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../page-language.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The page language</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../layer-ocr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Layered OCR, and the Kirch reprocess</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../document-grammar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">One grammar per document</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../production-pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">The Production Pipeline</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../schema-architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Schema Architecture</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dtd-derivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">DTD Derivation Playbook</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../page-xml-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Structured Page XML Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../engine-options.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Engine and Option Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../audit-taxonomy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Audit Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../relax-ng.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">RELAX NG Layer</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Improving collections</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">The cure method</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/diagnose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Diagnosis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/attribute.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Attribution</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/remedy-gate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Remedy and gate</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/apply.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Application</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/certify-downstream.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Certification and downstream</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/learn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/reference.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/case-copernicus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">The Copernicus case</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/letter-dtd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Universal letter DTD</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#metrics-and-thresholds" id="toc-metrics-and-thresholds" class="nav-link active" data-scroll-target="#metrics-and-thresholds"><span class="header-section-number">19.1</span> Metrics and thresholds</a>
+  <ul class="collapse">
+  <li><a href="#page-verdict-text-validity" id="toc-page-verdict-text-validity" class="nav-link" data-scroll-target="#page-verdict-text-validity"><span class="header-section-number">19.1.1</span> Page verdict (text validity)</a></li>
+  <li><a href="#collection-verdict" id="toc-collection-verdict" class="nav-link" data-scroll-target="#collection-verdict"><span class="header-section-number">19.1.2</span> Collection verdict</a></li>
+  <li><a href="#iteration-metrics" id="toc-iteration-metrics" class="nav-link" data-scroll-target="#iteration-metrics"><span class="header-section-number">19.1.3</span> Iteration metrics</a></li>
+  </ul></li>
+  <li><a href="#model-policy" id="toc-model-policy" class="nav-link" data-scroll-target="#model-policy"><span class="header-section-number">19.2</span> Model policy</a>
+  <ul class="collapse">
+  <li><a href="#retired-and-not-adopted-models" id="toc-retired-and-not-adopted-models" class="nav-link" data-scroll-target="#retired-and-not-adopted-models"><span class="header-section-number">19.2.1</span> Retired and not adopted models</a></li>
+  <li><a href="#model-evidence" id="toc-model-evidence" class="nav-link" data-scroll-target="#model-evidence"><span class="header-section-number">19.2.2</span> Model evidence</a></li>
+  </ul></li>
+  <li><a href="#commands" id="toc-commands" class="nav-link" data-scroll-target="#commands"><span class="header-section-number">19.3</span> Commands</a></li>
+  <li><a href="#the-schema-package-of-a-collection" id="toc-the-schema-package-of-a-collection" class="nav-link" data-scroll-target="#the-schema-package-of-a-collection"><span class="header-section-number">19.4</span> The schema package of a collection</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../cure/index.html">Improving collections</a></li><li class="breadcrumb-item"><a href="../cure/reference.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Reference</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Reference</span></h1>
+<p class="subtitle lead">Metrics, thresholds, models, commands and the schema package</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="metrics-and-thresholds" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="metrics-and-thresholds"><span class="header-section-number">19.1</span> Metrics and thresholds</h2>
+<section id="page-verdict-text-validity" class="level3" data-number="19.1.1">
+<h3 data-number="19.1.1" class="anchored" data-anchor-id="page-verdict-text-validity"><span class="header-section-number">19.1.1</span> Page verdict (text validity)</h3>
+<p><code>pdai-validity</code> (check version <code>text-validity/1.10</code>) compares the Apple Vision reading of the scan with the text of the page XML. The verdict of a page follows from its flags:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Verdict</th>
+<th>Condition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>fail</code></td>
+<td>at least one severe flag: <code>TXT-PAGE-LOST</code>, <code>FN-MISSING</code>, <code>TXT-EXCESS</code>, <code>BODY-IN-FN</code>, <code>FN-IN-BODY</code></td>
+</tr>
+<tr class="even">
+<td><code>warn</code></td>
+<td>flags, none of them severe (e.g.&nbsp;<code>TXT-GAP</code>, <code>FN-PARTIAL</code>, <code>SEG-ORDER</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>ok</code></td>
+<td>no flag</td>
+</tr>
+<tr class="even">
+<td><code>unverifiable</code></td>
+<td>mean Vision confidence below 0.45, or the collection class is not readable by Vision (<code>handwritten-archival</code>, <code>special-script</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>Detector parameters: a scan line counts as missing below a token coverage of 0.5; two consecutive missing body lines with confidence ≥ 0.5 make a <code>TXT-GAP</code>; fewer than 12 scan tokens mark a (near) blank page; <code>TXT-EXCESS</code> requires more than 1.8 × the scan tokens + 40 and a precision below 0.6.</p>
+</section>
+<section id="collection-verdict" class="level3" data-number="19.1.2">
+<h3 data-number="19.1.2" class="anchored" data-anchor-id="collection-verdict"><span class="header-section-number">19.1.2</span> Collection verdict</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Verdict</th>
+<th>Condition (n = pages)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>valid</code></td>
+<td>fail rate ≤ 1 %</td>
+</tr>
+<tr class="even">
+<td><code>minor-defects</code></td>
+<td>fail rate ≤ 5 %</td>
+</tr>
+<tr class="odd">
+<td><code>defective</code></td>
+<td>fail rate &gt; 5 %</td>
+</tr>
+<tr class="even">
+<td><code>unverifiable</code></td>
+<td>more than half of the pages <code>unverifiable</code>, or class not readable</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="iteration-metrics" class="level3" data-number="19.1.3">
+<h3 data-number="19.1.3" class="anchored" data-anchor-id="iteration-metrics"><span class="header-section-number">19.1.3</span> Iteration metrics</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>Source</th>
+<th>Condition in the cure</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>fail count</td>
+<td><code>text_validity.json</code></td>
+<td>not higher after the iteration (certify)</td>
+</tr>
+<tr class="even">
+<td>structural defect count per code</td>
+<td><code>pdai-audit</code> defect register</td>
+<td>not higher (certify)</td>
+</tr>
+<tr class="odd">
+<td>new defect class</td>
+<td>diagnosis vs.&nbsp;certification</td>
+<td>none (certify)</td>
+</tr>
+<tr class="even">
+<td>blockers on specimen pages</td>
+<td><code>pdai-audit</code></td>
+<td>0 (gate)</td>
+</tr>
+<tr class="odd">
+<td>composite score of an overlay</td>
+<td><code>cure_learn</code>: mean inner score × (1 − audit penalty)</td>
+<td>candidate above baseline (learn)</td>
+</tr>
+</tbody>
+</table>
+<p>The inner score of a page in <code>cure_learn</code> is 0 with any audit blocker, otherwise the validity verdict mapped to ok 1, warn 0.75, unverifiable 0.5, fail 0. The audit penalty is <code>blocker_fraction × 0.5 + repair_fraction × 0.2</code>.</p>
+</section>
+</section>
+<section id="model-policy" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="model-policy"><span class="header-section-number">19.2</span> Model policy</h2>
+<p>The roles are defined in <code>pdai/skills/pipeline/pdai-cure/models.yaml</code> and resolved by <code>ocr_runner.cure_models.resolve_role</code>. A collection overrides a role with <code>models: {&lt;role&gt;: &lt;model&gt;}</code> in its <code>config/cure.yaml</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Policy">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Policy
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>No LLM where a deterministic check exists (scope, validity and audit checks, gates, normalizer, certification, downstream).</li>
+<li>The default of every LLM role, text and vision, is <code>kimi-k2.7-code:cloud</code> via Ollama Cloud (owner decision 2026-09-26).</li>
+<li><code>gemini-3.8-flash</code> is only the fallback of the Kimi default. It runs when Kimi fails on the item: an HTTP error, a timeout, an empty answer, or an answer that fails the step’s check. With the environment variable <code>PDAI_CURE_FALLBACK=off</code> a run has no fallback: a failed Kimi item is recorded as an error and no Gemini call is made.</li>
+<li>Local <code>qwen3.8:27b-mlx</code> is the route for harvest and for runs that must stay local.</li>
+<li>Every A/B run is recorded in <code>model_evidence.jsonl</code>. No untested model is adopted.</li>
+</ol>
+</div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Role</th>
+<th>Stage</th>
+<th>Kind</th>
+<th>Default</th>
+<th>Fallback</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>reocr</code></td>
+<td>apply</td>
+<td>vision</td>
+<td>head of the catalog <code>engine_chain</code> (<code>kimi-k2.7-code:cloud</code>, then <code>qwen3.8:27b-mlx</code>)</td>
+<td><code>gemini-3.8-flash</code>, only after every chain engine failed on the page</td>
+</tr>
+<tr class="even">
+<td><code>print-first-pass</code></td>
+<td>apply</td>
+<td>vision</td>
+<td><code>kimi-k2.7-code:cloud</code> (local: <code>qwen3.8:27b-mlx</code>)</td>
+<td><code>gemini-3.8-flash</code></td>
+</tr>
+<tr class="odd">
+<td><code>validity-judge</code></td>
+<td>diagnose</td>
+<td>vision</td>
+<td>head of the catalog chain</td>
+<td><code>gemini-3.8-flash</code></td>
+</tr>
+<tr class="even">
+<td><code>attribute-uncoded</code></td>
+<td>attribute</td>
+<td>text</td>
+<td><code>kimi-k2.7-code:cloud</code></td>
+<td><code>gemini-3.8-flash</code></td>
+</tr>
+<tr class="odd">
+<td><code>overlay-propose</code></td>
+<td>remedy</td>
+<td>text</td>
+<td><code>kimi-k2.7-code:cloud</code></td>
+<td><code>gemini-3.8-flash</code></td>
+</tr>
+<tr class="even">
+<td><code>learning-text</code></td>
+<td>learn</td>
+<td>text</td>
+<td><code>kimi-k2.7-code:cloud</code></td>
+<td><code>gemini-3.8-flash</code></td>
+</tr>
+<tr class="odd">
+<td><code>schema-derive</code></td>
+<td>remedy</td>
+<td>text</td>
+<td><code>kimi-k2.7-code:cloud</code></td>
+<td><code>gemini-3.8-flash</code></td>
+</tr>
+<tr class="even">
+<td><code>facsimile-check</code></td>
+<td>certify</td>
+<td>vision</td>
+<td><code>kimi-k2.7-code:cloud</code> (candidate: <code>qwen3.8:27b-mlx</code> first tier)</td>
+<td><code>gemini-3.8-flash</code></td>
+</tr>
+<tr class="odd">
+<td><code>css-classify</code></td>
+<td>certify</td>
+<td>text</td>
+<td><code>kimi-k2.7-code:cloud</code></td>
+<td><code>gemini-3.8-flash</code></td>
+</tr>
+<tr class="even">
+<td><code>downstream-nlp</code></td>
+<td>downstream</td>
+<td>local</td>
+<td>Stanza + GLiNER2.5 + BGE-M3</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Text roles run through <code>ocr_runner.cure_models.runtime_for_role</code>, which calls the default and hands the item to the fallback on an exception, an empty answer or an answer that the step’s check rejects; the route taken is recorded with the result (<code>author_route</code> in the <code>cure_learn</code> summary).</p>
+<p>Ollama call options from live probes: <code>kimi-k2.7-code:cloud</code>, <code>deepseek-v4.1-flash:cloud</code> and <code>qwen3.8:27b-mlx</code> run with <code>think: false</code>.</p>
+<section id="retired-and-not-adopted-models" class="level3" data-number="19.2.1">
+<h3 data-number="19.2.1" class="anchored" data-anchor-id="retired-and-not-adopted-models"><span class="header-section-number">19.2.1</span> Retired and not adopted models</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Status</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>qwen3.5:cloud</code></td>
+<td>retired</td>
+<td>HTTP 410: Ollama withdrew <code>qwen3.5:397b</code> on 2026-09-25 (probe 2026-09-26)</td>
+</tr>
+<tr class="even">
+<td><code>kimi-k3:cloud</code></td>
+<td>retired</td>
+<td>HTTP 402 without extra-usage credits</td>
+</tr>
+<tr class="odd">
+<td><code>deepseek-v4-flash:cloud</code></td>
+<td>not adopted</td>
+<td>text only, HTTP 400 on images</td>
+</tr>
+<tr class="even">
+<td><code>glm-5.3:cloud</code></td>
+<td>not adopted</td>
+<td>overlay-propose A/B: candidate 0.714 against baseline 0.855, one new blocker</td>
+</tr>
+<tr class="odd">
+<td><code>gemma4:31b-cloud</code></td>
+<td>not adopted</td>
+<td>untested on page OCR</td>
+</tr>
+<tr class="even">
+<td><code>qwen3-vl:235b-cloud</code></td>
+<td>not adopted</td>
+<td>untested on page OCR</td>
+</tr>
+</tbody>
+</table>
+<p><code>resolve_role</code> refuses a model outside the Gemini allowlist, a retired model and a not adopted model.</p>
+</section>
+<section id="model-evidence" class="level3" data-number="19.2.2">
+<h3 data-number="19.2.2" class="anchored" data-anchor-id="model-evidence"><span class="header-section-number">19.2.2</span> Model evidence</h3>
+<p>Each run of <code>ocr_runner.cure_learn</code> appends one record to <code>pdai/skills/pipeline/pdai-cure/model_evidence.jsonl</code>. The A/B of the role <code>overlay-propose</code> on 2026-09-26 revised the overlay <code>ocr-overlay:copernicus-prim:kimi</code> (engine <code>kimi-k2.7-code:cloud</code>) for one round with each author:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Sample</th>
+<th>Author</th>
+<th>Baseline</th>
+<th>Candidate</th>
+<th>Duration</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>3 pages</td>
+<td><code>glm-5.3:cloud</code></td>
+<td>1.000</td>
+<td>1.000</td>
+<td>155 s</td>
+</tr>
+<tr class="even">
+<td>3 pages</td>
+<td><code>gemini-3.8-flash</code></td>
+<td>1.000</td>
+<td>1.000</td>
+<td>66 s</td>
+</tr>
+<tr class="odd">
+<td>7 pages</td>
+<td><code>glm-5.3:cloud</code></td>
+<td>0.855</td>
+<td>0.714</td>
+<td>292 s</td>
+</tr>
+<tr class="even">
+<td>7 pages</td>
+<td><code>gemini-3.8-flash</code></td>
+<td>0.857</td>
+<td>0.857</td>
+<td>171 s</td>
+</tr>
+<tr class="odd">
+<td>7 pages</td>
+<td><code>kimi-k2.7-code:cloud</code></td>
+<td>0.857</td>
+<td>0.857</td>
+<td>206 s</td>
+</tr>
+</tbody>
+</table>
+<p>The 3-page sample does not separate the authors, because the baseline already scores 1.000. On 7 pages the candidate of <code>glm-5.3:cloud</code> introduced one blocker (GW-IV page 19: XML not well-formed, page text lost); the candidates of <code>gemini-3.8-flash</code> and <code>kimi-k2.7-code:cloud</code> left every page verdict unchanged. No candidate solved the <code>FN-MISSING</code> of Copernicus1873 page 50. The baseline runs differ by at most 0.0017, so the drop of the glm candidate exceeds the run-to-run variation, while Kimi and Gemini are equal on this sample. One round on one sample is weak evidence; the Kimi default rests on the owner decision, the evidence only excludes <code>glm-5.3:cloud</code>.</p>
+<p>The two-tier setup of <code>facsimile-check</code> needs visual-audit specimens with adjudicated discrepancies before its A/B can run; none are registered yet.</p>
+</section>
+</section>
+<section id="commands" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="commands"><span class="header-section-number">19.3</span> Commands</h2>
+<p>All commands run from <code>~/ai-mac-studio/pdai</code>. The ocr-runner modules run with the orchestrator venv (<code>~/ai-mac-studio/development/ai-agent-orchestrator/.venv/bin/python -m …</code>).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Stage</th>
+<th>Command</th>
+<th>Writes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>diagnose</td>
+<td><code>pdai-validity --collection C [--doc D]</code></td>
+<td><code>text_validity.json</code>, <code>pages.jsonl</code></td>
+</tr>
+<tr class="even">
+<td>diagnose</td>
+<td><code>pdai-validity --worklist C</code></td>
+<td><code>&lt;data&gt;/quality/text_validity/reocr/&lt;doc&gt;.json</code></td>
+</tr>
+<tr class="odd">
+<td>diagnose</td>
+<td><code>pdai-audit --collection C --vol D --dossier --protocol --quiet</code></td>
+<td>dossier, tag protocol</td>
+</tr>
+<tr class="even">
+<td>certify</td>
+<td><code>pdai-audit --collection C --vol D --all</code></td>
+<td>+ Typst report <code>audit_report_&lt;vol&gt;.pdf</code></td>
+</tr>
+<tr class="odd">
+<td>certify</td>
+<td><code>pdai-coherence --collection C --vol D</code></td>
+<td>CSS coherence report</td>
+</tr>
+<tr class="even">
+<td>certify</td>
+<td><code>pdai-validity --adjudicate C --page P --codes X --evidence E --by B</code></td>
+<td>adjudication register</td>
+</tr>
+<tr class="odd">
+<td>gate</td>
+<td><code>python -m ocr_runner.normalize_apply --collection C --doc D --specimen P1,P2,P3</code></td>
+<td><code>&lt;data&gt;/quality/&lt;doc&gt;_norm_gate.json</code></td>
+</tr>
+<tr class="even">
+<td>apply</td>
+<td><code>python -m ocr_runner.normalize_apply --collection C --doc D --apply</code></td>
+<td>page XML (gated normalizer only)</td>
+</tr>
+<tr class="odd">
+<td>gate</td>
+<td><code>python -m ocr_runner.cure_run --collection C --doc D --pilot --also P… --sample N --targeted 0</code></td>
+<td>pilot tree under the collection tmp directory</td>
+</tr>
+<tr class="even">
+<td>apply</td>
+<td><code>python -m ocr_runner.cure_run --collection C --doc D --worklist --max-pages N --max-minutes M</code></td>
+<td>page XML of flagged pages, backups <code>page_NNN.xml.vN</code></td>
+</tr>
+<tr class="odd">
+<td>remedy</td>
+<td><code>python -m ocr_runner.cure_learn --collection C --engine E --rounds R [--author M] [--apply]</code></td>
+<td>version tree, <code>model_evidence.jsonl</code>; overlay only with <code>--apply</code></td>
+</tr>
+<tr class="even">
+<td>setup</td>
+<td><code>python -m ocr_runner.cure_settings --collection C [--force]</code></td>
+<td>document settings from <code>setting_defaults</code></td>
+</tr>
+<tr class="odd">
+<td>downstream</td>
+<td><code>pdai-complete --collection C [--dry-run]</code></td>
+<td>corpus stages of changed pages</td>
+</tr>
+</tbody>
+</table>
+<p><code>--dry-run</code> of <code>cure_run</code> lists the pages it would process without calling an engine.</p>
+<p>The Partitur runs through the Conductor:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/ai-mac-studio/development/ai-agent-orchestrator</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/bin/orchestrator</span> run ~/ai-mac-studio/pdai/skills/pipeline/pdai-cure/partitur.yaml <span class="dt">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--setting</span> cure-copernicus-prim [--input-file iteration.yaml]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The input file carries <code>remedy</code>, <code>until</code> and <code>apply</code> for one iteration. Setting ids are global in <code>partitur_register.duckdb</code>; the Settings of <code>pdai-cure</code> are named <code>cure-&lt;collection&gt;</code>.</p>
+</section>
+<section id="the-schema-package-of-a-collection" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="the-schema-package-of-a-collection"><span class="header-section-number">19.4</span> The schema package of a collection</h2>
+<p>A collection is ready for the cure when its code folder <code>pdai/collections/&lt;c&gt;/</code> holds:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>config/cure.yaml</code></td>
+<td>instruction prefix, audit rules path, <code>placement_rule</code>, <code>reject_codes</code>, guard options, normalizer module, <code>setting_defaults</code>, <code>doc_notes</code>, budget, model overrides</td>
+</tr>
+<tr class="even">
+<td><code>config/page.dtd</code></td>
+<td>page grammar the audit validates against</td>
+</tr>
+<tr class="odd">
+<td><code>config/audit_rules.yaml</code></td>
+<td>structure rules; the rule named by <code>placement_rule</code> carries the note placement map per document; <code>layer</code> per rule overrides <code>defect_layers.yaml</code></td>
+</tr>
+<tr class="even">
+<td><code>config/volumes.yaml</code></td>
+<td>document metadata for <code>pdai-audit</code></td>
+</tr>
+<tr class="odd">
+<td><code>config/page.css</code></td>
+<td>measures and typography over the shared sheet (margin geometry is shared, <a href="../page-language.html" class="quarto-xref"><span>Chapter 2</span></a>); the viewer reads the deployed copy <code>&lt;data&gt;/page.css</code>, written by <code>python -m ocr_runner.page_language deploy</code></td>
+</tr>
+<tr class="even">
+<td><code>ai-instructions/&lt;prefix&gt;.base.j2</code></td>
+<td>shared OCR instruction</td>
+</tr>
+<tr class="odd">
+<td><code>ai-instructions/&lt;prefix&gt;.&lt;engine&gt;.j2</code></td>
+<td>one overlay per engine key; keys from the one table at the top of <code>ocr_catalog.yaml</code>; composed by <code>cure_config.compose</code> after the page-language fragment; <code>pdai-partitur check</code> lists missing overlays</td>
+</tr>
+<tr class="even">
+<td><code>ai-instructions/settings/&lt;doc&gt;.partitur.setting.yaml</code></td>
+<td>bound values per document (engine chain, image scale, notes)</td>
+</tr>
+</tbody>
+</table>
+<p>and when <code>collections/ocr_catalog.yaml</code> has an entry with data path, tmp directory, viewer port and <code>engine_chain</code>. The cure’s stage scope lists every missing part as a gap. The data themselves stay on <code>/Volumes/PDAI-1/pdai-collections/&lt;c&gt;/</code>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../cure/learn.html" class="pagination-link" aria-label="Learning">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Learning</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../cure/case-copernicus.html" class="pagination-link" aria-label="The Copernicus case">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">The Copernicus case</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

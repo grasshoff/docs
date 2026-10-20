@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>21&nbsp; Universal letter DTD – PDAI Structured-XML OCR System</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../cure/case-copernicus.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d790f1a89f3916965f720a191022e3fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-89a676d4ad20e24d423491e1503c3133.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../cure/index.html">Improving collections</a></li><li class="breadcrumb-item"><a href="../cure/letter-dtd.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Universal letter DTD</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <span>PDAI Structured-XML OCR System</span> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Overview: Collection Layout and Metadata</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../page-language.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The page language</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../layer-ocr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Layered OCR, and the Kirch reprocess</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../document-grammar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">One grammar per document</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../production-pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">The Production Pipeline</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../schema-architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Schema Architecture</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dtd-derivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">DTD Derivation Playbook</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../page-xml-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Structured Page XML Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../engine-options.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Engine and Option Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../audit-taxonomy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Audit Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../relax-ng.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">RELAX NG Layer</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Improving collections</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">The cure method</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/diagnose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Diagnosis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/attribute.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Attribution</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/remedy-gate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Remedy and gate</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/apply.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Application</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/certify-downstream.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Certification and downstream</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/learn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/case-copernicus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">The Copernicus case</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/letter-dtd.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Universal letter DTD</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose"><span class="header-section-number">21.1</span> Purpose</a></li>
+  <li><a href="#derivation" id="toc-derivation" class="nav-link" data-scroll-target="#derivation"><span class="header-section-number">21.2</span> Derivation</a></li>
+  <li><a href="#the-page-structure" id="toc-the-page-structure" class="nav-link" data-scroll-target="#the-page-structure"><span class="header-section-number">21.3</span> The page structure</a></li>
+  <li><a href="#one-assembler" id="toc-one-assembler" class="nav-link" data-scroll-target="#one-assembler"><span class="header-section-number">21.4</span> One assembler</a></li>
+  <li><a href="#collection-overlays" id="toc-collection-overlays" class="nav-link" data-scroll-target="#collection-overlays"><span class="header-section-number">21.5</span> Collection overlays</a></li>
+  <li><a href="#transformation-of-the-structured-collections" id="toc-transformation-of-the-structured-collections" class="nav-link" data-scroll-target="#transformation-of-the-structured-collections"><span class="header-section-number">21.6</span> Transformation of the structured collections</a>
+  <ul class="collapse">
+  <li><a href="#afterword-pages" id="toc-afterword-pages" class="nav-link" data-scroll-target="#afterword-pages"><span class="header-section-number">21.6.1</span> Afterword pages</a></li>
+  </ul></li>
+  <li><a href="#audit-after-the-transformation" id="toc-audit-after-the-transformation" class="nav-link" data-scroll-target="#audit-after-the-transformation"><span class="header-section-number">21.7</span> Audit after the transformation</a></li>
+  <li><a href="#flat-collections" id="toc-flat-collections" class="nav-link" data-scroll-target="#flat-collections"><span class="header-section-number">21.8</span> Flat collections</a>
+  <ul class="collapse">
+  <li><a href="#pilot-result-26-september-2026" id="toc-pilot-result-26-september-2026" class="nav-link" data-scroll-target="#pilot-result-26-september-2026"><span class="header-section-number">21.8.1</span> Pilot result (26 September 2026)</a></li>
+  <li><a href="#pilot-2-karman-nachlass-through-the-page-language-partitur-28-september-2026" id="toc-pilot-2-karman-nachlass-through-the-page-language-partitur-28-september-2026" class="nav-link" data-scroll-target="#pilot-2-karman-nachlass-through-the-page-language-partitur-28-september-2026"><span class="header-section-number">21.8.2</span> Pilot 2: karman-nachlass through the page-language partitur (28 September 2026)</a></li>
+  </ul></li>
+  <li><a href="#viewer" id="toc-viewer" class="nav-link" data-scroll-target="#viewer"><span class="header-section-number">21.9</span> Viewer</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../cure/index.html">Improving collections</a></li><li class="breadcrumb-item"><a href="../cure/letter-dtd.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Universal letter DTD</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Universal letter DTD</span></h1>
+<p class="subtitle lead">One page grammar for the letter editions pirckheimer, Kepler KGW 13–16, eulerOO-IVA and karman-nachlass</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="purpose" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">21.1</span> Purpose</h2>
+<p>Four collections contain letters: the Pirckheimer <em>Briefwechsel</em> (pirckheimer), the letter volumes 13–16 of the Kepler <em>Gesammelte Werke</em> (kepler-prim), the Euler correspondence volumes of series IVA (eulerOO-IVA) and the Kármán archive (karman-nachlass). Each was transcribed under its own page grammar. A query about the sender, the date or the closing of a letter therefore needed one reader per collection. The universal letter DTD <code>page_letter.dtd</code> (v4.2 since 2026-09-28; <code>pdai/pipeline/ai-scholar/src/ai_scholar/schemas/</code>) is one page grammar that holds every letter convention attested in these editions. It is a wrapper of the canonical <code>page.dtd</code> v4.0: margins, <code>meta</code>, figures, tables, <code>p</code>, <code>hi</code>, <code>fn</code> and footnotes come from the page language (<a href="../page-language.html" class="quarto-xref"><span>Chapter 2</span></a>), and this file adds the letter families. v4.1 added the diplomatic marks <code>del</code> / <code>add</code>.</p>
+</section>
+<section id="derivation" class="level2" data-number="21.2">
+<h2 data-number="21.2" class="anchored" data-anchor-id="derivation"><span class="header-section-number">21.2</span> Derivation</h2>
+<p>The grammar was derived per collection and then unified; no element was declared from general expectations.</p>
+<ol type="1">
+<li><p><strong>Per collection</strong> — the schema-derive Partitur read the printed front matter of each edition and a sample of body pages and wrote a <code>config/letter_schema.yaml</code>. Each section carries an evidence grade: <code>front-matter</code> (the edition’s own editorial principles state the convention), <code>facsimile-only</code> (observed on pages, not stated) or <code>unattested</code>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Collection</th>
+<th>Sections</th>
+<th>front-matter</th>
+<th>facsimile-only</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>pirckheimer</td>
+<td>20</td>
+<td>0</td>
+<td>20</td>
+</tr>
+<tr class="even">
+<td>eulerOO-IVA</td>
+<td>17</td>
+<td>14</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>karman-nachlass</td>
+<td>16</td>
+<td>0</td>
+<td>16</td>
+</tr>
+</tbody>
+</table></li>
+<li><p><strong>Union</strong> — the unify-letter-schema instruction merged the three schemas into <code>letter_union.yaml</code>: 34 elements, 0 rejected, 15 unattested generic page elements, 9 excluded.</p></li>
+<li><p><strong>Grammar</strong> — <code>page_letter.dtd</code> declares the union. Each letter element carries a provenance comment naming the collections that attest it and the evidence grade. <code>tests/test_letter_dtd_union.py</code> (ocr-runner) checks both directions: every union element is declared, and every declared letter element is in the union or in the listed structural containers.</p></li>
+</ol>
+</section>
+<section id="the-page-structure" class="level2" data-number="21.3">
+<h2 data-number="21.3" class="anchored" data-anchor-id="the-page-structure"><span class="header-section-number">21.3</span> The page structure</h2>
+<p>A page holds its content in <code>main</code>. A letter’s share of the page is one <code>letter-part</code>; a page on which two letters meet holds two.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>letter-part[nr, partial]</code></td>
+<td>the part of one letter on this page, in page order; <code>partial="start"</code> when the letter continues on the next page</td>
+</tr>
+<tr class="even">
+<td><code>letter-head</code></td>
+<td>reference, sender, addressee, place, date, dateline, archive, witness, regest, printed letterhead, file reference, attention line</td>
+</tr>
+<tr class="odd">
+<td><code>salutation</code>, <code>p</code></td>
+<td>salutation and letter text</td>
+</tr>
+<tr class="even">
+<td><code>letter-closing</code></td>
+<td>valediction, place-date, signature, postscriptum, address, endorsement, enclosure</td>
+</tr>
+<tr class="odd">
+<td><code>enclosure</code>, <code>translation[lang]</code></td>
+<td>enclosed documents and printed translations</td>
+</tr>
+<tr class="even">
+<td><code>footnotes</code> / <code>footnote</code></td>
+<td>the edition’s apparatus on this page</td>
+</tr>
+<tr class="odd">
+<td><code>register[type]</code></td>
+<td>non-letter matter printed in a letter edition: registers, indexes, afterword commentary</td>
+</tr>
+<tr class="even">
+<td><code>letter-starts</code> / <code>letter-ends</code> with <code>letter-ref[nr]</code></td>
+<td>page-level list of the letters that begin or end on the page</td>
+</tr>
+</tbody>
+</table>
+<p><code>main</code> admits no <code>letter-head</code> outside a <code>letter-part</code> or <code>register</code>: a head without its letter is a structural defect.</p>
+<p>The record grammar <code>letter.dtd</code> (v4.2) describes one assembled letter across pages; it replaces <code>anhang</code> by <code>enclosure | translation</code>. Its <code>%inline;</code> carries the diplomatic marks <code>del</code>, <code>add</code>, <code>supplied</code> since v4.2 (before, the record’s entity silently overrode the page grammar’s and Kepleriana records with these marks were invalid).</p>
+</section>
+<section id="one-assembler" class="level2" data-number="21.4">
+<h2 data-number="21.4" class="anchored" data-anchor-id="one-assembler"><span class="header-section-number">21.4</span> One assembler</h2>
+<p>Records are assembled by <code>python -m ocr_runner.assemble_letters --collection &lt;c&gt; --doc &lt;d&gt; --write</code> for every collection whose pages are v4: consecutive letter parts with the same <code>nr</code> are one letter, <code>nr="cont"</code> continues the open letter, <code>nr="anhang"</code> is its enclosure, and a page boundary inside a letter becomes <code>&lt;pb n="printed page" pidx="…"/&gt;</code>. Records and <code>letters_assembled.jsonl</code> go to <code>&lt;data&gt;/&lt;doc&gt;/segments/letters/</code>. Run of 2026-09-28: KGW 13–16 631 letters (442 multi-page), pirckheimer 233 (182), kepleriana-munich-2024 59 — all valid. Pirckheimer’s legacy assembler (letter.dtd v1) is retired.</p>
+</section>
+<section id="collection-overlays" class="level2" data-number="21.5">
+<h2 data-number="21.5" class="anchored" data-anchor-id="collection-overlays"><span class="header-section-number">21.5</span> Collection overlays</h2>
+<p>Each collection receives two overlays in its <code>config/</code> folder, <code>page_letter.dtd</code> and <code>letter_record.dtd</code>. Both include the universal file as an external entity; a collection-specific restriction is declared before the inclusion, since the first declaration of an entity binds. Flat pages (<code>main &gt; p</code>) of eulerOO-IVA and karman-nachlass are valid v4 pages; their letter markup is added only through the gated pilot (see <a href="#flat-collections">Flat collections</a>). karman-nachlass has an <code>audit_rules.yaml</code> naming its <code>page_letter.dtd</code> since 2026-09-28.</p>
+</section>
+<section id="transformation-of-the-structured-collections" class="level2" data-number="21.6">
+<h2 data-number="21.6" class="anchored" data-anchor-id="transformation-of-the-structured-collections"><span class="header-section-number">21.6</span> Transformation of the structured collections</h2>
+<p>pirckheimer and KGW 13–16 already carried letter structure in another form. A declarative mapping (<code>config/letter_mapping.yaml</code>) and the normalizer <code>letter-universal</code> (<code>ocr_runner.normalize_letter</code>) convert it. The normalizer never changes the order of the page text; its ID contains the hash of the mapping file, so a changed mapping invalidates every earlier gate.</p>
+<p>Each document passed the specimen gate of <code>ocr_runner.normalize_apply</code> on five pages before any page was written. Every written page is backed up as <code>.vN</code>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Document</th>
+<th>Letter pages</th>
+<th>Register pages</th>
+<th>Broken anchors</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>pirckheimer korrespondenz</td>
+<td>526</td>
+<td>—</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>KGW 13</td>
+<td>369</td>
+<td>59</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>KGW 14</td>
+<td>421</td>
+<td>63</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>KGW 15</td>
+<td>479</td>
+<td>69</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>KGW 16</td>
+<td>390</td>
+<td>75</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>39 KGW pages were not converted, because they are invalid against Kepler’s own earlier page DTD already (undeclared MathML <code>math</code>/<code>mrow</code>, misplaced elements). They remain in the register as <code>SYN-DTD</code> for the cure.</p>
+<section id="afterword-pages" class="level3" data-number="21.6.1">
+<h3 data-number="21.6.1" class="anchored" data-anchor-id="afterword-pages"><span class="header-section-number">21.6.1</span> Afterword pages</h3>
+<p>The first audit after the transformation found 15 unchanged afterword pages (running head NACHBERICHT) invalid against v4.0; 13 of them had been valid under the old grammar. The OCR had set the commentary heading for each letter as <code>letter-head</code> directly in <code>main</code>. An afterword page is non-letter editorial matter; the mapping now names such pages in <code>register_page_if</code>, and the normalizer places their content unchanged in <code>register[type]</code> (<code>nachbericht</code>, <code>register</code>, <code>verzeichnis</code>). The page reader of the lemma index returns identical text for all 266 register pages before and after.</p>
+</section>
+</section>
+<section id="audit-after-the-transformation" class="level2" data-number="21.7">
+<h2 data-number="21.7" class="anchored" data-anchor-id="audit-after-the-transformation"><span class="header-section-number">21.7</span> Audit after the transformation</h2>
+<p>The collection audit rules name the v4.0 overlays (<code>audit_rules.yaml</code> for pirckheimer, <code>audit_rules_kgw-13.yaml</code> … <code>audit_rules_kgw-16.yaml</code> for the KGW letter volumes; <code>pdai-audit --vol</code> selects the volume file when it exists).</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Volume</th>
+<th>Pages</th>
+<th>Pages with repair defects</th>
+<th>SYN-DTD pages</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>pirckheimer korrespondenz</td>
+<td>526</td>
+<td>3</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>KGW 13</td>
+<td>446</td>
+<td>11</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>KGW 14</td>
+<td>516</td>
+<td>57</td>
+<td>24</td>
+</tr>
+<tr class="even">
+<td>KGW 15</td>
+<td>567</td>
+<td>29</td>
+<td>9</td>
+</tr>
+<tr class="odd">
+<td>KGW 16</td>
+<td>478</td>
+<td>50</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<p>The SYN-DTD pages are exactly the 39 excluded pages. For KGW 15 an audit register from before the transformation exists: pages with repair defects fell from 52 to 29, SYN-DTD pages from 32 to 9, and no page received a defect code it did not have before. For the other volumes no earlier register was kept.</p>
+<p>The vocabulary rules of the new grammar (<code>SCH-WITNESS-TYPE</code>, <code>SCH-FNTYPE-UNKNOWN</code>, <code>SCH-REGISTER-TYPE</code>, <code>SCH-FOREIGNLANG-UNKNOWN</code>) fire on no page. The structural codes without a layer received layer proposals (<code>quality/attribute_proposals.json</code>); none is in force until the owner confirms it.</p>
+</section>
+<section id="flat-collections" class="level2" data-number="21.8">
+<h2 data-number="21.8" class="anchored" data-anchor-id="flat-collections"><span class="header-section-number">21.8</span> Flat collections</h2>
+<p>eulerOO-IVA and karman-nachlass carry letter text in plain paragraphs without letter structure. A mapping cannot convert them; the letter structure has to be produced by a model. The Partitur <code>letter-flat-pilot</code> compares two routes on five body pages per document:</p>
+<ul>
+<li><strong>(a) overlay re-OCR</strong> — the page image is transcribed again under the letter-ocr-overlay instruction;</li>
+<li><strong>(b) restructuring</strong> — the existing page XML is restructured into v4.0 by a text model; the word sequence must remain unchanged.</li>
+</ul>
+<p>No volume is processed before the owner’s decision.</p>
+<section id="pilot-result-26-september-2026" class="level3" data-number="21.8.1">
+<h3 data-number="21.8.1" class="anchored" data-anchor-id="pilot-result-26-september-2026"><span class="header-section-number">21.8.1</span> Pilot result (26 September 2026)</h3>
+<p>Both routes ran on <code>kimi-k2.7-code:cloud</code> via Ollama with four concurrent calls and without the Gemini fallback (<code>PDAI_CURE_FALLBACK=off</code>); every answer came from Kimi. Run trees: <code>/Volumes/PDAI-1/tmp/schema-derive/&lt;collection&gt;/pilot1/</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Collection</th>
+<th>Route</th>
+<th>DTD-valid</th>
+<th>Word sequence kept</th>
+<th>Mean word agreement</th>
+<th>Pilot pass</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>eulerOO-IVA</td>
+<td>(a) re-OCR</td>
+<td>0/5</td>
+<td>—</td>
+<td>0.994</td>
+<td>0/5</td>
+</tr>
+<tr class="even">
+<td>eulerOO-IVA</td>
+<td>(b) restructuring</td>
+<td>5/5</td>
+<td>5/5</td>
+<td>1.000</td>
+<td>2/5</td>
+</tr>
+<tr class="odd">
+<td>karman-nachlass</td>
+<td>(a) re-OCR</td>
+<td>2/5</td>
+<td>—</td>
+<td>0.977</td>
+<td>2/5</td>
+</tr>
+<tr class="even">
+<td>karman-nachlass</td>
+<td>(b) restructuring</td>
+<td>0/5</td>
+<td>5/5</td>
+<td>1.000</td>
+<td>0/5</td>
+</tr>
+</tbody>
+</table>
+<p>Three of the eulerOO-IVA sample pages are no letter pages (introduction p.&nbsp;825, subject index p.&nbsp;1144, section title “VII ANHÄNGE”). Route (b) set no letter part on them and placed the index in <code>register</code>; the pilot’s pass condition (at least one letter part) counts these correct answers as failures. Measured by content, route (b) is correct on 5 of 5 eulerOO-IVA pages. Route (a) failed on eulerOO-IVA because the model introduced header elements the grammar does not declare (<code>running-header</code>, <code>parno</code>, <code>p</code> in <code>header</code>).</p>
+<p>On karman-nachlass neither route passed in run 1. The errors of route (b) were content-model violations — attributes the grammar does not declare (<code>marginal@place</code>, <code>file-reference@place</code>) and children of <code>letter-part</code> in an order the grammar does not admit; the words are kept on every page.</p>
+</section>
+<section id="pilot-2-karman-nachlass-through-the-page-language-partitur-28-september-2026" class="level3" data-number="21.8.2">
+<h3 data-number="21.8.2" class="anchored" data-anchor-id="pilot-2-karman-nachlass-through-the-page-language-partitur-28-september-2026"><span class="header-section-number">21.8.2</span> Pilot 2: karman-nachlass through the page-language partitur (28 September 2026)</h3>
+<p>Same five pages, <code>kimi-k2.7-code:cloud</code>, no Gemini fallback. Route (a) uses the composed partitur <code>karman-letter-ocr</code> (page language + <code>karman-letter-ocr.base.j2</code> + <code>karman-letter-ocr.kimi.j2</code>): the base maps the collection’s convention names (<code>line</code>, <code>body</code>, <code>closing</code>, <code>marginal_note</code> …) onto the universal elements and lists the admitted children of every letter element, read from the DTD; the Kimi overlay names the run-1 errors. Route (b) gives the restructuring instruction the same grammar rows, convention map and page-language fragment. The word measure now counts a <code>&lt;br/&gt;</code> as a word boundary (before, <code>Professor&lt;br/&gt;Th.</code> became one word and failed the word-sequence gate); <code>&lt;lb/&gt;</code> is normalized to <code>&lt;br/&gt;</code>. Run tree <code>/Volumes/PDAI-1/tmp/schema-derive/karman-nachlass/pilot2/</code>, summary <code>collections/karman-nachlass/quality/letter-pilot-2026-09-28/pilot.json</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Route</th>
+<th>DTD-valid</th>
+<th>Letter parts</th>
+<th>Margin-type defects</th>
+<th>Word sequence kept / agreement</th>
+<th>Pilot pass</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(a) re-OCR, composed partitur</td>
+<td>5/5</td>
+<td>5/5</td>
+<td>0</td>
+<td>agreement 0.977 (≥ 0.95 on 5/5)</td>
+<td>5/5</td>
+</tr>
+<tr class="even">
+<td>(b) restructuring</td>
+<td>5/5</td>
+<td>5/5</td>
+<td>0</td>
+<td>2/5 exact, agreement 0.987</td>
+<td>2/5</td>
+</tr>
+</tbody>
+</table>
+<p>Route (a) passes the gate on all five pages; its word differences to the existing transcription are mostly joined line-end hyphenations and diacritics the old reading lacked. No mapping is registered and no volume is converted: route (a) is a re-OCR, not a deterministic remap, and the owner decides whether karman-nachlass is re-read under this partitur.</p>
+<p>The sample draw found one eulerOO-IVA page with a facsimile but no page XML (<code>978-3-319-33989-4/page_752</code>); it was replaced by the next drawn page.</p>
+</section>
+</section>
+<section id="viewer" class="level2" data-number="21.9">
+<h2 data-number="21.9" class="anchored" data-anchor-id="viewer"><span class="header-section-number">21.9</span> Viewer</h2>
+<p>The viewer renders the letter elements through the book-sheet renderer <code>window.ReproXML</code> (<code>config/scripts/repro-xml.js</code>; <code>xmlToStructuredHtml</code> in <code>viewer.html</code> is only its fallback), which sets <code>data-el</code> and <code>data-&lt;attr&gt;</code> on each element; the collection’s <code>page.css</code> styles them by <code>[data-el="…"]</code> selectors only and takes its colours from the variables of <code>pdai-page.css</code>, so that the light and the dark scheme both stay legible. <code>letter-ref</code> is not displayed; it is navigation data. The <code>letter-head</code> handler renders the head’s reference chips and then every further child in document order.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../cure/case-copernicus.html" class="pagination-link" aria-label="The Copernicus case">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">The Copernicus case</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

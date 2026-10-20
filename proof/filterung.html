@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Filterung von Evidenzräumen – Famulus Proof</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d5b4e69c7e37b49c6591bcc5116dd748.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-0a7ffee50ecdcac772426c46f9339f28.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Keine Treffer",
+    "search-matching-documents-text": "Treffer",
+    "search-copy-link-title": "Link in die Suche kopieren",
+    "search-hide-matches-text": "Zusätzliche Treffer verbergen",
+    "search-more-match-text": "weitere Treffer in diesem Dokument",
+    "search-more-matches-text": "weitere Treffer in diesem Dokument",
+    "search-clear-button-title": "Zurücksetzen",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Abbrechen",
+    "search-submit-button-title": "Abschicken",
+    "search-label": "Suchen"
+  }
+}</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Famulus Proof</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Suchen"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navigation umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Übersicht</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-filterung" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Filterung</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-filterung">    
+        <li>
+    <a class="dropdown-item" href="./filterung.html">
+ <span class="dropdown-text">Filterung von Evidenzräumen</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./evidenzobjekte.html">
+ <span class="dropdown-text">Evidenzobjekte</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./attribute.html">
+ <span class="dropdown-text">Attribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./gebrauch.html">
+ <span class="dropdown-text">Lesart des Gebrauchs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ablauf.html">
+ <span class="dropdown-text">Ablauf</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./geschichte.html">
+ <span class="dropdown-text">Geschichte</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./satzrecord.html">
+ <span class="dropdown-text">Satzrecord</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hnlichkeitssuche" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ähnlichkeitssuche</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hnlichkeitssuche">    
+        <li>
+    <a class="dropdown-item" href="./aehnlichkeitssuche.html">
+ <span class="dropdown-text">Ähnlichkeitssuche</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pruefverfahren-aehnlichkeit.html">
+ <span class="dropdown-text">Prüfverfahren</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./validitaetsbaum.html"> 
+<span class="menu-text">Validitätsbaum</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./integration.html"> 
+<span class="menu-text">Sidecar-Integration</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./referenz.html"> 
+<span class="menu-text">Famulus-Referenz</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./landkarte.html"> 
+<span class="menu-text">Landkarte</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#ein-beispiel-vorweg" id="toc-ein-beispiel-vorweg" class="nav-link active" data-scroll-target="#ein-beispiel-vorweg">Ein Beispiel vorweg</a></li>
+  <li><a href="#die-begriffe" id="toc-die-begriffe" class="nav-link" data-scroll-target="#die-begriffe">Die Begriffe</a></li>
+  <li><a href="#drei-werte-je-ebene-eine-regel" id="toc-drei-werte-je-ebene-eine-regel" class="nav-link" data-scroll-target="#drei-werte-je-ebene-eine-regel">Drei Werte, je Ebene eine Regel</a></li>
+  <li><a href="#der-ablauf" id="toc-der-ablauf" class="nav-link" data-scroll-target="#der-ablauf">Der Ablauf</a></li>
+  <li><a href="#was-gemessen-ist" id="toc-was-gemessen-ist" class="nav-link" data-scroll-target="#was-gemessen-ist">Was gemessen ist</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Filterung von Evidenzräumen</h1>
+<p class="subtitle lead">Suche als Einschränkung der Attribute von Evidenzobjekten in DuckDB</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">8. Oktober 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled" title="Die Filterung in einem Satz">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tipp</span>Die Filterung in einem Satz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Eine Famulus-Frage sucht nicht nach Zeichenketten. Sie schränkt die Evidenzobjekte einer Collection (Briefe, Seiten, Absätze, Sätze, Fußnoten), die mit ihren Attributen in DuckDB liegen, durch einen hierarchischen Attributbaum ein. Eine einzige Anweisung gibt die Objekte zurück, die ihn erfüllen, jedes mit seinem Grund.</p>
+</div>
+</div>
+<section id="ein-beispiel-vorweg" class="level2">
+<h2 class="anchored" data-anchor-id="ein-beispiel-vorweg">Ein Beispiel vorweg</h2>
+<p><em>In welchen Briefen erwähnt Theodor von Kármán die Person Adolf Hitler?</em></p>
+<p>Die Frage legt zwei Attribute fest, die auf verschiedenen Ebenen liegen. Kármán ist der <strong>Absender</strong>: ein Attribut des Briefkopfs, das der Briefdatensatz verzeichnet (<code>letter-head/sender</code>). Hitler ist eine <strong>Nennung</strong>: ein Attribut des Textes, das ein Satz trägt oder nicht trägt. Wer beides auf dieselbe Weise behandelt, bekommt eine falsche Menge (siehe <a href="./geschichte.html">Geschichte</a>).</p>
+<div class="specimen" data-label="SUCHBAUM">
+<p><code>kopf/korrespondenz/absender</code> = Theodor von Kármán → <code>P000224</code></p>
+<p><code>text/nennung/person</code> = Adolf Hitler → <code>P007304</code>, Lemmaklassen <code>Hitler|de</code>, <code>Hitler|en</code></p>
+<p>Einheit der Konjunktion: Brief</p>
+</div>
+<p>Die Filterung geht den Ebenen nach:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 9%">
+<col style="width: 76%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Schritt</th>
+<th style="text-align: right;">Briefe</th>
+<th>was entschieden wird</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>alle Briefe</td>
+<td style="text-align: right;">15.976</td>
+<td>der Körper <code>karman-nachlass</code></td>
+</tr>
+<tr class="even">
+<td>nach dem Kopf</td>
+<td style="text-align: right;">9.413</td>
+<td><strong>2.514 belegt</strong>: Kármán ist als Absender verzeichnet; <strong>6.899 offen</strong>: kein Absender verzeichnet, unentschieden; 6.563 hat ein anderer geschrieben</td>
+</tr>
+<tr class="odd">
+<td>nach dem Text</td>
+<td style="text-align: right;">175</td>
+<td><strong>1 belegt</strong>: ein Brief trägt einen Satz, in dem Hitler als Person steht; <strong>174 offen</strong>: 174 dieser Briefe haben keinen Text und bleiben unentschieden</td>
+</tr>
+</tbody>
+</table>
+<p>Das Ergebnis ist <strong>ein Evidenzobjekt</strong>, ein Satz:</p>
+<div class="specimen" data-label="EVIDENZOBJEKT">
+<p><code>S:10-6_fromm_carl_1921_1937#52.8</code>, Brief <code>10-6_fromm_carl_1921_1937/035</code>, Kármán an Carl Fromm, 26. November 1934.</p>
+<blockquote class="blockquote">
+<p>There are many flags on the streets and people mumble something which sounds like ” Heil Hitler ” , but except for this you will find your old friends about the same as they were before .</p>
+</blockquote>
+<p>Kanäle: <code>ner_linked</code> (NER am Einzelding <code>P007304</code>), <code>lexical</code> (Wortform <em>hitler</em>). Lesart: als die Person gelesen.</p>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Der Raum ist keine Trefferzahl">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Wichtig</span>Der Raum ist keine Trefferzahl
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Der Raum (175) ist die Vereinigung der <strong>belegten</strong> Briefe, die jedes Blatt mit einem verzeichneten Wert erfüllen, und der <strong>offenen</strong>, die nur bleiben, weil ein Wert fehlt. Die Antwort liest die belegten. <em>Welche Briefe schrieb Ludwig Prandtl?</em> hat einen Raum von 6.908 Briefen, aber 9 belegte: 6.899 Briefe haben überhaupt keinen verzeichneten Absender. → <a href="./gebrauch.html#raum-belegt-offen">Raum, belegt, offen</a></p>
+</div>
+</div>
+<p>Die Anweisung läuft in weniger als 200 ms. Acht weitere Briefe nennen Hitler als Person, Kármán hat sie nicht geschrieben; jeder steht im Ausschlussbuch mit dem Blatt, das ihn ausschließt, und seinem Grund. Briefe, in denen der Name nur als Beiwort oder Eponym steht („Adolf - Hitler - Str.“, „Hitler-Zeit“), zählen nicht als Nennung (<a href="./gebrauch.html">Lesart des Gebrauchs</a>). Zwei Briefe mit „Hitlers Machtergreifung“ und „In Hitlers Zeiten“ fehlen: Stanza führt <em>Hitlers</em> unter einem eigenen Lemma, das das Register noch nicht der Person zuordnet. Der Raumbeweis <code>famulus-raum/1</code> hält: jeder der 15.976 Briefe ist verbucht.</p>
+</section>
+<section id="die-begriffe" class="level2">
+<h2 class="anchored" data-anchor-id="die-begriffe">Die Begriffe</h2>
+<p><strong>Evidenzobjekt.</strong> Eine adressierbare Einheit einer Collection, die Beleg einer Antwort sein kann: ein Satz, ein Absatz, eine Fußnote, eine Abbildung, eine Seite (Segment), ein Brief (Gliederungseinheit), ein Dokument (Verbund). Ein Evidenzobjekt hat eine Art, einen Schlüssel, eine Herkunft in der DTD und seinen Platz in der Gliederung. Jedes Evidenzobjekt liegt in DuckDB; was dort nicht steht, ist kein Evidenzobjekt, sondern eine Lücke der Bereitschaft. → <a href="./evidenzobjekte.html">Evidenzobjekte</a></p>
+<p><strong>Attribut.</strong> Eine Eigenschaft, die einem Evidenzobjekt zukommt oder nicht: Kármán ist der Absender dieses Briefs; dieser Satz nennt Hitler; dieser Brief ist im März 1933 datiert. Jedes Attribut hat eine Herkunft (DTD-Element, Tabelle), die Objektart, an der es hängt, einen Klassifikator und eine Regel, wann sein Wert unbekannt ist.</p>
+<p><strong>Fast Index.</strong> Die Klassifikation der Ausdrücke einer Frage auf Schlüssel, bevor gesucht wird. Ein Name in jeder Schreibweise wird eine Personen-Id, eine Jahresangabe ein Intervall („1543“ ist wahr für jedes Datum, dessen Intervall in 1543 liegt), eine Wortform ihr Lemma, ein Fachterminus eine Bedeutung im Wörterbuch. Danach arbeitet die Suche nur noch auf Schlüsseln. Die Liste der Attribute, einschließlich ähnlicher Ausdrücke, steht unter <a href="./attribute.html#filterattribute">Was sich filtern lässt</a>. → <a href="./attribute.html">Attribute</a></p>
+<p><strong>Attributbaum.</strong> Die hierarchische Zergliederung in Kategorie, Unterkategorie und Aspekt (<code>kopf/korrespondenz/absender</code>). Ein Suchbaum über diesen Blättern ist eine minimale Theorie: eine Disjunktion von Clustern, jeder Cluster eine Konjunktion von Blättern, jedes Blatt wahlweise negiert, jeder Cluster mit mindestens einem positiven Blatt. Als Hypergraph gelesen ist ein Cluster eine Hyperkante, die ihre Blätter an dieselbe Einheit bindet, denselben Satz oder denselben Brief.</p>
+<p><strong>Kontextbaum, Fragebaum, Suchbaum.</strong> Der Kontext einer Frage (die Vorfrage der Sitzung, das Gedächtnis der Collection) ist selbst ein Teilbaum von Einschränkungen, keine Umgangssprache. Die Frage legt einen zweiten Teilbaum fest. Beide werden zum Suchbaum zusammengeführt.</p>
+<p><strong>Träger.</strong> Die Objektart, an der der Raum verbucht wird: in einer Korrespondenz der Brief, in einer Sammlung von Büchern, Diaserien und Karteien das Dokument. Jeder Träger liegt im Raum oder ist mit Grund ausgeschlossen; das beweist das Zertifikat. Ein Träger, über den der Datensatz nichts sagt, bleibt als unentschieden im Raum, ist aber kein Evidenzobjekt.</p>
+<p><strong>Evidenzobjektmenge.</strong> Was die Anweisung zurückgibt: die Objekte, die den Suchbaum erfüllen, mit dem Grund je Objekt. Mit dieser Menge arbeitet die Begründung weiter (<a href="./validitaetsbaum.html">Validitätsbaum</a>).</p>
+</section>
+<section id="drei-werte-je-ebene-eine-regel" class="level2">
+<h2 class="anchored" data-anchor-id="drei-werte-je-ebene-eine-regel">Drei Werte, je Ebene eine Regel</h2>
+<p>Jedes Blatt entscheidet für jeden Brief: <strong>erfüllt</strong>, <strong>verletzt</strong> oder <strong>unentschieden</strong>. Nur <em>verletzt</em> schließt aus, immer mit Grund. Wann ein Brief unentschieden bleibt, hängt an der Ebene des Blatts:</p>
+<div class="columns">
+<div class="column" style="width:49%;">
+<p><strong>Kopf und Inhalt.</strong> Was der Briefdatensatz verzeichnet. Ein verzeichneter anderer Wert schließt aus. Ist kein Wert verzeichnet, bleibt der Brief: das Register sagt nichts über ihn.</p>
+</div><div class="column" style="width:49%;">
+<p><strong>Text.</strong> Was auf den Briefseiten steht. Hat der Brief Text der Objektart und trägt kein Objekt den Wert, ist er ausgeschlossen: der Text ist selbst die Evidenz. Nur ein Brief ohne Text bleibt. Eine Personennennung trägt den Wert nur, wenn die <a href="./gebrauch.html">Lesart des Gebrauchs</a> das Vorkommen als Bezug auf die Person liest, nicht schon, weil die Wortform passt.</p>
+</div>
+</div>
+<p>Die Unterscheidung kostet nichts an Recall und trennt, was die erste flache Fassung vermischte: dort blieb jeder Brief ohne Nennungszeile im Raum, 4.824 statt rund einem Dutzend.</p>
+</section>
+<section id="der-ablauf" class="level2">
+<h2 class="anchored" data-anchor-id="der-ablauf">Der Ablauf</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  raum["1 Evidenzraum: Collection, Objekte, Gate"]
+  schema["2 Schemabaum aus DTD und Schemakarte"]
+  kontext["3 Kontextbaum"]
+  frage["4 Fragebaum: Klassifikation und Fast Index"]
+  merge["5 Suchbaum"]
+  sqlStep["6 eine SQL-Anweisung"]
+  ausf["7 Evidenzobjektmenge mit Gruenden"]
+  bewert["8 Bewertung"]
+  verf["Rueckfrage: Verfeinerung"]
+  beweis["9 Raumbeweis"]
+  raum --&gt; schema --&gt; kontext --&gt; frage --&gt; merge --&gt; sqlStep --&gt; ausf --&gt; bewert
+  bewert --&gt;|"zu gross, unspezifisch, leer, widerspruechlich"| verf
+  verf --&gt; merge
+  bewert --&gt;|"brauchbar"| beweis
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Die neun Stufen sind die Partitur <code>famulus_constraint_raum_agent</code> (<code>goal_path: famulus/evidenz/constraint</code>); jede Stufe ist eine Operation <code>famulus:evidenz_filter_*</code>. → <a href="./ablauf.html">Ablauf</a></p>
+</section>
+<section id="was-gemessen-ist" class="level2">
+<h2 class="anchored" data-anchor-id="was-gemessen-ist">Was gemessen ist</h2>
+<p>Am Kármán-Nachlass (8. Oktober 2026):</p>
+<p>1.206.532 Evidenzobjekte (663.972 Sätze, 482.693 Absätze, 38.213 Seiten, 15.976 Briefe, 4.612 Fußnoten, 1.066 Dokumente, 0 Abbildungen), 20.196.883 Postings, 1.242.958 Zeilen Enthaltensein.</p>
+<p>Für die vier Nennungsfragen der Messreihe tragen die Evidenzobjekte 1, 2, 34 und 218 Briefe (Hitler, Weinstein, Einstein, Prandtl). Der ältere Entscheidungsbaum behielt 1, 6, 44 und 279: er zählte jede Wortform, die mit dem Namensschlüssel beginnt, auch Beiwort, Eponym und Literaturangabe. Jetzt ist ein Token Kandidat nur durch sein Stanza-Lemma, und es zählt nur, wenn die <a href="./gebrauch.html">Lesart des Gebrauchs</a> es als Bezug auf die Person liest. Der Recall gegen das Gold sinkt dadurch für Einstein auf 0,793 und für Prandtl auf 0,87; die meisten verfehlten Goldbriefe tragen eine Schreibung, die Stanza unter ein eigenes Lemma gestellt hat und die das Register noch nicht kennt („Prandtls“, „Prandl“). Die vier Attributfragen behalten jeden Goldbrief; ihre Mengen sind zu groß, weil viele Briefe keinen verzeichneten Absender haben, und eine Rückfrage verkleinert sie. Die Goldzeilen haben den Status <code>vorgeschlagen</code>.</p>
+<p>Dieselbe Filterung läuft auf Hevelius, Euler IVA, Pirckheimer, Wäfler, Kepler und Copernicus, mit derselben Vorlage für Korrespondenzen und einer zweiten für Dokumente (<a href="./evidenzobjekte.html#neun-collections">Evidenzobjekte</a>). Die Anweisung liegt dort zwischen 35 und 70 ms. Zahlen und Tabellen stehen in <a href="./ablauf.html#messung">Ablauf</a>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Kopiert");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Kopiert");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

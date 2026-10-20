@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; The Production Pipeline – PDAI Structured-XML OCR System</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./schema-architecture.html" rel="next">
+<link href="./document-grammar.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d790f1a89f3916965f720a191022e3fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-89a676d4ad20e24d423491e1503c3133.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./production-pipeline.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">The Production Pipeline</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <span>PDAI Structured-XML OCR System</span> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Overview: Collection Layout and Metadata</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./page-language.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The page language</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./layer-ocr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Layered OCR, and the Kirch reprocess</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./document-grammar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">One grammar per document</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./production-pipeline.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">The Production Pipeline</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./schema-architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Schema Architecture</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dtd-derivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">DTD Derivation Playbook</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./page-xml-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Structured Page XML Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./engine-options.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Engine and Option Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./audit-taxonomy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Audit Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./relax-ng.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">RELAX NG Layer</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Improving collections</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">The cure method</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/diagnose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Diagnosis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/attribute.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Attribution</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/remedy-gate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Remedy and gate</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/apply.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Application</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/certify-downstream.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Certification and downstream</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/learn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/case-copernicus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">The Copernicus case</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/letter-dtd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Universal letter DTD</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-this-chapter-covers" id="toc-what-this-chapter-covers" class="nav-link active" data-scroll-target="#what-this-chapter-covers"><span class="header-section-number">5.1</span> What this chapter covers</a></li>
+  <li><a href="#stage-1-ingest-and-classify" id="toc-stage-1-ingest-and-classify" class="nav-link" data-scroll-target="#stage-1-ingest-and-classify"><span class="header-section-number">5.2</span> Stage 1: Ingest and classify</a></li>
+  <li><a href="#stage-2-schema-derivation" id="toc-stage-2-schema-derivation" class="nav-link" data-scroll-target="#stage-2-schema-derivation"><span class="header-section-number">5.3</span> Stage 2: Schema derivation</a></li>
+  <li><a href="#stage-3-pilot-gate" id="toc-stage-3-pilot-gate" class="nav-link" data-scroll-target="#stage-3-pilot-gate"><span class="header-section-number">5.4</span> Stage 3: Pilot gate</a></li>
+  <li><a href="#stage-4-schema-first-ocr-batch" id="toc-stage-4-schema-first-ocr-batch" class="nav-link" data-scroll-target="#stage-4-schema-first-ocr-batch"><span class="header-section-number">5.5</span> Stage 4: Schema-first OCR batch</a></li>
+  <li><a href="#stage-5-certify-and-learn" id="toc-stage-5-certify-and-learn" class="nav-link" data-scroll-target="#stage-5-certify-and-learn"><span class="header-section-number">5.6</span> Stage 5: Certify and learn</a>
+  <ul class="collapse">
+  <li><a href="#what---all-runs" id="toc-what---all-runs" class="nav-link" data-scroll-target="#what---all-runs"><span class="header-section-number">5.6.1</span> What <code>--all</code> runs</a></li>
+  <li><a href="#the-tag-hierarchy-protocol" id="toc-the-tag-hierarchy-protocol" class="nav-link" data-scroll-target="#the-tag-hierarchy-protocol"><span class="header-section-number">5.6.2</span> The tag hierarchy protocol</a></li>
+  <li><a href="#figure-completion-census" id="toc-figure-completion-census" class="nav-link" data-scroll-target="#figure-completion-census"><span class="header-section-number">5.6.3</span> Figure completion census</a></li>
+  <li><a href="#the-four-layer-fault-model" id="toc-the-four-layer-fault-model" class="nav-link" data-scroll-target="#the-four-layer-fault-model"><span class="header-section-number">5.6.4</span> The four-layer fault model</a></li>
+  <li><a href="#the-learning-bridge---emit-annotations" id="toc-the-learning-bridge---emit-annotations" class="nav-link" data-scroll-target="#the-learning-bridge---emit-annotations"><span class="header-section-number">5.6.5</span> The learning bridge (<code>--emit-annotations</code>)</a></li>
+  </ul></li>
+  <li><a href="#stage-6-corpus-completion" id="toc-stage-6-corpus-completion" class="nav-link" data-scroll-target="#stage-6-corpus-completion"><span class="header-section-number">5.7</span> Stage 6: Corpus completion</a>
+  <ul class="collapse">
+  <li><a href="#contextual-data-stores" id="toc-contextual-data-stores" class="nav-link" data-scroll-target="#contextual-data-stores"><span class="header-section-number">5.7.1</span> Contextual data stores</a></li>
+  </ul></li>
+  <li><a href="#stage-7-registration-and-the-ai-viewer-endpoint" id="toc-stage-7-registration-and-the-ai-viewer-endpoint" class="nav-link" data-scroll-target="#stage-7-registration-and-the-ai-viewer-endpoint"><span class="header-section-number">5.8</span> Stage 7: Registration and the ai-viewer endpoint</a></li>
+  <li><a href="#the-partitur-contract" id="toc-the-partitur-contract" class="nav-link" data-scroll-target="#the-partitur-contract"><span class="header-section-number">5.9</span> The Partitur contract</a></li>
+  <li><a href="#steering-catalog" id="toc-steering-catalog" class="nav-link" data-scroll-target="#steering-catalog"><span class="header-section-number">5.10</span> Steering catalog</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">The Production Pipeline</span></h1>
+<p class="subtitle lead">From document delivery to the ai-viewer endpoint: every stage, engine, and data store</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="what-this-chapter-covers" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="what-this-chapter-covers"><span class="header-section-number">5.1</span> What this chapter covers</h2>
+<p>This chapter describes the single, authoritative production pipeline that takes an incoming PDF or scan and delivers a certified, queryable PDAI document to the <code>ai-viewer</code> endpoint. The pipeline is unified: one <code>pilot-gated-ocr-pipeline</code> Partitur (v1.1.0), one <code>pdai-audit</code> engine, one learning loop. The per-collection forking that characterised earlier iterations is deprecated; this is the canonical path.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  delivery["PDF or scan delivery"] --&gt; ingest["ingest and classify\nai-classifypdf"]
+  ingest --&gt; profile["schema derivation\ndocument profile"]
+  profile --&gt; pilot["pilot gate\n5-page sample"]
+  pilot --&gt; ocr["schema-first OCR batch\nqwen3.8:27b-mlx"]
+  ocr --&gt; certify["certify-and-learn\npdai-audit --all"]
+  certify --&gt; learn["learning loop\nannotations A/B"]
+  learn -. "regression gate" .-&gt; ocr
+  certify --&gt; complete["corpus completion\nstanza · lemma · gazetteer · lexicon"]
+  complete --&gt; register["readiness manifest\nedition registry"]
+  register --&gt; viewer["ai-viewer endpoint"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Every arrow corresponds to a concrete command or service. Every node corresponds to a system component described below.</p>
+<hr>
+</section>
+<section id="stage-1-ingest-and-classify" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="stage-1-ingest-and-classify"><span class="header-section-number">5.2</span> Stage 1: Ingest and classify</h2>
+<p><strong>Command:</strong> <code>ai-classifypdf ingest --collection &lt;name&gt;</code> or <code>ai-classifypdf prepare &lt;collection&gt;</code> followed by <code>ai-classifypdf run</code>.</p>
+<p><strong>What happens:</strong> The PDF is harvested into the collection folder on PDAI-1, page images are extracted at 300 DPI, and the document is classified into one of the recognised document-class templates: <code>printed-scholarly</code>, <code>special-script</code>, <code>handwritten-archival</code>, or <code>catalogue</code>. The preparation step produces <code>ocr_classification.json</code> and <code>collection_profile.yaml</code> — the plan the OCR stage reads.</p>
+<p><strong>Engines:</strong> - <code>fastapple</code> backbone (Apple fastimage + Ollama vision LLM) for highspeed ingest; <code>kimi-k2.7-code:cloud</code> is the structuring model. - Classic <code>ai-scholar process</code> path (<code>kimi-k2.7-code:cloud</code>, per-page fallback <code>gemini-3.8-flash</code>) remains available via <code>--classic</code>.</p>
+<p><strong>Output:</strong> <code>pages/page_NNN/</code> folder tree under <code>/Volumes/PDAI-1/pdai-collections/&lt;collection&gt;/&lt;doc&gt;/</code>, with one PNG per page and <code>pdai-config.json</code> recording the harvest provenance.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Classification precedes OCR">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Classification precedes OCR
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Never begin production OCR without a completed <code>ocr_classification.json</code>. The template, DTD, and model are all determined here; guessing them inline is not permitted.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="stage-2-schema-derivation" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="stage-2-schema-derivation"><span class="header-section-number">5.3</span> Stage 2: Schema derivation</h2>
+<p><strong>Command:</strong> <code>ai-classifypdf prepare &lt;collection&gt;</code> (also produced in Stage 1 for standard collections; for formalised editions, a dedicated <code>schema-derive</code> skill).</p>
+<p>For formalised editions — catalogues, letter registers, ephemerides — the schema derivation reads the printed front matter of the volume and derives the record schema <strong>before</strong> any OCR. The derivation produces:</p>
+<ul>
+<li><code>config/page.dtd</code> — grammar for one OCR’d page</li>
+<li><code>config/&lt;record&gt;.dtd</code> — grammar for the assembled record</li>
+<li><code>config/audit_rules.yaml</code> — declarative cue and vocabulary rules</li>
+<li><code>config/page.css</code> — collection overlay on the shared book sheet: measures (<code>--pdai-note-width</code>, <code>--pdai-marker-gutter</code>) and typography; margin geometry is shared (<a href="page-language.html" class="quarto-xref"><span>Chapter 2</span></a>)</li>
+</ul>
+<p>The derivation is never retrospective: the DTD is written before the first production page is processed. Evidence grades: <code>front-matter</code> (authoritative), <code>facsimile-only</code> (provisional), <code>unattested</code> (do not invent).</p>
+<hr>
+</section>
+<section id="stage-3-pilot-gate" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="stage-3-pilot-gate"><span class="header-section-number">5.4</span> Stage 3: Pilot gate</h2>
+<p><strong>Command:</strong> <code>python3 scripts/pilot_gate.py --vol &lt;vol&gt;</code> or via the Partitur stage <code>draw-pilot-sample</code> + <code>execute-pilot-ocr</code> + <code>audit-structural-gate</code>.</p>
+<p><strong>Iron rule:</strong> For any document with more than 50 pages, the pilot gate is <strong>mandatory</strong> before batch OCR is unlocked. Five pages are drawn randomly, OCR’d under the assumed DTD, and audited in three passes:</p>
+<ol type="1">
+<li>DTD validation — the XML must be well-formed and valid.</li>
+<li><code>audit_rules.yaml</code> — vocabulary, cue, and SCH-* checks.</li>
+<li>Visual facsimile comparison — every VIS-* class checked against the actual scan.</li>
+</ol>
+<p>If any blocker is raised, the improvement loop runs before batch unlock.</p>
+<hr>
+</section>
+<section id="stage-4-schema-first-ocr-batch" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="stage-4-schema-first-ocr-batch"><span class="header-section-number">5.5</span> Stage 4: Schema-first OCR batch</h2>
+<p><strong>Command:</strong> <code>python3 scripts/&lt;collection&gt;_ocr_run.py --vol &lt;vol&gt;</code> (or <code>chain_&lt;collection&gt;.sh</code> for multi-volume succession).</p>
+<p><strong>Primary model:</strong> <code>qwen3.8:27b-mlx</code> (Ollama local, M1 Ultra, <code>think=false</code>, image scale 0.5, <code>num_ctx=8192</code>, 1 worker — optimal on this hardware). <strong>Fallback:</strong> <code>kimi-k2.7-code:cloud</code>. <strong>Special-script / handwritten:</strong> <code>kimi-k2.7-code:cloud</code> directly.</p>
+<p>Every page is processed against the collection <code>config/page.dtd</code>, rendered by <code>ai-viewer</code> at the collection’s dedicated port, and logged to a JSONL telemetry file under <code>/Volumes/PDAI-1/tmp/&lt;collection&gt;-ocr/&lt;vol&gt;.jsonl</code>. The live monitor is available at <code>http://localhost:&lt;port&gt;/ocr-monitor?volume=&lt;vol&gt;</code>.</p>
+<p><strong>Key parameters (qwen3.8:27b-mlx, validated Aug 2026):</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 26%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Value</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>num_batch</code></td>
+<td>512</td>
+<td>Prefill latency: 0.1 s (vs 26 s at default)</td>
+</tr>
+<tr class="even">
+<td><code>num_ctx</code></td>
+<td>8192</td>
+<td>Sufficient for one PDAI page</td>
+</tr>
+<tr class="odd">
+<td><code>num_predict</code></td>
+<td>2048</td>
+<td>Avoids truncation on dense tables</td>
+</tr>
+<tr class="even">
+<td><code>reasoning</code></td>
+<td>false</td>
+<td>Required; thinking leaks in output otherwise</td>
+</tr>
+<tr class="odd">
+<td>Workers</td>
+<td>1</td>
+<td>Optimal on M1 Ultra (2 workers do not increase throughput)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="stage-5-certify-and-learn" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="stage-5-certify-and-learn"><span class="header-section-number">5.6</span> Stage 5: Certify and learn</h2>
+<p><strong>Command:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pdai-audit</span> <span class="at">--collection</span> <span class="op">&lt;</span>name<span class="op">&gt;</span> --vol <span class="op">&lt;</span>vol<span class="op">&gt;</span> --all <span class="at">--emit-annotations</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is the <code>certify-and-learn</code> stage of Partitur <code>pilot-gated-ocr-pipeline</code> v1.1.0, registered at <code>pipeline/ocr/pilot-gated</code> in <code>partitur_register.duckdb</code>. It is not optional. A volume is not certified until this stage passes with 0 structural blockers and 0 visual blockers.</p>
+<section id="what---all-runs" class="level3" data-number="5.6.1">
+<h3 data-number="5.6.1" class="anchored" data-anchor-id="what---all-runs"><span class="header-section-number">5.6.1</span> What <code>--all</code> runs</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 44%">
+<col style="width: 24%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Sub-stage</th>
+<th>Flag</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Structural audit</td>
+<td>(always)</td>
+<td><code>quality/&lt;vol&gt;_defects.json</code></td>
+</tr>
+<tr class="even">
+<td>Visual layout scan</td>
+<td><code>--visual</code></td>
+<td><code>quality/&lt;vol&gt;_visual_audit.json</code></td>
+</tr>
+<tr class="odd">
+<td>Tag hierarchy protocol</td>
+<td><code>--protocol</code></td>
+<td><code>quality/&lt;vol&gt;/tag_hierarchy_protocol.jsonl</code></td>
+</tr>
+<tr class="even">
+<td>Figure completion census</td>
+<td>(part of <code>--protocol</code>)</td>
+<td>Embedded in protocol manifest</td>
+</tr>
+<tr class="odd">
+<td>Fault dossier assembly</td>
+<td><code>--dossier</code></td>
+<td><code>quality/&lt;vol&gt;/learning_fault_dossier.json</code></td>
+</tr>
+<tr class="even">
+<td>LettreAI Typst PDF</td>
+<td><code>--typst</code></td>
+<td><code>quality/&lt;vol&gt;/audit_report_&lt;vol&gt;.pdf</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-tag-hierarchy-protocol" class="level3" data-number="5.6.2">
+<h3 data-number="5.6.2" class="anchored" data-anchor-id="the-tag-hierarchy-protocol"><span class="header-section-number">5.6.2</span> The tag hierarchy protocol</h3>
+<p>Every page in the volume is logged as a content-free structural fingerprint: tag names, nesting, and structural attributes only — no transcription content. Each page receives a SHA-256 hash of its pure S-expression. This creates the <strong>zero-regression anchor</strong>: when a prompt overlay or normalizer is updated, <code>diff_tag_protocols()</code> compares structural hashes in under 50 ms across all pages, catching any lost table, corrupted equation, or newly introduced element instantly.</p>
+</section>
+<section id="figure-completion-census" class="level3" data-number="5.6.3">
+<h3 data-number="5.6.3" class="anchored" data-anchor-id="figure-completion-census"><span class="header-section-number">5.6.3</span> Figure completion census</h3>
+<p>Every <code>&lt;figure&gt;</code> element is audited for:</p>
+<ul>
+<li><code>@ref</code> attribute (required)</li>
+<li><code>&lt;caption&gt;</code> element (printed caption, if present in the facsimile)</li>
+<li><code>&lt;description&gt;</code> element (rich geometric or diagrammatic description)</li>
+</ul>
+<p>Completion rates are expressed as four states: <code>complete_full</code> (caption + description), <code>complete_desc</code> (description only, standard when no printed caption exists), <code>caption_only</code>, and <code>empty</code>. Target: 100% of figures at <code>complete_full</code> or <code>complete_desc</code>.</p>
+</section>
+<section id="the-four-layer-fault-model" class="level3" data-number="5.6.4">
+<h3 data-number="5.6.4" class="anchored" data-anchor-id="the-four-layer-fault-model"><span class="header-section-number">5.6.4</span> The four-layer fault model</h3>
+<p>Every assembled fault case is attributed to one of four root-cause layers:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 26%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Layer</th>
+<th>System</th>
+<th>Example fault</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Layer 1: Prompt/Vision LLM</td>
+<td>composed partitur: page language + <code>&lt;prefix&gt;.base.j2</code> + engine overlay <code>&lt;prefix&gt;.&lt;engine&gt;.j2</code> (<code>qwen38</code>, <code>kimi</code>, <code>gemini38</code>, <code>qwen3vl</code>)</td>
+<td>Missing <code>&lt;description&gt;</code> in figures; margin type or side wrong</td>
+</tr>
+<tr class="even">
+<td>Layer 2: Runner Normalizer</td>
+<td><code>_clean_xml()</code> in OCR runner</td>
+<td>Unjoined line-end hyphen before <code>&lt;br/&gt;</code></td>
+</tr>
+<tr class="odd">
+<td>Layer 3: Typographic CSS</td>
+<td><code>pdai-page.css</code> margins; <code>config/page.css</code> measures</td>
+<td>A marginal in the text column; notes overlapping</td>
+</tr>
+<tr class="even">
+<td>Layer 4: DTD/Record Schema</td>
+<td><code>config/page.dtd</code></td>
+<td><code>&lt;marginal&gt;</code> not declared in <code>&lt;footnote&gt;</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="the-learning-bridge---emit-annotations" class="level3" data-number="5.6.5">
+<h3 data-number="5.6.5" class="anchored" data-anchor-id="the-learning-bridge---emit-annotations"><span class="header-section-number">5.6.5</span> The learning bridge (<code>--emit-annotations</code>)</h3>
+<p>Every assembled fault case is posted to the ai-query server (<code>POST /api/annotations</code>, port 5113) as an <code>ocr-audit</code> annotation, carrying: the fault’s collection, volume, and page coordinates; the observed defect (full <code>FaultCase</code> dataclass); the targeted fix directive; and the regression prevention anchor. The payload is also persisted as <code>quality/&lt;vol&gt;/learning_annotations_payload.json</code>.</p>
+<p>Once annotations are registered, the A/B-gated instruction learning loop is triggered via <code>POST /api/learn/from-annotations</code>. The loop proposes a patch to the responsible SKILL.md (Layer 1–2) or schema file (Layer 4), runs the golden test set before and after, and promotes the patch only when the pass rate improves with no regression. This is an iron rule: <strong>no ad-hoc fixes to generation errors of a Partitur</strong> — all corrections go through the versioned learning system.</p>
+<hr>
+<div class="callout callout-style-default callout-note callout-titled" title="Repairing a produced collection">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Repairing a produced collection
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When certification finds defects in a collection that is already produced, the repair follows the cure method: diagnosis, attribution to a layer, a remedy tested on 3–5 specimen pages, application to the flagged pages only. See <a href="./cure/index.html">Improving collections</a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="stage-6-corpus-completion" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="stage-6-corpus-completion"><span class="header-section-number">5.7</span> Stage 6: Corpus completion</h2>
+<p><strong>Command:</strong> <code>pdai-complete --collection &lt;name&gt;</code></p>
+<p>After the volume is certified, the corpus completion pipeline runs the remaining indexing stages in order, checking for each stage’s readiness before proceeding:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 34%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Stage</th>
+<th>Engine</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>OCR</td>
+<td>(already done)</td>
+<td><code>pages/page_NNN/*.xml</code></td>
+</tr>
+<tr class="even">
+<td>Structure</td>
+<td><code>ai-scholar segment</code> + <code>materialise</code></td>
+<td><code>structure.xml</code>, <code>segments/</code></td>
+</tr>
+<tr class="odd">
+<td>Stanza ingest</td>
+<td><code>ai_lemma_index stanza_ingest</code></td>
+<td><code>stz_sentences</code>, <code>stz_entities</code> in corpus DuckDB</td>
+</tr>
+<tr class="even">
+<td>Lemma index</td>
+<td><code>ai_lemma_index build_index</code></td>
+<td><code>lemma_index.parquet</code> (postings)</td>
+</tr>
+<tr class="odd">
+<td>Gazetteer</td>
+<td><code>ai_lemma_index build_gazetteer</code></td>
+<td>Gazetteer entries in DuckDB</td>
+</tr>
+<tr class="even">
+<td>LWgrammar lexicon</td>
+<td><code>ai_lemma_index lwgrammar_build</code></td>
+<td><code>&lt;collection&gt;_lwgrammar.duckdb</code></td>
+</tr>
+<tr class="odd">
+<td>ChromaDB vectors</td>
+<td><code>ai_lemma_index chroma_build</code></td>
+<td>Per-collection BGE-M3 vector store</td>
+</tr>
+<tr class="even">
+<td>Readiness manifest</td>
+<td><code>pdai-complete status</code></td>
+<td><code>status.json</code> on the collection</td>
+</tr>
+</tbody>
+</table>
+<section id="contextual-data-stores" class="level3" data-number="5.7.1">
+<h3 data-number="5.7.1" class="anchored" data-anchor-id="contextual-data-stores"><span class="header-section-number">5.7.1</span> Contextual data stores</h3>
+<p>After corpus completion, a PDAI collection maintains the following data stores that the query layer reads:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 37%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Store</th>
+<th>Location</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Corpus DuckDB</td>
+<td><code>/Volumes/PDAI-1/pdai-collections/&lt;name&gt;/&lt;name&gt;.duckdb</code></td>
+<td>Documents, letters, persons, places, dates, sentences</td>
+</tr>
+<tr class="even">
+<td>Lemma parquet</td>
+<td>Same volume, <code>lemma_index.parquet</code></td>
+<td>Inverted postings: lemma → (doc, pidx, tid)</td>
+</tr>
+<tr class="odd">
+<td>Entity registry</td>
+<td><code>entity_registry.duckdb</code></td>
+<td>Person/place aliases and canonical forms</td>
+</tr>
+<tr class="even">
+<td>Gazetteer</td>
+<td>Embedded in corpus DuckDB</td>
+<td><code>stz_entities</code>; gazetteer expansions</td>
+</tr>
+<tr class="odd">
+<td>LWgrammar lexicon</td>
+<td><code>&lt;collection&gt;_lwgrammar.duckdb</code></td>
+<td>OED-form usage entries per lemma</td>
+</tr>
+<tr class="even">
+<td>Partitur register</td>
+<td><code>development/ai-agent-orchestrator/partitur_register.duckdb</code></td>
+<td>Goal contracts, plan paths, stage registry</td>
+</tr>
+<tr class="odd">
+<td>Audit vocabulary</td>
+<td><code>config/audit_rules.yaml</code></td>
+<td>Cue rules, vocabulary, forbidden tokens</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="stage-7-registration-and-the-ai-viewer-endpoint" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="stage-7-registration-and-the-ai-viewer-endpoint"><span class="header-section-number">5.8</span> Stage 7: Registration and the ai-viewer endpoint</h2>
+<p><strong>Command:</strong> <code>ae-platform port register --project &lt;viewer&gt;</code> (already registered) or via the <code>editions.yaml</code> and edition registry.</p>
+<p>When a volume passes <code>pdai-complete</code> and <code>status.json</code> reports <code>ready</code>, it is automatically visible in the <code>ai-viewer</code> instance for its collection. The edition registry maps collection names to viewer ports:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Collection class</th>
+<th>Viewer port</th>
+<th>Instance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kepler (prim/sec)</td>
+<td>5104</td>
+<td><code>kepler-gw</code> edition</td>
+</tr>
+<tr class="even">
+<td>Pirckheimer</td>
+<td>5108</td>
+<td><code>pirckheimer</code> edition</td>
+</tr>
+<tr class="odd">
+<td>Astronomical Diaries</td>
+<td>5112</td>
+<td><code>diaries</code> edition</td>
+</tr>
+<tr class="even">
+<td>Medieval Sec (Bischoff)</td>
+<td>5112</td>
+<td>Shared with diaries</td>
+</tr>
+<tr class="odd">
+<td>Enestroem</td>
+<td>5100</td>
+<td><code>enestroem</code> edition</td>
+</tr>
+<tr class="even">
+<td>Kármán archive</td>
+<td>5725</td>
+<td><code>karman</code> edition (separate supervisor)</td>
+</tr>
+<tr class="odd">
+<td>Editions landing</td>
+<td>5111</td>
+<td>Hub for all editions</td>
+</tr>
+</tbody>
+</table>
+<p>The viewer serves: - Facsimile + structured transcription in a dual-pane split view - Segment navigation via <code>manifest.json</code> - Collection-specific typographic rendering (<code>page.css</code>) - The <code>&lt;ai-query-chat&gt;</code> web component (Shadow DOM) for inline query access - The integrated per-collection <code>/audit</code> page for live quality scoring</p>
+<hr>
+</section>
+<section id="the-partitur-contract" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="the-partitur-contract"><span class="header-section-number">5.9</span> The Partitur contract</h2>
+<p>The full pipeline is formalised as Partitur <code>pilot-gated-ocr-pipeline</code> v1.2.0, registered at goal path <code>pipeline/ocr/pilot-gated</code> in <code>development/ai-agent-orchestrator/partitur_register.duckdb</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Stage</th>
+<th>Goal contract</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>assess-document-scale</code></td>
+<td><code>total_pages &gt; 50 → pilot_required == true</code></td>
+</tr>
+<tr class="even">
+<td><code>profile-document</code></td>
+<td>every finding graded; page classes cover all pages</td>
+</tr>
+<tr class="odd">
+<td><code>derive-document-grammar</code></td>
+<td>DTD parses; no <code>unattested</code> vocabulary declared</td>
+</tr>
+<tr class="even">
+<td><code>draw-pilot-sample</code></td>
+<td><code>len(sample_pages) == 5</code> and all pages unprocessed</td>
+</tr>
+<tr class="odd">
+<td><code>execute-pilot-ocr</code></td>
+<td>All pilot pages well-formed XML</td>
+</tr>
+<tr class="even">
+<td><code>audit-structural-gate</code></td>
+<td><code>blockers == 0</code></td>
+</tr>
+<tr class="odd">
+<td><code>train-layer</code></td>
+<td><code>retested_defects == 0</code></td>
+</tr>
+<tr class="even">
+<td><code>fit-check</code></td>
+<td><code>fit == pages and fails == []</code></td>
+</tr>
+<tr class="odd">
+<td><code>select-model</code></td>
+<td>engine has a passed layer; a changed default is owner-confirmed</td>
+</tr>
+<tr class="even">
+<td><code>unlock-and-execute-full</code></td>
+<td><code>done == total_pages, failed == 0</code> (threshold 0.99)</td>
+</tr>
+<tr class="odd">
+<td><code>certify-and-learn</code></td>
+<td><code>blockers == 0 and vis_blockers == 0</code>; <code>annotations_emitted == fault_cases</code></td>
+</tr>
+</tbody>
+</table>
+<p>The Partitur is bound through a setting file (<code>skills/pipeline/pilot-gated-ocr/settings/&lt;collection&gt;-&lt;vol&gt;.partitur.setting.yaml</code>) that provides the concrete <code>collection</code>, <code>volume</code>, <code>primary_model</code>, and <code>dtd_path</code> inputs before execution. The Conductor never executes an unbound Partitur.</p>
+<hr>
+</section>
+<section id="steering-catalog" class="level2" data-number="5.10">
+<h2 data-number="5.10" class="anchored" data-anchor-id="steering-catalog"><span class="header-section-number">5.10</span> Steering catalog</h2>
+<p><code>pdai/collections/ocr_catalog.yaml</code> is the one file that maps every collection to its Partitur, model, ports, data roots, and DTD class. The <code>pdai-audit</code> CLI reads this catalog automatically so metadata (viewer port, model identities, edition label, volume titles) is always derived from the catalog rather than hardcoded in audit scripts.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="One audit engine, one entry point">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>One audit engine, one entry point
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>pdai-audit --collection &lt;c&gt; --vol &lt;v&gt; --all</code> is the only supported way to run a comprehensive audit. The per-collection <code>scripts/audit_check.py</code> files are deprecated forwarding shims — they inject <code>--collection &lt;c&gt;</code> and call <code>schema_audit.cli.main</code>. They continue to work for backward compatibility but should not be maintained further.</p>
+<p><code>pdai-audit</code> is the console script of the schema-audit package at <code>pipeline/schema-audit/</code>. The corpus-readiness audit of <code>ai-lemma-index</code> (<code>status.json</code>) is a separate command, <code>pdai-corpus-audit</code>.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./document-grammar.html" class="pagination-link" aria-label="One grammar per document">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">One grammar per document</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./schema-architecture.html" class="pagination-link" aria-label="Schema Architecture">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Schema Architecture</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

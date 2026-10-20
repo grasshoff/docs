@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; Layered OCR, and the Kirch reprocess – PDAI Structured-XML OCR System</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./document-grammar.html" rel="next">
+<link href="./page-language.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d790f1a89f3916965f720a191022e3fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-89a676d4ad20e24d423491e1503c3133.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./layer-ocr.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Layered OCR, and the Kirch reprocess</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <span>PDAI Structured-XML OCR System</span> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Overview: Collection Layout and Metadata</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./page-language.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The page language</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./layer-ocr.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Layered OCR, and the Kirch reprocess</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./document-grammar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">One grammar per document</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./production-pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">The Production Pipeline</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./schema-architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Schema Architecture</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dtd-derivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">DTD Derivation Playbook</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./page-xml-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Structured Page XML Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./engine-options.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Engine and Option Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./audit-taxonomy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Audit Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./relax-ng.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">RELAX NG Layer</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Improving collections</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">The cure method</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/diagnose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Diagnosis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/attribute.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Attribution</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/remedy-gate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Remedy and gate</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/apply.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Application</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/certify-downstream.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Certification and downstream</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/learn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/case-copernicus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">The Copernicus case</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/letter-dtd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Universal letter DTD</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#one-page-two-prompts" id="toc-one-page-two-prompts" class="nav-link active" data-scroll-target="#one-page-two-prompts"><span class="header-section-number">3.1</span> One page, two prompts</a></li>
+  <li><a href="#what-kirch-actually-is" id="toc-what-kirch-actually-is" class="nav-link" data-scroll-target="#what-kirch-actually-is"><span class="header-section-number">3.2</span> What Kirch actually is</a></li>
+  <li><a href="#how-kirch-is-reprocessed" id="toc-how-kirch-is-reprocessed" class="nav-link" data-scroll-target="#how-kirch-is-reprocessed"><span class="header-section-number">3.3</span> How Kirch is reprocessed</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-layer-ocr" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Layered OCR, and the Kirch reprocess</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><em>The page grammar, the prompt, and the model are three separate decisions. Kirch was processed as if they were one.</em></p>
+<p>A page is tagged in the universal page language. The prompt that asks for those tags is built in layers, and each layer is stamped on the page. The model is chosen after that prompt exists, from a measurement on a real page. Kirch has none of the three: its pages were read in August 2026 by <code>gemini-3.6-flash</code> and <code>qwen3.5:cloud</code>, from templates that name elements <code>page.dtd</code> v4.0 does not admit.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="In one sentence">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>In one sentence
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compose the prompt from the page language outward, stamp the layers, pick the model from a measured page — and rebuild Kirch on that pattern, as calendars and scholarly books, before any of its 4,668 pages is read again.</p>
+</div>
+</div>
+<p>The grammar itself is <a href="./page-language.html">the page language</a>. This chapter is what changed in the prompt and the model choice, and what that implies for Kirch.</p>
+<section id="one-page-two-prompts" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="one-page-two-prompts"><span class="header-section-number">3.1</span> One page, two prompts</h2>
+<p>KGW 3, printed page 102, was read twice on 28 September 2026. The facsimile has a running header <em>102</em>, line counts 45 and 10 in the right margin, and a gloss on Brahe in the left margin beside <em>Denique eadem</em>.</p>
+<p>The first prompt was the older Kepler overlay, handed to the model as a single file. Kimi returned the gloss with <code>type="marginal-note"</code>, which is not a word of the margin list, and it missed the printed header. Qwen3.8 returned the gloss as <code>type="note"</code>. Gemini 3.8, on that same older file, returned XML that failed to parse. <code>qwen3.5:cloud</code> answered HTTP 410. <code>deepseek-v4-pro:cloud</code> answered HTTP 400: the model does not accept an image.</p>
+<p>The second prompt was composed. <code>ocr_runner.cure_config.compose</code> stacks five layers, and stops at the last one that exists:</p>
+<ol type="1">
+<li>the page-language fragment, filled with this collection’s margin types;</li>
+<li>the collection base;</li>
+<li>the volume note, when the volume has one;</li>
+<li>the engine note;</li>
+<li>the volume-and-engine note.</li>
+</ol>
+<p>Kimi then ran as <code>kepler-ocr@739ec396938e</code> with layers <code>page-language, base, kimi</code>. Gemini 3.8 ran as <code>kepler-ocr@ef4f29445dd4</code> with <code>page-language, base, gemini38</code>. Both returned the header <em>102</em>, both line counts as <code>line-number</code> on the right, and the gloss as <code>type="topic"</code> on the left. The audit reported 0 defects and 0 blockers. Kimi took 9.5 seconds; Gemini 3.8 took 11.0 seconds and $0.0074 at the promotional rate.</p>
+<div class="specimen" data-label="KGW 3, p. 102">
+<p><strong>The same page, after the prompt was composed.</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">meta</span> <span class="ot">partitur=</span><span class="st">"kepler-ocr@739ec396938e"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>      <span class="ot">layers=</span><span class="st">"page-language,base,kimi"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>      <span class="ot">overlay=</span><span class="st">"kepler-ocr.kimi.j2"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="ot">model=</span><span class="st">"kimi-k2.7-code:cloud"</span>/&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><span class="chip">Kimi</span> 0 defects, both line counts, gloss typed <code>topic</code>. <span class="chip">Gemini 3.8</span> the same tags, $0.0074. <span class="chip">Rapid-MLX</span> local <code>qwen3.8:27b-mlx</code> via the server on port 5138: valid tags, the line count 45 absent, 75 seconds.</p>
+</div>
+<p>The hash is the first twelve hex digits of the composed instruction, with the page variables left as placeholders. It is the same for every page of one model and volume, and it changes when any layer changes. <code>pdai-partitur check</code> refuses a model that composes base-only or whose overlay names a tag outside the grammar.</p>
+<p>Local <code>qwen3.8:27b-mlx</code> remains the engine for harvest and for a run that must stay on this machine. Rapid-MLX (<code>rapid-mlx/Qwen3.8-27B-4bit-MTP-MLX</code>, prefill step 8192, vision cap 800,000 pixels, thinking off, one request in flight) is a route for that same model. On this page it was legal and slower, and it dropped a line count the composed cloud prompts kept. It is a measured option for a local pilot, and the printed-page default stays <code>kimi-k2.7-code:cloud</code>, with <code>gemini-3.8-flash</code> only when Kimi fails on that page.</p>
+</section>
+<section id="what-kirch-actually-is" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="what-kirch-actually-is"><span class="header-section-number">3.2</span> What Kirch actually is</h2>
+<p>The steering catalog calls the collection <em>Kirch Astronomical Correspondence</em> and points it at generic <code>page.dtd</code> and <code>ai-scholar process</code>. The seventeen <code>biblio.xml</code> files name the <em>Acta Calendariographica</em> series edited around Gottfried Kirch and the early modern <em>Schreibkalender</em>: Klaus-Dieter Herbst’s <em>Forschungsberichte</em> and <em>Biobibliographisches Handbuch der Kalendermacher</em>, Anja Groß, <em>Der kompilierte Schreibkalender</em>, the <em>Kalenderreihen</em>, Johann Christoph Sturm’s <em>Finsternissen-Calender</em>, and Herbst’s <em>Gottfried Kirch: Astronom, Kalendermacher, Pietist, Frühaufklärer</em>.</p>
+<p>There is no <code>collections/kirch/</code> tree, no collection wrapper, and no <code>partitur</code> attribute on any page. The census of 28 September 2026 validated every page against <code>page.dtd</code> v4.0.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: right;">Pages</th>
+<th style="text-align: right;">Valid</th>
+<th style="text-align: right;">Invalid</th>
+<th style="text-align: right;">Malformed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kirch, 17 volumes</td>
+<td style="text-align: right;">4,668</td>
+<td style="text-align: right;">2,267 (48.6%)</td>
+<td style="text-align: right;">2,327</td>
+<td style="text-align: right;">74</td>
+</tr>
+</tbody>
+</table>
+<p>The invalid pages fail in the vocabulary the August templates taught:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What the files contain</th>
+<th style="text-align: right;">Pages citing it</th>
+<th>What the page language admits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>&lt;section&gt;</code> inside <code>&lt;main&gt;</code></td>
+<td style="text-align: right;">405</td>
+<td><code>p</code>, <code>figure</code>, <code>marginal</code>, <code>table</code></td>
+</tr>
+<tr class="even">
+<td><code>&lt;i&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;b&gt;</code>, <code>&lt;strong&gt;</code></td>
+<td style="text-align: right;">254</td>
+<td><code>&lt;hi rend="italic"&gt;</code> or <code>rend="bold"</code></td>
+</tr>
+<tr class="odd">
+<td><code>&lt;sup&gt;</code></td>
+<td style="text-align: right;">191</td>
+<td><code>&lt;hi rend="superscript"&gt;</code></td>
+</tr>
+<tr class="even">
+<td><code>&lt;figure&gt;</code> with description before caption, or with <code>&lt;p&gt;</code> inside</td>
+<td style="text-align: right;">160</td>
+<td><code>(caption?, description?)</code></td>
+</tr>
+<tr class="odd">
+<td><code>&lt;footnote&gt;</code> as a child of <code>&lt;page&gt;</code></td>
+<td style="text-align: right;">142</td>
+<td><code>&lt;footnotes&gt;&lt;footnote&gt;…</code></td>
+</tr>
+<tr class="even">
+<td>broken <code>&amp;</code></td>
+<td style="text-align: right;">38</td>
+<td>a declared entity</td>
+</tr>
+<tr class="odd">
+<td><code>&lt;fn&gt;</code> or <code>&lt;footer&gt;</code> with child elements</td>
+<td style="text-align: right;">7</td>
+<td>text</td>
+</tr>
+<tr class="even">
+<td><code>type="catchword"</code>, <code>type="table"</code></td>
+<td style="text-align: right;">2</td>
+<td>the closed margin list</td>
+</tr>
+</tbody>
+</table>
+<p>The former central template <code>kirch-fraktur-ocr.j2</code> (retired on 29 September 2026; the Kirch prompts are now composed from <code>collections/kirch/ai-instructions/</code>) was explicit. It was scored 0.976 on a 35-page sample of volumes 0002, 0003, 0005, 0006, 0008, 0009 and 0010, and it tells the model to emit <code>&lt;section l="2"&gt;</code>, a figure with <code>&lt;description&gt;</code> before <code>&lt;caption&gt;</code>, and a footnote. The sample score measured agreement with that template. The census measures the template against the grammar, and the template loses.</p>
+<p>The same template was then used far outside that sample. Volumes 0011–0017 are the handbook, the essays on the <em>Schreibkalender</em>, and the Kirch biography: 3,434 pages, all stamped <code>kirch-fraktur-ocr</code> and <code>gemini-3.6-flash</code>. A Fraktur calendar prompt on a modern antiqua handbook is the wrong instruction, whatever the model.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Volumes</th>
+<th>What the biblio names</th>
+<th style="text-align: right;">Pages</th>
+<th style="text-align: right;">Valid</th>
+<th>How they were read</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0005, 0007, 0008</td>
+<td><em>Kalenderreihen</em> 1.6, 3.2, 1.4</td>
+<td style="text-align: right;">438</td>
+<td style="text-align: right;">287</td>
+<td>0005 on <code>qwen3.5:cloud</code>; 0007 and 0008 on the Fraktur template</td>
+</tr>
+<tr class="even">
+<td>0006, 0009, 0010</td>
+<td><em>Kalenderreihen</em> 1.5, Sturm, 3.1</td>
+<td style="text-align: right;">314</td>
+<td style="text-align: right;">133</td>
+<td>Fraktur template and <code>full_page_scholarly</code>, mixed inside the volume</td>
+</tr>
+<tr class="odd">
+<td>0001, 0003, 0011, 0015</td>
+<td><em>Forschungsberichte</em></td>
+<td style="text-align: right;">1,022</td>
+<td style="text-align: right;">453</td>
+<td>Fraktur template, except 0003 on <code>full_page_scholarly</code></td>
+</tr>
+<tr class="even">
+<td>0002</td>
+<td>Groß, <em>Der kompilierte Schreibkalender</em></td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">22</td>
+<td><code>full_page_scholarly</code> only — the lowest rate in the collection</td>
+</tr>
+<tr class="odd">
+<td>0004</td>
+<td><em>Forschungsberichte</em> 4</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">106</td>
+<td><code>qwen3.5:cloud</code> — the highest rate, and a retired model</td>
+</tr>
+<tr class="even">
+<td>0012, 0014, 0016, 0017</td>
+<td><em>Handbuch der Kalendermacher</em></td>
+<td style="text-align: right;">1,932</td>
+<td style="text-align: right;">877</td>
+<td>Fraktur template on every page</td>
+</tr>
+<tr class="odd">
+<td>0013</td>
+<td><em>Gottfried Kirch</em></td>
+<td style="text-align: right;">744</td>
+<td style="text-align: right;">389</td>
+<td>Fraktur template on every page</td>
+</tr>
+</tbody>
+</table>
+<p>Engine stamps, collection-wide: 4,414 pages <code>gemini-3.6-flash</code>, 254 pages <code>qwen3.5:cloud</code>. Neither name is available for a new run. <code>gemini-3.6-flash</code> is outside the allowlist. <code>qwen3.5:cloud</code> was retired on 25 September 2026. A page that validates today was still produced by one of those two, and it carries no partitur hash, so a later audit cannot say which instruction wrote it.</p>
+</section>
+<section id="how-kirch-is-reprocessed" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="how-kirch-is-reprocessed"><span class="header-section-number">3.3</span> How Kirch is reprocessed</h2>
+<p>The reprocess follows the document-grammar procedure: profile, grammar, layer, fit, run. Nothing is written to a volume before its gate passes.</p>
+<p><strong>Grammar per document.</strong> Each of the 17 documents has a <code>document_profile.yaml</code> that names its page classes (<code>kalendarium</code>, <code>computus</code>, <code>entry</code>, <code>table</code>, <code>register-table</code>, <code>facsimile-text</code>, <code>inset-facsimile</code>, <code>show-through</code>, and the default) and a wrapper DTD that adds only what the front matter attests. The Vision classifier assigns a class to each page (three votes, <code>gemini-3.5-flash-lite</code>); the geometry census breaks ties.</p>
+<p><strong>Layer per engine and class.</strong> The prompt is composed from the page language, the collection base, the volume layer, the engine overlay, and the class layer. Layers were trained on 46 pilot pages spread over all 17 documents.</p>
+<p><strong>Fit check.</strong> Every reading is compared with its facsimile by measurement only: DTD and audit, table rows and columns against the image census, text agreement with the Vision reading (Antiqua) or between two engine readings (Fraktur, mixed), figures, margins, and ink share (a leaf without ink must yield an empty <code>&lt;main/&gt;</code>). A page fits when no finding fails.</p>
+<p><strong>Pilot result (29 September 2026, 46 pages).</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Reading</th>
+<th>Pages that fit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Decision of the dual read (Kimi, <code>gemini-3.8-flash</code> when the fit check doubts Kimi)</td>
+<td>46 of 46</td>
+</tr>
+<tr class="even">
+<td><code>kimi-k2.7-code:cloud</code> alone</td>
+<td>43 of 46</td>
+</tr>
+<tr class="odd">
+<td><code>gemini-3.8-flash</code> alone</td>
+<td>43 of 46</td>
+</tr>
+<tr class="even">
+<td><code>qwen3.8:27b-mlx</code> on the Kalender volumes</td>
+<td>11 of 17</td>
+</tr>
+<tr class="odd">
+<td>Production XML before the reprocess</td>
+<td>10 of 17 on the document-grammar pages</td>
+</tr>
+</tbody>
+</table>
+<p>Kimi alone invents a calendar table on a faint page (<code>0009</code> p.&nbsp;60) and merges days into six rows on one register page (<code>0007</code> p.&nbsp;125). <code>gemini-3.8-flash</code> fits every Kalender page but is about three times slower. The two fail on different pages, so the decision reading is the measured winner, not either engine alone. The thresholds were calibrated on these pages; the per-volume gate below is the held-out check. Evidence: hub runs <code>84d67c2eed3c994bbf6f</code>, <code>60ab00b1876fe63438bc</code>, <code>b131b7d26147f3dd7f00</code>; Setting <code>cure-kirch</code>. A reproduction of a historical page inside a modern volume (<code>inset-facsimile</code>) is one <code>&lt;figure&gt;</code> without caption and description (owner decision, 29 September 2026).</p>
+<p><strong>Run.</strong> <code>collections/kirch/scripts/chain_kirch.sh</code> runs one volume at a time in the order modern volumes, Handbuch, Kalenderreihen. For each volume, <code>python -m ocr_runner.pilot gate</code> reads five random pages the pilot has not seen and the volume is skipped if any does not fit. Otherwise <code>ocr_runner.dual_read --write --resume --escalate 3</code> runs in batches of 40 pages, and every overwritten XML is kept as <code>.xml.v&lt;n&gt;</code>. The chain waits while another OCR runner is alive and stops after the current batch when <code>STOP</code> appears in <code>/Volumes/PDAI-1/tmp/kirch-ocr/</code>. New pages are stamped with <code>partitur</code>, <code>layers</code>, and the engine that wrote them.</p>
+<p>Letters stay out of this run. These volumes are not a correspondence register, and <code>letters_resolved</code> is not rebuilt from them.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./page-language.html" class="pagination-link" aria-label="The page language">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The page language</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./document-grammar.html" class="pagination-link" aria-label="One grammar per document">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">One grammar per document</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

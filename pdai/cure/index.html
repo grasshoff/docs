@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>12&nbsp; The cure method – PDAI Structured-XML OCR System</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../cure/diagnose.html" rel="next">
+<link href="../relax-ng.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d790f1a89f3916965f720a191022e3fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-89a676d4ad20e24d423491e1503c3133.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../cure/index.html">Improving collections</a></li><li class="breadcrumb-item"><a href="../cure/index.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">The cure method</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <span>PDAI Structured-XML OCR System</span> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Overview: Collection Layout and Metadata</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../page-language.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The page language</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../layer-ocr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Layered OCR, and the Kirch reprocess</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../document-grammar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">One grammar per document</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../production-pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">The Production Pipeline</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../schema-architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Schema Architecture</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dtd-derivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">DTD Derivation Playbook</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../page-xml-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Structured Page XML Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../engine-options.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Engine and Option Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../audit-taxonomy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Audit Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../relax-ng.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">RELAX NG Layer</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Improving collections</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">The cure method</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/diagnose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Diagnosis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/attribute.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Attribution</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/remedy-gate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Remedy and gate</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/apply.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Application</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/certify-downstream.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Certification and downstream</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/learn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/case-copernicus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">The Copernicus case</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cure/letter-dtd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Universal letter DTD</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose"><span class="header-section-number">12.1</span> Purpose</a></li>
+  <li><a href="#four-rules" id="toc-four-rules" class="nav-link" data-scroll-target="#four-rules"><span class="header-section-number">12.2</span> Four rules</a></li>
+  <li><a href="#the-loop" id="toc-the-loop" class="nav-link" data-scroll-target="#the-loop"><span class="header-section-number">12.3</span> The loop</a></li>
+  <li><a href="#iteration-budget-and-stop-criterion" id="toc-iteration-budget-and-stop-criterion" class="nav-link" data-scroll-target="#iteration-budget-and-stop-criterion"><span class="header-section-number">12.4</span> Iteration budget and stop criterion</a></li>
+  <li><a href="#one-processing-agent-at-a-time" id="toc-one-processing-agent-at-a-time" class="nav-link" data-scroll-target="#one-processing-agent-at-a-time"><span class="header-section-number">12.5</span> One processing agent at a time</a></li>
+  <li><a href="#chapters-of-this-part" id="toc-chapters-of-this-part" class="nav-link" data-scroll-target="#chapters-of-this-part"><span class="header-section-number">12.6</span> Chapters of this part</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../cure/index.html">Improving collections</a></li><li class="breadcrumb-item"><a href="../cure/index.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">The cure method</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">The cure method</span></h1>
+<p class="subtitle lead">Repairing a produced collection by measured iterations</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="purpose" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="purpose"><span class="header-section-number">12.1</span> Purpose</h2>
+<p>A PDAI collection that is already produced can still carry defects: lost footnotes, flattened tables, generation loops, apparatus entries filed as body text. The cure is the method for removing them. It differs from production in one respect: it never processes a collection as a whole. It measures, selects the defective pages, tests a remedy on a few of them, and applies it only where the measurement found the defect.</p>
+<p>The method is written down in three places that state the same thing at different levels:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Level</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Documentation (this part)</td>
+<td><code>pdai/docs/cure/</code></td>
+</tr>
+<tr class="even">
+<td>Instructions for agents</td>
+<td><code>pdai/skills/pipeline/pdai-cure/SKILL.md</code> and one sub-skill per stage</td>
+</tr>
+<tr class="odd">
+<td>Executable plan</td>
+<td>Partitur <code>pdai-cure</code>, <code>pdai/skills/pipeline/pdai-cure/partitur.yaml</code>, goal_path <code>pipeline/cure/collection</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="four-rules" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="four-rules"><span class="header-section-number">12.2</span> Four rules</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Rules of the cure">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Rules of the cure
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Diagnose before repairing.</strong> No repair starts without a measured defect.</li>
+<li><strong>Test before applying.</strong> A remedy is tried on 3–5 specimen pages before it touches a collection.</li>
+<li><strong>Touch only defective pages.</strong> Pages with verdict <code>ok</code> are never processed again.</li>
+<li><strong>Recompute downstream incrementally.</strong> Only changed pages go to later stages.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="the-loop" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="the-loop"><span class="header-section-number">12.3</span> The loop</h2>
+<div class="cell" data-fig-width="7" data-fig-height="2.6" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="250" viewbox="0.00 0.00 667.18 128.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 124)">
+<title>cure</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-124 663.18,-124 663.18,4 -4,4"></polygon>
+<!-- s0 -->
+<g id="node1" class="node">
+<title>s0</title>
+<polygon fill="none" stroke="black" points="56.55,-120 -0.18,-120 -0.18,-84 56.55,-84 56.55,-120"></polygon>
+<text text-anchor="middle" x="28.18" y="-98.7" font-family="Helvetica,sans-Serif" font-size="11.00">0 Scope</text>
+</g>
+<!-- s1 -->
+<g id="node2" class="node">
+<title>s1</title>
+<polygon fill="none" stroke="black" points="177.83,-120 106.53,-120 106.53,-84 177.83,-84 177.83,-120"></polygon>
+<text text-anchor="middle" x="142.18" y="-98.7" font-family="Helvetica,sans-Serif" font-size="11.00">1 Diagnose</text>
+</g>
+<!-- s0&#45;&gt;s1 -->
+<g id="edge1" class="edge">
+<title>s0-&gt;s1</title>
+<path fill="none" stroke="black" d="M56.68,-102C69.9,-102 83.12,-102 96.34,-102"></path>
+<polygon fill="black" stroke="black" points="96.45,-105.5 106.45,-102 96.45,-98.5 96.45,-105.5"></polygon>
+</g>
+<!-- s2 -->
+<g id="node3" class="node">
+<title>s2</title>
+<polygon fill="none" stroke="black" points="293.32,-120 227.04,-120 227.04,-84 293.32,-84 293.32,-120"></polygon>
+<text text-anchor="middle" x="260.18" y="-98.7" font-family="Helvetica,sans-Serif" font-size="11.00">2 Attribute</text>
+</g>
+<!-- s1&#45;&gt;s2 -->
+<g id="edge2" class="edge">
+<title>s1-&gt;s2</title>
+<path fill="none" stroke="black" d="M178.14,-102C190.95,-102 203.76,-102 216.57,-102"></path>
+<polygon fill="black" stroke="black" points="216.85,-105.5 226.85,-102 216.85,-98.5 216.85,-105.5"></polygon>
+</g>
+<!-- s3 -->
+<g id="node4" class="node">
+<title>s3</title>
+<polygon fill="none" stroke="black" points="463.25,-120 343.12,-120 343.12,-84 463.25,-84 463.25,-120"></polygon>
+<text text-anchor="middle" x="403.18" y="-105.3" font-family="Helvetica,sans-Serif" font-size="11.00">3 Remedy</text>
+<text text-anchor="middle" x="403.18" y="-92.1" font-family="Helvetica,sans-Serif" font-size="11.00">3–5 specimen pages</text>
+</g>
+<!-- s2&#45;&gt;s3 -->
+<g id="edge3" class="edge">
+<title>s2-&gt;s3</title>
+<path fill="none" stroke="black" d="M293.42,-102C306.52,-102 319.61,-102 332.71,-102"></path>
+<polygon fill="black" stroke="black" points="332.73,-105.5 342.73,-102 332.73,-98.5 332.73,-105.5"></polygon>
+</g>
+<!-- s4 -->
+<g id="node5" class="node">
+<title>s4</title>
+<polygon fill="none" stroke="black" points="556.18,-120 513.4,-102 556.18,-84 598.96,-102 556.18,-120"></polygon>
+<text text-anchor="middle" x="556.18" y="-98.7" font-family="Helvetica,sans-Serif" font-size="11.00">4 Gate</text>
+</g>
+<!-- s3&#45;&gt;s4 -->
+<g id="edge4" class="edge">
+<title>s3-&gt;s4</title>
+<path fill="none" stroke="black" d="M463.28,-99.05C474.39,-98.8 485.89,-98.73 496.68,-99 500.42,-99.09 504.28,-99.22 508.17,-99.37"></path>
+<polygon fill="black" stroke="black" points="508.28,-102.88 518.42,-99.81 508.58,-95.88 508.28,-102.88"></polygon>
+</g>
+<!-- s4&#45;&gt;s3 -->
+<g id="edge5" class="edge">
+<title>s4-&gt;s3</title>
+<path fill="none" stroke="black" d="M513.12,-102C500.89,-102 487.24,-102 473.83,-102"></path>
+<polygon fill="black" stroke="black" points="473.65,-98.5 463.65,-102 473.65,-105.5 473.65,-98.5"></polygon>
+<text text-anchor="middle" x="488.38" y="-108" font-family="Helvetica,sans-Serif" font-size="10.00">fail</text>
+</g>
+<!-- s5 -->
+<g id="node9" class="node">
+<title>s5</title>
+<polygon fill="none" stroke="black" points="286.53,-36 177.83,-36 177.83,0 286.53,0 286.53,-36"></polygon>
+<text text-anchor="middle" x="232.18" y="-21.3" font-family="Helvetica,sans-Serif" font-size="11.00">5 Apply</text>
+<text text-anchor="middle" x="232.18" y="-8.1" font-family="Helvetica,sans-Serif" font-size="11.00">flagged pages only</text>
+</g>
+<!-- s4&#45;&gt;s5 -->
+<g id="edge6" class="edge">
+<title>s4-&gt;s5</title>
+<path fill="none" stroke="black" d="M537.08,-92.03C513.76,-81.43 472.88,-63.99 436.18,-54 387.11,-40.65 373.29,-44.67 323.18,-36 314.55,-34.51 305.47,-32.88 296.53,-31.24"></path>
+<polygon fill="black" stroke="black" points="296.98,-27.77 286.51,-29.4 295.71,-34.65 296.98,-27.77"></polygon>
+<text text-anchor="middle" x="484.74" y="-57" font-family="Helvetica,sans-Serif" font-size="10.00">pass</text>
+</g>
+<!-- s8 -->
+<g id="node6" class="node">
+<title>s8</title>
+<polygon fill="none" stroke="black" points="659.18,-36 605.18,-36 605.18,0 659.18,0 659.18,-36"></polygon>
+<text text-anchor="middle" x="632.18" y="-14.7" font-family="Helvetica,sans-Serif" font-size="11.00">8 Learn</text>
+</g>
+<!-- s8&#45;&gt;s2 -->
+<g id="edge10" class="edge">
+<title>s8-&gt;s2</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M605.01,-27.34C593.72,-30.52 580.41,-33.87 568.18,-36 474.81,-52.23 447.02,-28.64 355.7,-54 335.42,-59.63 314.27,-69.56 297.05,-78.84"></path>
+<polygon fill="black" stroke="black" points="294.97,-75.99 287.91,-83.9 298.36,-82.12 294.97,-75.99"></polygon>
+<text text-anchor="middle" x="393.42" y="-57" font-family="Helvetica,sans-Serif" font-size="10.00">next defect class</text>
+</g>
+<!-- s7 -->
+<g id="node7" class="node">
+<title>s7</title>
+<polygon fill="none" stroke="black" points="556.01,-36 442.36,-36 442.36,0 556.01,0 556.01,-36"></polygon>
+<text text-anchor="middle" x="499.18" y="-14.7" font-family="Helvetica,sans-Serif" font-size="11.00">7 Downstream delta</text>
+</g>
+<!-- s7&#45;&gt;s8 -->
+<g id="edge9" class="edge">
+<title>s7-&gt;s8</title>
+<path fill="none" stroke="black" d="M556.07,-18C568.97,-18 581.88,-18 594.78,-18"></path>
+<polygon fill="black" stroke="black" points="595.13,-21.5 605.13,-18 595.13,-14.5 595.13,-21.5"></polygon>
+</g>
+<!-- s6 -->
+<g id="node8" class="node">
+<title>s6</title>
+<polygon fill="none" stroke="black" points="392.64,-36 335.73,-36 335.73,0 392.64,0 392.64,-36"></polygon>
+<text text-anchor="middle" x="364.18" y="-14.7" font-family="Helvetica,sans-Serif" font-size="11.00">6 Certify</text>
+</g>
+<!-- s6&#45;&gt;s7 -->
+<g id="edge8" class="edge">
+<title>s6-&gt;s7</title>
+<path fill="none" stroke="black" d="M392.66,-18C405.81,-18 418.96,-18 432.12,-18"></path>
+<polygon fill="black" stroke="black" points="432.18,-21.5 442.18,-18 432.18,-14.5 432.18,-21.5"></polygon>
+</g>
+<!-- s5&#45;&gt;s6 -->
+<g id="edge7" class="edge">
+<title>s5-&gt;s6</title>
+<path fill="none" stroke="black" d="M286.58,-18C299.5,-18 312.41,-18 325.33,-18"></path>
+<polygon fill="black" stroke="black" points="325.69,-21.5 335.69,-18 325.69,-14.5 325.69,-21.5"></polygon>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>One iteration handles one defect class. After stage 8 the next iteration begins at stage 2 with the next class of the attribution.</p>
+</section>
+<section id="iteration-budget-and-stop-criterion" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="iteration-budget-and-stop-criterion"><span class="header-section-number">12.4</span> Iteration budget and stop criterion</h2>
+<p>Every iteration runs within a page budget and a time budget, declared in the collection’s <code>config/cure.yaml</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">budget</span><span class="kw">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pages_per_iteration</span><span class="kw">:</span><span class="at"> </span><span class="dv">40</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">minutes_per_iteration</span><span class="kw">:</span><span class="at"> </span><span class="dv">90</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">specimen_min</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">specimen_max</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The runner reports pages beyond the budget as <code>deferred</code> and does not process them. A pilot with deferred pages fails. An iteration whose target metric does not improve ends with a report of the measurement; it does not start another run of the same remedy. This rule answers the failure that gave rise to the method: a repair session on copernicus-prim ran for half a day because each unsatisfactory result started a new collection-wide run instead of a narrower test (see <a href="../cure/case-copernicus.html">the Copernicus case</a>).</p>
+</section>
+<section id="one-processing-agent-at-a-time" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="one-processing-agent-at-a-time"><span class="header-section-number">12.5</span> One processing agent at a time</h2>
+<p>Only one process that writes page XML or occupies the OCR engines runs at a time: the targeted re-OCR runner (<code>ocr_runner.cure_run</code>), the normalizer application (<code>normalize_apply --apply</code>), the overlay learning loop (<code>ocr_runner.cure_learn</code>) or a production run (<code>ai-scholar process</code>). On the M1 Ultra a second request to <code>qwen3.8:27b-mlx</code> saturates the GPU; it does not double throughput. The gate and apply ops of the Partitur refuse to start while another such process is live.</p>
+</section>
+<section id="chapters-of-this-part" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="chapters-of-this-part"><span class="header-section-number">12.6</span> Chapters of this part</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Chapter</th>
+<th>Stages</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../cure/diagnose.html">Diagnosis</a></td>
+<td>0 Scope, 1 Diagnose</td>
+</tr>
+<tr class="even">
+<td><a href="../cure/attribute.html">Attribution</a></td>
+<td>2 Attribute</td>
+</tr>
+<tr class="odd">
+<td><a href="../cure/remedy-gate.html">Remedy and gate</a></td>
+<td>3 Remedy, 4 Gate</td>
+</tr>
+<tr class="even">
+<td><a href="../cure/apply.html">Application</a></td>
+<td>5 Apply</td>
+</tr>
+<tr class="odd">
+<td><a href="../cure/certify-downstream.html">Certification and downstream</a></td>
+<td>6 Certify, 7 Downstream</td>
+</tr>
+<tr class="even">
+<td><a href="../cure/learn.html">Learning</a></td>
+<td>8 Learn</td>
+</tr>
+<tr class="odd">
+<td><a href="../cure/reference.html">Reference</a></td>
+<td>metrics, thresholds, models, CLI, schema package</td>
+</tr>
+<tr class="even">
+<td><a href="../cure/case-copernicus.html">The Copernicus case</a></td>
+<td>measured numbers and anti-patterns</td>
+</tr>
+</tbody>
+</table>
+<p>The production pipeline that creates a collection is described in <a href="../production-pipeline.html">The Production Pipeline</a>; the defect codes in <a href="../audit-taxonomy.html">Audit taxonomy</a>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../relax-ng.html" class="pagination-link" aria-label="RELAX NG Layer">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">RELAX NG Layer</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../cure/diagnose.html" class="pagination-link" aria-label="Diagnosis">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Diagnosis</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

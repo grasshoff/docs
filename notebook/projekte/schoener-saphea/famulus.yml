@@ -1,0 +1,11 @@
+id: schoener-saphea
+title: 'Schöner: Saphea und Sonnenuhr'
+defaults:
+  collections:
+  - pirckheimer
+  client: gemini-3.5-flash-lite
+  evidence: grounding
+  locked: true
+  duckdb_root: $PDAI_COLLECTIONS
+  persons:
+  - Schöner

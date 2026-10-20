@@ -1,0 +1,12 @@
+# Festlegung dieser Arbeit. Der Binder liest sie, wenn ein partiturs-Eintrag
+# setting auf diesen Pfad setzt. year_from und year_to sind die Namen,
+# die correspondence-roster heute aus QueryObject.years erwartet.
+setting:
+  id: pirckheimer-1520-1530
+  partitur: query/historical/stage-one
+  description: Briefpartner Pirckheimers, 1520 bis 1530.
+  values:
+    collections: [pirckheimer]
+    year_from: 1520
+    year_to: 1530
+    subtask: correspondence-roster

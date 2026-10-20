@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Attribute und Attributbaum – Famulus Proof</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d5b4e69c7e37b49c6591bcc5116dd748.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-0a7ffee50ecdcac772426c46f9339f28.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Keine Treffer",
+    "search-matching-documents-text": "Treffer",
+    "search-copy-link-title": "Link in die Suche kopieren",
+    "search-hide-matches-text": "Zusätzliche Treffer verbergen",
+    "search-more-match-text": "weitere Treffer in diesem Dokument",
+    "search-more-matches-text": "weitere Treffer in diesem Dokument",
+    "search-clear-button-title": "Zurücksetzen",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Abbrechen",
+    "search-submit-button-title": "Abschicken",
+    "search-label": "Suchen"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Famulus Proof</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Suchen"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navigation umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Übersicht</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-filterung" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Filterung</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-filterung">    
+        <li>
+    <a class="dropdown-item" href="./filterung.html">
+ <span class="dropdown-text">Filterung von Evidenzräumen</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./evidenzobjekte.html">
+ <span class="dropdown-text">Evidenzobjekte</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./attribute.html">
+ <span class="dropdown-text">Attribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./gebrauch.html">
+ <span class="dropdown-text">Lesart des Gebrauchs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ablauf.html">
+ <span class="dropdown-text">Ablauf</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./geschichte.html">
+ <span class="dropdown-text">Geschichte</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./satzrecord.html">
+ <span class="dropdown-text">Satzrecord</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hnlichkeitssuche" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ähnlichkeitssuche</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hnlichkeitssuche">    
+        <li>
+    <a class="dropdown-item" href="./aehnlichkeitssuche.html">
+ <span class="dropdown-text">Ähnlichkeitssuche</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pruefverfahren-aehnlichkeit.html">
+ <span class="dropdown-text">Prüfverfahren</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./validitaetsbaum.html"> 
+<span class="menu-text">Validitätsbaum</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./integration.html"> 
+<span class="menu-text">Sidecar-Integration</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./referenz.html"> 
+<span class="menu-text">Famulus-Referenz</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./landkarte.html"> 
+<span class="menu-text">Landkarte</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#ein-blatt-vorweg" id="toc-ein-blatt-vorweg" class="nav-link active" data-scroll-target="#ein-blatt-vorweg">Ein Blatt vorweg</a></li>
+  <li><a href="#der-schemabaum-des-kármán-nachlasses" id="toc-der-schemabaum-des-kármán-nachlasses" class="nav-link" data-scroll-target="#der-schemabaum-des-kármán-nachlasses">Der Schemabaum des Kármán-Nachlasses</a></li>
+  <li><a href="#vorlagen-und-karten" id="toc-vorlagen-und-karten" class="nav-link" data-scroll-target="#vorlagen-und-karten">Vorlagen und Karten</a></li>
+  <li><a href="#drei-werte-je-ebene-eine-regel" id="toc-drei-werte-je-ebene-eine-regel" class="nav-link" data-scroll-target="#drei-werte-je-ebene-eine-regel">Drei Werte, je Ebene eine Regel</a></li>
+  <li><a href="#filterattribute" id="toc-filterattribute" class="nav-link" data-scroll-target="#filterattribute">Was sich filtern lässt</a>
+  <ul class="collapse">
+  <li><a href="#aehnlich" id="toc-aehnlich" class="nav-link" data-scroll-target="#aehnlich">Ähnliche Ausdrücke</a></li>
+  </ul></li>
+  <li><a href="#der-fast-index" id="toc-der-fast-index" class="nav-link" data-scroll-target="#der-fast-index">Der Fast Index</a></li>
+  <li><a href="#der-suchbaum-als-minimale-theorie" id="toc-der-suchbaum-als-minimale-theorie" class="nav-link" data-scroll-target="#der-suchbaum-als-minimale-theorie">Der Suchbaum als minimale Theorie</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Attribute und Attributbaum</h1>
+<p class="subtitle lead">Kategorie, Unterkategorie, Aspekt: was einem Evidenzobjekt zukommt und wie eine Frage es festlegt</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">8. Oktober 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled" title="Der Attributbaum in einem Satz">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tipp</span>Der Attributbaum in einem Satz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Die Attribute einer Collection bilden einen Baum mit drei Ebenen, Kopf, Inhalt und Text. Jedes Blatt nennt, an welcher Objektart es hängt, woher es in DTD und DuckDB kommt, welcher Klassifikator einen Wert der Frage auf Schlüssel abbildet und wann ein Objekt unentschieden bleibt. Eine Frage wählt Blätter dieses Baums und verbindet sie zu einer minimalen Theorie.</p>
+</div>
+</div>
+<section id="ein-blatt-vorweg" class="level2">
+<h2 class="anchored" data-anchor-id="ein-blatt-vorweg">Ein Blatt vorweg</h2>
+<div class="specimen" data-label="BLATT">
+<p><code>kopf/korrespondenz/absender</code></p>
+<p>Ebene <strong>Kopf</strong>, Objekt <strong>Brief</strong>; DTD <code>letter:sender</code>, <code>letter:letter@sender</code>; Quelle <code>fq_letters.sender_id</code>; Klassifikator <strong>person</strong>; einwertig (ein Brief hat einen Absender); unentschieden, wenn kein Absender verzeichnet ist.</p>
+<p>Frage: <em>Briefe von Theodor von Kármán</em> → Schlüssel <code>P000224</code> → 2.514 Briefe erfüllt, 6.563 verletzt, 6.899 unentschieden.</p>
+</div>
+<p>Dasselbe Einzelding kann an zwei Blättern hängen. <em>Kármán schrieb</em> ist <code>kopf/korrespondenz/absender</code>; <em>Kármán wird erwähnt</em> ist <code>text/nennung/person</code>. Die Personen-Id ist dieselbe, das Attribut nicht: das eine verzeichnet der Briefdatensatz, das andere trägt ein Satz. Die Klassifikation entscheidet die Rolle aus der Satzfunktion der Frage („schrieb X“, „an X“, „erwähnt X“), nicht aus dem Namen.</p>
+</section>
+<section id="der-schemabaum-des-kármán-nachlasses" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="der-schemabaum-des-kármán-nachlasses">Der Schemabaum des Kármán-Nachlasses</h2>
+<p>Die Karte <code>karten/karman-nachlass.yaml</code> (Abschnitt <code>schemabaum</code>) deklariert ihn; <code>schemakarte.pruefen_schemabaum</code> prüft jedes Blatt gegen die DTD, das Sidecar und die Stanza-Datenbank. Die Zahl der Postings ist aus DuckDB gelesen.</p>
+<div class="column-page">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 10%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 10%">
+<col style="width: 15%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Knoten</th>
+<th>Objekte</th>
+<th>DTD</th>
+<th>Quelle</th>
+<th>Klassifikator</th>
+<th>unentschieden, wenn</th>
+<th style="text-align: right;">Postings</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Kopf</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td><code>kopf/korrespondenz/absender</code></td>
+<td>brief</td>
+<td><code>letter:sender</code>, <code>letter:letter@sender</code></td>
+<td><code>fq_letters.sender_id</code></td>
+<td>person</td>
+<td>kein Wert verzeichnet</td>
+<td style="text-align: right;">9.077</td>
+</tr>
+<tr class="odd">
+<td><code>kopf/korrespondenz/empfaenger</code></td>
+<td>brief</td>
+<td><code>letter:addressee</code>, <code>letter:letter@recipient</code></td>
+<td><code>fq_letters.recipient_id</code></td>
+<td>person</td>
+<td>kein Wert verzeichnet</td>
+<td style="text-align: right;">6.900</td>
+</tr>
+<tr class="even">
+<td><code>kopf/ort/absendeort</code></td>
+<td>brief</td>
+<td><code>letter:place</code>, <code>letter:letter@place</code></td>
+<td><code>fq_letters.place</code></td>
+<td>ort</td>
+<td>kein Wert verzeichnet</td>
+<td style="text-align: right;">7.332</td>
+</tr>
+<tr class="odd">
+<td><code>kopf/zeit/datum</code></td>
+<td>brief</td>
+<td><code>letter:date</code>, <code>letter:letter@date-when</code></td>
+<td><code>fq_letters.date_day</code></td>
+<td>zeit</td>
+<td>Intervall überlappt nur, oder kein Datum</td>
+<td style="text-align: right;">15.976</td>
+</tr>
+<tr class="even">
+<td><code>kopf/zeit/periode</code></td>
+<td>brief</td>
+<td>—</td>
+<td><code>fq_letter_period.period_id</code></td>
+<td>periode</td>
+<td>kein Wert verzeichnet</td>
+<td style="text-align: right;">7.841</td>
+</tr>
+<tr class="odd">
+<td><code>kopf/ueberlieferung/band</code></td>
+<td>brief</td>
+<td>—</td>
+<td><code>fq_letters.doc_id</code></td>
+<td>geschlossen</td>
+<td>kein Wert verzeichnet</td>
+<td style="text-align: right;">15.976</td>
+</tr>
+<tr class="even">
+<td><code>kopf/sprache</code></td>
+<td>brief</td>
+<td><code>letter:letter@lang</code></td>
+<td><code>fq_letters.language</code></td>
+<td>geschlossen</td>
+<td>kein Wert verzeichnet</td>
+<td style="text-align: right;">15.173</td>
+</tr>
+<tr class="odd">
+<td><strong>Inhalt</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td><code>inhalt/regest</code></td>
+<td>brief</td>
+<td><code>letter:regest</code></td>
+<td><code>fq_letters.regest</code></td>
+<td>form</td>
+<td>kein Wert verzeichnet</td>
+<td style="text-align: right;">454.329</td>
+</tr>
+<tr class="odd">
+<td><code>inhalt/thema</code></td>
+<td>brief</td>
+<td>—</td>
+<td><code>fq_letter_topics.topic_id</code></td>
+<td>thema</td>
+<td>nie ausschließend (Facette nicht gemessen)</td>
+<td style="text-align: right;">47.031</td>
+</tr>
+<tr class="even">
+<td><code>inhalt/akt</code></td>
+<td>brief</td>
+<td>—</td>
+<td><code>fq_acts.act_type</code></td>
+<td>geschlossen</td>
+<td>kein Wert verzeichnet</td>
+<td style="text-align: right;">4.867</td>
+</tr>
+<tr class="odd">
+<td><code>inhalt/verzeichnet/person</code></td>
+<td>brief</td>
+<td>—</td>
+<td><code>fq_letter_entities.ent_id</code></td>
+<td>person</td>
+<td>kein Wert verzeichnet</td>
+<td style="text-align: right;">35.031</td>
+</tr>
+<tr class="even">
+<td><code>inhalt/verzeichnet/ort</code></td>
+<td>brief</td>
+<td>—</td>
+<td><code>fq_letter_entities.ent_id</code></td>
+<td>ort_einzelding</td>
+<td>kein Wert verzeichnet</td>
+<td style="text-align: right;">18.998</td>
+</tr>
+<tr class="odd">
+<td><code>inhalt/verzeichnet/institution</code></td>
+<td>brief</td>
+<td>—</td>
+<td><code>fq_letter_entities.ent_id</code></td>
+<td>institution</td>
+<td>kein Wert verzeichnet</td>
+<td style="text-align: right;">24.065</td>
+</tr>
+<tr class="even">
+<td><code>inhalt/tag</code></td>
+<td>brief</td>
+<td>—</td>
+<td><code>fq_letters.tags</code></td>
+<td>geschlossen</td>
+<td>kein Wert verzeichnet</td>
+<td style="text-align: right;">54.066</td>
+</tr>
+<tr class="odd">
+<td><strong>Text</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td><code>text/nennung/person</code></td>
+<td>satz, fussnote</td>
+<td><code>page:main</code>, <code>page:fn</code></td>
+<td><code>fq_mentions.ent_id</code></td>
+<td>person</td>
+<td>kein Text dieser Objektarten</td>
+<td style="text-align: right;">60.010</td>
+</tr>
+<tr class="odd">
+<td><code>text/nennung/ort</code></td>
+<td>satz</td>
+<td><code>page:main</code></td>
+<td><code>fq_mentions.ent_id</code></td>
+<td>ort_einzelding</td>
+<td>kein Text dieser Objektarten</td>
+<td style="text-align: right;">39.012</td>
+</tr>
+<tr class="even">
+<td><code>text/nennung/institution</code></td>
+<td>satz</td>
+<td><code>page:main</code></td>
+<td><code>fq_mentions.ent_id</code></td>
+<td>institution</td>
+<td>kein Text dieser Objektarten</td>
+<td style="text-align: right;">30.455</td>
+</tr>
+<tr class="odd">
+<td><code>text/lexik/lemma</code></td>
+<td>satz</td>
+<td><code>page:main</code></td>
+<td><code>stz_tokens.lemma</code></td>
+<td>lemma</td>
+<td>kein Text dieser Objektarten</td>
+<td style="text-align: right;">6.315.601</td>
+</tr>
+<tr class="even">
+<td><code>text/lexik/form</code></td>
+<td>satz, fussnote, absatz</td>
+<td><code>page:main</code>, <code>page:fn</code>, <code>page:p</code></td>
+<td><code>stz_tokens.form</code></td>
+<td>form</td>
+<td>kein Text dieser Objektarten</td>
+<td style="text-align: right;">12.546.568</td>
+</tr>
+<tr class="odd">
+<td><code>text/lexik/terminus</code></td>
+<td>satz</td>
+<td><code>page:main</code></td>
+<td><code>stz_tokens.lemma</code></td>
+<td>terminus</td>
+<td>kein Text dieser Objektarten</td>
+<td style="text-align: right;">die Lemma-Postings</td>
+</tr>
+<tr class="even">
+<td><code>text/satzlinguistik/satzrolle</code></td>
+<td>satz</td>
+<td><code>page:main</code></td>
+<td><code>stz_deps.deprel</code></td>
+<td>satzrolle</td>
+<td>kein Text dieser Objektarten</td>
+<td style="text-align: right;">8.711.986 Abhängigkeiten (<code>stz_deps</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>text/absatzart</code></td>
+<td>absatz</td>
+<td><code>page:p</code>, <code>page:marginal</code>, <code>page:table</code></td>
+<td><code>fq_paragraphs.kind</code></td>
+<td>geschlossen</td>
+<td>kein Text dieser Objektarten</td>
+<td style="text-align: right;">482.693</td>
+</tr>
+<tr class="even">
+<td><code>text/seitenzahl</code></td>
+<td>seite</td>
+<td><code>page:page@printed-page</code></td>
+<td><code>fq_page_labels.label</code></td>
+<td>geschlossen</td>
+<td>kein Text dieser Objektarten</td>
+<td style="text-align: right;">4.927</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="vorlagen-und-karten" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="vorlagen-und-karten">Vorlagen und Karten</h2>
+<p>Der Schemabaum oben ist die Vorlage für Korrespondenzen (<code>karten/_vorlagen/korrespondenz.yaml</code>). Eine Karte übernimmt sie mit <code>vorlage: korrespondenz</code> und nennt nur, was in ihrer Collection anders ist: Blätter ohne Quelle (<code>schemabaum_ohne</code>), andere DTD-Elemente (<code>dtd_ersatz</code>), andere Felder eines Blatts (<code>blatt_ersatz</code>), andere Zuordnungen einer Objektart (<code>objekte</code>). Für die Wäfler-, Kepler- und Copernicus-Collections gibt es eine zweite Vorlage (<code>dokumente</code>): Träger ist das Dokument, sein Kopf ist der bibliographische Datensatz (Verfasser, Jahr, Titel, Gattung, Sprache), sein Text die Seiten.</p>
+<div class="column-page">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 14%">
+<col style="width: 11%">
+<col style="width: 4%">
+<col style="width: 22%">
+<col style="width: 20%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Collection</th>
+<th>Karte</th>
+<th>Vorlage</th>
+<th style="text-align: right;">Blätter</th>
+<th>ohne</th>
+<th>ersetzt</th>
+<th>Datenbank</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kármán-Nachlass</td>
+<td><code>karten/karman-nachlass.yaml</code></td>
+<td><code>korrespondenz</code></td>
+<td style="text-align: right;">23</td>
+<td>—</td>
+<td>—</td>
+<td><code>karman-nachlass_fql.duckdb</code></td>
+</tr>
+<tr class="even">
+<td>Hevelius</td>
+<td><code>karten/hevelius.yaml</code></td>
+<td><code>korrespondenz</code></td>
+<td style="text-align: right;">21</td>
+<td><code>inhalt/verzeichnet/ort</code>, <code>text/nennung/ort</code></td>
+<td><code>inhalt/regest</code>, <code>kopf/korrespondenz/absender</code>, <code>kopf/korrespondenz/empfaenger</code>, <code>kopf/ort/absendeort</code>, <code>kopf/zeit/datum</code>, <code>text/absatzart</code></td>
+<td><code>hevelius_fql.duckdb</code></td>
+</tr>
+<tr class="odd">
+<td>Euler, Briefwechsel (IVA)</td>
+<td><code>karten/eulerOO-IVA.yaml</code></td>
+<td><code>korrespondenz</code></td>
+<td style="text-align: right;">19</td>
+<td><code>inhalt/verzeichnet</code>, <code>text/nennung/ort</code></td>
+<td>—</td>
+<td><code>eulerOO-IVA_fql.duckdb</code></td>
+</tr>
+<tr class="even">
+<td>Pirckheimer</td>
+<td><code>karten/pirckheimer.yaml</code></td>
+<td><code>korrespondenz</code></td>
+<td style="text-align: right;">11</td>
+<td><code>inhalt/thema</code>, <code>inhalt/akt</code>, <code>inhalt/verzeichnet</code>, <code>inhalt/tag</code>, <code>inhalt/regest</code>, <code>kopf/zeit/periode</code>, <code>text/nennung/ort</code>, <code>text/nennung/institution</code>, <code>text/absatzart</code>, <code>text/seitenzahl</code></td>
+<td><code>text/nennung/person</code></td>
+<td><code>pirckheimer_fql.duckdb</code></td>
+</tr>
+<tr class="odd">
+<td>Wäfler, Primärquellen</td>
+<td><code>karten/waefler-prim.yaml</code></td>
+<td><code>dokumente</code></td>
+<td style="text-align: right;">12</td>
+<td>—</td>
+<td>—</td>
+<td><code>waefler-prim_fx.duckdb</code></td>
+</tr>
+<tr class="even">
+<td>Wäfler, Sekundärliteratur</td>
+<td><code>karten/waefler-sec.yaml</code></td>
+<td><code>dokumente</code></td>
+<td style="text-align: right;">12</td>
+<td>—</td>
+<td>—</td>
+<td><code>waefler-sec_fx.duckdb</code></td>
+</tr>
+<tr class="odd">
+<td>Kepler, Gesammelte Werke</td>
+<td><code>karten/kepler-prim.yaml</code></td>
+<td><code>dokumente</code></td>
+<td style="text-align: right;">12</td>
+<td>—</td>
+<td>—</td>
+<td><code>kepler-prim_fx.duckdb</code></td>
+</tr>
+<tr class="even">
+<td>Kepler, Sekundärliteratur</td>
+<td><code>karten/kepler-sec.yaml</code></td>
+<td><code>dokumente</code></td>
+<td style="text-align: right;">12</td>
+<td>—</td>
+<td>—</td>
+<td><code>kepler-sec_fx.duckdb</code></td>
+</tr>
+<tr class="odd">
+<td>Copernicus, Primärquellen</td>
+<td><code>karten/copernicus-prim.yaml</code></td>
+<td><code>dokumente</code></td>
+<td style="text-align: right;">12</td>
+<td>—</td>
+<td>—</td>
+<td><code>copernicus-prim_fx.duckdb</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Gestrichen wird ein Blatt nur, wenn die Collection keine Quelle dafür hat. Ein Blatt ohne Quelle wäre nicht harmlos: ein Textblatt ohne Treffer schließt jeden Brief mit Text aus. So hat keines der Register von Hevelius, Euler und Pirckheimer Orte als Einzeldinge, und eine Ortsnennung kann dort nicht als verknüpfte Nennung gelesen werden; das Blatt <code>text/nennung/ort</code> fehlt deshalb in diesen Karten. Hevelius trägt den Briefkopf als Attribute von <code>&lt;letter&gt;</code> (<code>letter@sender</code>, <code>letter@recipient</code>, …), nicht als Elemente; die Karte ersetzt die DTD-Verweise.</p>
+</section>
+<section id="drei-werte-je-ebene-eine-regel" class="level2">
+<h2 class="anchored" data-anchor-id="drei-werte-je-ebene-eine-regel">Drei Werte, je Ebene eine Regel</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Ebene</th>
+<th>erfüllt</th>
+<th>verletzt</th>
+<th>unentschieden</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kopf</td>
+<td>der verzeichnete Wert ist einer der Schlüssel</td>
+<td>ein anderer Wert ist verzeichnet</td>
+<td>kein Wert verzeichnet</td>
+</tr>
+<tr class="even">
+<td>Kopf, Datum</td>
+<td>das Intervall des Briefs liegt im gefragten</td>
+<td>die Intervalle sind disjunkt</td>
+<td>sie überlappen nur, oder kein Datum</td>
+</tr>
+<tr class="odd">
+<td>Inhalt</td>
+<td>wie Kopf</td>
+<td>wie Kopf</td>
+<td>wie Kopf; beim Thema nie verletzt, solange die Facette nicht gemessen ist</td>
+</tr>
+<tr class="even">
+<td>Text</td>
+<td>ein enthaltenes Objekt trägt den Wert</td>
+<td>der Brief hat Text dieser Objektarten, keines trägt ihn</td>
+<td>der Brief hat keinen solchen Text</td>
+</tr>
+</tbody>
+</table>
+<p>Ein negiertes Blatt schließt nur aus, was es <em>erfüllt</em>. Ein <strong>strenges</strong> Blatt behandelt <em>unentschieden</em> wie <em>verletzt</em>: Präzision statt Recall, gewählt in der Verfeinerung, nie still.</p>
+<p>Beim Text liest die Nennung einer Person die <strong>Lesart des Gebrauchs</strong>: jedes Vorkommen des Namens im Satz wird nach seiner Rolle in der Satzanalyse einer Klasse zugeordnet (Person, Urheber, Eponym, Beiwort, Literaturangabe, andere Person), und nur die Klassen, die die Frage verlangt, erfüllen das Blatt. Ein Satz, in dem der Name nur als Eponym („Prandtl number“), als Beiwort („Prandtl’schen Profil-Theorie“) oder in einer Literaturangabe steht, nennt die Person nicht und ist verletzt. Ein Vorkommen, das keine Bedingung trifft, und ein Treffer ohne lesbares Vorkommen (Fußnote, entstellte Form) bleiben unentschieden; eine Wortform allein erfüllt das Blatt nicht mehr. → <a href="./gebrauch.html">Lesart des Gebrauchs</a></p>
+</section>
+<section id="filterattribute" class="level2">
+<h2 class="anchored" data-anchor-id="filterattribute">Was sich filtern lässt</h2>
+<p>Ein Wert der Frage wird ein Schlüssel, bevor die Suche läuft. Dieselbe Personen-Id trifft jede Schreibweise; ein Datum trifft ein Intervall; ein Lemma trifft jede Flexion.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Attribut</th>
+<th>Die Frage darf nennen</th>
+<th>Der Schlüssel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Person</strong> — Absender, Empfänger, verzeichnete Person, Nennung im Text</td>
+<td>jede Schreibweise des Namens</td>
+<td>die Personen-Id (<code>ind_id</code>). Im Text die Stanza-Lemmaklassen des Registernachnamens: jedes Token mit dem Lemma <em>Hitler</em> oder <em>Einstein</em> (auch <em>Einsteins</em>, wenn Stanza es so lemmatisiert), kein Präfix-Abgleich</td>
+</tr>
+<tr class="even">
+<td><strong>Ort</strong> — Absendeort, verzeichneter Ort, Nennung</td>
+<td>den Ortsnamen, auch mit Beinamen hinter dem Komma</td>
+<td>die Ortsschlüssel; im Text die gefalteten Wörter der Registernamen (<em>Nürnberg</em>, <em>Nuernberg</em>)</td>
+</tr>
+<tr class="odd">
+<td><strong>Institution</strong> — verzeichnet, im Text genannt</td>
+<td>den Namen</td>
+<td>die Institutions-Id und die Formen der Registernamen</td>
+</tr>
+<tr class="even">
+<td><strong>Datum</strong></td>
+<td>Jahr, Monat, Tag oder Spanne</td>
+<td>ein geschlossenes Tagesintervall. <code>1933</code> das Jahr, <code>1933-03</code> der März, <code>1933-03-15</code> der Tag, <code>1930/1933</code> die Jahre 1930 bis 1933. Ein Brief, der nur das Jahr trägt, überlappt einen Monat und bleibt unentschieden</td>
+</tr>
+<tr class="odd">
+<td><strong>Periode</strong></td>
+<td>einen benannten Zeitraum</td>
+<td>die <code>period_id</code>, deren Bezeichnung den Ausdruck enthält</td>
+</tr>
+<tr class="even">
+<td><strong>Lemma</strong></td>
+<td>eine Wortform oder ihr Lemma</td>
+<td>alle Stanza-Klassen <code>Lemma\|Sprache</code> dieser Form. <em>Vertrag</em> trifft <em>Vertrages</em>, <em>Verträge</em></td>
+</tr>
+<tr class="odd">
+<td><strong>Wortform</strong></td>
+<td>ein Token</td>
+<td>die gefaltete Form, auch in Fußnote, Absatz und Bildunterschrift</td>
+</tr>
+<tr class="even">
+<td><strong>Terminus</strong></td>
+<td>einen Fachausdruck</td>
+<td>die Bedeutung im Wörterbuch von LWgrammar, die verwandten Bedeutungen und deren Lemmata. Ohne Eintrag bleibt das Blatt eine Lücke</td>
+</tr>
+<tr class="odd">
+<td><strong>Satzrolle</strong></td>
+<td><code>nsubj:Prandtl</code></td>
+<td>die Sätze, in denen dieses Lemma Subjekt, Objekt oder eine andere Abhängigkeit ist</td>
+</tr>
+<tr class="even">
+<td><strong>Geschlossene Liste</strong> — Sprache, Gattung, Akt, Tag, Band, Absatzart, Seitenzahl</td>
+<td>ein Wort der Liste oder sein Synonym</td>
+<td>den verzeichneten Code: <em>Latein</em> → <code>la</code>, <em>Buch</em> → <code>book</code>, <em>deutsch</em> → <code>de</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Verfasser, Jahr, Titel</strong> eines Dokuments</td>
+<td>Name, Erscheinungsjahr, Wort des Titels</td>
+<td>Namensschlüssel ohne Register, das Jahr als Intervall, die Wörter des Titels. Vorlage <code>dokumente</code> (Wäfler, Kepler, Copernicus)</td>
+</tr>
+</tbody>
+</table>
+<p>Ohne Register (Wäfler, Kepler, Copernicus) hat ein Name keine Personen-Id. Er trifft die Lemmaklassen seiner Namensschlüssel. Ein Namensvetter lässt sich dort nicht von der Person trennen.</p>
+<section id="aehnlich" class="level3">
+<h3 class="anchored" data-anchor-id="aehnlich">Ähnliche Ausdrücke</h3>
+<p>Ähnliche Wendungen, Verben und Sätze sucht dieses Blatt über Embeddings. Es steht noch nicht: Der Filter fragt die Embeddings heute nicht ab, und bis es steht, sucht ein Fachausdruck über den Terminus. Ein Satz ohne Sprachcode gilt als Latein.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Sprache des Satzes</th>
+<th>Modell</th>
+<th>Speicher</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Latein</td>
+<td><code>bge-m3</code>, 1024 Dimensionen, ohne Präfix</td>
+<td><code>{coll}_sentences</code></td>
+</tr>
+<tr class="even">
+<td>jede andere Sprache</td>
+<td>EmbeddingGemma 2, <code>embeddinggemma-2:270m-bf16-text</code>, 768 Dimensionen. Anfrage <code>task: search result \| query:</code>, Text <code>title: none \| text:</code></td>
+<td><code>{coll}_sentences_gemma</code></td>
+</tr>
+</tbody>
+</table>
+<p>GLiNER2.5 ist seit dem 8. Oktober 2026 aus der PDAI-Pipeline. Ein fertiger <code>bge-m3</code>-Speicher wird nicht neu gebaut. Fehlt die Gemma-Collection, sucht eine nicht-lateinische Anfrage weiter dort. Das Gold ist noch <code>vorgeschlagen</code>. Die Messung steht in <a href="./aehnlichkeitssuche.html">Ähnlichkeitssuche</a>.</p>
+</section>
+</section>
+<section id="der-fast-index" class="level2">
+<h2 class="anchored" data-anchor-id="der-fast-index">Der Fast Index</h2>
+<p>Bevor gesucht wird, wird jeder Wert der Frage klassifiziert (<code>evidenzraum/fastindex.py</code>). Die Suche vergleicht danach keine Zeichenketten mehr.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Person</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Zeit</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Lemma</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Terminus</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false" href="">Satzrolle</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-6" role="tab" aria-controls="tabset-1-6" aria-selected="false" href="">Geschlossen</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-7" role="tab" aria-controls="tabset-1-7" aria-selected="false" href="">Name ohne Register</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p><em>Theodor von Kármán</em> → das Register bindet den Namen an <code>P000224</code> (eine Form genau dieses Einzeldings, sonst wählt die Identitätsinstruktion unter den Kandidaten mit der Frage als Kontext). Passt ein Name auf mehrere Kandidaten gleich gut, wird das Blatt ihre Disjunktion, mit Grund; keiner wird still gewählt. Für ein Textblatt wird die Person auf die Lemmaklassen abgebildet, die Stanza den Wortformen ihres Registernachnamens zugewiesen hat (genaues Nachschlagen in <code>fx_lemma_form</code>, kein Präfix, keine Ähnlichkeit). Jedes Token einer solchen Klasse ist ein Kandidat, gleich wie es geschrieben ist: <em>Prandtl</em> bekommt <code>Prandtl|en</code>, <code>Prandtl|de</code>, <code>PRANDTL|en</code>, die lateinische Flexion <code>prandtlum|la</code> …; Klassen mit nur einem Token gelten als Rauschen des Taggers. Ob ein Kandidat die Person meint, entscheidet die <a href="./gebrauch.html">Lesart des Gebrauchs</a>.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p><em>1933</em> → <code>[1933-01-01, 1933-12-31]</code>; <em>1933-03</em> → <code>[1933-03-01, 1933-03-31]</code>; <em>1930/1933</em> → <code>[1930-01-01, 1933-12-31]</code>. Ein Brief, der nur das Jahr 1933 trägt, hat das Intervall des ganzen Jahres; für die Frage nach dem März überlappt es nur und bleibt unentschieden.</p>
+<p><em>Welche Briefe schrieb Theodor von Kármán im März 1933?</em> Das Datumsblatt <code>1933-03</code> entscheidet 8 Briefe als erfüllt, 8.707 als verletzt und 7.261 als unentschieden; darunter 11 Briefe, die nur das Jahr 1933 tragen: ihr Intervall überlappt den März. Minimalität: aus den Blättern 1930/1939 und 1933 bleibt 1933; gestrichen ist 1930/1939 (folgt aus j1 (1933)).</p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p><em>Vertrag</em> → <code>Vertrag|de</code> (42 Formen), <code>vertragen|de</code> (2 Formen): alle Lemmaklassen, die Stanza der Form oder dem Wort als Lemma gegeben hat, mit Sprache. Jede Flexion zählt.</p>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<p>Ein Fachterminus wird als Bedeutung gesucht, nicht als Schreibweise. Der Ausdruck wird im Wörterbuch von LWgrammar nachgeschlagen (<code>term_entry</code>, <code>term_sense</code>), eingeschränkt auf die Kontextklasse der Collection; verwandte Bedeutungen kommen aus <code>sense_relation</code>, ihre Lemmata und die belegten Sätze (<code>sense_locus</code>) werden die Schlüssel. Ohne Eintrag ist das Blatt eine Lücke, keine Zeichenkettensuche:</p>
+<blockquote class="blockquote">
+<p><code>text/lexik/terminus</code> = turbulence: turbulence: Lücke — 3 Stichwort/Stichwörter im Wörterbuch der Collection (karman-nachlass:turbulence:en, karman-nachlass:turbulence:en+de, karman-nachlass:turbulence:de+en), aber keine Bedeutung (lw_sense); Rückstufung auf das Lemma nur nach Bestätigung</p>
+</blockquote>
+<p>Das Wörterbuch des Kármán-Nachlasses hat 73 Stichwörter und 21.337 Belegzettel, aber keine Bedeutung (<code>lw_sense</code> ist leer). Eine Rückstufung auf das Lemma ist möglich, aber nur, wenn der Eigentümer sie bestätigt.</p>
+</div>
+<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<p><em>nsubj:Prandtl</em> → die Sätze, in denen ein Wort mit dem gefalteten Lemma <em>prandtl</em> das Subjekt ist (<code>stz_deps.deprel = 'nsubj'</code>). Das trennt „Prandtl zeigt, dass …“ von „über Prandtl“.</p>
+</div>
+<div id="tabset-1-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-6-tab">
+<p>Sprache, Akttyp, Tag, Gattung, Band, Absatzart, Seitenzahl: der Wert muss einer der verzeichneten sein, mit den Synonymen der Vorlage (<em>deutsch</em> → <code>german</code>, <em>Latein</em> → <code>la</code>, <em>Buch</em> → <code>book</code>). Ohne Synonym wäre <em>Latein</em> kein Wert der Liste <code>de, en, fr, la</code>; so hat die Messung es gefunden.</p>
+</div>
+<div id="tabset-1-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-7-tab">
+<p>In einer Collection, deren Namen nicht im Register stehen (Wäfler), wird ein Name auf seine Namensschlüssel klassifiziert (<em>Markus Wäfler</em> → <code>wafler</code>, dieselbe Faltung wie das Register) und auf deren Lemmaklassen. Der Verfasser eines Dokuments trägt dieselben Schlüssel als Posting. Es gibt keine Lesart: ohne Register kann ein Satz einen Namensvetter nicht von der Person unterscheiden.</p>
+<p>Orte und Institutionen bekommen auch in einer Korrespondenz einen Formenvorrat: die gefalteten Wörter ihrer Registernamen, als genaue Formen. Sonst fände ein Ortsblatt nur die verknüpften Nennungen und schlösse jeden Brief aus, dessen Text den Ort unverknüpft nennt.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="der-suchbaum-als-minimale-theorie" class="level2">
+<h2 class="anchored" data-anchor-id="der-suchbaum-als-minimale-theorie">Der Suchbaum als minimale Theorie</h2>
+<p>Ein Suchbaum ist eine Disjunktion von Clustern; ein Cluster ist eine Konjunktion von Blättern. Das ist dieselbe Form wie die Minimaltheorie der Regularitätstheorie der Kausalität (Graßhoff und May 2001): ein Bündel von Clustern, deren jeder für sich hinreicht. Drei Bedingungen halten den Baum minimal und sinnvoll:</p>
+<ul>
+<li><strong>Ein positiver Faktor je Cluster.</strong> Ein Cluster nur aus Negationen hält nichts fest; er wird zurückgewiesen.</li>
+<li><strong>Kein Blatt folgt aus einem anderen.</strong> Folgt ein Blatt aus einem anderen desselben Clusters, fügt es der Konjunktion nichts hinzu und wird gestrichen, mit Grund. Das Jahr 1543 impliziert das Intervall 1540–1550; gestrichen wird das Intervall. Eine Schlüsselmenge impliziert jede Obermenge.</li>
+<li><strong>Einheit der Konjunktion.</strong> Ein Cluster sagt, woran seine Textblätter gemeinsam hängen: an demselben <strong>Satz</strong> („ein Satz, der <em>Vertrag</em> und <em>Hitler</em> enthält“) oder nur an demselben <strong>Brief</strong>. Kopf- und Inhaltsblätter entscheiden immer am Brief.</li>
+</ul>
+<p>Zwei positive Blätter eines einwertigen Attributs mit unvereinbaren Werten (zwei Absender, disjunkte Zeiträume) widersprechen sich; der Widerspruch wird gemeldet, bevor eine Anweisung läuft.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Kopiert");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Kopiert");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

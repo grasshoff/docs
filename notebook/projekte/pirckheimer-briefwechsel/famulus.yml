@@ -1,0 +1,9 @@
+id: pirckheimer-briefwechsel
+title: Pirckheimers Briefpartner 1520–1530
+defaults:
+  collections:
+  - pirckheimer
+  client: gemini-3.5-flash-lite
+  evidence: grounding
+  locked: true
+  duckdb_root: $PDAI_COLLECTIONS

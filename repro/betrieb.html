@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Betrieb – Famulus Repro</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e9ffef92cdba039cd9f354581f2d08e4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-3c5d738871792cd3597d1e3af193bffb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Keine Treffer",
+    "search-matching-documents-text": "Treffer",
+    "search-copy-link-title": "Link in die Suche kopieren",
+    "search-hide-matches-text": "Zusätzliche Treffer verbergen",
+    "search-more-match-text": "weitere Treffer in diesem Dokument",
+    "search-more-matches-text": "weitere Treffer in diesem Dokument",
+    "search-clear-button-title": "Zurücksetzen",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Abbrechen",
+    "search-submit-button-title": "Abschicken",
+    "search-label": "Suchen"
+  }
+}</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Famulus Repro</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Suchen"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navigation umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Architektur</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./reproplatz.html"> 
+<span class="menu-text">Reproplatz</span></a>
+  </li>  
+  <li class="nav-item">
+    <span class="nav-link"> 
+<span class="menu-text">Verbindung</span></span>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-pipeline" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Pipeline</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-pipeline">    
+        <li>
+    <a class="dropdown-item" href="./geometrie.html">
+ <span class="dropdown-text">Geometrie</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./tonwert.html">
+ <span class="dropdown-text">Tonwert</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ocr.html">
+ <span class="dropdown-text">OCR</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./partitur.html"> 
+<span class="menu-text">Partitur</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./pdai-ablage.html"> 
+<span class="menu-text">Dateiformat</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./backstage-ui.html"> 
+<span class="menu-text">Backstage</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./cli.html"> 
+<span class="menu-text">CLI</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./betrieb.html"> 
+<span class="menu-text">Betrieb</span></a>
+  </li>  
+  <li class="nav-item">
+    <span class="nav-link"> 
+<span class="menu-text">Entwicklung</span></span>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./konstruktion.html">Konstruktion &amp; Betrieb</a></li><li class="breadcrumb-item"><a href="./betrieb.html">Betrieb</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">System &amp; Aufnahme</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Abschnitt umschalten">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Repro — Architektur &amp; Gesamtsystem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reproplatz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Der Reproplatz — Aufbau und Auslöselogik</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <span class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mac und iPhone verbinden</span></span>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Verarbeitungspipeline</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Abschnitt umschalten">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geometrie.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Geometrische Rektifizierung</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tonwert.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Archivischer Tonwert und Schärfung</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ocr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">On-Device Struktur-OCR</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Orchestrierung &amp; Daten</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Abschnitt umschalten">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./partitur.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Partitur-Nachbearbeitung</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pdai-ablage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">PDAI-Dateiformat und Ablagestruktur</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Bedienung &amp; Diagnose</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Abschnitt umschalten">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backstage-ui.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mac Backstage — Bedienung und Bedienphilosophie</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cli.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entwickler-CLI: famulus-pipeline</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Konstruktion &amp; Betrieb</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Abschnitt umschalten">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./konstruktion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Konstruktion und Dateikatalog</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./betrieb.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Betrieb</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <span class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entwickler- und Wiederherstellungsschleife</span></span>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#gesamtablauf-im-überblick" id="toc-gesamtablauf-im-überblick" class="nav-link active" data-scroll-target="#gesamtablauf-im-überblick"><span class="header-section-number">1</span> Gesamtablauf im Überblick</a></li>
+  <li><a href="#buchscan-schritt-für-schritt" id="toc-buchscan-schritt-für-schritt" class="nav-link" data-scroll-target="#buchscan-schritt-für-schritt"><span class="header-section-number">2</span> Buchscan — Schritt für Schritt</a>
+  <ul class="collapse">
+  <li><a href="#vorbereitung-einmalig-je-sitzung" id="toc-vorbereitung-einmalig-je-sitzung" class="nav-link" data-scroll-target="#vorbereitung-einmalig-je-sitzung"><span class="header-section-number">2.1</span> 1. Vorbereitung (einmalig je Sitzung)</a></li>
+  <li><a href="#aufnehmen" id="toc-aufnehmen" class="nav-link" data-scroll-target="#aufnehmen"><span class="header-section-number">2.2</span> 2. Aufnehmen</a></li>
+  <li><a href="#qualitäts-chip-nachbessern" id="toc-qualitäts-chip-nachbessern" class="nav-link" data-scroll-target="#qualitäts-chip-nachbessern"><span class="header-section-number">2.3</span> 3. Qualitäts-Chip „Nachbessern”</a></li>
+  <li><a href="#ergebnis-und-ablage" id="toc-ergebnis-und-ablage" class="nav-link" data-scroll-target="#ergebnis-und-ablage"><span class="header-section-number">2.4</span> 4. Ergebnis und Ablage</a></li>
+  <li><a href="#extended-ocr-und-partitur" id="toc-extended-ocr-und-partitur" class="nav-link" data-scroll-target="#extended-ocr-und-partitur"><span class="header-section-number">2.5</span> 5. Extended OCR und Partitur</a></li>
+  </ul></li>
+  <li><a href="#einzelblatt-scan-schritt-für-schritt" id="toc-einzelblatt-scan-schritt-für-schritt" class="nav-link" data-scroll-target="#einzelblatt-scan-schritt-für-schritt"><span class="header-section-number">3</span> Einzelblatt-Scan — Schritt für Schritt</a>
+  <ul class="collapse">
+  <li><a href="#vorlage-wählen" id="toc-vorlage-wählen" class="nav-link" data-scroll-target="#vorlage-wählen"><span class="header-section-number">3.1</span> 1. Vorlage wählen</a></li>
+  <li><a href="#aufnehmen-1" id="toc-aufnehmen-1" class="nav-link" data-scroll-target="#aufnehmen-1"><span class="header-section-number">3.2</span> 2. Aufnehmen</a></li>
+  <li><a href="#sofortige-benennung-aus-transkript" id="toc-sofortige-benennung-aus-transkript" class="nav-link" data-scroll-target="#sofortige-benennung-aus-transkript"><span class="header-section-number">3.3</span> 3. Sofortige Benennung aus Transkript</a></li>
+  <li><a href="#dubletten-erkennen-und-aufräumen" id="toc-dubletten-erkennen-und-aufräumen" class="nav-link" data-scroll-target="#dubletten-erkennen-und-aufräumen"><span class="header-section-number">3.4</span> 4. Dubletten erkennen und aufräumen</a></li>
+  <li><a href="#extended-ocr-beleg-xml-und-json" id="toc-extended-ocr-beleg-xml-und-json" class="nav-link" data-scroll-target="#extended-ocr-beleg-xml-und-json"><span class="header-section-number">3.5</span> 5. Extended OCR (Beleg-XML und JSON)</a></li>
+  </ul></li>
+  <li><a href="#reprocessing-und-ocr-neulauf" id="toc-reprocessing-und-ocr-neulauf" class="nav-link" data-scroll-target="#reprocessing-und-ocr-neulauf"><span class="header-section-number">4</span> Reprocessing und OCR-Neulauf</a>
+  <ul class="collapse">
+  <li><a href="#neu-verarbeiten-aus-master" id="toc-neu-verarbeiten-aus-master" class="nav-link" data-scroll-target="#neu-verarbeiten-aus-master"><span class="header-section-number">4.1</span> „Neu verarbeiten (aus Master)”</a></li>
+  <li><a href="#t-ocr-für-alle-seiten-erneuern" id="toc-t-ocr-für-alle-seiten-erneuern" class="nav-link" data-scroll-target="#t-ocr-für-alle-seiten-erneuern"><span class="header-section-number">4.2</span> <code>⌘⇧T</code> — OCR für alle Seiten erneuern</a></li>
+  </ul></li>
+  <li><a href="#capture-settings-persistenz" id="toc-capture-settings-persistenz" class="nav-link" data-scroll-target="#capture-settings-persistenz"><span class="header-section-number">5</span> Capture-Settings-Persistenz</a></li>
+  <li><a href="#batch-ocr-monitoring" id="toc-batch-ocr-monitoring" class="nav-link" data-scroll-target="#batch-ocr-monitoring"><span class="header-section-number">6</span> Batch-OCR Monitoring</a></li>
+  <li><a href="#laufende-quittungen-sammlung" id="toc-laufende-quittungen-sammlung" class="nav-link" data-scroll-target="#laufende-quittungen-sammlung"><span class="header-section-number">7</span> Laufende QUITTUNGEN-Sammlung</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./konstruktion.html">Konstruktion &amp; Betrieb</a></li><li class="breadcrumb-item"><a href="./betrieb.html">Betrieb</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Betrieb</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled" title="Betrieb in einem Satz">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tipp</span>Betrieb in einem Satz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ein Scan-Durchgang läuft von Kamera-Auslösen bis zur fertig benannten Datei vollautomatisch — der Nutzer wählt nur Vorlage und Partitur; alles andere entscheidet die Pipeline.</p>
+</div>
+</div>
+<p>Dieses Kapitel beschreibt den Tagesbetrieb: Buchscan und Einzelblatt-Scan von Anfang bis Ende, mit allen Zwischenzuständen, Rückmeldungen und Nachbearbeitungsschritten, die der Nutzer sieht oder auslösen kann.</p>
+<section id="gesamtablauf-im-überblick" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="gesamtablauf-im-überblick"><span class="header-section-number">1</span> Gesamtablauf im Überblick</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    phone["iPhone CameraService\n(48 MP + LiDAR)"] --&gt; lock["DocumentDetector lock\nstage1→stage2"]
+    lock --&gt; shutter["pageCaptured\n+ Tiefensnapshot"]
+    shutter --&gt; link["ReproLink TCP 8765\nFrame-Transfer"]
+    link --&gt; backstage["BackstageController\nEmpfang + Dispatch"]
+    backstage --&gt; pipeline["PDAIBackendPipeline\nRektifizierung + Ton + OCR"]
+    pipeline --&gt; geo["PageGeometry\nGutterFinder + Quality-Gates"]
+    geo --&gt; tone["ArchivalToneEngine\nFlat-Field + S-Kurve"]
+    tone --&gt; vision["OCRService Vision\nTranskript lokal"]
+    vision --&gt; store["Documents/Scans\nmaster NNN.heic + page NNN/"]
+    store --&gt; batch["PartiturClient\nasync Batch 5401"]
+    batch --&gt; xml["ext.xml + receipt.json\nbzw. page.json"]
+    xml --&gt; rename["renamePageArtefacts\nnur Einzelblatt"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Der Gesamtfluss endet im Buchmode mit einem benannten Ordner und XML je Seite; im Einzelblatt-Modus zusätzlich mit Ordner- und Dateiumbenennung nach <code>[klasse]-Firma-Datum-Betrag-Währung</code>.</p>
+<hr>
+</section>
+<section id="buchscan-schritt-für-schritt" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="buchscan-schritt-für-schritt"><span class="header-section-number">2</span> Buchscan — Schritt für Schritt</h2>
+<section id="vorbereitung-einmalig-je-sitzung" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="vorbereitung-einmalig-je-sitzung"><span class="header-section-number">2.1</span> 1. Vorbereitung (einmalig je Sitzung)</h3>
+<p>Im rechten Inspektor:</p>
+<ul>
+<li>Vorlage: <strong>Buch</strong></li>
+<li>Ausrichtung: <code>topOnRight</code> (Standard, iPhone quer mit Oberkante rechts)</li>
+<li>Buchtyp-Overlay wählen, falls für dieses Buch bereits einer existiert (z. B. „Hevelius”)</li>
+<li>Batch-OCR-Toggle: Ein (Standard) für Gemini-Batch mit 50-%-Kostenrabatt; Aus für sofortigen Sync-Pfad (Ollama/local)</li>
+</ul>
+<p>Capture-Settings werden nach jeder Aufnahme automatisch persistiert und bei der nächsten Sitzung wiederhergestellt (<code>CaptureSettingsStore</code>).</p>
+</section>
+<section id="aufnehmen" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="aufnehmen"><span class="header-section-number">2.2</span> 2. Aufnehmen</h3>
+<p>iPhone über dem Buch, App öffnen → Kamera wird gestartet. Sobald der Rahmen stabil erkannt und die Lock-Bedingungen erfüllt sind (<code>stage2Locked</code>), leuchtet der Sucher-Rand <strong>grün</strong> auf.</p>
+<p>Auslösen: Leertaste am Mac (Fernauslöser), Volume-Taste am iPhone, oder Tap auf den Shutter-Button. Die App löst <strong>nur</strong> aus, wenn der Rahmen gesperrt ist.</p>
+<p>Nach dem Auslösen: - Der Master (HEIC, 48 MP) wird per ReproLink an den Mac übertragen. - Backstage zeigt sofort einen <strong>Platzhalter-Thumb</strong> in der Seitenleiste (Busy-Zustand, keine Wartezeit für den Nutzer). - Die Pipeline startet im Hintergrund: Geometrie → Tonwert → Vision-OCR. - Sobald Vision-OCR abgeschlossen ist, erscheint das verarbeitete Seitenbild im Thumb.</p>
+</section>
+<section id="qualitäts-chip-nachbessern" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="qualitäts-chip-nachbessern"><span class="header-section-number">2.3</span> 3. Qualitäts-Chip „Nachbessern”</h3>
+<p>Jede Spreite bekommt nach dem Verarbeiten ein Qualitäts-Gate-Ergebnis:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Chip</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(kein Chip)</td>
+<td>Alle Quality-Gates bestanden</td>
+</tr>
+<tr class="even">
+<td><strong>Nachbessern</strong> (gelb)</td>
+<td>Residualneigung &gt; 0,15° oder Scale-Mismatch &gt; 6 %</td>
+</tr>
+<tr class="odd">
+<td><strong>Neu aufnehmen</strong> (rot)</td>
+<td>Paper-Coverage &lt; 35 % oder Score-Gate fehlgeschlagen</td>
+</tr>
+</tbody>
+</table>
+<p>Ein Klick auf den Chip öffnet die Spreite mit Diagnose im Detailbereich. Dort ist auch ein direktes Reshoot möglich.</p>
+</section>
+<section id="ergebnis-und-ablage" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="ergebnis-und-ablage"><span class="header-section-number">2.4</span> 4. Ergebnis und Ablage</h3>
+<p>Für jede Doppelseite entstehen in <code>~/Documents/Scans/&lt;Dokumentname&gt;/</code>:</p>
+<pre><code>masters/
+  master_NNN.heic         — 48-MP-Kamerabild
+page_NNN/                 — Linke Seite
+  page_NNN.jpg            — Verarbeitetes Seitenbild
+  page_NNN.json           — GeometryReport + ToneReport + OCRResult
+  page_NNN.txt            — Flachtext-Transkript (Vision-OCR)
+  page_NNN.ext.xml        — Extended-OCR-Ergebnis (DTD-konformes Buch-XML)
+  page_NNN.ext.txt        — Flachtext aus ext.xml
+page_NNN+1/               — Rechte Seite (analog)
+metadata/
+  page_selection.json     — Pagenum-Overrides, Reihenfolge-Korrekturen (nie direkt in XML)
+document.json             — Dokumentregister, Partitur-Status</code></pre>
+</section>
+<section id="extended-ocr-und-partitur" class="level3" data-number="2.5">
+<h3 data-number="2.5" class="anchored" data-anchor-id="extended-ocr-und-partitur"><span class="header-section-number">2.5</span> 5. Extended OCR und Partitur</h3>
+<p>Extended OCR läuft asynchron über den Orchestrator:</p>
+<ul>
+<li><code>PartiturClient</code> sendet alle Seitenbilder als Batch an den <code>repro_extended_ocr_agent</code>.</li>
+<li>Gemini-Batch (<code>gemini-3.8-flash</code>) verarbeitet mit 50-%-Kostenrabatt; typische Queue-Zeit: 3–10 Min.</li>
+<li>Nach Rückgabe schreibt der Client <code>page_NNN.ext.xml</code> und <code>page_NNN.ext.txt</code>.</li>
+<li>Der <strong>XML-Tab</strong> in <code>PageDetailView</code> zeigt das formatierte Buchblatt-XML (Warm-Papier-Stil).</li>
+</ul>
+<p>„Partitur anwenden” löst einen separaten Lauf für Buch-Bibliographie (<code>repro_book_agent</code>) oder Buchtyp-Klassifizierung (<code>repro_booktype_agent</code>) aus.</p>
+<p><code>⌘⇧T</code> startet OCR für alle Seiten neu, <strong>ohne</strong> die verarbeiteten Seitenbilder zu verändern.</p>
+<hr>
+</section>
+</section>
+<section id="einzelblatt-scan-schritt-für-schritt" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="einzelblatt-scan-schritt-für-schritt"><span class="header-section-number">3</span> Einzelblatt-Scan — Schritt für Schritt</h2>
+<section id="vorlage-wählen" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="vorlage-wählen"><span class="header-section-number">3.1</span> 1. Vorlage wählen</h3>
+<p>Im Inspektor: Vorlage → <strong>Einzelblatt</strong>. Der Rahmen-Erkennungsmodus wechselt auf Belegsuche: Die App erkennt das weiße Rechteck auf dem schwarzen Untergrund und zoomt darauf, statt eine A4-Buchspreite zu erwarten.</p>
+</section>
+<section id="aufnehmen-1" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="aufnehmen-1"><span class="header-section-number">3.2</span> 2. Aufnehmen</h3>
+<p>Beleg auf schwarzem Untergrund, ausreichend Abstand wählen (kleine Belege wie Bustickets können bis 8 cm herangehen). Sucher-Rand leuchtet grün bei stabiler Erkennung.</p>
+<p>Nach dem Auslösen erscheint der Beleg sofort im Kontaktbogen. Die Vision-OCR läuft on-device in ≤ 3 s.</p>
+</section>
+<section id="sofortige-benennung-aus-transkript" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="sofortige-benennung-aus-transkript"><span class="header-section-number">3.3</span> 3. Sofortige Benennung aus Transkript</h3>
+<p><code>ReceiptClassifier</code> extrahiert aus dem Vision-OCR-Transkript: - Händlername (bereinigt, max. 20 Zeichen) - Datum (<code>TT-MM-JJJJ</code>) - Gesamtbetrag (2 Dezimalstellen) - Währung (<code>EUR</code>, <code>CHF</code>, …) - Klasse (<code>Taxi</code>, <code>parking</code>, <code>pharma</code>, usw. — oder leer für offene Klasse)</p>
+<p>Der Ordner wird sofort umbenannt: <code>[klasse]-Firma-Datum-Betrag-Währung</code> (z. B. <code>[parking]-Schadowstrasse-15-08-2026-3.50-EUR</code>).</p>
+<p><strong>Erfolgs-Feedback:</strong> Wenn Extraktion und Umbenennung erfolgreich sind, ertönt ein kurzer heller Ton.</p>
+<p><strong>Fehler-Feedback:</strong> Scheitert die Strukturextraktion (kein erkennbarer Betrag, kein Datum), ertönt ein dunkles Brummen — Signal zum Wiederholen der Aufnahme.</p>
+</section>
+<section id="dubletten-erkennen-und-aufräumen" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="dubletten-erkennen-und-aufräumen"><span class="header-section-number">3.4</span> 4. Dubletten erkennen und aufräumen</h3>
+<p>Wenn zwei Aufnahmen denselben Datei-Stem (Firma + Datum + Betrag) ergeben, erscheint ein 🔁-Icon auf beiden Thumbs in der Seitenleiste. Klick darauf öffnet <code>DuplicateSelectionView</code>: beide Seiten nebeneinander, „Behalten” / „Archivieren” je Seite. Archivierte Seiten landen in <code>&lt;Dokumentordner&gt;/archive/</code>.</p>
+</section>
+<section id="extended-ocr-beleg-xml-und-json" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="extended-ocr-beleg-xml-und-json"><span class="header-section-number">3.5</span> 5. Extended OCR (Beleg-XML und JSON)</h3>
+<p><code>repro_receipt_ocr_agent</code> verarbeitet sowohl Bild als auch Transkript: - Schreibt <code>&lt;stem&gt;.ext.xml</code> (DTD <code>repro_receipt.dtd</code>) mit vollem Beleg-Schema: Händler, Adresse, Positionen, Steuern, Zahlung, TSE, Reise-/Treibstoff-/Parkdaten. - Schreibt <code>&lt;stem&gt;.receipt.json</code> — Flat-Contract aller DTD-Attribute für Mac-App-Konsum. - DTD-Validierungsstatus und eventuelle Fehler stehen in den <code>dtd_valid</code>/<code>dtd_errors</code>-Attributen der Wurzel.</p>
+<p>Der <strong>XML-Tab</strong> zeigt das Beleg-XML als stilisierten Thermobon (warm, kompakt, Klasse-Badge), der <strong>Daten-Tab</strong> zeigt <code>receipt.json</code> als lesbares Key-Value-Layout.</p>
+<hr>
+</section>
+</section>
+<section id="reprocessing-und-ocr-neulauf" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="reprocessing-und-ocr-neulauf"><span class="header-section-number">4</span> Reprocessing und OCR-Neulauf</h2>
+<section id="neu-verarbeiten-aus-master" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="neu-verarbeiten-aus-master"><span class="header-section-number">4.1</span> „Neu verarbeiten (aus Master)”</h3>
+<p>Rechtsklick auf eine Spreite im Kontaktbogen → „Neu verarbeiten”. Startet die vollständige Pipeline neu, beginnend mit dem gespeicherten Master, ohne den Master zu verändern.</p>
+<p>Mit dem Schraubenschlüssel-Symbol oben in der Backstage startet der Neuverarbeitungs-Sweep für <strong>alle</strong> Spreiten des Dokuments. Nach dem Sweep läuft automatisch Extended-OCR für alle geänderten Seiten.</p>
+</section>
+<section id="t-ocr-für-alle-seiten-erneuern" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="t-ocr-für-alle-seiten-erneuern"><span class="header-section-number">4.2</span> <code>⌘⇧T</code> — OCR für alle Seiten erneuern</h3>
+<p>Startet Extended-OCR für alle Seiten neu, <strong>ohne</strong> Seitenbilder neu zu erzeugen. Nützlich nach Orchestrator-Update oder Partitur-Änderung.</p>
+<hr>
+</section>
+</section>
+<section id="capture-settings-persistenz" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="capture-settings-persistenz"><span class="header-section-number">5</span> Capture-Settings-Persistenz</h2>
+<p>Die folgenden Einstellungen werden automatisch nach jeder Änderung persistiert und beim nächsten Start wiederhergestellt:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Einstellung</th>
+<th>Schlüssel</th>
+<th>Wertebereich</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Vorlage</td>
+<td><code>captureMode</code></td>
+<td><code>book</code> / <code>receipt</code></td>
+</tr>
+<tr class="even">
+<td>Buchausrichtung</td>
+<td><code>orientation</code></td>
+<td><code>topOnRight</code> / <code>topOnLeft</code> / <code>topOnTop</code></td>
+</tr>
+<tr class="odd">
+<td>Kopierständer-Modus</td>
+<td><code>copyStandMode</code></td>
+<td>Bool</td>
+</tr>
+<tr class="even">
+<td>Rahmen-Padding</td>
+<td><code>framePadding</code></td>
+<td>0 %–20 %, Standard 8 %</td>
+</tr>
+<tr class="odd">
+<td>Flat-Field</td>
+<td><code>flatFieldEnabled</code></td>
+<td>Bool</td>
+</tr>
+<tr class="even">
+<td>Batch-OCR</td>
+<td><code>batchOCREnabled</code></td>
+<td>Bool</td>
+</tr>
+<tr class="odd">
+<td>Orchestrator-URL</td>
+<td><code>FamulusReproOrchestratorURL</code></td>
+<td>URL-String</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="batch-ocr-monitoring" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="batch-ocr-monitoring"><span class="header-section-number">6</span> Batch-OCR Monitoring</h2>
+<p>Der linke Seitenleisten-Fußbereich zeigt: - <strong>„Batch läuft…“</strong> mit geschätzter ETA (aus historischen Queue-Zeiten) - Fertig-Badge, sobald alle offenen Seiten das Batch-Ergebnis haben</p>
+<hr>
+</section>
+<section id="laufende-quittungen-sammlung" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="laufende-quittungen-sammlung"><span class="header-section-number">7</span> Laufende QUITTUNGEN-Sammlung</h2>
+<p>Als Beispiel für den Alltag: der Scan-Ordner <code>~/Documents/Scans/QUITTUNGEN/</code> enthält alle Einzelbelege der laufenden Buchführung. Jeder neue Scan landet dort, wird sofort benannt und der Extended-OCR-Batch-Queue zugestellt. Die OCR-Ergebnisse stehen nach wenigen Minuten als DTD-konformes Beleg-XML und Flat-JSON zur Verfügung.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Kopiert");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Kopiert");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Famulus Repro · lettreai</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Gerd Graßhoff · 2026</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

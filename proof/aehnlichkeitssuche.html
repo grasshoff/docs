@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Ähnlichkeitssuche – Famulus Proof</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d5b4e69c7e37b49c6591bcc5116dd748.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-0a7ffee50ecdcac772426c46f9339f28.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Keine Treffer",
+    "search-matching-documents-text": "Treffer",
+    "search-copy-link-title": "Link in die Suche kopieren",
+    "search-hide-matches-text": "Zusätzliche Treffer verbergen",
+    "search-more-match-text": "weitere Treffer in diesem Dokument",
+    "search-more-matches-text": "weitere Treffer in diesem Dokument",
+    "search-clear-button-title": "Zurücksetzen",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Abbrechen",
+    "search-submit-button-title": "Abschicken",
+    "search-label": "Suchen"
+  }
+}</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Famulus Proof</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Suchen"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navigation umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Übersicht</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-filterung" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Filterung</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-filterung">    
+        <li>
+    <a class="dropdown-item" href="./filterung.html">
+ <span class="dropdown-text">Filterung von Evidenzräumen</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./evidenzobjekte.html">
+ <span class="dropdown-text">Evidenzobjekte</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./attribute.html">
+ <span class="dropdown-text">Attribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./gebrauch.html">
+ <span class="dropdown-text">Lesart des Gebrauchs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ablauf.html">
+ <span class="dropdown-text">Ablauf</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./geschichte.html">
+ <span class="dropdown-text">Geschichte</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./satzrecord.html">
+ <span class="dropdown-text">Satzrecord</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hnlichkeitssuche" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ähnlichkeitssuche</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hnlichkeitssuche">    
+        <li>
+    <a class="dropdown-item" href="./aehnlichkeitssuche.html">
+ <span class="dropdown-text">Ähnlichkeitssuche</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pruefverfahren-aehnlichkeit.html">
+ <span class="dropdown-text">Prüfverfahren</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./validitaetsbaum.html"> 
+<span class="menu-text">Validitätsbaum</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./integration.html"> 
+<span class="menu-text">Sidecar-Integration</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./referenz.html"> 
+<span class="menu-text">Famulus-Referenz</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./landkarte.html"> 
+<span class="menu-text">Landkarte</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#ein-beispiel-vorweg" id="toc-ein-beispiel-vorweg" class="nav-link active" data-scroll-target="#ein-beispiel-vorweg">Ein Beispiel vorweg</a></li>
+  <li><a href="#die-funktion" id="toc-die-funktion" class="nav-link" data-scroll-target="#die-funktion">Die Funktion</a></li>
+  <li><a href="#was-gemessen-wurde" id="toc-was-gemessen-wurde" class="nav-link" data-scroll-target="#was-gemessen-wurde">Was gemessen wurde</a>
+  <ul class="collapse">
+  <li><a href="#grenzen-der-messung" id="toc-grenzen-der-messung" class="nav-link" data-scroll-target="#grenzen-der-messung">Grenzen der Messung</a></li>
+  </ul></li>
+  <li><a href="#speicher" id="toc-speicher" class="nav-link" data-scroll-target="#speicher">Speicher</a></li>
+  <li><a href="#was-noch-nicht-gemessen-ist" id="toc-was-noch-nicht-gemessen-ist" class="nav-link" data-scroll-target="#was-noch-nicht-gemessen-ist">Was noch nicht gemessen ist</a></li>
+  <li><a href="#entscheidung-vom-8.-oktober-2026" id="toc-entscheidung-vom-8.-oktober-2026" class="nav-link" data-scroll-target="#entscheidung-vom-8.-oktober-2026">Entscheidung vom 8. Oktober 2026</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Ähnlichkeitssuche</h1>
+<p class="subtitle lead">Ähnliche Wörter, Verben und Wendungen im Lemmaindex einer Collection</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">8. Oktober 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled" title="Die Ähnlichkeitssuche in einem Satz">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tipp</span>Die Ähnlichkeitssuche in einem Satz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Zu einem Wort (einem Verb, einer Wendung) gibt die Ähnlichkeitssuche die Lemmata des Index zurück, die ihm in der Bedeutung nahestehen, mit ihrer Häufigkeit und ihren Fundstellen. Sie ist <strong>spezifiziert und gemessen, aber noch nicht gebaut</strong>: Der Filter fragt die Embeddings heute nicht ab. Die Messung sagt, welches Embedding dafür nicht taugt und dass bisher keines die Aufgabe gut löst.</p>
+</div>
+</div>
+<section id="ein-beispiel-vorweg" class="level2">
+<h2 class="anchored" data-anchor-id="ein-beispiel-vorweg">Ein Beispiel vorweg</h2>
+<p>Welche Verben stehen <em>versprechen</em> nahe? Im Pilotkorpus (kepler-prim, nur Verben des Deutschen) ordnen die Modelle so:</p>
+<div class="specimen" data-label="NACHBARN VON VERSPRECHEN">
+<p><code>bge-m3</code>: <em>zusprechen</em>, <em>schwören</em>, <em>gewähren</em>, <em>verpflichten</em>, <em>aussagen</em></p>
+<p>EmbeddingGemma 2 (bf16, Präfix): <em>vertrauen</em>, <em>versichern</em>, <em>versehen</em>, <em>verpflichten</em>, <em>vorschlagen</em></p>
+<p>qwen3-embedding 0.6b: <em>entsprechen</em>, <em>ansprechen</em>, <em>besprechen</em>, <em>versichern</em>, <em>vorsagen</em></p>
+</div>
+<p>Das ist der Befund, der die Frage bestimmt. Die Nachbarn sind gefiltert (Sprache Deutsch, Wortart Verb, nicht die Anfrage selbst), und trotzdem steht bei zwei Modellen neben echten Verwandten (<em>versichern</em>, <em>verpflichten</em>) Verben, die nur dieselbe Vorsilbe oder Wortendung tragen (<em>versehen</em>, <em>entsprechen</em>, <em>besprechen</em>). Ein Satz-Embedding, das ein einzelnes Wort ohne Kontext bekommt, vergleicht zum Teil die Schreibung. Die Synonyme, die das vorgeschlagene Gold mit der höchsten Note führt (<em>zusagen</em>, <em>geloben</em>, <em>verheißen</em>), fehlen in allen drei Listen. Bei <code>bge-m3</code> steht <em>verheißen</em> auf Rang 16, <em>zusagen</em> und <em>geloben</em> stehen hinter Rang 50; bei den beiden anderen Modellen liegen alle drei hinter Rang 50.</p>
+</section>
+<section id="die-funktion" class="level2">
+<h2 class="anchored" data-anchor-id="die-funktion">Die Funktion</h2>
+<p>Eingabe ist ein Wort mit Sprache. Ausgabe sind Lemmata des Index, nicht Wortformen, jedes mit seiner Zahl im Korpus und mit Fundstellen, damit jeder Treffer ein adressierbarer Beleg ist.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    wort["Wort und Sprache"]
+    lemma["Lemma bestimmen (Stanza)"]
+    filter["Kandidaten filtern"]
+    rang["nach Kosinus ordnen"]
+    aus["Lemma, Zahl, Fundstellen"]
+    wort --&gt; lemma
+    lemma --&gt; filter
+    filter --&gt; rang
+    rang --&gt; aus
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Die Reihenfolge ist Absicht: <strong>zuerst filtern, dann ordnen</strong>. Der Filter ist exakt und entscheidet ohne Modell, welche Einträge des Index überhaupt Nachbarn sein dürfen (<code>famulus_proof.aehnlichkeit.kandidaten</code>). Das Embedding ordnet nur, was übrig bleibt.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Filter</th>
+<th>Wirkung</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sprache</td>
+<td>nur Lemmata der Sprache der Anfrage; beim Sprachwechsel nur die Zielsprache</td>
+</tr>
+<tr class="even">
+<td>Art</td>
+<td>Lemma oder Wendung</td>
+</tr>
+<tr class="odd">
+<td>Wortart</td>
+<td>bei einem Verb nur Verben</td>
+</tr>
+<tr class="even">
+<td>Mindestzahl <code>n</code></td>
+<td>seltene Lemmata, meist OCR-Rauschen, scheiden aus; ein Wert wird erst gesetzt, wenn das Prüfverfahren ihn misst</td>
+</tr>
+<tr class="odd">
+<td>nicht die Anfrage</td>
+<td>das Wort ist nicht sein eigener Nachbar</td>
+</tr>
+</tbody>
+</table>
+<p>Die Zahl <code>n</code> steht in dem Zählmodus, den jede genannte Zahl tragen muss (<em>canonical</em>: nur das Lemma, kleingeschrieben; ein Satz ist durch das Tripel <code>(doc_id, pidx, sent_idx)</code> bestimmt). Im Pilot wird nach Sprache, Art und Wortart gefiltert; das Vokabular des Pilots enthält nur Einträge mit mindestens drei Vorkommen und, bei Lemmata, mindestens drei Buchstaben. Der Filter wirkt nicht allein: Im Beispiel oben hat er die Verben nicht von den Vorsilben-Nachbarn getrennt. Die Mindestzahl ist zweischneidig: <em>geloben</em> und <em>verheißen</em> kommen in der Stichprobe je sechsmal vor, eine hohe Schwelle entfernte also gerade die gesuchten Synonyme.</p>
+<p>Beobachtet wurde außerdem, dass das Wendungsvokabular Zweiwortfolgen mit Funktionswörtern enthält (<em>es natura</em>, <em>natura licet</em>), die bei der Anfrage <em>lex natura</em> unter den Nachbarn stehen. Das ist eine Eigenschaft des Vokabulars, nicht des Embeddings.</p>
+</section>
+<section id="was-gemessen-wurde" class="level2">
+<h2 class="anchored" data-anchor-id="was-gemessen-wurde">Was gemessen wurde</h2>
+<p>Der Pilot (8. Oktober 2026) verglich Embeddings an vier Aufgaben auf einer Stichprobe von kepler-prim: Wendung (<em>lex naturae</em>), Verb (<em>versprechen</em>), Satz und Sprachwechsel (<em>versprechen</em> zu <em>promitto</em>). Das Gold sind Noten 0 bis 2, die <code>gemini-3.5-flash-lite</code> aus dem gemeinsamen Pool der besten 15 jedes Arms <strong>vorgeschlagen</strong> hat. Es zählt als Gold erst nach Ihrer Bestätigung (<code>gold_overrides.json</code>); bis dahin ist jedes Urteil vorläufig. Das Verfahren steht in <a href="./pruefverfahren-aehnlichkeit.html">Prüfverfahren der Ähnlichkeitssuche</a>.</p>
+<p>nDCG@10, je höher desto besser (1 ist die ideale Ordnung der bekannten Treffer):</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Arm</th>
+<th style="text-align: right;">Wendung</th>
+<th style="text-align: right;">Verb</th>
+<th style="text-align: right;">Satz</th>
+<th style="text-align: right;">Sprachwechsel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>bge-m3 (Produktion)</td>
+<td style="text-align: right;">0,575</td>
+<td style="text-align: right;">0,378</td>
+<td style="text-align: right;">0,216</td>
+<td style="text-align: right;">0,380</td>
+</tr>
+<tr class="even">
+<td>EmbeddingGemma 2, bf16, Präfix</td>
+<td style="text-align: right;">0,501</td>
+<td style="text-align: right;">0,386</td>
+<td style="text-align: right;">0,237</td>
+<td style="text-align: right;">0,395</td>
+</tr>
+<tr class="odd">
+<td>EmbeddingGemma 2, Standard-Tag, Präfix</td>
+<td style="text-align: right;">0,484</td>
+<td style="text-align: right;">0,391</td>
+<td style="text-align: right;">0,254</td>
+<td style="text-align: right;">0,361</td>
+</tr>
+<tr class="even">
+<td>qwen3-embedding 0.6b</td>
+<td style="text-align: right;">0,478</td>
+<td style="text-align: right;">0,307</td>
+<td style="text-align: right;">0,096</td>
+<td style="text-align: right;">0,325</td>
+</tr>
+<tr class="odd">
+<td>GLiNER2.5, Encoder</td>
+<td style="text-align: right;">0,305</td>
+<td style="text-align: right;">0,143</td>
+<td style="text-align: right;">0,029</td>
+<td style="text-align: right;">0,064</td>
+</tr>
+<tr class="even">
+<td>GLiNER2.5, Nachsortierung</td>
+<td style="text-align: right;">0,318</td>
+<td style="text-align: right;">0,205</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">0,208</td>
+</tr>
+<tr class="odd">
+<td>GLiNER2.5, Extraktor</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">0,043</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td><em>Anfragen</em></td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">18</td>
+</tr>
+</tbody>
+</table>
+<p>Ob ein Unterschied trägt, entscheidet der gepaarte Bootstrap über die Anfragen, nicht der Abstand der Mittelwerte:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 25%">
+<col style="width: 18%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Arm gegen bge-m3</th>
+<th>Funktion</th>
+<th style="text-align: right;">Differenz nDCG@10</th>
+<th>95 %-Intervall</th>
+<th>Urteil</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>EmbeddingGemma 2, bf16, Präfix</td>
+<td>Wendung</td>
+<td style="text-align: right;">-0,074</td>
+<td>-0,208 bis +0,010</td>
+<td>unentschieden</td>
+</tr>
+<tr class="even">
+<td>EmbeddingGemma 2, bf16, Präfix</td>
+<td>Verb</td>
+<td style="text-align: right;">+0,008</td>
+<td>-0,096 bis +0,125</td>
+<td>unentschieden</td>
+</tr>
+<tr class="odd">
+<td>EmbeddingGemma 2, bf16, Präfix</td>
+<td>Satz</td>
+<td style="text-align: right;">+0,020</td>
+<td>-0,067 bis +0,117</td>
+<td>unentschieden</td>
+</tr>
+<tr class="even">
+<td>EmbeddingGemma 2, bf16, Präfix</td>
+<td>Sprachwechsel</td>
+<td style="text-align: right;">+0,015</td>
+<td>-0,058 bis +0,093</td>
+<td>unentschieden</td>
+</tr>
+<tr class="odd">
+<td>EmbeddingGemma 2, Standard-Tag, Präfix</td>
+<td>Wendung</td>
+<td style="text-align: right;">-0,091</td>
+<td>-0,220 bis -0,009</td>
+<td>schlechter</td>
+</tr>
+<tr class="even">
+<td>EmbeddingGemma 2, Standard-Tag, Präfix</td>
+<td>Verb</td>
+<td style="text-align: right;">+0,013</td>
+<td>-0,092 bis +0,130</td>
+<td>unentschieden</td>
+</tr>
+<tr class="odd">
+<td>EmbeddingGemma 2, Standard-Tag, Präfix</td>
+<td>Satz</td>
+<td style="text-align: right;">+0,038</td>
+<td>-0,062 bis +0,137</td>
+<td>unentschieden</td>
+</tr>
+<tr class="even">
+<td>EmbeddingGemma 2, Standard-Tag, Präfix</td>
+<td>Sprachwechsel</td>
+<td style="text-align: right;">-0,019</td>
+<td>-0,080 bis +0,046</td>
+<td>unentschieden</td>
+</tr>
+<tr class="odd">
+<td>qwen3-embedding 0.6b</td>
+<td>Wendung</td>
+<td style="text-align: right;">-0,097</td>
+<td>-0,249 bis +0,057</td>
+<td>unentschieden</td>
+</tr>
+<tr class="even">
+<td>qwen3-embedding 0.6b</td>
+<td>Verb</td>
+<td style="text-align: right;">-0,070</td>
+<td>-0,205 bis +0,079</td>
+<td>unentschieden</td>
+</tr>
+<tr class="odd">
+<td>qwen3-embedding 0.6b</td>
+<td>Satz</td>
+<td style="text-align: right;">-0,121</td>
+<td>-0,254 bis -0,004</td>
+<td>schlechter</td>
+</tr>
+<tr class="even">
+<td>qwen3-embedding 0.6b</td>
+<td>Sprachwechsel</td>
+<td style="text-align: right;">-0,055</td>
+<td>-0,188 bis +0,059</td>
+<td>unentschieden</td>
+</tr>
+</tbody>
+</table>
+<p>Gesamturteil nach der Entscheidungsregel: EmbeddingGemma 2, bf16, Präfix: <strong>kein Grund zum Wechsel</strong>; EmbeddingGemma 2, Standard-Tag, Präfix: <strong>ersetzt bge-m3 nicht</strong>; qwen3-embedding 0.6b: <strong>ersetzt bge-m3 nicht</strong>. Das Urteil ist vorläufig, solange das Gold nur vorgeschlagen ist.</p>
+<p>So ist es zu lesen:</p>
+<ul>
+<li>Bei <strong>Verben</strong>, <strong>Sätzen</strong> und beim <strong>Sprachwechsel</strong> trennen die Daten bge-m3 und EmbeddingGemma 2 nicht. 14 bis 18 Anfragen reichen dafür nicht.</li>
+<li>Bei <strong>Wendungen</strong> liegt bge-m3 vorn; nur beim Standard-Tag von EmbeddingGemma 2 liegt das Intervall ganz unter null.</li>
+<li>Das <strong>Standard-Tag</strong> (<code>270m</code>, auch <code>440m</code>, <code>740m</code>) ist quantisiert und liefert dieselben Vektoren für alle drei Größen; <code>270m-bf16-text</code> ist besser. Ohne die <strong>Suchpräfixe</strong> (<code>task: search result | query:</code> für die Anfrage, <code>title: none | text:</code> für das Dokument) liegt EmbeddingGemma 2 deutlich unter bge-m3.</li>
+<li><strong>GLiNER2.5</strong> ist seit dem 8. Oktober 2026 aus der PDAI-Pipeline. Als Encoder, Extraktor und Nachsortierer liegt es überall weit unter den Embeddings.</li>
+<li><strong>Alle</strong> Werte der Verbspalte sind niedrig. Der beste liegt bei 0,39. Kein getestetes Embedding löst die Aufgabe so, dass man ihm das Ergebnis ungeprüft überlassen sollte.</li>
+</ul>
+<section id="grenzen-der-messung" class="level3">
+<h3 class="anchored" data-anchor-id="grenzen-der-messung">Grenzen der Messung</h3>
+<ul>
+<li>Das Gold ist vorgeschlagen. Das Modell urteilt zwischen zwei Läufen nicht gleich; es zählen nur die Zahlen des letzten Laufs, die dieser Seite zugrunde liegen.</li>
+<li>Eine Collection (kepler-prim), 14 bis 18 Anfragen je Aufgabe.</li>
+<li>Der Recall ist ein <em>gepoolter</em> Recall: Treffer außerhalb der besten 15 aller Arme sind nach Konstruktion unbekannt. Deshalb werden Anfragen mit Ankerlemmata (alle Sätze mit <em>lex</em> und <em>natura</em>) immer beurteilt.</li>
+<li>Die auf 512, 256 und 128 Dimensionen gekürzten Vektoren wurden nur mit den besten zehn gepoolt; ihre Werte sind Untergrenzen. Auf 256 Dimensionen geht in dieser Stichprobe wenig verloren.</li>
+</ul>
+</section>
+</section>
+<section id="speicher" class="level2">
+<h2 class="anchored" data-anchor-id="speicher">Speicher</h2>
+<p>Wo die Vektoren liegen, entscheidet über Latenz und Genauigkeit. Die Pilotzeilen tragen EmbeddingGemma-Vektoren (768 Dimensionen, 13.626 Sätze), die Produktionszeilen die bge-m3-Vektoren (1024 Dimensionen) der Collection kepler-prim.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Speicher</th>
+<th>Messung</th>
+<th style="text-align: right;">Latenz p50</th>
+<th style="text-align: right;">Recall@10 gegen exakt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>numpy, exakt</td>
+<td>Pilot, 13.626 Vektoren</td>
+<td style="text-align: right;">1,6 ms</td>
+<td style="text-align: right;">1,0</td>
+</tr>
+<tr class="even">
+<td>Chroma (HNSW)</td>
+<td>Pilot</td>
+<td style="text-align: right;">2,1 ms</td>
+<td style="text-align: right;">0,987</td>
+</tr>
+<tr class="odd">
+<td>DuckDB, Brute Force</td>
+<td>Pilot</td>
+<td style="text-align: right;">87,3 ms</td>
+<td style="text-align: right;">1,000</td>
+</tr>
+<tr class="even">
+<td>DuckDB, vss (HNSW)</td>
+<td>Pilot</td>
+<td style="text-align: right;">77,3 ms</td>
+<td style="text-align: right;">0,982</td>
+</tr>
+<tr class="odd">
+<td>numpy, exakt</td>
+<td>Produktion, 440.581 Vektoren</td>
+<td style="text-align: right;">84,3 ms</td>
+<td style="text-align: right;">1,0</td>
+</tr>
+<tr class="even">
+<td>Chroma (HNSW)</td>
+<td>Produktion</td>
+<td style="text-align: right;">3,9 ms</td>
+<td style="text-align: right;">0,906</td>
+</tr>
+</tbody>
+</table>
+<p>Chroma antwortet im Produktionsmaßstab in 3,9 ms, findet aber nur 90,6 % der exakten zehn nächsten Nachbarn. Für eine Wortliste von einigen Zehntausend Lemmata genügt eine Brute-Force-Suche. DuckDB und vss wurden nur im Pilotmaßstab gemessen. Ihre Werte für den vollen Maßstab sind eine Hochrechnung und nicht verifiziert.</p>
+</section>
+<section id="was-noch-nicht-gemessen-ist" class="level2">
+<h2 class="anchored" data-anchor-id="was-noch-nicht-gemessen-ist">Was noch nicht gemessen ist</h2>
+<p>Die folgenden Wege kommen aus Quellen, nicht aus einer Messung an den Collections:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Weg</th>
+<th>Warum er für ein einzelnes Wort passt</th>
+<th>Quelle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>fastText oder word2vec, auf den Lemmasequenzen der Collection trainiert</td>
+<td>der Wortschatz ist der Lemmaindex; Teilwort-Information verbindet Wortfamilien; wirkt auch bei kleiner Datenmenge</td>
+<td>lateinische Lemma-Embeddings: 86,9 % bei der Synonymwahl, über 90 % bei gleicher Wortart (<a href="https://ceur-ws.org/Vol-2481/paper69.pdf">Sprugnoli u. a.</a>); deutsche Wortähnlichkeit: einfaches fastText genügt (<a href="https://www.ceur-ws.org/Vol-2989/long_paper35.pdf">Type- and Token-based Word Embeddings</a>)</td>
+</tr>
+<tr class="even">
+<td><code>qwen3-embedding:4b</code>, <code>:8b</code></td>
+<td>größere Modelle derselben Familie, die 0.6b ist hier schwächer als bge-m3</td>
+<td><a href="https://ollama.com/library/qwen3-embedding">Ollama</a></td>
+</tr>
+<tr class="odd">
+<td><code>snowflake-arctic-embed2</code>, <code>nomic-embed-text-v2-moe</code></td>
+<td>mehrsprachig, über Ollama zu beziehen</td>
+<td><a href="https://ollama.com/library/snowflake-arctic-embed2">Ollama</a>, <a href="https://ollama.com/library/nomic-embed-text-v2-moe">Ollama</a></td>
+</tr>
+<tr class="even">
+<td>Llama-Embed-Nemotron-8B</td>
+<td>offene Gewichte; Spitze der mehrsprachigen Rangliste</td>
+<td><a href="https://huggingface.co/blog/nvidia/llama-embed-nemotron-8b">NVIDIA</a></td>
+</tr>
+<tr class="odd">
+<td>ein Wortnetz (GermaNet, OdeNet; lateinisch ein Entsprechendes)</td>
+<td>gibt echte Synonyme als Präzisionsfilter über einem Embedding</td>
+<td>nicht geprüft</td>
+</tr>
+</tbody>
+</table>
+<p>Ausgeschlossen sind <code>gemini-embedding-001</code> und jede Cloud-Einbettung: Sie liegen außerhalb der Gemini-Liste der Plattform und sind in Harvest-Skripten nicht erlaubt.</p>
+<p>Ob ein Wort-für-Wort-Index auf dem Lemmaindex besser ist als ein Satz-Embedding, entscheidet nur das Prüfverfahren. Neue Kandidaten kommen als Arm in <code>common.py</code> hinzu; die Anfragen, das Gold und die Entscheidungsregel bleiben dieselben.</p>
+</section>
+<section id="entscheidung-vom-8.-oktober-2026" class="level2">
+<h2 class="anchored" data-anchor-id="entscheidung-vom-8.-oktober-2026">Entscheidung vom 8. Oktober 2026</h2>
+<p>Latein bleibt <code>bge-m3</code> (<code>EXPECTED_EMBEDDING_MODEL</code>, Collection <code>{coll}_sentences</code>). Jede andere Sprache nimmt EmbeddingGemma 2 (<code>embeddinggemma-2:270m-bf16-text</code>, bf16, mit den Suchpräfixen, Collection <code>{coll}_sentences_gemma</code>). GLiNER2.5 wird nicht mehr geladen. Ein fertiger <code>bge-m3</code>-Speicher wird nicht mit <code>--rebuild</code> neu gebaut; sonst gälte er als veraltet. Neue Sätze einer anderen Sprache schreibt der nächste Bau oder ein Seitendelta in die Gemma-Collection. Fehlt sie, bleibt die Anfrage bei <code>bge-m3</code>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Kopiert");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Kopiert");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

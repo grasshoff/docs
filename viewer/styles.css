@@ -1,0 +1,381 @@
+/* AI-Viewer Documentation - Custom Sandstone Theme Enhancements */
+/* Matching ai-scholar styling for visual consistency */
+
+/* Typography refinements */
+body {
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* Code styling */
+pre {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+code {
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", Consolas, monospace;
+  font-size: 0.9em;
+}
+
+/* Command line styling */
+pre.sourceCode.bash code,
+pre.sourceCode.shell code {
+  color: #2d3748;
+}
+
+/* Callout enhancements */
+.callout {
+  border-radius: 8px;
+  border-left-width: 4px;
+}
+
+.callout-note {
+  background-color: #e7f3ff;
+  border-left-color: #0969da;
+}
+
+.callout-warning {
+  background-color: #fff8e6;
+  border-left-color: #d29922;
+}
+
+.callout-important {
+  background-color: #ffebe9;
+  border-left-color: #cf222e;
+}
+
+.callout-tip {
+  background-color: #dafbe1;
+  border-left-color: #1a7f37;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+th {
+  background-color: #f6f8fa;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid #d0d7de;
+}
+
+td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #d0d7de;
+}
+
+tr:hover {
+  background-color: #f6f8fa;
+}
+
+/* Navigation enhancements */
+.navbar {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar {
+  border-right: 1px solid #e9ecef;
+}
+
+/* Content width */
+.content {
+  max-width: 900px;
+}
+
+/* Mermaid diagram styling - Elegant monochrome theme */
+.mermaid {
+  background-color: #fafbfc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e1e4e8;
+  margin: 1.5rem 0;
+}
+
+/* Mermaid theme overrides for readability */
+.mermaid .node rect,
+.mermaid .node circle,
+.mermaid .node ellipse,
+.mermaid .node polygon,
+.mermaid .node path {
+  fill: #f6f8fa !important;
+  stroke: #57606a !important;
+  stroke-width: 1.5px !important;
+}
+
+.mermaid .node .label,
+.mermaid .nodeLabel {
+  color: #24292f !important;
+  fill: #24292f !important;
+  font-family: "Source Sans Pro", -apple-system, sans-serif !important;
+  font-size: 13px !important;
+}
+
+.mermaid .edgeLabel {
+  background-color: #fff !important;
+  color: #57606a !important;
+  font-size: 12px !important;
+}
+
+.mermaid .edgePath .path {
+  stroke: #8b949e !important;
+  stroke-width: 1.5px !important;
+}
+
+.mermaid .arrowheadPath {
+  fill: #8b949e !important;
+}
+
+.mermaid .cluster rect {
+  fill: #f6f8fa !important;
+  stroke: #d0d7de !important;
+  stroke-width: 1px !important;
+}
+
+.mermaid .cluster .nodeLabel,
+.mermaid .cluster-label .nodeLabel {
+  color: #57606a !important;
+  fill: #57606a !important;
+  font-weight: 600 !important;
+}
+
+/* Sequence diagram styling */
+.mermaid .actor {
+  fill: #f6f8fa !important;
+  stroke: #57606a !important;
+}
+
+.mermaid .actor-line {
+  stroke: #d0d7de !important;
+}
+
+.mermaid text.actor {
+  fill: #24292f !important;
+  font-weight: 500 !important;
+}
+
+.mermaid .messageLine0,
+.mermaid .messageLine1 {
+  stroke: #8b949e !important;
+}
+
+.mermaid .messageText {
+  fill: #57606a !important;
+  font-size: 12px !important;
+}
+
+.mermaid .activation0,
+.mermaid .activation1,
+.mermaid .activation2 {
+  fill: #eaeef2 !important;
+  stroke: #8b949e !important;
+}
+
+.mermaid .loopText,
+.mermaid .loopLine {
+  fill: #57606a !important;
+  stroke: #d0d7de !important;
+}
+
+/* Subgraph/cluster styling */
+.mermaid .subgraph {
+  fill: #f6f8fa !important;
+}
+
+.mermaid .label-container {
+  fill: #f6f8fa !important;
+}
+
+/* Hero section for landing page - Viewer accent colour (teal/cyan) */
+.hero {
+  background: linear-gradient(135deg, #0d9488 0%, #0891b2 100%);
+  color: white;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+/* Feature cards */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.feature-card {
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card h3 {
+  margin-top: 0;
+  color: #0d9488;
+}
+
+/* Badge styling */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+}
+
+.badge-stable {
+  background-color: #dafbe1;
+  color: #1a7f37;
+}
+
+.badge-beta {
+  background-color: #fff8e6;
+  color: #9a6700;
+}
+
+/* CLI command boxes */
+.cli-command {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  font-family: "JetBrains Mono", monospace;
+  margin: 1rem 0;
+}
+
+.cli-command .prompt {
+  color: #6a9955;
+}
+
+.cli-command .command {
+  color: #dcdcaa;
+}
+
+/* XML/DTD styling */
+pre.sourceCode.xml code,
+pre.sourceCode.dtd code {
+  color: #032f62;
+}
+
+/* Status indicators */
+.status-complete {
+  color: #1a7f37;
+}
+
+.status-pending {
+  color: #9a6700;
+}
+
+.status-error {
+  color: #cf222e;
+}
+
+/* Package relationship cards */
+.package-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 1px solid #d0d7de;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+
+.package-card.ai-scholar {
+  border-left: 4px solid #667eea;
+}
+
+.package-card.pdai {
+  border-left: 4px solid #22c55e;
+}
+
+.package-card.ai-viewer {
+  border-left: 4px solid #0d9488;
+}
+
+.package-card h4 {
+  margin-top: 0;
+}
+
+/* Keyboard shortcut styling */
+kbd {
+  background-color: #f6f8fa;
+  border: 1px solid #d0d7de;
+  border-radius: 4px;
+  box-shadow: inset 0 -1px 0 #d0d7de;
+  color: #24292f;
+  display: inline-block;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85em;
+  line-height: 1;
+  padding: 0.2rem 0.4rem;
+  vertical-align: middle;
+}
+
+/* Navigation flow indicator */
+.nav-flow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #f6f8fa;
+  border-radius: 8px;
+}
+
+.nav-flow .step {
+  background: #0d9488;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.nav-flow .arrow {
+  color: #8b949e;
+  font-size: 1.2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero {
+    padding: 2rem 1rem;
+  }
+  
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+  
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+}

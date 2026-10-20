@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Evidenzobjekte – Famulus Proof</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d5b4e69c7e37b49c6591bcc5116dd748.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-0a7ffee50ecdcac772426c46f9339f28.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Keine Treffer",
+    "search-matching-documents-text": "Treffer",
+    "search-copy-link-title": "Link in die Suche kopieren",
+    "search-hide-matches-text": "Zusätzliche Treffer verbergen",
+    "search-more-match-text": "weitere Treffer in diesem Dokument",
+    "search-more-matches-text": "weitere Treffer in diesem Dokument",
+    "search-clear-button-title": "Zurücksetzen",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Abbrechen",
+    "search-submit-button-title": "Abschicken",
+    "search-label": "Suchen"
+  }
+}</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Famulus Proof</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Suchen"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navigation umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Übersicht</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-filterung" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Filterung</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-filterung">    
+        <li>
+    <a class="dropdown-item" href="./filterung.html">
+ <span class="dropdown-text">Filterung von Evidenzräumen</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./evidenzobjekte.html">
+ <span class="dropdown-text">Evidenzobjekte</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./attribute.html">
+ <span class="dropdown-text">Attribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./gebrauch.html">
+ <span class="dropdown-text">Lesart des Gebrauchs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ablauf.html">
+ <span class="dropdown-text">Ablauf</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./geschichte.html">
+ <span class="dropdown-text">Geschichte</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./satzrecord.html">
+ <span class="dropdown-text">Satzrecord</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hnlichkeitssuche" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ähnlichkeitssuche</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hnlichkeitssuche">    
+        <li>
+    <a class="dropdown-item" href="./aehnlichkeitssuche.html">
+ <span class="dropdown-text">Ähnlichkeitssuche</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pruefverfahren-aehnlichkeit.html">
+ <span class="dropdown-text">Prüfverfahren</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./validitaetsbaum.html"> 
+<span class="menu-text">Validitätsbaum</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./integration.html"> 
+<span class="menu-text">Sidecar-Integration</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./referenz.html"> 
+<span class="menu-text">Famulus-Referenz</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./landkarte.html"> 
+<span class="menu-text">Landkarte</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#ein-objekt-vorweg" id="toc-ein-objekt-vorweg" class="nav-link active" data-scroll-target="#ein-objekt-vorweg">Ein Objekt vorweg</a></li>
+  <li><a href="#die-arten" id="toc-die-arten" class="nav-link" data-scroll-target="#die-arten">Die Arten</a></li>
+  <li><a href="#von-der-seite-in-die-duckdb" id="toc-von-der-seite-in-die-duckdb" class="nav-link" data-scroll-target="#von-der-seite-in-die-duckdb">Von der Seite in die DuckDB</a></li>
+  <li><a href="#fallstricke-die-der-bau-abfängt" id="toc-fallstricke-die-der-bau-abfängt" class="nav-link" data-scroll-target="#fallstricke-die-der-bau-abfängt">Fallstricke, die der Bau abfängt</a></li>
+  <li><a href="#neun-collections" id="toc-neun-collections" class="nav-link" data-scroll-target="#neun-collections">Neun Collections</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Evidenzobjekte</h1>
+<p class="subtitle lead">Was ein Beleg sein kann, wo es in DuckDB steht und woher es in der DTD kommt</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">8. Oktober 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled" title="Evidenzobjekte in einem Satz">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tipp</span>Evidenzobjekte in einem Satz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ein Evidenzobjekt ist eine Einheit der Collection, die Beleg einer Antwort sein kann — ein Satz, ein Absatz, eine Fußnote, eine Abbildung, eine Seite, ein Brief, ein Dokument —, mit Art, Schlüssel, DTD-Herkunft und Platz in der Gliederung; alle Evidenzobjekte einer Collection stehen als Zeilen in DuckDB, und nur sie kann eine Suche zurückgeben. Eine Art ist der Träger: an ihren Objekten wird der Raum verbucht.</p>
+</div>
+</div>
+<section id="ein-objekt-vorweg" class="level2">
+<h2 class="anchored" data-anchor-id="ein-objekt-vorweg">Ein Objekt vorweg</h2>
+<div class="specimen" data-label="EVIDENZOBJEKT">
+<p><code>S:10-6_fromm_carl_1921_1937#52.8</code></p>
+<p>Art <strong>Satz</strong>; Schlüssel <code>doc_id = 10-6_fromm_carl_1921_1937</code>, <code>pidx = 52</code>, <code>sent_idx = 8</code>; Teil der Seite <code>P:10-6_fromm_carl_1921_1937#52</code>, die zum Dokument <code>D:10-6_fromm_carl_1921_1937</code> gehört; enthalten im Brief <code>B:10-6_fromm_carl_1921_1937/035</code>; Herkunft <code>page:main</code> (Stanza zerlegt den Haupttext der Seite in Sätze).</p>
+<p>Attribute (Zeilen in <code>fx_post</code>): <code>person.genannt = P007304</code> (NER), <code>form.text = hitler</code>, <code>lemma.text = Hitler|en</code> und die Lemmata und Formen der übrigen Wörter.</p>
+</div>
+<p>Die Id ist der Schlüssel selbst, mit einem Kürzel für die Art davor. Aus ihr lassen sich Text, Seite und Faksimile wieder holen; die Suche gibt nur die Id zurück und den Grund, warum das Objekt die Frage erfüllt.</p>
+</section>
+<section id="die-arten" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="die-arten">Die Arten</h2>
+<div class="column-page">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 4%">
+<col style="width: 17%">
+<col style="width: 19%">
+<col style="width: 11%">
+<col style="width: 8%">
+<col style="width: 19%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Objektart</th>
+<th>Id</th>
+<th>Schlüssel</th>
+<th>DuckDB</th>
+<th>DTD</th>
+<th>Teil von</th>
+<th>im Brief über</th>
+<th style="text-align: right;">Anzahl</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dokument</td>
+<td><code>D:</code></td>
+<td><code>doc_id</code></td>
+<td><code>fq_documents</code> (Sidecar)</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">1.066</td>
+</tr>
+<tr class="even">
+<td>Brief</td>
+<td><code>B:</code></td>
+<td><code>letter_id</code></td>
+<td><code>fq_letters</code> (Sidecar)</td>
+<td><code>letter:letter</code></td>
+<td>dokument</td>
+<td>—</td>
+<td style="text-align: right;">15.976</td>
+</tr>
+<tr class="odd">
+<td>Seite</td>
+<td><code>P:</code></td>
+<td><code>doc_id, pidx</code></td>
+<td><code>stz_pages</code> (Stanza)</td>
+<td><code>page:page</code></td>
+<td>dokument</td>
+<td><code>fq_letter_pages</code></td>
+<td style="text-align: right;">38.213</td>
+</tr>
+<tr class="even">
+<td>Absatz</td>
+<td><code>A:</code></td>
+<td><code>doc_id, pidx, par_idx</code></td>
+<td><code>fq_paragraphs</code> (Sidecar)</td>
+<td><code>page:p</code></td>
+<td>seite</td>
+<td><code>fq_paragraphs.letter_id</code></td>
+<td style="text-align: right;">482.693</td>
+</tr>
+<tr class="odd">
+<td>Satz</td>
+<td><code>S:</code></td>
+<td><code>doc_id, pidx, sent_idx</code></td>
+<td><code>stz_sentences</code> (Stanza)</td>
+<td>—</td>
+<td>seite</td>
+<td><code>fq_letter_sentences</code></td>
+<td style="text-align: right;">663.972</td>
+</tr>
+<tr class="even">
+<td>Fußnote</td>
+<td><code>F:</code></td>
+<td><code>doc_id, pidx, fn_no</code></td>
+<td><code>fq_footnotes</code> (Sidecar)</td>
+<td><code>page:fn</code></td>
+<td>seite</td>
+<td><code>fq_letter_pages</code></td>
+<td style="text-align: right;">4.612</td>
+</tr>
+<tr class="odd">
+<td>Abbildung</td>
+<td><code>G:</code></td>
+<td><code>doc_id, pidx, ref</code></td>
+<td><code>fq_figures</code> (Sidecar)</td>
+<td><code>page:figure</code></td>
+<td>seite</td>
+<td><code>fq_figures.letter_id</code></td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Die Gliederung ist nicht nur ein Baum. Ein Dokument (eine Archivmappe) enthält Seiten; ein Brief belegt einige dieser Seiten, und eine Seite kann zu zwei Briefen gehören, wenn der eine auf ihr endet und der nächste beginnt. Deshalb steht das Enthaltensein in einer eigenen Tabelle:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  dok["Dokument D"]
+  brief["Brief B"]
+  seite["Seite P"]
+  absatz["Absatz A"]
+  satz["Satz S"]
+  fn["Fussnote F"]
+  abb["Abbildung G"]
+  dok --&gt; brief
+  dok --&gt; seite
+  brief --&gt;|"fx_enthalten, n zu m"| seite
+  seite --&gt; absatz
+  seite --&gt; satz
+  seite --&gt; fn
+  seite --&gt; abb
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Satz und Absatz sind Geschwister, nicht Teil und Ganzes: Stanza zerlegt den Haupttext der Seite in Sätze, der Absatz kommt aus der Seiten-XML (<code>p</code>, <code>marginal</code>, <code>table</code>), und in dieser Collection gibt es keine Zuordnung zwischen beiden.</p>
+</section>
+<section id="von-der-seite-in-die-duckdb" class="level2">
+<h2 class="anchored" data-anchor-id="von-der-seite-in-die-duckdb">Von der Seite in die DuckDB</h2>
+<p>Jede Seite der Collection ist eine XML-Datei nach <code>page_letter.dtd</code>. Ihre Teile kommen auf drei Wegen in DuckDB:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 42%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Element der Seiten-XML</th>
+<th>Tabelle</th>
+<th>Objekt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>page</code></td>
+<td><code>stz_pages</code> (Stanza), <code>fq_letter_pages</code></td>
+<td>Seite</td>
+</tr>
+<tr class="even">
+<td><code>main</code> (Haupttext)</td>
+<td><code>stz_sentences</code>, <code>stz_tokens</code>, <code>stz_deps</code>, <code>stz_feats</code> (Stanza)</td>
+<td>Satz, mit Token, Lemma, Wortart, Abhängigkeit</td>
+</tr>
+<tr class="odd">
+<td><code>p</code>, <code>marginal</code>, <code>table</code></td>
+<td><code>fq_paragraphs</code> (Sidecar)</td>
+<td>Absatz, mit <code>kind</code></td>
+</tr>
+<tr class="even">
+<td><code>footnotes/fn</code></td>
+<td><code>fq_footnotes</code> (Sidecar)</td>
+<td>Fußnote</td>
+</tr>
+<tr class="odd">
+<td><code>figure</code></td>
+<td><code>fq_figures</code> (Sidecar)</td>
+<td>Abbildung</td>
+</tr>
+<tr class="even">
+<td><code>letter-head</code> (<code>sender</code>, <code>addressee</code>, <code>place</code>, <code>date</code>, <code>regest</code>) und <code>letter@…</code></td>
+<td><code>fq_letters</code>, <code>fq_letter_entities</code>, <code>fq_letter_topics</code>, <code>fq_acts</code></td>
+<td>Brief und seine Kopf- und Inhaltsattribute</td>
+</tr>
+</tbody>
+</table>
+<p>Die Personen, Orte und Institutionen sind keine Zeichenketten, sondern Einzeldinge des Registers (<code>_register/register.duckdb</code>, <code>ind_einzelding</code>, <code>ind_name</code>): <code>fq_entities</code> führt jede <code>ent_id</code> der Collection auf ihre <code>ind_id</code>, und eine Nennung im Text (<code>fq_mentions</code>) trägt die <code>ent_id</code>, an die NER und Register den Namen gebunden haben, und ihre Lesart (Person, Eponym, kein Name).</p>
+<p>Aus diesen Quelltabellen baut <code>evidenzraum/bau.py</code> (Aufruf <code>scripts/build_fq_index.py</code>) die Tabellen der Evidenzobjekte, im Kármán-Nachlass im Sidecar (<code>karman-nachlass_fql.duckdb</code>):</p>
+<ul>
+<li><code>fx_meta</code>: die Trägerart der Collection (<code>brief</code>) und ihr Name;</li>
+<li><code>fx_traeger</code>: jeder <strong>Träger</strong>, das heißt jedes Objekt der Art, an der der Raumbeweis verbucht wird (hier jeder Brief);</li>
+<li><code>fx_objekt</code>: jedes Evidenzobjekt mit Id, Art, Schlüsselspalten, Eltern, DTD-Herkunft und Quelle;</li>
+<li><code>fx_enthalten</code>: welcher Träger welches Objekt enthält;</li>
+<li><code>fx_deck</code>: welche Träger Objekte welcher Art haben (daraus folgt, wann ein Textblatt unentschieden bleibt);</li>
+<li><code>fx_post</code>: die Attribute, eine Zeile je Attribut, Rolle, Schlüssel und Objekt; dazu <code>fx_formen</code>, der Vorrat der gefalteten Wortformen, und <code>fx_lemma_form</code>, die Lemmaklassen jeder Form.</li>
+</ul>
+<p>1.206.532 Evidenzobjekte (663.972 Sätze, 482.693 Absätze, 38.213 Seiten, 15.976 Briefe, 4.612 Fußnoten, 1.066 Dokumente, 0 Abbildungen), 20.196.883 Postings, 1.242.958 Zeilen Enthaltensein.</p>
+<p>Der Bau braucht rund 20 Sekunden. Eine Zeile <code>gate:fx</code> in <code>fq_build_meta</code> hält die Zahlen je Objektart und die Zahl der Postings fest; jede Suche prüft sie, bevor sie den Tabellen traut, und bricht ab, wenn sie nicht mehr stimmen. Aus derselben Zeile wird der Name des Körpers gebildet, auf den sich der Raumbeweis bezieht (<code>karman-nachlass@fx-…</code>): ein Neubau, der eine Zahl ändert, ändert den Körper.</p>
+</section>
+<section id="fallstricke-die-der-bau-abfängt" class="level2">
+<h2 class="anchored" data-anchor-id="fallstricke-die-der-bau-abfängt">Fallstricke, die der Bau abfängt</h2>
+<div class="callout callout-style-default callout-warning callout-titled" title="Was die Quelle nicht hergibt">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warnung</span>Was die Quelle nicht hergibt
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Satzschlüssel.</strong> <code>sent_idx</code> beginnt auf jeder Seite neu. Ein Satz ist nur durch das Tripel <code>(doc_id, pidx, sent_idx)</code> bestimmt.</li>
+<li><strong>Fußnoten.</strong> Stanza liest nur <code>main</code>; der Text einer Fußnote hat keine Sätze im Stanza-Korpus. Fußnoten sind deshalb eigene Evidenzobjekte mit eigenen Wortformen.</li>
+<li><strong>Wiederholte Fußnotennummern.</strong> Auf einigen Seiten stehen mehrere Fußnotentexte unter derselben Nummer (auf einer Seite neun unter „1“). Die Id trägt dann das Vorkommen: <code>fn1</code>, <code>fn1.2</code>, …</li>
+<li><strong>Abbildungen.</strong> <code>fq_figures</code> hat in dieser Collection keine Zeile. Die Objektart ist deklariert und wird als Lücke gemeldet, nicht still weggelassen.</li>
+<li><strong>Absender.</strong> 6.899 Briefe haben keinen verzeichneten Absender und auch keinen rohen Namen (<code>sender_raw</code> ist leer); 6.727 von ihnen haben Text. Eine Lesung der Unterschrift wäre eine weitere Quelle, ist aber nicht gebaut.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="neun-collections" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="neun-collections">Neun Collections</h2>
+<p>Die Filterung läuft auf neun Collections. Vier sind Korrespondenzen, ihr Träger ist der Brief. Wäfler, Kepler und Copernicus sind Bücher und Aufsätze; ihr Träger ist das <strong>Dokument</strong>.</p>
+<div class="column-page">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 6%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Collection</th>
+<th>Träger</th>
+<th style="text-align: right;">Dokument</th>
+<th style="text-align: right;">Brief</th>
+<th style="text-align: right;">Seite</th>
+<th style="text-align: right;">Absatz</th>
+<th style="text-align: right;">Satz</th>
+<th style="text-align: right;">Fußnote</th>
+<th style="text-align: right;">Abbildung</th>
+<th style="text-align: right;">Postings</th>
+<th style="text-align: right;">Bau</th>
+<th style="text-align: right;">Träger mit Text</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kármán-Nachlass</td>
+<td>Brief</td>
+<td style="text-align: right;">1.066</td>
+<td style="text-align: right;">15.976</td>
+<td style="text-align: right;">38.213</td>
+<td style="text-align: right;">482.693</td>
+<td style="text-align: right;">663.972</td>
+<td style="text-align: right;">4.612</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">20.196.883</td>
+<td style="text-align: right;">20,2 s</td>
+<td style="text-align: right;">15.799 von 15.976</td>
+</tr>
+<tr class="even">
+<td>Hevelius</td>
+<td>Brief</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2.970</td>
+<td style="text-align: right;">2.450</td>
+<td style="text-align: right;">15.643</td>
+<td style="text-align: right;">29.380</td>
+<td style="text-align: right;">4.266</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">1.752.909</td>
+<td style="text-align: right;">2,5 s</td>
+<td style="text-align: right;">534 von 2.970</td>
+</tr>
+<tr class="odd">
+<td>Euler, Briefwechsel (IVA)</td>
+<td>Brief</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">3.393</td>
+<td style="text-align: right;">6.294</td>
+<td style="text-align: right;">14.479</td>
+<td style="text-align: right;">153.669</td>
+<td style="text-align: right;">236</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">4.154.190</td>
+<td style="text-align: right;">7,4 s</td>
+<td style="text-align: right;">194 von 3.393</td>
+</tr>
+<tr class="even">
+<td>Pirckheimer</td>
+<td>Brief</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">354</td>
+<td style="text-align: right;">526</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10.492</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">228.722</td>
+<td style="text-align: right;">0,6 s</td>
+<td style="text-align: right;">147 von 354</td>
+</tr>
+<tr class="odd">
+<td>Wäfler, Primärquellen</td>
+<td>Dokument</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4.198</td>
+<td style="text-align: right;">69.613</td>
+<td style="text-align: right;">98.015</td>
+<td style="text-align: right;">530</td>
+<td style="text-align: right;">1.766</td>
+<td style="text-align: right;">1.845.269</td>
+<td style="text-align: right;">78,4 s</td>
+<td style="text-align: right;">15 von 15</td>
+</tr>
+<tr class="even">
+<td>Wäfler, Sekundärliteratur</td>
+<td>Dokument</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.431</td>
+<td style="text-align: right;">37.793</td>
+<td style="text-align: right;">61.801</td>
+<td style="text-align: right;">8.560</td>
+<td style="text-align: right;">354</td>
+<td style="text-align: right;">2.417.436</td>
+<td style="text-align: right;">53,9 s</td>
+<td style="text-align: right;">15 von 15</td>
+</tr>
+<tr class="odd">
+<td>Kepler, Gesammelte Werke</td>
+<td>Dokument</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">14.864</td>
+<td style="text-align: right;">140.543</td>
+<td style="text-align: right;">459.698</td>
+<td style="text-align: right;">9.984</td>
+<td style="text-align: right;">898</td>
+<td style="text-align: right;">14.098.496</td>
+<td style="text-align: right;">168,3 s</td>
+<td style="text-align: right;">27 von 27</td>
+</tr>
+<tr class="even">
+<td>Kepler, Sekundärliteratur</td>
+<td>Dokument</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5.375</td>
+<td style="text-align: right;">46.436</td>
+<td style="text-align: right;">1.045</td>
+<td style="text-align: right;">7.127</td>
+<td style="text-align: right;">981</td>
+<td style="text-align: right;">1.725.696</td>
+<td style="text-align: right;">69,5 s</td>
+<td style="text-align: right;">18 von 18</td>
+</tr>
+<tr class="odd">
+<td>Copernicus, Primärquellen</td>
+<td>Dokument</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3.644</td>
+<td style="text-align: right;">37.091</td>
+<td style="text-align: right;">79.908</td>
+<td style="text-align: right;">3.362</td>
+<td style="text-align: right;">287</td>
+<td style="text-align: right;">3.074.485</td>
+<td style="text-align: right;">47,5 s</td>
+<td style="text-align: right;">10 von 10</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>„Träger mit Text“ zählt die Träger, die Sätze oder Fußnoten enthalten. Für die anderen bleibt jedes Textblatt unentschieden. Das ist keine Lücke des Baus, sondern die Überlieferung:</p>
+<ul>
+<li><strong>Registerbände tragen keinen Brieftext.</strong> Hevelius Tome I (2.436 Briefe) und Euler IVA 1 (2.353 Briefe) verzeichnen Briefe, sie edieren sie nicht. Ihre Seitenangaben zeigen auf den Registereintrag. Der Bau ordnet nur Seiten zu, die eine Collection ausdrücklich als Seiten des Briefs führt (<code>fq_letter_pages</code>, <code>fq_letter_sentences</code>), nie einen Seitenbereich; sonst stünde der Text des Registers als Text des Briefs im Raum. Das Kopfblatt <code>kopf/ueberlieferung/band</code> trennt Registerband und Edition.</li>
+<li><strong>Euler, Editionsbände.</strong> Von den übrigen Bänden ordnet nur IVA 4 (<code>978-3-0348-0892-7</code>) Seiten zu. 844 Briefe in sechs weiteren Bänden haben im Sidecar keine Seitenzuordnung; das ist eine Lücke des Sidecar-Baus, nicht der Überlieferung, und ihre Textblätter bleiben unentschieden, bis er sie schließt.</li>
+<li><strong>Pirckheimer</strong> hat im Sidecar weder Satz- noch Seitenzuordnung. Die Hauptdatenbank führt in <code>letter_pages</code> die Seiten von 147 Briefen; die Karte sagt <code>seite.im_brief: haupt:letter_pages</code>, und die Sätze dieser Seiten werden die Sätze des Briefs. Die übrigen 207 Briefe haben hier keinen Text.</li>
+<li><strong>Wäfler, Kepler und Copernicus</strong> haben kein FQL-Sidecar. Der Bau legt je eine eigene Datenbank an (<code>waefler-prim_fx.duckdb</code>, <code>kepler-prim_fx.duckdb</code>, <code>kepler-sec_fx.duckdb</code>, <code>copernicus-prim_fx.duckdb</code>): die Dokumente aus <code>biblio.xml</code> und <code>pdai-config.json</code>, Absätze, Fußnoten und Abbildungen aus der Seiten-XML mit dem Seitenparser des Sidecar-Baus (<code>ai_lemma_index.sidecar.fql_build._page_rows</code>, derselbe, der die Kármán-Absätze schrieb), die Sätze aus Stanza. Das Dokument <code>Waefler2001</code> hat keinen eigenen Ordner, nur Seiten und Sätze im Stanza-Korpus; es ist ein Träger mit leerem bibliographischem Datensatz. In <code>kepler-sec</code> hat Stanza nur einen Teil der Seiten gelesen; die übrigen Seiten tragen Absätze aus der Seiten-XML, aber keine Sätze. Das Gate bricht ab, wenn ein Objekt ohne Träger bliebe.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Kopiert");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Kopiert");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

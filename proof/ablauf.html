@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Ablauf der Filterung – Famulus Proof</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d5b4e69c7e37b49c6591bcc5116dd748.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-0a7ffee50ecdcac772426c46f9339f28.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Keine Treffer",
+    "search-matching-documents-text": "Treffer",
+    "search-copy-link-title": "Link in die Suche kopieren",
+    "search-hide-matches-text": "Zusätzliche Treffer verbergen",
+    "search-more-match-text": "weitere Treffer in diesem Dokument",
+    "search-more-matches-text": "weitere Treffer in diesem Dokument",
+    "search-clear-button-title": "Zurücksetzen",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Abbrechen",
+    "search-submit-button-title": "Abschicken",
+    "search-label": "Suchen"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Famulus Proof</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Suchen"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navigation umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Übersicht</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-filterung" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Filterung</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-filterung">    
+        <li>
+    <a class="dropdown-item" href="./filterung.html">
+ <span class="dropdown-text">Filterung von Evidenzräumen</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./evidenzobjekte.html">
+ <span class="dropdown-text">Evidenzobjekte</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./attribute.html">
+ <span class="dropdown-text">Attribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./gebrauch.html">
+ <span class="dropdown-text">Lesart des Gebrauchs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ablauf.html">
+ <span class="dropdown-text">Ablauf</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./geschichte.html">
+ <span class="dropdown-text">Geschichte</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./satzrecord.html">
+ <span class="dropdown-text">Satzrecord</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hnlichkeitssuche" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ähnlichkeitssuche</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hnlichkeitssuche">    
+        <li>
+    <a class="dropdown-item" href="./aehnlichkeitssuche.html">
+ <span class="dropdown-text">Ähnlichkeitssuche</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pruefverfahren-aehnlichkeit.html">
+ <span class="dropdown-text">Prüfverfahren</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./validitaetsbaum.html"> 
+<span class="menu-text">Validitätsbaum</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./integration.html"> 
+<span class="menu-text">Sidecar-Integration</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./referenz.html"> 
+<span class="menu-text">Famulus-Referenz</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./landkarte.html"> 
+<span class="menu-text">Landkarte</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#die-stufen" id="toc-die-stufen" class="nav-link active" data-scroll-target="#die-stufen">Die Stufen</a></li>
+  <li><a href="#kontext-eine-frage-die-an-die-vorige-anschließt" id="toc-kontext-eine-frage-die-an-die-vorige-anschließt" class="nav-link" data-scroll-target="#kontext-eine-frage-die-an-die-vorige-anschließt">Kontext: eine Frage, die an die vorige anschließt</a></li>
+  <li><a href="#die-anweisung" id="toc-die-anweisung" class="nav-link" data-scroll-target="#die-anweisung">Die Anweisung</a></li>
+  <li><a href="#bewertung-und-verfeinerung" id="toc-bewertung-und-verfeinerung" class="nav-link" data-scroll-target="#bewertung-und-verfeinerung">Bewertung und Verfeinerung</a></li>
+  <li><a href="#der-raumbeweis" id="toc-der-raumbeweis" class="nav-link" data-scroll-target="#der-raumbeweis">Der Raumbeweis</a></li>
+  <li><a href="#messung" id="toc-messung" class="nav-link" data-scroll-target="#messung">Messung</a></li>
+  <li><a href="#ausführen" id="toc-ausführen" class="nav-link" data-scroll-target="#ausführen">Ausführen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Ablauf der Filterung</h1>
+<p class="subtitle lead">Neun Stufen von der Frage zur Evidenzobjektmenge, und was sie am Kármán-Nachlass messen</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">8. Oktober 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled" title="Der Ablauf in einem Satz">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tipp</span>Der Ablauf in einem Satz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Die Partitur <code>famulus_constraint_raum_agent</code> bestimmt den Evidenzraum, liest aus der DTD die möglichen Attribute, nimmt den Kontext als Teilbaum auf, klassifiziert die Frage, führt beides zum Suchbaum zusammen, kompiliert ihn zu einer DuckDB-Anweisung, führt sie aus, bewertet die Menge, fragt gegebenenfalls nach, und beweist, dass kein Brief ohne Grund fehlt.</p>
+</div>
+</div>
+<section id="die-stufen" class="level2">
+<h2 class="anchored" data-anchor-id="die-stufen">Die Stufen</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 13%">
+<col style="width: 32%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Stufe</th>
+<th>Operation</th>
+<th>was sie liefert</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>raum</td>
+<td><code>famulus:evidenz_filter_raum</code></td>
+<td>Collection, Objektzahlen, Gate <code>gate:fx</code>, Lücken der Bereitschaft</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>schemabaum</td>
+<td><code>…_filter_schemabaum</code></td>
+<td>die Blätter, die die Klassifikation verwenden darf</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>kontextbaum</td>
+<td><code>…_filter_kontextbaum</code></td>
+<td>der Suchbaum der Vorfrage dieser Sitzung, der stehende Baum aus dem Gedächtnis der Collection</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>fragebaum</td>
+<td><code>…_filter_fragebaum</code></td>
+<td>ein Modellaufruf über den Blättern, dann der Fast Index je Wert</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>merge</td>
+<td><code>…_filter_merge</code></td>
+<td>Suchbaum; Ersetzungen, gestrichene Blätter, Widersprüche</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>sql</td>
+<td><code>…_filter_sql</code></td>
+<td>eine Anweisung, ohne Semikolon</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>ausfuehren</td>
+<td><code>…_filter_ausfuehren</code></td>
+<td>Briefe, Evidenzobjekte mit Text, Trichter, Verbuchung jedes Briefs, Projektion</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>bewerten</td>
+<td><code>…_filter_bewerten</code></td>
+<td>brauchbar, zu groß, unspezifisch, leer oder widersprüchlich; die Rückfrage</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>beweis</td>
+<td><code>…_filter_beweis</code></td>
+<td>Zertifikat <code>famulus-raum/1</code></td>
+</tr>
+</tbody>
+</table>
+<p>Die Evaluatoren der Partitur prüfen, dass jedes Textblatt die Unbekannt-Regel des Textes trägt und kein Kopf- oder Inhaltsblatt sie trägt, dass jeder Cluster ein positives Blatt hat, dass die Anweisung eine ist und dass der Trichter von Ebene zu Ebene nicht wächst.</p>
+</section>
+<section id="kontext-eine-frage-die-an-die-vorige-anschließt" class="level2">
+<h2 class="anchored" data-anchor-id="kontext-eine-frage-die-an-die-vorige-anschließt">Kontext: eine Frage, die an die vorige anschließt</h2>
+<p><em>Welche Briefe schrieb Ludwig Prandtl?</em> Dann: <em>Welches Thema hat ein Brief dieser Person an Theodor von Kármán?</em> Die zweite Frage legt nur den Empfänger neu fest und fragt nach dem Thema; dass „diese Person“ Prandtl ist, steht im Kontextbaum, nicht in der Frage. Die Klassifikation meldet <code>bezug_vorfrage</code>, und der Merge nimmt das Blatt der Vorfrage auf:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 8%">
+<col style="width: 33%">
+<col style="width: 8%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Frage</th>
+<th>Kontext</th>
+<th>Blätter (Quelle)</th>
+<th style="text-align: right;">Briefe</th>
+<th>häufigste Themen</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Welche Briefe schrieb Ludwig Prandtl?</td>
+<td>—</td>
+<td><code>kopf/korrespondenz/absender</code> = Ludwig Prandtl (frage)</td>
+<td style="text-align: right;">6.908</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Welches Thema hat ein Brief dieser Person an Theodor von Kármán?</td>
+<td>sitzung</td>
+<td><code>kopf/korrespondenz/absender</code> = Ludwig Prandtl (kontext); <code>kopf/korrespondenz/empfaenger</code> = Theodor von Kármán (frage)</td>
+<td style="text-align: right;">6.873</td>
+<td>Aerodynamics and Fluid Mechanics (3), Turbulence (3), Boundary layers (2)</td>
+</tr>
+<tr class="odd">
+<td>Welches Thema hat ein Brief dieser Person an Theodor von Kármán? (verfeinert: nur verzeichneter Absender)</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">5</td>
+<td>Aerodynamics and Fluid Mechanics (3), Turbulence (3), Boundary layers (2)</td>
+</tr>
+</tbody>
+</table>
+<p>Bindet die neue Frage dasselbe Blatt neu (<em>und von Einstein?</em>), ersetzt ihr Wert den des Kontexts, und die Ersetzung steht im Ergebnis. Der Kontextbaum kommt aus dem Protokoll der Sitzung (<code>~/Library/Application Support/famulus-proof/suchbaeume.jsonl</code>) oder aus dem Schlüssel <code>kontextbaum</code> im <code>agent_context.json</code> der Collection. Die Textchronik der Anfragen von ai-query hält Fragen, keine Bäume, und ist keine Quelle.</p>
+</section>
+<section id="die-anweisung" class="level2">
+<h2 class="anchored" data-anchor-id="die-anweisung">Die Anweisung</h2>
+<p>Der Suchbaum wird eine einzige DuckDB-Anweisung (<code>evidenzraum/theorie.py</code>). Ihre CTEs folgen den Ebenen; hier für Kármán und Hitler:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>b0 <span class="kw">AS</span> (<span class="op">..</span>.),            <span class="co">-- Kopfblatt Absender: erfüllt / verletzt / unentschieden je Brief (fx_post)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>o1_hit <span class="kw">AS</span> (<span class="op">..</span>.),        <span class="co">-- Textblatt Nennung: Objekte mit P007304 (NER) oder einer Namensform (Wortform, Fußnote)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>o1_ss <span class="kw">AS</span> (<span class="op">..</span>.),         <span class="co">-- die Sätze dieser Treffer</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>o1_v <span class="kw">AS</span> (<span class="op">..</span>.),          <span class="co">-- jedes Namensvorkommen mit seinen Faktoren und seiner Gebrauchsklasse</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>o1_k <span class="kw">AS</span> (<span class="op">..</span>.),          <span class="co">-- je Satz: eine akzeptierte Klasse? nur offene? nur Eponym, Beiwort, Zitat?</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>o1 <span class="kw">AS</span> (<span class="op">..</span>.),            <span class="co">-- Entscheidung je Objekt mit Grund („Gebrauch person: Handelnder“)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>b1 <span class="kw">AS</span> (<span class="op">..</span>.),            <span class="co">-- Entscheidung je Brief: Treffer, sonst verletzt, ohne Text unentschieden (fx_deck)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>k0 <span class="kw">AS</span> (<span class="op">..</span>.),            <span class="co">-- Briefe nach dem Kopf</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>i0 <span class="kw">AS</span> (<span class="op">..</span>.),            <span class="co">-- davon nach dem Inhalt</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>t0 <span class="kw">AS</span> (<span class="op">..</span>.),            <span class="co">-- davon nach dem Text</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>ob0 <span class="kw">AS</span> (<span class="op">..</span>.),           <span class="co">-- die Evidenzobjekte in diesen Briefen (fx_enthalten)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>raum, obj, entscheid,   <span class="co">-- Vereinigung der Cluster, Objekte, alle Entscheidungen</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>zaehl, erste, buchung,  <span class="co">-- Zählung je Blatt, erstes ausschließendes Blatt, Verbuchung jedes Briefs</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>trichter, objtext       <span class="co">-- Briefe je Ebene, Texte der Objekte</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> briefe, n_objekte, tragend, objekte, zaehlung, trichter, gruende, buchung, projektion …</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="Die ganze Anweisung">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Hinweis</span>Die ganze Anweisung
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> b0 <span class="kw">AS</span> <span class="kw">MATERIALIZED</span> (</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> l.traeger_id,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>         <span class="cf">CASE</span> <span class="cf">WHEN</span> h.traeger_id <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="cf">THEN</span> <span class="st">'erfuellt'</span> <span class="cf">WHEN</span> k.traeger_id <span class="kw">IS</span> <span class="kw">NULL</span> <span class="cf">THEN</span> <span class="st">'unentschieden'</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>              <span class="cf">ELSE</span> <span class="st">'verletzt'</span> <span class="cf">END</span> <span class="kw">AS</span> e,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>         <span class="cf">CASE</span> <span class="cf">WHEN</span> h.traeger_id <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="cf">THEN</span> <span class="st">'verzeichnet: '</span> <span class="op">||</span> <span class="st">'Theodor von Kármán'</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>              <span class="cf">WHEN</span> k.traeger_id <span class="kw">IS</span> <span class="kw">NULL</span> <span class="cf">THEN</span> <span class="st">'nicht verzeichnet'</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>              <span class="cf">ELSE</span> <span class="st">'verzeichnet ist ein anderer Wert als '</span> <span class="op">||</span> <span class="st">'Theodor von Kármán'</span> <span class="cf">END</span> <span class="kw">AS</span> w</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> fx_traeger l <span class="kw">LEFT</span> <span class="kw">JOIN</span> (<span class="kw">SELECT</span> <span class="kw">DISTINCT</span> <span class="fu">substr</span>(obj_id, <span class="dv">3</span>) <span class="kw">AS</span> traeger_id <span class="kw">FROM</span> fx_post <span class="kw">WHERE</span> attr <span class="op">=</span> <span class="st">'person'</span> <span class="kw">AND</span> rolle <span class="op">=</span> <span class="st">'sender'</span> <span class="kw">AND</span> art <span class="op">=</span> <span class="st">'brief'</span> <span class="kw">AND</span> schluessel <span class="kw">IN</span> (<span class="st">'P000224'</span>)) h <span class="kw">USING</span> (traeger_id) <span class="kw">LEFT</span> <span class="kw">JOIN</span> (<span class="kw">SELECT</span> <span class="kw">DISTINCT</span> <span class="fu">substr</span>(obj_id, <span class="dv">3</span>) <span class="kw">AS</span> traeger_id <span class="kw">FROM</span> fx_post <span class="kw">WHERE</span> attr <span class="op">=</span> <span class="st">'person'</span> <span class="kw">AND</span> rolle <span class="op">=</span> <span class="st">'sender'</span> <span class="kw">AND</span> art <span class="op">=</span> <span class="st">'brief'</span>) k <span class="kw">USING</span> (traeger_id)),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>o1_hit <span class="kw">AS</span> <span class="kw">MATERIALIZED</span> (</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> obj_id, kanal <span class="kw">FROM</span> fx_post</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>      <span class="kw">WHERE</span> attr <span class="op">=</span> <span class="st">'person'</span> <span class="kw">AND</span> rolle <span class="op">=</span> <span class="st">'genannt'</span> <span class="kw">AND</span> art <span class="kw">IN</span> (<span class="st">'satz'</span>, <span class="st">'fussnote'</span>) <span class="kw">AND</span> schluessel <span class="kw">IN</span> (<span class="st">'P007304'</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> obj_id, <span class="st">'lemma'</span> <span class="kw">AS</span> kanal <span class="kw">FROM</span> fx_post</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>      <span class="kw">WHERE</span> attr <span class="op">=</span> <span class="st">'lemma'</span> <span class="kw">AND</span> rolle <span class="op">=</span> <span class="st">'text'</span> <span class="kw">AND</span> art <span class="kw">IN</span> (<span class="st">'satz'</span>, <span class="st">'fussnote'</span>) <span class="kw">AND</span> schluessel <span class="kw">IN</span> (<span class="st">'Hitler|de'</span>, <span class="st">'Hitler|en'</span>, <span class="st">'HITLER|en'</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> obj_id, art <span class="kw">AS</span> kanal <span class="kw">FROM</span> fx_post</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>      <span class="kw">WHERE</span> attr <span class="op">=</span> <span class="st">'form'</span> <span class="kw">AND</span> rolle <span class="op">=</span> <span class="st">'text'</span> <span class="kw">AND</span> art <span class="kw">IN</span> (<span class="st">'fussnote'</span>) <span class="kw">AND</span> schluessel <span class="kw">IN</span> (<span class="st">'hitler'</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>o1_hh <span class="kw">AS</span> (<span class="kw">SELECT</span> obj_id, <span class="kw">list</span>(<span class="kw">DISTINCT</span> kanal <span class="kw">ORDER</span> <span class="kw">BY</span> kanal) <span class="kw">AS</span> kanaele <span class="kw">FROM</span> o1_hit <span class="kw">GROUP</span> <span class="kw">BY</span> obj_id),</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>o1_ss <span class="kw">AS</span> (<span class="kw">SELECT</span> split_part(<span class="fu">substr</span>(obj_id, <span class="dv">3</span>), <span class="st">'#'</span>, <span class="dv">1</span>) <span class="kw">AS</span> doc_id, <span class="fu">CAST</span>(split_part(split_part(<span class="fu">substr</span>(obj_id, <span class="dv">3</span>), <span class="st">'#'</span>, <span class="dv">2</span>), <span class="st">'.'</span>, <span class="dv">1</span>) <span class="kw">AS</span> BIGINT) <span class="kw">AS</span> pidx, <span class="fu">CAST</span>(split_part(split_part(<span class="fu">substr</span>(obj_id, <span class="dv">3</span>), <span class="st">'#'</span>, <span class="dv">2</span>), <span class="st">'.'</span>, <span class="dv">2</span>) <span class="kw">AS</span> BIGINT) <span class="kw">AS</span> sent_idx <span class="kw">FROM</span> o1_hh <span class="kw">WHERE</span> starts_with(obj_id, <span class="st">'S:'</span>)),</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>o1_v <span class="kw">AS</span> (</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> <span class="st">'S:'</span> <span class="op">||</span> doc_id <span class="op">||</span> <span class="st">'#'</span> <span class="op">||</span> pidx <span class="op">||</span> <span class="st">'.'</span> <span class="op">||</span> sent_idx <span class="kw">AS</span> obj_id,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>         <span class="cf">CASE</span> <span class="cf">WHEN</span> (FRE) <span class="cf">THEN</span> <span class="st">'andere'</span> <span class="cf">WHEN</span> (ZIT) <span class="kw">OR</span> (LIT) <span class="cf">THEN</span> <span class="st">'zitat'</span> <span class="cf">WHEN</span> (BEI) <span class="cf">THEN</span> <span class="st">'beiwort'</span> <span class="cf">WHEN</span> (KOM) <span class="kw">OR</span> (DOP) <span class="cf">THEN</span> <span class="st">'eponym'</span> <span class="cf">WHEN</span> (POS) <span class="cf">THEN</span> <span class="st">'urheber'</span> <span class="cf">WHEN</span> (ZIEL) <span class="kw">OR</span> (ARG) <span class="kw">OR</span> (NAM) <span class="kw">OR</span> (KOO) <span class="kw">OR</span> (NER) <span class="cf">THEN</span> <span class="st">'person'</span> <span class="cf">ELSE</span> <span class="st">'offen'</span> <span class="cf">END</span> <span class="kw">AS</span> klasse, <span class="cf">CASE</span> <span class="cf">WHEN</span> (FRE) <span class="cf">THEN</span> <span class="st">'andere: Registerlink andere Person'</span> <span class="cf">WHEN</span> (ZIT) <span class="cf">THEN</span> <span class="st">'zitat: Zitatumgebung'</span> <span class="cf">WHEN</span> (LIT) <span class="cf">THEN</span> <span class="st">'zitat: Titelangabe'</span> <span class="cf">WHEN</span> (BEI) <span class="cf">THEN</span> <span class="st">'beiwort: Beiwort'</span> <span class="cf">WHEN</span> (KOM) <span class="cf">THEN</span> <span class="st">'eponym: Kompositumglied'</span> <span class="cf">WHEN</span> (DOP) <span class="cf">THEN</span> <span class="st">'eponym: Doppelname'</span> <span class="cf">WHEN</span> (POS) <span class="cf">THEN</span> <span class="st">'urheber: Urheber'</span> <span class="cf">WHEN</span> (ZIEL) <span class="cf">THEN</span> <span class="st">'person: Registerlink Ziel'</span> <span class="cf">WHEN</span> (ARG) <span class="cf">THEN</span> <span class="st">'person: Handelnder'</span> <span class="cf">WHEN</span> (NAM) <span class="cf">THEN</span> <span class="st">'person: Namensgefüge'</span> <span class="cf">WHEN</span> (KOO) <span class="cf">THEN</span> <span class="st">'person: Reihung'</span> <span class="cf">WHEN</span> (NER) <span class="cf">THEN</span> <span class="st">'person: Personenspanne'</span> <span class="cf">ELSE</span> <span class="st">'keine Bedingung trifft zu'</span> <span class="cf">END</span> <span class="kw">AS</span> bedingung</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> (<span class="kw">WITH</span> g_ks <span class="kw">AS</span> <span class="kw">MATERIALIZED</span> (<span class="kw">SELECT</span> <span class="kw">DISTINCT</span> doc_id, pidx, sent_idx <span class="kw">FROM</span> (<span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> o1_ss)),</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  g_tk <span class="kw">AS</span> <span class="kw">MATERIALIZED</span> (<span class="kw">SELECT</span> t.<span class="op">*</span>, s.lang <span class="kw">FROM</span> stz.stz_tokens t <span class="kw">JOIN</span> g_ks <span class="kw">USING</span> (doc_id, pidx, sent_idx) <span class="kw">JOIN</span> stz.stz_sentences s <span class="kw">USING</span> (doc_id, pidx, sent_idx)),</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  g_fe <span class="kw">AS</span> <span class="kw">MATERIALIZED</span> (<span class="kw">SELECT</span> <span class="kw">DISTINCT</span> x.doc_id, x.pidx, x.sent_idx <span class="kw">FROM</span> stz.stz_feats x <span class="kw">JOIN</span> g_ks <span class="kw">USING</span> (doc_id, pidx, sent_idx)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">WHERE</span> x.feat <span class="op">=</span> <span class="st">'VerbForm'</span> <span class="kw">AND</span> x.val <span class="op">=</span> <span class="st">'Fin'</span>),</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  g_en <span class="kw">AS</span> <span class="kw">MATERIALIZED</span> (<span class="kw">SELECT</span> x.<span class="op">*</span> <span class="kw">FROM</span> stz.stz_entities x <span class="kw">JOIN</span> g_ks <span class="kw">USING</span> (doc_id, pidx, sent_idx) <span class="kw">WHERE</span> x.ent_type <span class="kw">IN</span> (<span class="st">'PER'</span>, <span class="st">'PERSON'</span>)),</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  g_m <span class="kw">AS</span> <span class="kw">MATERIALIZED</span> (</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> m.doc_id, m.pidx, m.sent_idx, e.ind_id, e.canonical</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> fq_mentions m <span class="kw">JOIN</span> g_ks <span class="kw">USING</span> (doc_id, pidx, sent_idx) <span class="kw">JOIN</span> fq_entities e <span class="kw">ON</span> e.ent_id <span class="op">=</span> m.ent_id</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> e.ind_id <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">AND</span> e.kind <span class="op">=</span> <span class="st">'person'</span>),</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  g_nk <span class="kw">AS</span> <span class="kw">MATERIALIZED</span> (</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="kw">DISTINCT</span> x.canonical, f.lemma <span class="op">||</span> <span class="st">'|'</span> <span class="op">||</span> f.lang <span class="kw">AS</span> lk</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> (<span class="kw">SELECT</span> <span class="kw">DISTINCT</span> canonical <span class="kw">FROM</span> g_m) x</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">JOIN</span> fx_lemma_form f <span class="kw">ON</span> strip_accents(f.form) <span class="op">=</span> strip_accents(<span class="fu">lower</span>(<span class="fu">trim</span>(split_part(x.canonical, <span class="st">','</span>, <span class="dv">1</span>))))),</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  g_reg <span class="kw">AS</span> (</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> m.doc_id, m.pidx, m.sent_idx, bool_or(list_contains([<span class="st">'P007304'</span>]:<span class="ch">:VARCHAR</span>[], m.ind_id)) <span class="kw">AS</span> ziel,</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>           <span class="kw">list</span>(<span class="kw">DISTINCT</span> nk.lk) <span class="kw">FILTER</span> (<span class="kw">WHERE</span> nk.lk <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">AND</span> <span class="kw">NOT</span> list_contains([<span class="st">'P007304'</span>]:<span class="ch">:VARCHAR</span>[], m.ind_id))</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>             <span class="kw">AS</span> andere_klassen</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> g_m m <span class="kw">LEFT</span> <span class="kw">JOIN</span> g_nk nk <span class="kw">USING</span> (canonical) <span class="kw">GROUP</span> <span class="kw">BY</span> <span class="kw">ALL</span>)</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> t.doc_id, t.pidx, t.sent_idx, t.tid, t.form, t.lemma, t.lang, t.upos, t.deprel, h.lemma <span class="kw">AS</span> kopf,</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>         <span class="fu">coalesce</span>(t.upos <span class="op">=</span> <span class="st">'PROPN'</span>, <span class="kw">false</span>) <span class="kw">AS</span> EIG,</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>         <span class="fu">coalesce</span>((t.deprel <span class="op">=</span> <span class="st">'amod'</span> <span class="kw">OR</span> t.upos <span class="op">=</span> <span class="st">'ADJ'</span>), <span class="kw">false</span>) <span class="kw">AS</span> BEI,</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>         <span class="fu">coalesce</span>((t.deprel <span class="op">=</span> <span class="st">'compound'</span> <span class="kw">AND</span> (h.upos <span class="kw">NOT</span> <span class="kw">IN</span> (<span class="st">'PROPN'</span>, <span class="st">'PRON'</span>) <span class="kw">OR</span> (h.upos <span class="op">=</span> <span class="st">'PROPN'</span> <span class="kw">AND</span> h.deprel <span class="kw">IN</span> (<span class="st">'compound'</span>, <span class="st">'flat'</span>, <span class="st">'flat:name'</span>) <span class="kw">AND</span> hh.upos <span class="kw">IN</span> (<span class="st">'NOUN'</span>, <span class="st">'VERB'</span>)))), <span class="kw">false</span>) <span class="kw">AS</span> KOM,</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>         <span class="fu">coalesce</span>((regexp_matches(t.form, <span class="st">'^[[:upper:]][[:alpha:]]+-[[:upper:]]'</span>) <span class="kw">OR</span> regexp_matches(t.form, <span class="st">'-$'</span>) <span class="kw">OR</span> <span class="kw">EXISTS</span> (<span class="kw">SELECT</span> <span class="dv">1</span> <span class="kw">FROM</span> g_tk x <span class="kw">JOIN</span> g_tk y <span class="kw">ON</span> y.doc_id <span class="op">=</span> x.doc_id <span class="kw">AND</span> y.pidx <span class="op">=</span> x.pidx <span class="kw">AND</span> y.sent_idx <span class="op">=</span> x.sent_idx <span class="kw">WHERE</span> x.doc_id <span class="op">=</span> t.doc_id <span class="kw">AND</span> x.pidx <span class="op">=</span> t.pidx <span class="kw">AND</span> x.sent_idx <span class="op">=</span> t.sent_idx <span class="kw">AND</span> x.form <span class="kw">IN</span> (<span class="st">'-'</span>, <span class="st">'–'</span>) <span class="kw">AND</span> ((x.tid <span class="op">=</span> t.tid <span class="op">+</span> <span class="dv">1</span> <span class="kw">AND</span> y.tid <span class="op">=</span> t.tid <span class="op">+</span> <span class="dv">2</span>) <span class="kw">OR</span> (x.tid <span class="op">=</span> t.tid <span class="op">-</span> <span class="dv">1</span> <span class="kw">AND</span> y.tid <span class="op">=</span> t.tid <span class="op">-</span> <span class="dv">2</span>)) <span class="kw">AND</span> y.upos <span class="op">=</span> <span class="st">'PROPN'</span>)), <span class="kw">false</span>) <span class="kw">AS</span> DOP,</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>         <span class="fu">coalesce</span>((t.deprel <span class="kw">LIKE</span> <span class="st">'nmod%'</span> <span class="kw">AND</span> h.upos <span class="op">=</span> <span class="st">'NOUN'</span>), <span class="kw">false</span>) <span class="kw">AS</span> POS,</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>         <span class="fu">coalesce</span>((h.upos <span class="kw">IN</span> (<span class="st">'VERB'</span>, <span class="st">'AUX'</span>) <span class="kw">AND</span> (t.deprel <span class="kw">LIKE</span> <span class="st">'nsubj%'</span> <span class="kw">OR</span> t.deprel <span class="kw">IN</span> (<span class="st">'obj'</span>, <span class="st">'iobj'</span>) <span class="kw">OR</span> t.deprel <span class="kw">LIKE</span> <span class="st">'obl%'</span>)), <span class="kw">false</span>) <span class="kw">AS</span> ARG,</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>         <span class="fu">coalesce</span>((t.deprel <span class="kw">IN</span> (<span class="st">'flat'</span>, <span class="st">'flat:name'</span>, <span class="st">'appos'</span>) <span class="kw">OR</span> <span class="kw">EXISTS</span> (<span class="kw">SELECT</span> <span class="dv">1</span> <span class="kw">FROM</span> g_tk x <span class="kw">WHERE</span> x.doc_id <span class="op">=</span> t.doc_id <span class="kw">AND</span> x.pidx <span class="op">=</span> t.pidx <span class="kw">AND</span> x.sent_idx <span class="op">=</span> t.sent_idx <span class="kw">AND</span> x.head <span class="op">=</span> t.tid <span class="kw">AND</span> x.deprel <span class="kw">IN</span> (<span class="st">'flat'</span>, <span class="st">'flat:name'</span>, <span class="st">'appos'</span>))), <span class="kw">false</span>) <span class="kw">AS</span> NAM,</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>         <span class="fu">coalesce</span>((t.deprel <span class="op">=</span> <span class="st">'conj'</span> <span class="kw">AND</span> h.upos <span class="kw">IN</span> (<span class="st">'PROPN'</span>, <span class="st">'PRON'</span>) <span class="kw">OR</span> <span class="kw">EXISTS</span> (<span class="kw">SELECT</span> <span class="dv">1</span> <span class="kw">FROM</span> g_tk x <span class="kw">WHERE</span> x.doc_id <span class="op">=</span> t.doc_id <span class="kw">AND</span> x.pidx <span class="op">=</span> t.pidx <span class="kw">AND</span> x.sent_idx <span class="op">=</span> t.sent_idx <span class="kw">AND</span> x.head <span class="op">=</span> t.tid <span class="kw">AND</span> x.deprel <span class="op">=</span> <span class="st">'conj'</span> <span class="kw">AND</span> x.upos <span class="kw">IN</span> (<span class="st">'PROPN'</span>, <span class="st">'PRON'</span>))), <span class="kw">false</span>) <span class="kw">AS</span> KOO,</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>         <span class="fu">coalesce</span>(<span class="kw">EXISTS</span> (<span class="kw">SELECT</span> <span class="dv">1</span> <span class="kw">FROM</span> g_en x <span class="kw">WHERE</span> x.doc_id <span class="op">=</span> t.doc_id <span class="kw">AND</span> x.pidx <span class="op">=</span> t.pidx <span class="kw">AND</span> x.sent_idx <span class="op">=</span> t.sent_idx <span class="kw">AND</span> list_contains(string_split(<span class="fu">trim</span>(<span class="fu">regexp_replace</span>(<span class="fu">lower</span>(strip_accents(x.text)), <span class="st">'[^a-z0-9]+'</span>, <span class="st">' '</span>, <span class="st">'g'</span>)), <span class="st">' '</span>), string_split(<span class="fu">trim</span>(<span class="fu">regexp_replace</span>(<span class="fu">lower</span>(strip_accents(t.form)), <span class="st">'[^a-z0-9]+'</span>, <span class="st">' '</span>, <span class="st">'g'</span>)), <span class="st">' '</span>)[<span class="dv">1</span>])), <span class="kw">false</span>) <span class="kw">AS</span> NER,</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>         <span class="fu">coalesce</span>((<span class="kw">NOT</span> <span class="kw">EXISTS</span> (<span class="kw">SELECT</span> <span class="dv">1</span> <span class="kw">FROM</span> g_fe x <span class="kw">WHERE</span> x.doc_id <span class="op">=</span> t.doc_id <span class="kw">AND</span> x.pidx <span class="op">=</span> t.pidx <span class="kw">AND</span> x.sent_idx <span class="op">=</span> t.sent_idx) <span class="kw">AND</span> <span class="kw">EXISTS</span> (<span class="kw">SELECT</span> <span class="dv">1</span> <span class="kw">FROM</span> g_tk x <span class="kw">WHERE</span> x.doc_id <span class="op">=</span> t.doc_id <span class="kw">AND</span> x.pidx <span class="op">=</span> t.pidx <span class="kw">AND</span> x.sent_idx <span class="op">=</span> t.sent_idx <span class="kw">AND</span> x.upos <span class="op">=</span> <span class="st">'NUM'</span>)), <span class="kw">false</span>) <span class="kw">AS</span> ZIT,</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>         <span class="fu">coalesce</span>((<span class="kw">NOT</span> <span class="kw">EXISTS</span> (<span class="kw">SELECT</span> <span class="dv">1</span> <span class="kw">FROM</span> g_fe x <span class="kw">WHERE</span> x.doc_id <span class="op">=</span> t.doc_id <span class="kw">AND</span> x.pidx <span class="op">=</span> t.pidx <span class="kw">AND</span> x.sent_idx <span class="op">=</span> t.sent_idx) <span class="kw">AND</span> <span class="kw">EXISTS</span> (<span class="kw">SELECT</span> <span class="dv">1</span> <span class="kw">FROM</span> g_tk x <span class="kw">WHERE</span> x.doc_id <span class="op">=</span> t.doc_id <span class="kw">AND</span> x.pidx <span class="op">=</span> t.pidx <span class="kw">AND</span> x.sent_idx <span class="op">=</span> t.sent_idx <span class="kw">AND</span> x.upos <span class="op">=</span> <span class="st">'PUNCT'</span> <span class="kw">AND</span> x.form <span class="op">=</span> <span class="st">':'</span> <span class="kw">AND</span> x.tid <span class="op">&gt;</span> t.tid <span class="kw">AND</span> x.tid <span class="op">&lt;=</span> t.tid <span class="op">+</span> <span class="dv">8</span>)), <span class="kw">false</span>) <span class="kw">AS</span> LIT,</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>         <span class="fu">coalesce</span>(<span class="fu">coalesce</span>(g_reg.ziel, <span class="kw">false</span>), <span class="kw">false</span>) <span class="kw">AS</span> ZIEL,</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>         <span class="fu">coalesce</span>((<span class="kw">NOT</span> <span class="fu">coalesce</span>(g_reg.ziel, <span class="kw">false</span>) <span class="kw">AND</span> list_contains(<span class="fu">coalesce</span>(g_reg.andere_klassen, []), t.lemma <span class="op">||</span> <span class="st">'|'</span> <span class="op">||</span> <span class="fu">coalesce</span>(t.lang, <span class="st">''</span>))), <span class="kw">false</span>) <span class="kw">AS</span> FRE,</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>         <span class="fu">coalesce</span>(t.deprel <span class="op">=</span> <span class="st">'root'</span>, <span class="kw">false</span>) <span class="kw">AS</span> WUR</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> g_tk t</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>  <span class="kw">LEFT</span> <span class="kw">JOIN</span> g_tk h <span class="kw">ON</span> h.doc_id <span class="op">=</span> t.doc_id <span class="kw">AND</span> h.pidx <span class="op">=</span> t.pidx <span class="kw">AND</span> h.sent_idx <span class="op">=</span> t.sent_idx <span class="kw">AND</span> h.tid <span class="op">=</span> t.head</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>  <span class="kw">LEFT</span> <span class="kw">JOIN</span> g_tk hh <span class="kw">ON</span> hh.doc_id <span class="op">=</span> h.doc_id <span class="kw">AND</span> hh.pidx <span class="op">=</span> h.pidx <span class="kw">AND</span> hh.sent_idx <span class="op">=</span> h.sent_idx <span class="kw">AND</span> hh.tid <span class="op">=</span> h.head</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>  <span class="kw">LEFT</span> <span class="kw">JOIN</span> g_reg <span class="kw">ON</span> g_reg.doc_id <span class="op">=</span> t.doc_id <span class="kw">AND</span> g_reg.pidx <span class="op">=</span> t.pidx <span class="kw">AND</span> g_reg.sent_idx <span class="op">=</span> t.sent_idx</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>  <span class="kw">WHERE</span> list_contains([<span class="st">'Hitler|de'</span>, <span class="st">'Hitler|en'</span>, <span class="st">'HITLER|en'</span>]:<span class="ch">:VARCHAR</span>[], t.lemma <span class="op">||</span> <span class="st">'|'</span> <span class="op">||</span> <span class="fu">coalesce</span>(t.lang, <span class="st">''</span>)))),</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>o1_k <span class="kw">AS</span> (</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> obj_id, bool_or(list_contains([<span class="st">'person'</span>, <span class="st">'urheber'</span>]:<span class="ch">:VARCHAR</span>[], klasse)) <span class="kw">AS</span> ok, bool_or(klasse <span class="op">=</span> <span class="st">'offen'</span>) <span class="kw">AS</span> offen,</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>         string_agg(<span class="kw">DISTINCT</span> klasse, <span class="st">', '</span> <span class="kw">ORDER</span> <span class="kw">BY</span> klasse) <span class="kw">AS</span> klassen,</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>         <span class="fu">min</span>(bedingung) <span class="kw">FILTER</span> (<span class="kw">WHERE</span> list_contains([<span class="st">'person'</span>, <span class="st">'urheber'</span>]:<span class="ch">:VARCHAR</span>[], klasse)) <span class="kw">AS</span> bed</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> o1_v <span class="kw">GROUP</span> <span class="kw">BY</span> obj_id),</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>o1 <span class="kw">AS</span> <span class="kw">MATERIALIZED</span> (</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> h.obj_id, h.kanaele,</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>         <span class="cf">CASE</span> <span class="cf">WHEN</span> k.ok <span class="cf">THEN</span> <span class="st">'erfuellt'</span> <span class="cf">WHEN</span> k.offen <span class="cf">THEN</span> <span class="st">'unentschieden'</span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>              <span class="cf">WHEN</span> k.obj_id <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="cf">THEN</span> <span class="st">'verletzt'</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>              <span class="cf">WHEN</span> list_contains(h.kanaele, <span class="st">'ner_linked'</span>) <span class="cf">THEN</span> <span class="st">'erfuellt'</span></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>              <span class="cf">ELSE</span> <span class="st">'unentschieden'</span> <span class="cf">END</span> <span class="kw">AS</span> e,</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>         <span class="cf">CASE</span> <span class="cf">WHEN</span> k.ok <span class="cf">THEN</span> <span class="st">'Gebrauch '</span> <span class="op">||</span> k.bed</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>              <span class="cf">WHEN</span> k.offen <span class="cf">THEN</span> <span class="st">'Gebrauch nicht entschieden'</span></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>              <span class="cf">WHEN</span> k.obj_id <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="cf">THEN</span> <span class="st">'Name nur als '</span> <span class="op">||</span> k.klassen</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>              <span class="cf">WHEN</span> list_contains(h.kanaele, <span class="st">'ner_linked'</span>) <span class="cf">THEN</span> <span class="st">'Registerverknüpfung ohne Wortvorkommen'</span></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>              <span class="cf">WHEN</span> starts_with(h.obj_id, <span class="st">'S:'</span>) <span class="cf">THEN</span> <span class="st">'Lemmatreffer ohne lesbares Vorkommen'</span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>              <span class="cf">ELSE</span> <span class="st">'Objekt ohne Satzanalyse'</span> <span class="cf">END</span> <span class="kw">AS</span> w</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> o1_hh h <span class="kw">LEFT</span> <span class="kw">JOIN</span> o1_k k <span class="kw">USING</span> (obj_id)),</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>b1 <span class="kw">AS</span> <span class="kw">MATERIALIZED</span> (</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> l.traeger_id,</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>         <span class="cf">CASE</span> <span class="cf">WHEN</span> p.n_ok <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="st">'erfuellt'</span> <span class="cf">WHEN</span> p.n_uns <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="st">'unentschieden'</span></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>              <span class="cf">WHEN</span> d.traeger_id <span class="kw">IS</span> <span class="kw">NULL</span> <span class="cf">THEN</span> <span class="st">'unentschieden'</span> <span class="cf">ELSE</span> <span class="st">'verletzt'</span> <span class="cf">END</span> <span class="kw">AS</span> e,</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>         <span class="cf">CASE</span> <span class="cf">WHEN</span> p.n_ok <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="st">'Treffer in '</span> <span class="op">||</span> p.n_ok <span class="op">||</span> <span class="st">' Objekt(en)'</span></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>              <span class="cf">WHEN</span> p.n_uns <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">THEN</span> <span class="st">'nur unsichere Lesung in '</span> <span class="op">||</span> p.n_uns <span class="op">||</span> <span class="st">' Objekt(en)'</span></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>              <span class="cf">WHEN</span> d.traeger_id <span class="kw">IS</span> <span class="kw">NULL</span> <span class="cf">THEN</span> <span class="st">'kein Text der Objektarten '</span> <span class="op">||</span> <span class="st">'satz, fussnote'</span></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>              <span class="cf">WHEN</span> p.n_aus <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">THEN</span> p.w_aus</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>              <span class="cf">ELSE</span> <span class="st">'kein Treffer im Text'</span> <span class="cf">END</span> <span class="kw">AS</span> w</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> fx_traeger l</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>  <span class="kw">LEFT</span> <span class="kw">JOIN</span> (<span class="kw">SELECT</span> fb.traeger_id,</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">FILTER</span> (<span class="kw">WHERE</span> o.e <span class="op">=</span> <span class="st">'erfuellt'</span>) <span class="kw">AS</span> n_ok,</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">FILTER</span> (<span class="kw">WHERE</span> o.e <span class="op">=</span> <span class="st">'unentschieden'</span>) <span class="kw">AS</span> n_uns,</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">FILTER</span> (<span class="kw">WHERE</span> o.e <span class="op">=</span> <span class="st">'verletzt'</span>) <span class="kw">AS</span> n_aus,</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">min</span>(o.w) <span class="kw">FILTER</span> (<span class="kw">WHERE</span> o.e <span class="op">=</span> <span class="st">'verletzt'</span>) <span class="kw">AS</span> w_aus</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>             <span class="kw">FROM</span> o1 o <span class="kw">JOIN</span> fx_enthalten fb <span class="kw">USING</span> (obj_id) <span class="kw">GROUP</span> <span class="kw">BY</span> fb.traeger_id) p <span class="kw">USING</span> (traeger_id)</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>  <span class="kw">LEFT</span> <span class="kw">JOIN</span> (<span class="kw">SELECT</span> <span class="kw">DISTINCT</span> traeger_id <span class="kw">FROM</span> fx_deck <span class="kw">WHERE</span> art <span class="kw">IN</span> (<span class="st">'satz'</span>, <span class="st">'fussnote'</span>)) d <span class="kw">USING</span> (traeger_id)),</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>k0 <span class="kw">AS</span> <span class="kw">MATERIALIZED</span> (<span class="kw">SELECT</span> traeger_id <span class="kw">FROM</span> fx_traeger <span class="kw">JOIN</span> b0 x0 <span class="kw">USING</span> (traeger_id) <span class="kw">WHERE</span> x0.e <span class="op">&lt;&gt;</span> <span class="st">'verletzt'</span>),</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>i0 <span class="kw">AS</span> <span class="kw">MATERIALIZED</span> (<span class="kw">SELECT</span> traeger_id <span class="kw">FROM</span> k0),</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>t0 <span class="kw">AS</span> <span class="kw">MATERIALIZED</span> (<span class="kw">SELECT</span> traeger_id <span class="kw">FROM</span> i0 <span class="kw">JOIN</span> b1 x0 <span class="kw">USING</span> (traeger_id) <span class="kw">WHERE</span> x0.e <span class="op">&lt;&gt;</span> <span class="st">'verletzt'</span>),</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>ob0 <span class="kw">AS</span> (</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> o.obj_id, fb.traeger_id, o.kanaele <span class="kw">FROM</span> (<span class="kw">SELECT</span> obj_id, kanaele <span class="kw">FROM</span> o1 <span class="kw">WHERE</span> e <span class="op">&lt;&gt;</span> <span class="st">'verletzt'</span>) o <span class="kw">JOIN</span> fx_enthalten fb <span class="kw">USING</span> (obj_id) <span class="kw">JOIN</span> t0 <span class="kw">USING</span> (traeger_id)),</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>raum <span class="kw">AS</span> <span class="kw">MATERIALIZED</span> (<span class="kw">SELECT</span> <span class="kw">DISTINCT</span> traeger_id <span class="kw">FROM</span> (<span class="kw">SELECT</span> traeger_id <span class="kw">FROM</span> t0)),</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>obj <span class="kw">AS</span> <span class="kw">MATERIALIZED</span> (<span class="kw">SELECT</span> obj_id, <span class="kw">list</span>(<span class="kw">DISTINCT</span> traeger_id <span class="kw">ORDER</span> <span class="kw">BY</span> traeger_id) <span class="kw">AS</span> traeger, list_distinct(flatten(<span class="kw">list</span>(kanaele))) <span class="kw">AS</span> kanaele, <span class="kw">list</span>(<span class="kw">DISTINCT</span> <span class="kw">cluster</span>) <span class="kw">AS</span> <span class="kw">cluster</span> <span class="kw">FROM</span> (<span class="kw">SELECT</span> obj_id, traeger_id, kanaele, <span class="dv">0</span> <span class="kw">AS</span> <span class="kw">cluster</span> <span class="kw">FROM</span> ob0) <span class="kw">GROUP</span> <span class="kw">BY</span> obj_id),</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>entscheid <span class="kw">AS</span> (<span class="kw">SELECT</span> traeger_id, <span class="st">'b1'</span> <span class="kw">AS</span> knoten, <span class="st">'kopf'</span> <span class="kw">AS</span> ebene, <span class="dv">0</span> <span class="kw">AS</span> rang, e, w, <span class="kw">false</span> <span class="kw">AS</span> negiert, <span class="kw">false</span> <span class="kw">AS</span> streng <span class="kw">FROM</span> b0 <span class="kw">UNION</span> <span class="kw">ALL</span> <span class="kw">SELECT</span> traeger_id, <span class="st">'b2'</span> <span class="kw">AS</span> knoten, <span class="st">'text'</span> <span class="kw">AS</span> ebene, <span class="dv">2001</span> <span class="kw">AS</span> rang, e, w, <span class="kw">false</span> <span class="kw">AS</span> negiert, <span class="kw">false</span> <span class="kw">AS</span> streng <span class="kw">FROM</span> b1),</span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>zaehl <span class="kw">AS</span> (</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> knoten, any_value(ebene) <span class="kw">AS</span> ebene, <span class="fu">min</span>(rang) <span class="kw">AS</span> rang,</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>         <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">FILTER</span> (<span class="kw">WHERE</span> e <span class="op">=</span> <span class="st">'erfuellt'</span>) <span class="kw">AS</span> erfuellt,</span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>         <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">FILTER</span> (<span class="kw">WHERE</span> e <span class="op">=</span> <span class="st">'unentschieden'</span>) <span class="kw">AS</span> unentschieden,</span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>         <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">FILTER</span> (<span class="kw">WHERE</span> e <span class="op">=</span> <span class="st">'verletzt'</span>) <span class="kw">AS</span> verletzt</span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> entscheid <span class="kw">GROUP</span> <span class="kw">BY</span> knoten),</span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>erste <span class="kw">AS</span> (</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> traeger_id, arg_min(struct_pack(knoten <span class="op">:=</span> knoten, w <span class="op">:=</span> w), rang) <span class="kw">AS</span> erste</span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> entscheid <span class="kw">WHERE</span> (<span class="kw">NOT</span> negiert <span class="kw">AND</span> e <span class="op">=</span> <span class="st">'verletzt'</span>) <span class="kw">OR</span> (negiert <span class="kw">AND</span> e <span class="op">=</span> <span class="st">'erfuellt'</span>)</span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>                     <span class="kw">OR</span> (streng <span class="kw">AND</span> e <span class="op">=</span> <span class="st">'unentschieden'</span>)</span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>  <span class="kw">GROUP</span> <span class="kw">BY</span> traeger_id),</span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>buchung <span class="kw">AS</span> (</span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> l.traeger_id,</span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>         <span class="cf">CASE</span> <span class="cf">WHEN</span> r.traeger_id <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="cf">THEN</span> <span class="st">'raum'</span> <span class="cf">ELSE</span> <span class="st">'aus'</span> <span class="cf">END</span> <span class="kw">AS</span> raum,</span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a>         <span class="cf">CASE</span> <span class="cf">WHEN</span> r.traeger_id <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="cf">THEN</span> <span class="kw">NULL</span></span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a>              <span class="cf">ELSE</span> <span class="fu">coalesce</span>(e.erste.knoten, <span class="st">'einheit'</span>) <span class="cf">END</span> <span class="kw">AS</span> ausgeschlossen_durch,</span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a>         <span class="cf">CASE</span> <span class="cf">WHEN</span> r.traeger_id <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="cf">THEN</span> <span class="kw">NULL</span></span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a>              <span class="cf">ELSE</span> <span class="fu">coalesce</span>(e.erste.w, <span class="st">'kein Objekt erfüllt die Textblätter gemeinsam (Einheit Satz)'</span>) <span class="cf">END</span> <span class="kw">AS</span> grund</span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> fx_traeger l <span class="kw">LEFT</span> <span class="kw">JOIN</span> raum r <span class="kw">USING</span> (traeger_id) <span class="kw">LEFT</span> <span class="kw">JOIN</span> erste e <span class="kw">USING</span> (traeger_id)),</span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>trichter <span class="kw">AS</span> (<span class="kw">SELECT</span> <span class="dv">0</span> <span class="kw">AS</span> <span class="kw">cluster</span>, (<span class="kw">SELECT</span> <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">FROM</span> fx_traeger) <span class="kw">AS</span> alle, (<span class="kw">SELECT</span> <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">FROM</span> k0) <span class="kw">AS</span> kopf,</span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a>                   (<span class="kw">SELECT</span> <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">FROM</span> i0) <span class="kw">AS</span> inhalt, (<span class="kw">SELECT</span> <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">FROM</span> t0) <span class="kw">AS</span> text,</span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>                   (<span class="kw">SELECT</span> <span class="fu">count</span>(<span class="kw">DISTINCT</span> obj_id) <span class="kw">FROM</span> ob0) <span class="kw">AS</span> objekte),</span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a>objsel <span class="kw">AS</span> <span class="kw">MATERIALIZED</span> (<span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> obj <span class="kw">ORDER</span> <span class="kw">BY</span> obj_id <span class="kw">LIMIT</span> <span class="dv">300</span>),</span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a>objtext <span class="kw">AS</span> (</span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> o.obj_id, <span class="st">'satz'</span> <span class="kw">AS</span> art, o.traeger, o.kanaele, s.text</span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> (<span class="kw">SELECT</span> <span class="op">*</span>, split_part(<span class="fu">substr</span>(obj_id, <span class="dv">3</span>), <span class="st">'#'</span>, <span class="dv">1</span>) <span class="kw">AS</span> doc_id, <span class="fu">CAST</span>(split_part(split_part(<span class="fu">substr</span>(obj_id, <span class="dv">3</span>), <span class="st">'#'</span>, <span class="dv">2</span>), <span class="st">'.'</span>, <span class="dv">1</span>) <span class="kw">AS</span> BIGINT) <span class="kw">AS</span> pidx, <span class="fu">CAST</span>(split_part(split_part(<span class="fu">substr</span>(obj_id, <span class="dv">3</span>), <span class="st">'#'</span>, <span class="dv">2</span>), <span class="st">'.'</span>, <span class="dv">2</span>) <span class="kw">AS</span> BIGINT) <span class="kw">AS</span> sent_idx <span class="kw">FROM</span> objsel <span class="kw">WHERE</span> starts_with(obj_id, <span class="st">'S:'</span>)) o</span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a>  <span class="kw">JOIN</span> stz.stz_sentences s <span class="kw">ON</span> s.doc_id <span class="op">=</span> o.doc_id <span class="kw">AND</span> s.pidx <span class="op">=</span> o.pidx <span class="kw">AND</span> s.sent_idx <span class="op">=</span> o.sent_idx</span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>  <span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> o.obj_id, <span class="st">'absatz'</span>, o.traeger, o.kanaele, a.text</span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> (<span class="kw">SELECT</span> <span class="op">*</span>, split_part(<span class="fu">substr</span>(obj_id, <span class="dv">3</span>), <span class="st">'#'</span>, <span class="dv">1</span>) <span class="kw">AS</span> doc_id, <span class="fu">CAST</span>(split_part(<span class="fu">substr</span>(obj_id, <span class="dv">3</span>), <span class="st">'#'</span>, <span class="dv">2</span>) <span class="kw">AS</span> BIGINT) <span class="kw">AS</span> pidx, <span class="fu">CAST</span>(split_part(<span class="fu">substr</span>(obj_id, <span class="dv">3</span>), <span class="st">'#'</span>, <span class="dv">3</span>) <span class="kw">AS</span> BIGINT) <span class="kw">AS</span> par_idx <span class="kw">FROM</span> objsel <span class="kw">WHERE</span> starts_with(obj_id, <span class="st">'A:'</span>)) o</span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>  <span class="kw">JOIN</span> fq_paragraphs a <span class="kw">ON</span> a.doc_id <span class="op">=</span> o.doc_id <span class="kw">AND</span> a.pidx <span class="op">=</span> o.pidx <span class="kw">AND</span> a.par_idx <span class="op">=</span> o.par_idx</span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>  <span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> o.obj_id, <span class="st">'fussnote'</span>, o.traeger, o.kanaele, f.text</span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> objsel o <span class="kw">JOIN</span> (<span class="kw">SELECT</span> obj_id, src_rowid <span class="kw">FROM</span> fx_objekt <span class="kw">WHERE</span> art <span class="op">=</span> <span class="st">'fussnote'</span>) x <span class="kw">USING</span> (obj_id)</span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>  <span class="kw">JOIN</span> fq_footnotes f <span class="kw">ON</span> f.<span class="dt">rowid</span> <span class="op">=</span> x.src_rowid</span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a>  <span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> o.obj_id, x.art, o.traeger, o.kanaele, <span class="kw">NULL</span></span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> objsel o <span class="kw">JOIN</span> (<span class="kw">SELECT</span> obj_id, art <span class="kw">FROM</span> fx_objekt <span class="kw">WHERE</span> art <span class="kw">IN</span> (<span class="st">'brief'</span>, <span class="st">'seite'</span>, <span class="st">'abbildung'</span>, <span class="st">'dokument'</span>)) x</span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a>    <span class="kw">USING</span> (obj_id))</span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">SELECT</span> <span class="kw">list</span>(traeger_id <span class="kw">ORDER</span> <span class="kw">BY</span> traeger_id) <span class="kw">FROM</span> raum) <span class="kw">AS</span> traeger_raum,</span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">SELECT</span> <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">FROM</span> obj) <span class="kw">AS</span> n_objekte,</span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">SELECT</span> <span class="kw">list</span>(<span class="kw">DISTINCT</span> l <span class="kw">ORDER</span> <span class="kw">BY</span> l) <span class="kw">FROM</span> (<span class="kw">SELECT</span> unnest(traeger) <span class="kw">AS</span> l <span class="kw">FROM</span> obj)) <span class="kw">AS</span> tragend,</span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">SELECT</span> <span class="kw">list</span>(struct_pack(art <span class="op">:=</span> art, n <span class="op">:=</span> n) <span class="kw">ORDER</span> <span class="kw">BY</span> art)</span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a>     <span class="kw">FROM</span> (<span class="kw">SELECT</span> x.art, <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">AS</span> n <span class="kw">FROM</span> obj <span class="kw">JOIN</span> fx_objekt x <span class="kw">USING</span> (obj_id) <span class="kw">GROUP</span> <span class="kw">BY</span> x.art)) <span class="kw">AS</span> objektarten,</span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">SELECT</span> <span class="kw">list</span>(struct_pack(obj_id <span class="op">:=</span> obj_id, art <span class="op">:=</span> art, traeger <span class="op">:=</span> traeger, kanaele <span class="op">:=</span> kanaele, text <span class="op">:=</span> text)</span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a>               <span class="kw">ORDER</span> <span class="kw">BY</span> obj_id) <span class="kw">FROM</span> objtext) <span class="kw">AS</span> objekte,</span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">SELECT</span> <span class="kw">list</span>(struct_pack(knoten <span class="op">:=</span> knoten, ebene <span class="op">:=</span> ebene, erfuellt <span class="op">:=</span> erfuellt,</span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a>                           unentschieden <span class="op">:=</span> unentschieden, verletzt <span class="op">:=</span> verletzt) <span class="kw">ORDER</span> <span class="kw">BY</span> rang) <span class="kw">FROM</span> zaehl) <span class="kw">AS</span> zaehlung,</span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">SELECT</span> <span class="kw">list</span>(struct_pack(<span class="kw">cluster</span> <span class="op">:=</span> <span class="kw">cluster</span>, alle <span class="op">:=</span> alle, kopf <span class="op">:=</span> kopf, inhalt <span class="op">:=</span> inhalt, text <span class="op">:=</span> text,</span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a>                           objekte <span class="op">:=</span> objekte) <span class="kw">ORDER</span> <span class="kw">BY</span> <span class="kw">cluster</span>) <span class="kw">FROM</span> trichter) <span class="kw">AS</span> trichter,</span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">SELECT</span> <span class="kw">list</span>(struct_pack(traeger_id <span class="op">:=</span> traeger_id, knoten <span class="op">:=</span> knoten, e <span class="op">:=</span> e, w <span class="op">:=</span> w) <span class="kw">ORDER</span> <span class="kw">BY</span> traeger_id, rang)</span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a>     <span class="kw">FROM</span> entscheid <span class="kw">WHERE</span> traeger_id <span class="kw">IN</span> (<span class="kw">SELECT</span> traeger_id <span class="kw">FROM</span> raum <span class="kw">ORDER</span> <span class="kw">BY</span> traeger_id <span class="kw">LIMIT</span> <span class="dv">2000</span>)) <span class="kw">AS</span> gruende,</span>
+<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a>  (<span class="kw">SELECT</span> <span class="kw">list</span>(struct_pack(traeger_id <span class="op">:=</span> traeger_id, raum <span class="op">:=</span> raum, ausgeschlossen_durch <span class="op">:=</span> ausgeschlossen_durch,</span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a>                           grund <span class="op">:=</span> grund) <span class="kw">ORDER</span> <span class="kw">BY</span> traeger_id) <span class="kw">FROM</span> buchung) <span class="kw">AS</span> buchung,</span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a>  [] <span class="kw">AS</span> projektion_zaehlung,</span>
+<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a>  [] <span class="kw">AS</span> projektion</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<p>Die Entscheidungen jedes Blatts werden für alle Briefe gerechnet, weil der Raumbeweis jeden Brief verbuchen muss; die Einschränkung selbst geht Ebene für Ebene (<code>k0</code> → <code>i0</code> → <code>t0</code>), und die Evidenzobjekte werden nur in den verbliebenen Briefen gesucht.</p>
+</section>
+<section id="bewertung-und-verfeinerung" class="level2">
+<h2 class="anchored" data-anchor-id="bewertung-und-verfeinerung">Bewertung und Verfeinerung</h2>
+<p>Eine Menge ist <strong>zu groß</strong>, wenn sie mehr Objekte ihrer Art enthält als die Karte zulässt (Briefe 150, Dokumente 5, Sätze 400), <strong>unspezifisch</strong>, wenn ein positives Blatt weniger als 5 % der Träger ausschließt, <strong>leer</strong> ohne Träger oder ohne ein einziges Evidenzobjekt (dann bleiben nur unentschiedene Träger: <em>Briefe an Maupertuis aus Berlin, 1754 oder 1755</em> hat 4 solche und kein Objekt), <strong>widersprüchlich</strong>, wenn der Merge einen Widerspruch fand. Die Rückfrage nennt dann den Hebel, der die Menge am stärksten teilt:</p>
+<ul>
+<li>Lässt ein Blatt mehr als die Hälfte der Menge nur als unentschieden stehen, fragt sie zuerst, ob diese Briefe bleiben sollen. <em>Welche Briefe schrieb Prandtl an Kármán zwischen 1930 und 1933?</em> behält 5.949 Briefe; 5.945 davon nur, weil ihr Absender nicht verzeichnet ist. Die Antwort „nur verzeichnete“ macht das Blatt streng: 4 Briefe, alle Goldbriefe darunter.</li>
+<li>Sonst schlägt sie das Unterattribut mit der größten Entropie über der Menge vor (Oberthema, Jahrzehnt, Sprache, Absendeort, Absender, Empfänger), mit den Zählungen je Wert aus derselben Anweisung. Ein Attribut, das nicht einschränken kann, wird nicht angeboten.</li>
+</ul>
+<p>Die Antwort wird ein Blatt des Suchbaums (<code>quelle: verfeinerung</code>), und die Stufen 5 bis 9 laufen neu.</p>
+</section>
+<section id="der-raumbeweis" class="level2">
+<h2 class="anchored" data-anchor-id="der-raumbeweis">Der Raumbeweis</h2>
+<p>Das Zertifikat <code>famulus-raum/1</code> sagt: jeder Träger des Körpers liegt im Raum, oder ein Blatt des Suchbaums hat ihn mit Grund ausgeschlossen (verletzt, bei einem negierten Blatt erfüllt, bei einem strengen unentschieden), oder kein Objekt erfüllt die Textblätter gemeinsam (Einheit Satz); die Facetten <code>fx</code> (Gate) und <code>schemabaum</code> (geprüfte Karte) gelten. Der Körper ist der Bau der Evidenztabellen (<code>collection@fx-…</code>, aus der Gate-Zeile). Der Prover (<code>famulus_proof.entails</code>) leitet daraus <code>RaumVollstaendig(B@version, Frage)</code> ab. Ein Brief, den nichts verbucht, wird genannt, und der Beweis hält nicht.</p>
+<p>Ob die Blätter <em>angemessen</em> sind, zeigt der Beweis nicht. Das misst der Recall gegen Gold. Die Goldzeilen haben den Status <code>vorgeschlagen</code> und zählen erst, wenn der Eigentümer sie bestätigt.</p>
+</section>
+<section id="messung" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="messung">Messung</h2>
+<p>Am 8. Oktober 2026 auf neun Collections, je Frage ein Kalt- und ein Warmlauf, berichtet der Warmlauf. Die Klassifikation ist als JSON vorgegeben, damit die Messung nicht vom Modell abhängt. „Objekte“ sind die Evidenzobjekte: in einer Textfrage die Sätze, Absätze und Fußnoten, die die Textblätter erfüllen; in einer Kopffrage die Träger, die jedes Blatt erfüllen. „tragend“ sind die Träger, die ein Evidenzobjekt enthalten; der Raum hält daneben die unentschiedenen. „Baum“ vergleicht die tragenden Briefe mit dem Raum des Entscheidungsbaums vom 4. Oktober (<code>reports/data/e*-nachher.json</code>). Recall gegen Gold gibt es nur im Kármán-Nachlass; die Goldzeilen von Hevelius, Euler und Pirckheimer sind leer (<code>nicht_erntbar</code>: es gibt keine Briefdatensätze, aus denen sie zu ernten wären), Wäfler, Kepler und Copernicus haben Probefragen ohne Gold.</p>
+<div class="column-page">
+<p><strong>Kármán-Nachlass</strong> — Träger: Briefe; Gold <code>vorgeschlagen</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 16%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Suchbaum</th>
+<th>Träger: alle → Kopf → Inhalt → Text</th>
+<th style="text-align: right;">Objekte</th>
+<th style="text-align: right;">tragend</th>
+<th>Baum</th>
+<th>Recall Raum / tragend</th>
+<th style="text-align: right;">SQL</th>
+<th>Urteil</th>
+<th>verfeinert</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>von Theodor von Kármán, nennt Adolf Hitler</td>
+<td>15.976 → 9.413 → 9.413 → 175</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td>1, gleich</td>
+<td>1,0 / 1,0</td>
+<td style="text-align: right;">151 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>von Theodor von Kármán, nennt Alexander Weinstein</td>
+<td>15.976 → 9.413 → 9.413 → 176</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td>6, verschieden</td>
+<td>—</td>
+<td style="text-align: right;">134 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>von Theodor von Kármán, nennt Albert Einstein</td>
+<td>15.976 → 9.413 → 9.413 → 208</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">34</td>
+<td>44, verschieden</td>
+<td>0,793 / 0,793</td>
+<td style="text-align: right;">152 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>von Theodor von Kármán, nennt Ludwig Prandtl</td>
+<td>15.976 → 9.413 → 9.413 → 392</td>
+<td style="text-align: right;">542</td>
+<td style="text-align: right;">218</td>
+<td>279, verschieden</td>
+<td>0,87 / 0,87</td>
+<td style="text-align: right;">194 ms</td>
+<td>zu groß</td>
+<td>156, Recall 0,864</td>
+</tr>
+<tr class="odd">
+<td>von Ludwig Prandtl, an Theodor von Kármán, 1930/1933</td>
+<td>15.976 → 5.949 → 5.949 → 5.949</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td>—</td>
+<td>1,0 / 1,0</td>
+<td style="text-align: right;">75 ms</td>
+<td>zu groß</td>
+<td>4, Recall 1,0</td>
+</tr>
+<tr class="even">
+<td>von Theodor von Kármán, deutsch, aus Pasadena</td>
+<td>15.976 → 1.809 → 1.809 → 1.809</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">18</td>
+<td>—</td>
+<td>1,0 / 1,0</td>
+<td style="text-align: right;">81 ms</td>
+<td>zu groß</td>
+<td>18, Recall 1,0</td>
+</tr>
+<tr class="odd">
+<td>von Theodor von Kármán, 1933</td>
+<td>15.976 → 6.621 → 6.621 → 6.621</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">22</td>
+<td>—</td>
+<td>1,0 / 1,0</td>
+<td style="text-align: right;">71 ms</td>
+<td>zu groß</td>
+<td>48, Recall 1,0</td>
+</tr>
+<tr class="even">
+<td>an Albert Einstein</td>
+<td>15.976 → 9.077 → 9.077 → 9.077</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td>—</td>
+<td>1,0 / 1,0</td>
+<td style="text-align: right;">63 ms</td>
+<td>zu groß</td>
+<td>1, Recall 1,0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Hevelius</strong> — Träger: Briefe; kein Gold (die Goldzeilen sind nicht erntbar).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 16%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Suchbaum</th>
+<th>Träger: alle → Kopf → Inhalt → Text</th>
+<th style="text-align: right;">Objekte</th>
+<th style="text-align: right;">tragend</th>
+<th>Baum</th>
+<th>Recall Raum / tragend</th>
+<th style="text-align: right;">SQL</th>
+<th>Urteil</th>
+<th>verfeinert</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>von Johannes Hevelius, an Pierre Des Noyers</td>
+<td>2.970 → 494 → 494 → 494</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">101</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">44 ms</td>
+<td>zu groß</td>
+<td>102</td>
+</tr>
+<tr class="even">
+<td>von Pierre Des Noyers, an Johannes Hevelius, 1665</td>
+<td>2.970 → 352 → 352 → 352</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">9</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">45 ms</td>
+<td>zu groß</td>
+<td>10</td>
+</tr>
+<tr class="odd">
+<td>von Johannes Hevelius, fr</td>
+<td>2.970 → 1.193 → 1.193 → 1.193</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">76</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">46 ms</td>
+<td>zu groß</td>
+<td>103</td>
+</tr>
+<tr class="even">
+<td>an Ismaël Boulliau, la</td>
+<td>2.970 → 437 → 437 → 437</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">43 ms</td>
+<td>zu groß</td>
+<td>40</td>
+</tr>
+<tr class="odd">
+<td>von Stanisław Lubieniecki, an Johannes Hevelius</td>
+<td>2.970 → 456 → 456 → 456</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">63</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">44 ms</td>
+<td>zu groß</td>
+<td>63</td>
+</tr>
+<tr class="even">
+<td>von Henry Oldenburg, an Johannes Hevelius, 1665/1666</td>
+<td>2.970 → 359 → 359 → 359</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">6</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">44 ms</td>
+<td>zu groß</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>an Johannes Hevelius, 1679</td>
+<td>2.970 → 396 → 396 → 396</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">56</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">44 ms</td>
+<td>zu groß</td>
+<td>57</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Euler, Briefwechsel (IVA)</strong> — Träger: Briefe; kein Gold (die Goldzeilen sind nicht erntbar).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 16%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Suchbaum</th>
+<th>Träger: alle → Kopf → Inhalt → Text</th>
+<th style="text-align: right;">Objekte</th>
+<th style="text-align: right;">tragend</th>
+<th>Baum</th>
+<th>Recall Raum / tragend</th>
+<th style="text-align: right;">SQL</th>
+<th>Urteil</th>
+<th>verfeinert</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>von Leonhard Euler, an Christian Goldbach</td>
+<td>3.393 → 123 → 123 → 123</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: right;">114</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">44 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>von Christian Goldbach, an Leonhard Euler</td>
+<td>3.393 → 105 → 105 → 105</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">100</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">44 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>von Leonhard Euler, aus Berlin</td>
+<td>3.393 → 985 → 985 → 985</td>
+<td style="text-align: right;">780</td>
+<td style="text-align: right;">780</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">47 ms</td>
+<td>zu groß</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>an Maupertuis, aus Berlin, 1754/1755</td>
+<td>3.393 → 4 → 4 → 4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">43 ms</td>
+<td>leer</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>von Daniel Bernoulli, an Leonhard Euler</td>
+<td>3.393 → 99 → 99 → 99</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">94</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">44 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>aus Petersburg, 1748</td>
+<td>3.393 → 75 → 75 → 75</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">20</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">42 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>von Leonhard Euler, an Friedrich II.</td>
+<td>3.393 → 67 → 67 → 67</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">50</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">43 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pirckheimer</strong> — Träger: Briefe; kein Gold (die Goldzeilen sind nicht erntbar).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 16%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Suchbaum</th>
+<th>Träger: alle → Kopf → Inhalt → Text</th>
+<th style="text-align: right;">Objekte</th>
+<th style="text-align: right;">tragend</th>
+<th>Baum</th>
+<th>Recall Raum / tragend</th>
+<th style="text-align: right;">SQL</th>
+<th>Urteil</th>
+<th>verfeinert</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>von Desiderius Erasmus, an Willibald Pirckheimer</td>
+<td>354 → 18 → 18 → 18</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">18</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">38 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>von Willibald Pirckheimer, an Desiderius Erasmus</td>
+<td>354 → 3 → 3 → 3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">36 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>aus Nürnberg, 1525</td>
+<td>354 → 39 → 39 → 39</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">36</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">37 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>von Klara Pirckheimer, an Willibald Pirckheimer</td>
+<td>354 → 20 → 20 → 20</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">20</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">38 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>an Willibald Pirckheimer, aus Basel</td>
+<td>354 → 29 → 29 → 29</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">26</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">38 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>an Willibald Pirckheimer, 1524/1526 (offen: absender)</td>
+<td>354 → 231 → 231 → 231</td>
+<td style="text-align: right;">231</td>
+<td style="text-align: right;">231</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">38 ms</td>
+<td>zu groß</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Wäfler, Primärquellen</strong> — Träger: Dokumente; Probefragen, kein Gold.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 16%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Suchbaum</th>
+<th>Träger: alle → Kopf → Inhalt → Text</th>
+<th style="text-align: right;">Objekte</th>
+<th style="text-align: right;">tragend</th>
+<th>Baum</th>
+<th>Recall Raum / tragend</th>
+<th style="text-align: right;">SQL</th>
+<th>Urteil</th>
+<th>verfeinert</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>von Markus Wäfler, book</td>
+<td>15 → 5 → 5 → 5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">37 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>nennt Hamidiya</td>
+<td>15 → 15 → 15 → 14</td>
+<td style="text-align: right;">443</td>
+<td style="text-align: right;">14</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">53 ms</td>
+<td>zu groß</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>1975, Wort Siegel</td>
+<td>15 → 10 → 10 → 4</td>
+<td style="text-align: right;">210</td>
+<td style="text-align: right;">4</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">51 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>diaserie</td>
+<td>15 → 5 → 5 → 5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">36 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Wäfler, Sekundärliteratur</strong> — Träger: Dokumente; Probefragen, kein Gold.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 16%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Suchbaum</th>
+<th>Träger: alle → Kopf → Inhalt → Text</th>
+<th style="text-align: right;">Objekte</th>
+<th style="text-align: right;">tragend</th>
+<th>Baum</th>
+<th>Recall Raum / tragend</th>
+<th style="text-align: right;">SQL</th>
+<th>Urteil</th>
+<th>verfeinert</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>nennt Markus Wäfler</td>
+<td>15 → 15 → 15 → 7</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">7</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">51 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>von Mirjo Salvini, englisch</td>
+<td>15 → 1 → 1 → 1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">44 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Kepler, Gesammelte Werke</strong> — Träger: Dokumente; Probefragen, kein Gold.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 16%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Suchbaum</th>
+<th>Träger: alle → Kopf → Inhalt → Text</th>
+<th style="text-align: right;">Objekte</th>
+<th style="text-align: right;">tragend</th>
+<th>Baum</th>
+<th>Recall Raum / tragend</th>
+<th style="text-align: right;">SQL</th>
+<th>Urteil</th>
+<th>verfeinert</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>von Johannes Kepler, Buch</td>
+<td>27 → 27 → 27 → 27</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">26</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">40 ms</td>
+<td>zu groß</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>nennt Tycho Brahe</td>
+<td>27 → 27 → 27 → 25</td>
+<td style="text-align: right;">1.415</td>
+<td style="text-align: right;">25</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">70 ms</td>
+<td>zu groß</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>Wort Mars</td>
+<td>27 → 27 → 27 → 26</td>
+<td style="text-align: right;">3.101</td>
+<td style="text-align: right;">26</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">65 ms</td>
+<td>zu groß</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Kepler, Sekundärliteratur</strong> — Träger: Dokumente; Probefragen, kein Gold.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 16%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Suchbaum</th>
+<th>Träger: alle → Kopf → Inhalt → Text</th>
+<th style="text-align: right;">Objekte</th>
+<th style="text-align: right;">tragend</th>
+<th>Baum</th>
+<th>Recall Raum / tragend</th>
+<th style="text-align: right;">SQL</th>
+<th>Urteil</th>
+<th>verfeinert</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>von Max Caspar, Buch</td>
+<td>18 → 1 → 1 → 1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">36 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>englisch</td>
+<td>18 → 11 → 11 → 11</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">11</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">36 ms</td>
+<td>zu groß</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Copernicus, Primärquellen</strong> — Träger: Dokumente; Probefragen, kein Gold.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 16%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Suchbaum</th>
+<th>Träger: alle → Kopf → Inhalt → Text</th>
+<th style="text-align: right;">Objekte</th>
+<th style="text-align: right;">tragend</th>
+<th>Baum</th>
+<th>Recall Raum / tragend</th>
+<th style="text-align: right;">SQL</th>
+<th>Urteil</th>
+<th>verfeinert</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>von Georg Joachim Rheticus</td>
+<td>10 → 1 → 1 → 1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">36 ms</td>
+<td>brauchbar</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Wort revolutio</td>
+<td>10 → 10 → 10 → 10</td>
+<td style="text-align: right;">417</td>
+<td style="text-align: right;">10</td>
+<td>—</td>
+<td>—</td>
+<td style="text-align: right;">52 ms</td>
+<td>zu groß</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Die Klassifikation durch das Modell, gesondert geprüft:</p>
+<p><em>Die Klassifikation durch das Modell wurde in dieser Messung nicht geprüft.</em></p>
+<p>Die Partitur über den Orchestrator (<code>ExecutionHarness</code>), Hitler-Frage im Kármán-Nachlass:</p>
+<p><em>Kein Lauf über den Orchestrator in der Messung.</em></p>
+<p>Die Stufe <code>fragebaum</code> enthält die Bindung der Namen an das Register (Fast Index); ohne Vorgabe kommt die Antwortzeit des Modellaufrufs der Klassifikation hinzu.</p>
+</section>
+<section id="ausführen" class="level2">
+<h2 class="anchored" data-anchor-id="ausführen">Ausführen</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> development/famulus-proof</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/bin/python</span> scripts/build_fq_index.py karman-nachlass hevelius eulerOO-IVA pirckheimer waefler-prim waefler-sec kepler-prim kepler-sec copernicus-prim</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/bin/python</span> scripts/pilot_constraint.py                     <span class="co"># Messung, reports/data/filter-pilot.json</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">../famulus-notebook/.venv/bin/python</span> scripts/pilot_constraint.py <span class="at">--modell</span> <span class="at">--orchestrator</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/bin/python</span> scripts/docs_evidenzobjekte.py                  <span class="co"># Tabellen dieser Seiten</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">.venv/bin/python</span> <span class="at">-c</span> <span class="st">"from famulus_proof.evidenzraum import lauf; </span><span class="dt">\</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">  st = lauf.filtern('In welchen Briefen erwähnt Theodor von Kármán die Person Adolf Hitler?', </span><span class="dt">\</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">  collections=['karman-nachlass']); print(st['filter_ausfuehren']['trichter'])"</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Kopiert");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Kopiert");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

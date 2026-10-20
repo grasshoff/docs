@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Sidecar-Integration – Famulus Proof</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d5b4e69c7e37b49c6591bcc5116dd748.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-0a7ffee50ecdcac772426c46f9339f28.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Keine Treffer",
+    "search-matching-documents-text": "Treffer",
+    "search-copy-link-title": "Link in die Suche kopieren",
+    "search-hide-matches-text": "Zusätzliche Treffer verbergen",
+    "search-more-match-text": "weitere Treffer in diesem Dokument",
+    "search-more-matches-text": "weitere Treffer in diesem Dokument",
+    "search-clear-button-title": "Zurücksetzen",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Abbrechen",
+    "search-submit-button-title": "Abschicken",
+    "search-label": "Suchen"
+  }
+}</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Famulus Proof</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Suchen"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navigation umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Übersicht</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-filterung" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Filterung</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-filterung">    
+        <li>
+    <a class="dropdown-item" href="./filterung.html">
+ <span class="dropdown-text">Filterung von Evidenzräumen</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./evidenzobjekte.html">
+ <span class="dropdown-text">Evidenzobjekte</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./attribute.html">
+ <span class="dropdown-text">Attribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./gebrauch.html">
+ <span class="dropdown-text">Lesart des Gebrauchs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ablauf.html">
+ <span class="dropdown-text">Ablauf</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./geschichte.html">
+ <span class="dropdown-text">Geschichte</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./satzrecord.html">
+ <span class="dropdown-text">Satzrecord</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hnlichkeitssuche" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ähnlichkeitssuche</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hnlichkeitssuche">    
+        <li>
+    <a class="dropdown-item" href="./aehnlichkeitssuche.html">
+ <span class="dropdown-text">Ähnlichkeitssuche</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pruefverfahren-aehnlichkeit.html">
+ <span class="dropdown-text">Prüfverfahren</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./validitaetsbaum.html"> 
+<span class="menu-text">Validitätsbaum</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./integration.html" aria-current="page"> 
+<span class="menu-text">Sidecar-Integration</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./referenz.html"> 
+<span class="menu-text">Famulus-Referenz</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-landkarte" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Landkarte</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-landkarte">    
+        <li>
+    <a class="dropdown-item" href="./landkarte.html">
+ <span class="dropdown-text">Landkarte der Workspaces</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./kollektionen.html">
+ <span class="dropdown-text">Kollektionen</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#worum-es-geht" id="toc-worum-es-geht" class="nav-link active" data-scroll-target="#worum-es-geht">Worum es geht</a></li>
+  <li><a href="#die-vier-stufen" id="toc-die-vier-stufen" class="nav-link" data-scroll-target="#die-vier-stufen">Die vier Stufen</a></li>
+  <li><a href="#je-sammlung" id="toc-je-sammlung" class="nav-link" data-scroll-target="#je-sammlung">Je Sammlung</a></li>
+  <li><a href="#die-prüfungen" id="toc-die-prüfungen" class="nav-link" data-scroll-target="#die-prüfungen">Die Prüfungen</a></li>
+  <li><a href="#lebenszyklus-und-lernen" id="toc-lebenszyklus-und-lernen" class="nav-link" data-scroll-target="#lebenszyklus-und-lernen">Lebenszyklus und Lernen</a></li>
+  <li><a href="#wo-das-dossier-gelesen-wird" id="toc-wo-das-dossier-gelesen-wird" class="nav-link" data-scroll-target="#wo-das-dossier-gelesen-wird">Wo das Dossier gelesen wird</a></li>
+  <li><a href="#wo-die-dossiers-zu-sehen-sind" id="toc-wo-die-dossiers-zu-sehen-sind" class="nav-link" data-scroll-target="#wo-die-dossiers-zu-sehen-sind">Wo die Dossiers zu sehen sind</a></li>
+  <li><a href="#normdaten-und-autorisierte-webquellen" id="toc-normdaten-und-autorisierte-webquellen" class="nav-link" data-scroll-target="#normdaten-und-autorisierte-webquellen">Normdaten und autorisierte Webquellen</a></li>
+  <li><a href="#verweise-weiterführendes-material-kein-beleg" id="toc-verweise-weiterführendes-material-kein-beleg" class="nav-link" data-scroll-target="#verweise-weiterführendes-material-kein-beleg">Verweise: weiterführendes Material, kein Beleg</a></li>
+  <li><a href="#aufruf" id="toc-aufruf" class="nav-link" data-scroll-target="#aufruf">Aufruf</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Sidecar-Integration</h1>
+<p class="subtitle lead">Ein Verweis wird Teil eines Dossiers, mit Beleg</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="worum-es-geht" class="level2">
+<h2 class="anchored" data-anchor-id="worum-es-geht">Worum es geht</h2>
+<p>Ein Lebenslauf, den eine Person selbst geschrieben hat, liegt als Seite im Nachlass (<code>http://127.0.0.1:5725/?doc=1-2_ackeret_jacob_1935_1958&amp;p=2</code>: Jakob Ackeret, geboren 17. März 1898, Diplom ETH 1920, Assistent bei Stodola, Göttingen bei Prandtl, Habilitation 1928, o. Prof.&nbsp;seit 1934, ausgewählte Arbeiten nach Gebieten). Was so eine Quelle über die Person sagt, gehört in ihr Dossier, und zwar so, dass jede Aussage nachweist, auf welcher Seite, in welchem Absatz und mit welchem Wortlaut sie steht, wer dafür bürgt und wer sie bestätigt hat. Dann kann jede spätere Begründung, die eine Person betrifft, auf diese Evidenz zeigen.</p>
+<p>Die Integration ist <strong>eine</strong> Funktion mit vier Stufen, als Partitur <code>famulus-integration</code> registriert, und so geschrieben, dass sie für andere Sidecars (Chronologie, Terminologie, LWgrammar-Regeln) dieselbe ist: was sich je Sidecar unterscheidet, steht in einer <strong>Karte</strong> (<code>integration/karten/&lt;sidecar&gt;.yaml</code>), nicht im Code.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  V[Verweis: URL, doc:page, Satz-ID, Phrase] --&gt; K[kontext]
+  K --&gt; U[untersuchung: DTD-Auszeichnung]
+  U --&gt; I[identitaet: Register, Bestand]
+  I --&gt; G[integration: Fakten, Prüfungen, Widersprüche]
+  G --&gt; D[(Dossier XML + Projektion)]
+  D --&gt; E[Explikation · Erkundung · Probe-Labor]
+  O[Owner-Verdikt] --&gt; D
+  O --&gt; L[(Lernspeicher: Episoden, Diagnosen)]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="die-vier-stufen" class="level2">
+<h2 class="anchored" data-anchor-id="die-vier-stufen">Die vier Stufen</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="kontext">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Hinweis</span>kontext
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Der Verweis wird zur Seite einer Sammlung: der Ordner, der die <code>doc_id</code> hält, wird gesucht, nie geraten. Dazu der Rahmen aus den Registern der Sammlung: die Ordnerzeile (<code>documents</code>), die Briefregistersätze, die die Seiten decken (<code>letters</code>: Art, Datum, Parteien, Regest), die Nachbarn, die <strong>Fortsetzung</strong> (Seiten desselben Satzes, die nicht übergeben wurden, laufen als <code>fortsetzung</code> mit), die <strong>Kandidaten</strong> für das Subjekt (Korrespondent des Ordners, Parteien und Personen der Sätze), die <strong>Datierung</strong> (Datum des Satzes; sonst das späteste genannte Jahr als terminus post quem; sonst die Ordnerjahre) und <strong>offene Verweise</strong> („s. Beilage“). Jeder Posten nennt Tabelle und Schlüssel. Woher der Rahmen kommt, sagt die Schemakarte der Sammlung (siehe <a href="#je-sammlung">Je Sammlung</a>).</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="untersuchung">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Hinweis</span>untersuchung
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Das Dokument wird gegen die Dokument-DTD des Sidecars ausgezeichnet, für einen Lebenslauf <code>lebenslauf.dtd</code>: Stationen (Geburt, Ausbildung, Stellung, Erfindung …), Werklisten nach Gebiet, Bemerkungen (Beziehungen, Verweise). Das Modell (<code>gemini-3.8-flash</code>, Instruktion <code>pdai/skills/integration/untersuchung-lebenslauf</code>) schlägt die Auszeichnung als JSON vor; gebaut, DTD-validiert und geprüft wird hier: jedes Element ist an <strong>einem Absatz</strong> verankert (<code>pidx</code>, <code>p</code>) und zitiert ihn wörtlich, jede Zeit ist EDTF. Was die Prüfung nicht besteht, wird verworfen und genannt; nicht erfasste Absätze stehen als <code>rest</code>. Eine Karte ohne Dokument-DTD für die erklärte Art bricht hier mit <code>nicht_pruefbar</code> ab.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="identitaet">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Hinweis</span>identitaet
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Das Subjekt: die vom Owner genannte Person (im Register geprüft), sonst der Korrespondent des Ordners. Jeder Name des Dokuments wird gebunden: zuerst über die Personen, die das Briefregister für diese Seite schon aufgelöst hat (<code>letter_persons</code> der Haupt-DB, ohne sie <code>fq_letter_entities</code> und die im Brieftext gebundenen <code>fq_mentions</code> des Sidecars; gleicher Nachname, verträgliche Initialen), sonst über das Verfahren des Registers (<code>ai_lemma_index.register.binden</code>). Was nicht bindet, bleibt <code>unaufgeloest</code> mit seinen Kandidaten. Keine ID wird erfunden. Dann wird der <strong>Bestand</strong> geladen: Registerkarte, Briefe des Subjekts in der Sammlung, das Dossier, wie es steht.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="integration">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Hinweis</span>integration
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ein Fakt je Station, Werk und Beziehung: eine Aussage, ihr typisierter Inhalt, ihre Zeit, ihr <strong>Beleg</strong> (<code>P:&lt;doc&gt;#&lt;pidx&gt;/p&lt;n&gt;</code>, die Satz-IDs des Stanza-Korpus in diesem Absatz, die Passage) und ihre <strong>Quelle</strong> (Art, Zeugnis <code>selbst|fremd|amtlich</code>, Urheber, Seiten, URL des Viewers, Datierung, Instruktionsstempel, offene Verweise). Status <code>vorgeschlagen</code>. Dann die Prüfungen der Karte; jeder Befund ist ein <code>widerspruch</code> mit Status <code>offen</code>, seiner Regel und beiden Adressen. Das Dossier wird gegen <code>dossier.dtd</code> validiert, atomar mit neuer Version geschrieben und nach <code>dossier.duckdb</code> projiziert; der Lauf ist eine Episode des Lernspeichers.</p>
+</div>
+</div>
+</section>
+<section id="je-sammlung" class="level2">
+<h2 class="anchored" data-anchor-id="je-sammlung">Je Sammlung</h2>
+<p>Jede Stufe liest die Sammlung über ihre Schemakarte (<code>profil</code>): Träger, Sprachen, Epoche, Fach und Datenbanken. Der Kármán-Nachlass ist ein durchgerechnetes Beispiel, nicht die Voreinstellung.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Sammlung</th>
+<th>Rahmen (<code>kontext</code>)</th>
+<th>Briefe des Subjekts (<code>bestand</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Korrespondenz mit Haupt-DB (<code>karman-nachlass</code>)</td>
+<td><code>documents</code>, <code>letters</code>, <code>letter_persons</code> … der Haupt-DB</td>
+<td><code>letters_resolved</code></td>
+</tr>
+<tr class="even">
+<td>Korrespondenz ohne Haupt-DB (<code>eulerOO-IVA</code>)</td>
+<td>FQL-Sidecar: <code>fq_documents</code>, <code>fq_letters</code> (Seiten aus <code>pidx_from</code>…<code>pidx_to</code> und <code>fq_letter_pages</code>), Parteien über <code>fq_entities</code>, Personen aus <code>fq_letter_entities</code> und <code>fq_mentions</code></td>
+<td><code>fq_letters</code></td>
+</tr>
+<tr class="odd">
+<td>Dokumentsammlung</td>
+<td>das Dokument aus <code>fq_documents</code> des Sidecars, sonst aus <code>biblio.xml</code>; datiert nach seinem Erscheinungsjahr</td>
+<td>entfällt (<code>nicht_anwendbar</code>), keine Lücke</td>
+</tr>
+</tbody>
+</table>
+<p>Die Fortsetzung eines Briefs ohne Haupt-DB sind die übrigen Seiten desselben Teils (Brieftext oder Übersetzung); die Übersetzung an anderer Stelle des Bandes läuft nicht mit. Ordnerjahre gelten nur für eine Korrespondenz, deren <code>doc_id</code> Jahre trägt: eine vierstellige Zahl für sich, innerhalb der Epoche der Sammlung (± 25 Jahre). Eine Sammlung ohne Karte behält die frühere Lesart.</p>
+<p>Der Bestandslauf aus dem Briefregister (<code>famulus-integration bestand-lauf --collection &lt;c&gt;</code>) liest Briefe, Parteien und Sprechakte aus dem FQL-Sidecar. Wen ein Brief nennt, liest er aus der Haupt-DB, wo es eine gibt, sonst aus <code>fq_letter_entities</code> und <code>fq_mentions</code> mit Brief-ID. Jede Angabe behält ihren Brief und, wo das Register sie kennt, ihre Seite (<code>pidx_from</code>, sonst die erste Seite in <code>fq_letter_pages</code>); ein Brief, den das Register ohne Seite führt, bleibt ohne Seite.</p>
+</section>
+<section id="die-prüfungen" class="level2">
+<h2 class="anchored" data-anchor-id="die-prüfungen">Die Prüfungen</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Regel</th>
+<th>Befund</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>innerer_widerspruch</code></td>
+<td>ein Fakt vor der Geburt oder nach dem Tod; eine vom Modell als unklar markierte Zahl (etwa „No.&nbsp;101946“)</td>
+</tr>
+<tr class="even">
+<td><code>bestand_widerspruch</code></td>
+<td>Geburt oder Tod mit anderem Datum als im Dossier; Stellung oder Abschluss bei derselben Institution mit anderen Jahren</td>
+</tr>
+<tr class="odd">
+<td><code>register_widerspruch</code></td>
+<td>Briefe des Subjekts vor der Geburt oder nach dem Tod</td>
+</tr>
+<tr class="even">
+<td><code>rahmen_widerspruch</code></td>
+<td>das Dokument nennt ein Jahr jenseits der Ordnerjahre (nur wo eine Korrespondenz ihre Ordner nach Jahren benennt)</td>
+</tr>
+<tr class="odd">
+<td><code>verweis_offen</code></td>
+<td>Beilagen und Folgeseiten, die das Dokument nennt und die Übergabe nicht enthält (als <code>offen</code> an der Quelle)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lebenszyklus-und-lernen" class="level2">
+<h2 class="anchored" data-anchor-id="lebenszyklus-und-lernen">Lebenszyklus und Lernen</h2>
+<p>Ein Fakt ist <code>vorgeschlagen</code>, <code>bestaetigt</code>, <code>verworfen</code> oder <code>revidiert</code>; eine Korrektur schreibt einen neuen Fakt mit <code>ersetzt</code>. Ein Owner-Verdikt (<code>bestaetigen</code>, <code>verwerfen</code>, <code>korrigieren</code>, <code>widerspruch</code>) steht über dem Modell, wird am Element vermerkt und von keinem Neuaufbau rückgängig gemacht (die Projektion spiegelt die XML, sie entscheidet nichts). Jedes Verdikt ist eine Episode des Lernspeichers (<code>lernen/store.py</code>); ein Verdikt gegen das Modell ist eine Diagnose der Untersuchungsinstruktion, die eine Lektion patchen kann. Gemessen wird eine Lektion durch <strong>Replay</strong> (<code>famulus-integration replay</code>): die Stufen 2 bis 4 laufen auf den gespeicherten Seiten noch einmal, ohne zu schreiben, und die Fakten werden verglichen, nie zwei Live-Läufe.</p>
+</section>
+<section id="wo-das-dossier-gelesen-wird" class="level2">
+<h2 class="anchored" data-anchor-id="wo-das-dossier-gelesen-wird">Wo das Dossier gelesen wird</h2>
+<ul>
+<li>Das Evidenzpaket der Explikation (<code>Packs.dossier</code>) führt die Fakten mit <code>table: dossier</code> und dem Schlüssel <code>&lt;ind_id&gt;/&lt;fakt_id&gt;</code>; die Instruktion <code>explicate</code> (v1.2) zitiert einen Fakt nur mit diesem Schlüssel und nennt einen vorgeschlagenen als vorgeschlagen.</li>
+<li>Die Erkundung (<code>satzrecord/ausdruck/erkundung.py</code>) hat die Quelle <code>dossier</code>: ein stützender Treffer ist ein tragender Grund der Art <code>beleg</code> mit der Seite, auf der der Fakt steht.</li>
+<li>Das Probe-Labor (<code>scripts/satz_viewer.py</code>, <code>/api/dossier</code>) und der Kármán-Viewer (<code>/api/dossier/{ind_id}</code>, Knopf „Ins Dossier“) zeigen Fakten, Status und Widersprüche mit Sprung auf die Seite.</li>
+</ul>
+</section>
+<section id="wo-die-dossiers-zu-sehen-sind" class="level2">
+<h2 class="anchored" data-anchor-id="wo-die-dossiers-zu-sehen-sind">Wo die Dossiers zu sehen sind</h2>
+<p>In der Kármán-Edition öffnet der Knopf <strong>„Dossier“</strong> über jeder Seite das Dossier der Person, zu der die Seite gehört (der Korrespondent des Ordners); eine Zahl am Knopf sagt, wie viele Vorschläge noch auf Prüfung warten. Das Dossier erscheint als knappe Biographie: Lebenslauf als Zeitleiste, Erfindungen und Konstruktionen, Werke nach Gebiet, Beziehungen, Quellen und offene Punkte. Ein Klick auf eine Angabe zeigt die wörtliche Belegstelle mit Ordner, Seite und Absatz und die redaktionellen Schritte:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Knopf</th>
+<th>Wirkung</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Übernehmen</strong></td>
+<td>der Vorschlag wird Teil des Dossiers (Status <code>bestaetigt</code>)</td>
+</tr>
+<tr class="even">
+<td><strong>Keine Änderung</strong></td>
+<td>das Dossier bleibt, wie es ist; der Vorschlag steht unter „Nicht übernommen“ und kann dort <strong>doch übernommen</strong> werden</td>
+</tr>
+<tr class="odd">
+<td><strong>Ändern …</strong></td>
+<td>Aussage oder Zeit (EDTF) berichtigen und so übernehmen; die alte Fassung bleibt als ersetzt in der Geschichte, die Belegstelle bleibt</td>
+</tr>
+<tr class="even">
+<td><strong>Kommentar …</strong></td>
+<td>eine Bemerkung (stimmt nicht, fehlt etwas, sonstiges) mit Namen; ändert keinen Status, wird als „erledigt“ abgeschlossen</td>
+</tr>
+</tbody>
+</table>
+<p>Nach jedem Schritt bleibt das Panel an derselben Stelle und die bearbeitete Zeile offen. Über dem Dossier steht, ob die gezeigte Seite schon Quelle ist („neu lesen“) oder aufgenommen werden kann („Diese Seite aufnehmen“, „Mit dieser Seite anlegen“); während des Lesens zeigt der Balken die vier Stufen. Hat die Person noch kein Dossier, sagt das Panel genau das.</p>
+<p>Für das Lernen gilt: „Keine Änderung“ und „Ändern“ sind Diagnosen gegen die Auszeichnungsinstruktion (das Modell hat die Quelle falsch oder ungenau gelesen); wird ein nicht übernommener Vorschlag später doch übernommen, ist die frühere Episode <code>widerrufen</code>. Das Erledigen eines offenen Punkts (etwa einer als unklar markierten Zahl) ist keine Fehlerdiagnose: die Markierung war berechtigt.</p>
+<p>Die Aufnahme läuft als Auftrag in famulus-proofs eigenem Interpreter, nicht im Prozess des Viewers: dort ist das Gemini-SDK geladen, und <code>ai_lemma_index.llm</code> verweigert in einem solchen Prozess den Dienst; die Registerbindung brach deshalb ab. Eine Seite, die schon Quelle ist, wird nicht ein zweites Mal gelesen; „neu lesen“ ersetzt nur die offenen Vorschläge dieser Seite, Bestätigtes bleibt.</p>
+<p><strong>Kommentare.</strong> Ein Kommentar steht beim Fakt (<code>&lt;anmerkung&gt;</code> in <code>dossier.dtd</code>, Art <code>einspruch</code>, <code>ergaenzung</code> oder <code>hinweis</code>) und ist eine Episode des Lernspeichers. Ein Kommentar zum Dossier als Ganzem („etwas fehlt“) steht unter den offenen Punkten.</p>
+<p><strong>Alle Dossiers:</strong> <code>http://127.0.0.1:5725/dossiers</code> (Link „Dossiers“ in der Kopfleiste), dieselbe Darstellung mit der Liste aller Dossiers jeder Sammlung. <code>famulus-integration dossiers</code> gibt die Übersicht, <code>anmerken</code> und <code>erledigen</code> dasselbe auf der Kommandozeile.</p>
+</section>
+<section id="normdaten-und-autorisierte-webquellen" class="level2">
+<h2 class="anchored" data-anchor-id="normdaten-und-autorisierte-webquellen">Normdaten und autorisierte Webquellen</h2>
+<p>Ein Dossier darf sich außer auf Seiten der Edition auch auf Webquellen stützen, aber nur auf solche, die in der <strong>Liste autorisierter Webquellen</strong> stehen (<code>&lt;collections_root&gt;/_famulus/webquellen.yaml</code>, Modul <code>integration/webquellen.py</code>). Jede Quelle trägt Status (<code>autorisiert</code>, <code>vorgeschlagen</code>, <code>abgelehnt</code>), Zweck (Personen, Orte, Firmen und Institutionen, alle), wahlweise die Register-IDs, für die sie allein gilt, und ein Linkmuster für Kennungen. Eine vorgeschlagene Quelle liest kein Lauf; autorisieren kann nur der Owner, und wer wann autorisiert hat, steht in der Liste. Eine geänderte Adresse verliert die Autorisierung. Die Liste ist auf der Dossier-Seite unter „Webquellen“ bearbeitbar (<code>dossiers?webquellen=1</code>) und über <code>…/api/famulus/webquellen</code> in jedem Viewer erreichbar.</p>
+<p>Autorisiert auf Anweisung des Owners vom 19.10.2026 sind die Normdaten-Institutionen mit eigenem Server: Wikidata (abgefragt), GND, VIAF, Library of Congress, GeoNames und Deutsche Biographie (als Kennungen mit aktivem Link, über Wikidata gefunden). Die Seite der NATO STO zur Geschichte von AGARD steht als <code>vorgeschlagen</code> für die sechs AGARD-Einträge des Registers und wartet auf die Autorisierung.</p>
+<p><strong>Normdaten-Lauf.</strong> <code>famulus-integration normdaten-lauf --collection &lt;c&gt;</code> ordnet jedem Einzelding der Sammlung (Personen, Orte, Firmen und Institutionen) höchstens einen Wikidata-Datensatz zu und trägt dessen Angaben als Vorschläge ein: Quelle <code>typ="web"</code>, <code>autoritaet="wikidata"</code>, Kennung und Abrufdatum; jede Angabe hat einen Beleg mit aktivem Link auf die Aussage (<code>https://www.wikidata.org/wiki/&lt;Q&gt;#&lt;P&gt;</code>). Die Kennungen (Wikidata, GND, VIAF, LoC, GeoNames, Deutsche Biographie) stehen als Links im Kopf des Dossiers. Der Lauf ist wiederaufnehmbar (<code>&lt;c&gt;/dossier/normdaten-lauf.duckdb</code>) und prüft jede neue Angabe gegen das Dossier, etwa ein Geburtsdatum gegen den Lebenslauf.</p>
+<p>Die Zuordnung folgt festen Regeln ohne Sprachmodell. Sie vermeidet falsche Zuordnungen auch um den Preis fehlender: Ein mehrdeutiger Fall wird mit seinen Kandidaten vermerkt, nie geraten.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Art</th>
+<th>Eine Zuordnung gilt nur, wenn …</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Person</td>
+<td>der Datensatz ein Mensch ist; der erste Vorname vorn und der Nachname am Ende des Namens steht; ein Zwischenname des Registers wiederkehrt; die Person beim ersten Beleg volljährig war und als Korrespondent beim ersten Brief lebte; eine nur erwähnte Person, die über 100 Jahre vor dem ersten Beleg geboren ist, einen Fachbezug hat (ein Korrespondent mit diesem Abstand wird nie zugeordnet); bei einem häufigen Namen ein Zwischenname und ein Fachbezug (Beruf) vorliegen</td>
+</tr>
+<tr class="even">
+<td>Ort</td>
+<td>die Bezeichnung gleich ist; eine genannte Region (auch als Kürzel wie CA, N.J., D.C.) in Beschreibung oder Verwaltungseinheit steht; ein bloßer Ortsname keinen zweiten Ort gleichen Hauptnamens hat</td>
+</tr>
+<tr class="odd">
+<td>Firma, Institution</td>
+<td>die Hauptbezeichnung (bis auf die Rechtsform) gleich ist, ein bloßer Alias genügt nicht; der Datensatz eine einzelne Organisation ist, keine Klasse, kein Gebäude, Werk oder Ereignis; die Gründung nicht nach dem letzten Beleg liegt; Wikidata den Namen nicht als Begriffsklärung führt; kein höher eingestufter Datensatz mit dem Namen beginnt („Washington University in St.&nbsp;Louis“); ein gleichnamiger Datensatz nur hinter einem erheblich bekannteren ersten Treffer zurücktritt (Zahl der Wikipedia-Artikel); ein kaum belegter Datensatz ein Gründungs- oder Auflösungsdatum hat; ein Gattungsname („Department of Transport“) nur auf den ersten, gut belegten Treffer führt</td>
+</tr>
+</tbody>
+</table>
+<p>Personen nur mit Initialen, Kürzel und Rufzeichen sowie Gattungsnamen („Ordnance School“) werden mit Grund übersprungen. Der <strong>Fachbezug</strong> ist die Liste der Berufe (Wikidata P106) im <code>profil.fach</code> der Schemakarte, je Sammlung: ein Theologe hat ihn für <code>pirckheimer</code> und <code>eulerOO</code>, nicht für den Kármán-Nachlass. Der <strong>erste Beleg</strong> ist das erste Jahr des Einzeldings im Register; kennt das Register keines, gilt für die Hundertjahresregel der Beginn der Epoche der Sammlung (<code>profil.epoche.von</code>). Die Regeln wurden an drei Stichproben der Kármán-Sammlung von Hand gegen Wikidata geprüft; jede gefundene Fehlzuordnung ist ein Testfall in <code>tests/test_normdaten.py</code>.</p>
+<p><strong>Erster Lauf (karman-nachlass, 19.10.2026).</strong> 18 308 Einzeldinge, 2 105 Dossiers mit Wikidata-Quelle, 12 274 Vorschläge mit Link, alle Dossiers DTD-gültig:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Art</th>
+<th>zugeordnet</th>
+<th>mehrdeutig</th>
+<th>kein Treffer</th>
+<th>übersprungen</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Personen</td>
+<td>829</td>
+<td>741</td>
+<td>2 926</td>
+<td>6 737</td>
+</tr>
+<tr class="even">
+<td>Orte</td>
+<td>641</td>
+<td>956</td>
+<td>1 275</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>Firmen und Institutionen</td>
+<td>635</td>
+<td>414</td>
+<td>2 861</td>
+<td>293</td>
+</tr>
+</tbody>
+</table>
+<p>Übersprungen wird vor allem, wo das Register nur Nachname oder Initialen kennt. Regeln, die während des Laufs geschärft wurden, wendet <code>famulus-integration normdaten-nachpruefen --vor &lt;Zeitpunkt&gt;</code> auf die früheren Zuordnungen an: was nicht mehr folgt, wird zurückgezogen, außer der Owner hat schon darüber entschieden (dann ein offener Punkt). Bericht: <code>runs/integration/normdaten-karman-nachlass-2026-10-19.zusammenfassung.json</code>.</p>
+<p><strong>Webseiten.</strong> <code>famulus-integration aufnehmen-web --url &lt;adresse&gt; --person &lt;ind_id&gt;</code> liest eine Seite nur, wenn ihre Adresse unter einer für dieses Einzelding autorisierten Quelle liegt; sonst bricht der Aufruf vor jeder Anfrage mit dem Grund ab, und eine Weigerung des Servers (HTTP 403) wird gemeldet. Die Seite wird in nummerierte Absätze zerlegt und durchläuft dieselben vier Stufen wie eine Seite der Edition; jeder Beleg verlinkt seinen Absatz als Text-Fragment (<code>#:~:text=…</code>), sodass der Link die Seite mit markierter Stelle öffnet.</p>
+</section>
+<section id="verweise-weiterführendes-material-kein-beleg" class="level2">
+<h2 class="anchored" data-anchor-id="verweise-weiterführendes-material-kein-beleg">Verweise: weiterführendes Material, kein Beleg</h2>
+<p>Ein Dossier kann auf weiteres Material zeigen, etwa ein Video oder eine Webseite, ohne dass sich ein Fakt darauf stützt. Dafür hat die DTD den optionalen Block <code>&lt;verweise&gt;</code> am Ende des Dossiers: jeder <code>&lt;verweis&gt;</code> hat Art (<code>video</code>, <code>webseite</code>, <code>bild</code>, <code>dokument</code>, <code>sonstige</code>), Adresse, Titel, Herausgeber, wer ihn wann erfasst hat und ob die Adresse bei der Erfassung antwortete (<code>abrufbar</code>: <code>ja</code>, <code>nein</code>, <code>unbekannt</code>, mit einem Prüfvermerk <code>geprueft</code>). Ein Verweis ist keine Quelle: Er erscheint nicht unter <code>quellen</code>, kein <code>beleg</code> nennt ihn, und keine Prüfung der Validität liest ihn. Die Projektion hat die Tabelle <code>do_verweis</code>; die Dossier-Ansicht zeigt die Verweise unter „Weiterführend“ mit dem Vermerk „kein Beleg“.</p>
+<p>Soll eine Webseite Fakten belegen, gilt der Weg über die autorisierten Webquellen (oben); ein Verweis macht eine Seite dafür nicht tauglich.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run famulus-integration verweisen I000331 https://www.sto.nato.int/history/ <span class="at">--art</span> video <span class="dt">\</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--collection</span> karman-context <span class="at">--titel</span> <span class="st">"History of the organisation — video page of the NATO STO"</span> <span class="dt">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--herausgeber</span> <span class="st">"NATO Science and Technology Organization"</span> <span class="at">--abrufbar</span> unbekannt <span class="dt">\</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--geprueft</span> <span class="st">"2026-10-19: scripted request answered HTTP 403"</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Dieselbe Adresse wird nur einmal geführt; ein zweiter Aufruf ersetzt Titel und Beschreibung. Gibt es in der Sammlung noch kein Dossier, legt der Aufruf es aus der Registerkarte an (nur der Personenblock).</p>
+</section>
+<section id="aufruf" class="level2">
+<h2 class="anchored" data-anchor-id="aufruf">Aufruf</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run famulus-integration aufnehmen <span class="st">'http://127.0.0.1:5725/?doc=1-2_ackeret_jacob_1935_1958&amp;p=2'</span> <span class="dt">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--sidecar</span> dossier <span class="at">--person</span> P002043 <span class="at">--art</span> lebenslauf <span class="at">--zeugnis</span> selbst <span class="pp">[--</span><span class="ss">dry</span><span class="pp">]</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run famulus-integration zeigen dossier P002043</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run famulus-integration bestaetigen P002043 f001</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run famulus-integration pruefen P002043</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run famulus-integration normdaten-lauf <span class="at">--collection</span> karman-nachlass [--limit 50] [--bericht runs/integration/….json]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run famulus-integration aufnehmen-web <span class="at">--url</span> https://www.sto.nato.int/history/ <span class="at">--person</span> I000282 <span class="at">--art</span> firmenprofil</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ablage, in der PDAI-Sammlung selbst: <code>&lt;collections_root&gt;/&lt;collection&gt;/dossier/&lt;ind_id&gt;.xml</code> (universelle DTD <code>dossier.dtd</code>, Kopie neben den Daten, sha-verglichen), die ausgezeichnete Quelle unter <code>dossier/quellen/&lt;quelle_id&gt;.xml</code>, die Projektion <code>&lt;collection&gt;_dossier.duckdb</code> neben den anderen DuckDBs der Sammlung (in der Schemakarte als <code>datenbanken.dossier</code>). Der Schlüssel ist die globale Register-ID, deshalb trägt eine Person je Sammlung ein Dossier, und <code>fakten(ind_id)</code> ohne Sammlung liest sie alle zusammen (jeder Fakt nennt seine Sammlung) — so konsultiert eine andere Sammlung dasselbe Dossier. Ein Verdikt geht an die Sammlung, die das Element hält. Andere Sidecars: <code>karten/terminologie.yaml</code> (Bindung über <code>lwgrammar_reference.dictionary.lookup_term</code>, Adapter über <code>submit_senses</code>), <code>karten/chronologie.yaml</code>, <code>karten/lwgrammar.yaml</code> — deklariert; ihre Lücken (Dokument-DTD, Ablage) meldet jeder Lauf, bis sie gefüllt sind.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Kopiert");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Kopiert");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

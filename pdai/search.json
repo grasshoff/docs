@@ -1,0 +1,1454 @@
+[
+ {
+  "objectID": "index.html",
+  "href": "index.html",
+  "title": "PDAI Structured-XML OCR System",
+  "section": "",
+  "text": "0.1 Two trees, one collection\nA PDAI collection is not a pile of PDFs. It is a folder of documents plus a small set of files that say what belongs here, how each document is identified, and what grammar its pages must obey. Those files are the metadata. Without them the pages can still be read; they cannot be cited, scoped, or checked.\nCode and data are separate on purpose. The workspace at ~/ai-mac-studio/pdai/collections/&lt;name&gt;/ holds schemas, scripts and instructions. The documents themselves live on the PDAI-1 volume at /Volumes/PDAI-1/pdai-collections/&lt;name&gt;/. Nothing in the code tree holds page images; nothing on the volume is the place to invent a schema.\nThe volume folder is what this chapter describes. It has two layers.\nThe folder name of a document is its citation key. Bischoff2004/ produces @book{Bischoff2004, …}. That is the join the search stack uses; renaming the folder without rebuilding the bib breaks it.",
+  "crumbs": [
+   "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview: Collection Layout and Metadata</span>"
+  ]
+ },
+ {
+  "objectID": "index.html#two-trees-one-collection",
+  "href": "index.html#two-trees-one-collection",
+  "title": "PDAI Structured-XML OCR System",
+  "section": "",
+  "text": "/Volumes/PDAI-1/pdai-collections/&lt;name&gt;/\n├── volumes.yaml              the plan: which documents belong here\n├── bibliography.yaml         verified title-page records (optional source)\n├── &lt;name&gt;.bib                rebuilt from per-document biblio.xml\n├── page.dtd                  grammar of one OCR'd page\n├── &lt;record&gt;.dtd              grammar of the assembled record\n├── status.json               last contract audit\n└── &lt;biblabel&gt;/               one folder per document\n    ├── &lt;biblabel&gt;.pdf\n    ├── biblio.xml            bibliographic metadata (source of the .bib)\n    ├── pdai-config.json      harvest + processing record\n    └── pages/page_NNN/",
+  "crumbs": [
+   "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview: Collection Layout and Metadata</span>"
+  ]
+ },
+ {
+  "objectID": "index.html#a-real-collection",
+  "href": "index.html#a-real-collection",
+  "title": "PDAI Structured-XML OCR System",
+  "section": "0.2 A real collection",
+  "text": "0.2 A real collection\nmedieval-sec is Bischoff’s Katalog der festländischen Handschriften des neunten Jahrhunderts — three volumes, nothing else. This is the folder as it stands on PDAI-1.\n\nThe collection after the metadata was set.\nmedieval-sec/\n├── volumes.yaml\n├── bibliography.yaml\n├── medieval-sec.bib          3 entries, rebuilt by bib_build\n├── page.dtd\n├── catalogue.dtd\n├── entry_schema.yaml\n├── status.json               overall: not_ready\n├── Bischoff1998/             Teil I: AACHEN – LAMBACH, 1998\n├── Bischoff2004/             Teil II: LAON – PADERBORN, 2004\n└── Bischoff2014/             Teil III: PADUA – ZWICKAU, 2014\nPlan volumes.yaml lists exactly those three folders. Curtze is not in the plan, so it is not in the collection — even if an older bib once named it.\n\ndiaries uses the same layout with different names (tablet.dtd instead of catalogue.dtd, ten ADART volumes instead of three Bischoff volumes). The files change; the jobs do not.",
+  "crumbs": [
+   "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview: Collection Layout and Metadata</span>"
+  ]
+ },
+ {
+  "objectID": "index.html#the-plan",
+  "href": "index.html#the-plan",
+  "title": "PDAI Structured-XML OCR System",
+  "section": "0.3 The plan",
+  "text": "0.3 The plan\nvolumes.yaml is the collection plan. It answers one question: which documents belong here, and how is each one processed? It does not describe the printed record — that is the schema — and it does not carry bibliographic fields. A document that is not in the plan is not in the collection.\n\nThe three Bischoff volumes, as the plan states them.\ncollection: medieval-sec\ncollection_root: /Volumes/PDAI-1/pdai-collections/medieval-sec\n\nvolumes:\n  - id: Bischoff1998\n    volume: I\n    teil: \"AACHEN – LAMBACH\"\n    route: scan\n    content: catalogue\n    pages: 518\n    source: /Volumes/PDAI-1/pdf_sortiert/bischof/Band_I_Einzelseiten.pdf\nid is the folder name. route and content tell the pipeline what kind of pages to expect. source is the PDF the folder was harvested from — a provenance pointer, not a second copy of the book.\n\ndiaries adds split: true for volumes photographed as two-page spreads. That is a plan fact: it changes how pages are rendered, not what a tablet is.",
+  "crumbs": [
+   "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview: Collection Layout and Metadata</span>"
+  ]
+ },
+ {
+  "objectID": "index.html#bibliographic-metadata",
+  "href": "index.html#bibliographic-metadata",
+  "title": "PDAI Structured-XML OCR System",
+  "section": "0.4 Bibliographic metadata",
+  "text": "0.4 Bibliographic metadata\nA document’s identity is written once, in biblio.xml, and then derived everywhere else. The file conforms to biblio.dtd in pdai/pipeline/ai-scholar/src/ai_scholar/schemas/. Required fields are entrytype, biblabel, at least one author, title, and year. Everything else is optional and is omitted when the printed source does not give it.\n\n\n\n\n\n\nWarningNever invent a bibliographic field\n\n\n\nEvery value in biblio.xml is read off the title page or the imprint / CIP page of that volume. A field the book does not print stays absent. Band I of Bischoff does not name an editor on the title page, so Bischoff1998 has no &lt;editor&gt; — even though Bands II and III name Birgit Ebersperger.\n\n\n\nBand II, taken from the title page (PDF p.001) and the imprint (PDF p.002).\n&lt;biblio&gt;\n  &lt;entrytype&gt;book&lt;/entrytype&gt;\n  &lt;biblabel&gt;Bischoff2004&lt;/biblabel&gt;\n  &lt;author&gt;Bischoff, Bernhard&lt;/author&gt;\n  &lt;editor&gt;Ebersperger, Birgit&lt;/editor&gt;\n  &lt;title&gt;Katalog der festländischen Handschriften des\n         neunten Jahrhunderts (mit Ausnahme der wisigotischen)&lt;/title&gt;\n  &lt;subtitle&gt;Teil II: LAON – PADERBORN&lt;/subtitle&gt;\n  &lt;series&gt;Veröffentlichungen der Kommission für die Herausgabe\n          der mittelalterlichen Bibliothekskataloge\n          Deutschlands und der Schweiz&lt;/series&gt;\n  &lt;year&gt;2004&lt;/year&gt;\n  &lt;publisher&gt;Harrassowitz Verlag&lt;/publisher&gt;\n  &lt;address&gt;Wiesbaden&lt;/address&gt;\n  &lt;isbn&gt;3-447-04750-X&lt;/isbn&gt;\n  &lt;language&gt;de&lt;/language&gt;\n&lt;/biblio&gt;\nbiblabel matches the folder name. The half-title of this volume prints the Bayerische Akademie der Wissenschaften as the issuing body of the series, not as the author — so the academy is not in &lt;author&gt;.\n\nbibliography.yaml in the collection (and, for the code tree, in pdai/collections/&lt;name&gt;/config/) is the working record of those verified fields, with a _provenance note naming the printed page. It is the file a setup script reads when it writes biblio.xml. It is not a second bibliography and it is not cited.\nThe collection file &lt;name&gt;.bib is generated:\npython -m ai_lemma_index.stanzadoc.bib_build --collection medieval-sec\nbib_build walks every document folder, reads biblio.xml, and writes one BibLaTeX entry whose key is the folder name. Documents without biblio.xml get no entry — a gap, not a guessed record. Hand-editing the .bib is overwritten the next time the command runs.\npdai-config.json is a different kind of metadata. It records how the document was harvested and processed: source PDF path, page count, OCR model, collection name, and — once the schema exists — a schema_ref pointing at the DTDs on the collection. It is not the bibliography. Correcting a title means editing biblio.xml and rebuilding the bib, then updating the document block in pdai-config.json so the two do not drift.",
+  "crumbs": [
+   "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview: Collection Layout and Metadata</span>"
+  ]
+ },
+ {
+  "objectID": "index.html#the-two-dtds",
+  "href": "index.html#the-two-dtds",
+  "title": "PDAI Structured-XML OCR System",
+  "section": "0.5 The two DTDs",
+  "text": "0.5 The two DTDs\nA formalised edition prints structured records inside running text. Those records span page breaks, so the collection carries two grammars, not one.\n\n\n\n\n\n\n\n\n\nFile\nGoverns\nMay do\nMust not do\n\n\n\n\npage.dtd\none OCR’d page\nrecord what is printed here, as complete or cut blocks\ninfer a number, a heading, or a field from another page\n\n\n&lt;record&gt;.dtd\nthe assembled record\njoin a block cut at the bottom of one page to the block cut at the top of the next\ninvent a field the pages never printed\n\n\n\n\nmedieval-secdiaries\n\n\nThe record is a catalogue entry. catalogue.dtd groups entries under a &lt;libraryplace&gt; and lets &lt;shelfmark&gt; repeat, because a manuscript dispersed across libraries is printed as a chain joined by +.\npage.dtd          →  &lt;page&gt; of &lt;entryblock&gt; elements\ncatalogue.dtd     →  &lt;catalogue&gt; of &lt;libraryplace&gt; / &lt;entry&gt;\n\n\nThe record is a tablet edition. tablet.dtd on the collection (and in config/) covers both the page and the assembled &lt;tablets&gt; document.\npage.dtd          →  &lt;page&gt; of diary / comments / calendar blocks\ntablet.dtd        →  &lt;tablets&gt; of &lt;tablet&gt; records\n\n\n\nBoth DTDs sit on the collection as well as in the code tree, so a page XML file can name them without reaching back into ~/ai-mac-studio. pdai-config.json records the paths under schema_ref.\nThe schema YAML (entry_schema.yaml / tablet_schema.yaml) is the prose behind the DTD: every element cites the printed page it came from. How that schema is derived, and why it is written before production OCR, is the schema-first method.",
+  "crumbs": [
+   "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview: Collection Layout and Metadata</span>"
+  ]
+ },
+ {
+  "objectID": "index.html#the-stylesheet-pair",
+  "href": "index.html#the-stylesheet-pair",
+  "title": "PDAI Structured-XML OCR System",
+  "section": "0.6 The stylesheet pair",
+  "text": "0.6 The stylesheet pair\nA page.dtd can only be rendered meaningfully if the viewer knows how each element should look. The rendering convention is therefore a pair:\ncollections/&lt;name&gt;/config/   page.dtd  +  page.css    authored here\n/Volumes/PDAI-1/pdai-collections/&lt;name&gt;/  page.dtd + page.css    deployed here\nBoth files of the pair are wrappers of the shared page language (Chapter 2): the collection page.dtd includes page.dtd v4.0 and pdai-core.mod, and the collection page.css is an overlay on the shared book sheet. The deployed page.dtd is a flattened, generated copy.\n\n0.6.1 How it works\nSchema rendering is always on. pdai_server.py injects the shared sheets (pdai-page.css, pdai-epistolary.css, pdai-astronomical.css, pdai-translation.css, pdai-receipt.css), the renderer repro-xml.js and window.PDAI_SCHEMA_RENDER = true into every viewer page, and adds the collection’s page.css (served at GET /api/collection/{collection}/page.css) as the last sheet when the collection has one. A collection without page.css is rendered by the shared sheets alone.\nThe renderer (ReproXML) parses the page XML with DOMParser(…, 'text/xml'), so empty DTD elements (&lt;witness/&gt;, &lt;row/&gt;, &lt;date/&gt;) survive as empty nodes. Every element becomes an HTML element with data-el=\"tagname\" and each XML attribute as data-&lt;attribute&gt; (data-type, data-side …); a marginal also carries data-kind (marker or note), which the margin rules of pdai-page.css use.\n\n\n0.6.2 Visual language\n\n\n\n\n\n\n\nProperty\nValue\n\n\n\n\nInk\n#1a1a1a on white\n\n\nAccent / hairlines\nOxford blue #002147 only\n\n\nTypeface\nGeorgia / Times New Roman (always present, no load promise)\n\n\nUppercase\nNone in content; labels use lower-case content: \"…\"\n\n\nStructure\nIndentation, vertical rhythm, hanging numbers, 1 px hairlines\n\n\nQuiet labels\n10 px #8a8a8a sans labels via ::before { content: attr(…) }\n\n\n\nThe base rules covering elements common to every DTD (page, header, p, hi, table, figure, footnotes, …) live in ai-viewer/config/styles/pdai-page.css. Collection-specific rules override and extend that base.\n\n\n0.6.3 Coverage tool\nai-viewer/scripts/css_coverage.py parses the DTD and the collection CSS and reports any element or enum value with no rule. It exits non-zero on a gap and accepts --scaffold to emit a starter stylesheet:\n# Verify coverage\npython scripts/css_coverage.py ../collections/diaries/config\n\n# Generate a skeleton for a new collection\npython scripts/css_coverage.py ../collections/new-collection/config --scaffold &gt; page.css\nRun the coverage check whenever the DTD gains a new element or attribute.\n\n\n0.6.4 Iron rule: DTD and stylesheet authored together\nA new page DTD must have a matching page.css before the collection enters production OCR. The coverage check enforces this at CI time. Unstyled elements render as anonymous &lt;div&gt; blocks, which is not an error — but they will never look correct. Author the two files in the same session and commit them together.",
+  "crumbs": [
+   "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview: Collection Layout and Metadata</span>"
+  ]
+ },
+ {
+  "objectID": "index.html#what-is-not-metadata",
+  "href": "index.html#what-is-not-metadata",
+  "title": "PDAI Structured-XML OCR System",
+  "section": "0.7 What is not metadata",
+  "text": "0.7 What is not metadata\nPages, OCR XML, structure.xml, the lemma index, the stanza database and the Chroma store are products. They are absent or incomplete on a collection that is not_ready, and that is a processing fact, not a metadata gap. status.json reports those products. It does not replace the plan.\nstatus.json is written by the collection contract audit. Correcting a document count after a volume is removed is honest; claiming the collection is ready because the bib now validates is not.",
+  "crumbs": [
+   "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview: Collection Layout and Metadata</span>"
+  ]
+ },
+ {
+  "objectID": "index.html#the--prim-sec-collection-convention",
+  "href": "index.html#the--prim-sec-collection-convention",
+  "title": "PDAI Structured-XML OCR System",
+  "section": "0.8 The -prim/-sec collection convention",
+  "text": "0.8 The -prim/-sec collection convention\nWhen a collection contains both primary sources and secondary literature, split them into two separate collection folders on PDAI-1:\n\n&lt;name&gt; — primary sources (correspondence originals, critical editions of the author’s own works, archival documents)\n&lt;name&gt;-sec — secondary literature (Jahrbücher, monographs, Festschriften, research volumes about the person/topic)\n\nBoth are served by the same edition viewer and appear under the same edition in editions.yaml. The split uses ditto — never symlinks.\n# Example: Pirckheimer\npirckheimer/         # Willibald Pirckheimers Briefwechsel (7 vols., Beck)\npirckheimer-sec/     # Pirckheimer-Jahrbuch, edited volumes, secondary scholarship\nWhy split? Different material classes → different OCR templates → different DTDs. A printed scholarly journal must never be transcribed with a letter template. The -sec split makes the classification boundary explicit in the data structure itself, so ai-classifypdf prepare &lt;collection&gt; can apply the right profile per collection without any guesswork.\nExisting examples: kepler-prim/kepler-sec, copernicus-prim/copernicus-sec, waefler-prim/waefler-sec, euler_sec, pirckheimer/pirckheimer-sec.\nconfig/ artifact set (per collection, in pdai/collections/&lt;name&gt;/config/):\n\n\n\n\n\n\n\nartifact\npurpose\n\n\n\n\ncollection_profile.yaml\nOCR run plan: class, template, DTDs, run_approved\n\n\nocr_classification.json\nper-document classification result + evidence\n\n\nbibliography.yaml\nverified title-page records with _provenance\n\n\nvolumes.yaml\ncollection manifest: which documents belong, what type\n\n\n\nThese are produced by ai-classifypdf prepare &lt;collection&gt; (the preparation step) and consumed by OCR automatically. They are the PDAI equivalent of “metadata before data”.",
+  "crumbs": [
+   "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview: Collection Layout and Metadata</span>"
+  ]
+ },
+ {
+  "objectID": "index.html#iron-rules",
+  "href": "index.html#iron-rules",
+  "title": "PDAI Structured-XML OCR System",
+  "section": "0.9 Iron rules",
+  "text": "0.9 Iron rules\n\n\n\n\n\n\nWarningSix constraints that keep the layout honest\n\n\n\n\nThe plan is the membership list. A bib entry without a folder, or a folder without a plan row, is a defect. Do not leave either standing.\nbiblio.xml is sourced, never guessed. Title page and imprint only. bib_build will not invent the missing year.\nFolder name = bib key = biblabel. Three spellings of the same identity, kept identical.\nThe page DTD does not assemble records. Cross-page join is the record DTD’s job, and only after the pages exist.\nClassification precedes OCR. Run ai-classifypdf prepare &lt;collection&gt; before any production OCR. Never hand-pin a template in pdai-config.json without an ocr_classification.json that documents why.\nPilot gate for book-sized documents (&gt; 50 pages). For large documents, never launch full batch processing directly. Draw a 5-page random sample, execute pilot OCR, and audit against DTD/audit rules/facsimile. If defects emerge, run the improvement loop (prompt overlay, normalizer regex, document-specific page.css) until 100% PASS before batch unlocking.\n\n\n\nThe production commands that fill pages/ are in the pipeline skill. This chapter stops at the folder that those commands write into.",
+  "crumbs": [
+   "<span class='chapter-number'>1</span>  <span class='chapter-title'>Overview: Collection Layout and Metadata</span>"
+  ]
+ },
+ {
+  "objectID": "page-language.html",
+  "href": "page-language.html",
+  "title": "2  The page language",
+  "section": "",
+  "text": "2.1 The layers\nOne grammar core, one prompt composer, one margin stylesheet, one letter assembler.\nEvery PDAI page, whatever its collection, is written in one page language. A collection may add elements, margin types and measures of its own; it cannot rename or drop a word of the common vocabulary. The same vocabulary is read by the OCR prompt, the normalizer, the audit and the viewer, from one file.\nThis chapter is the reference for that language. The other chapters and the skills point here instead of restating it.\nG\n\n\n\ncore\n\npdai-core.mod\nmarginal · meta · figure · hi renditions\n\n\n\npage\n\npage.dtd v4.0\ncontent models as entities\n\n\n\ncore-&gt;page\n\n\n\n\n\nrec\n\nsection · parno · tablet · catalogue\n(record grammars)\n\n\n\ncore-&gt;rec\n\n\n\n\n\ntable\n\npdai-table.mod\ntable · tr · th · td\n\n\n\ntable-&gt;page\n\n\n\n\n\nletter\n\npage_letter.dtd v4.2\nletter-part and letter families\n\n\n\npage-&gt;letter\n\n\n\n\n\nwrap\n\ncollection wrapper\nconfig/page.dtd, volume DTDs\n\n\n\npage-&gt;wrap\n\n\n\n\n\nletter-&gt;wrap\n\n\n\n\n\nflat\n\nflattened copy on PDAI-1\n(GENERATED, with source hash)\n\n\n\nwrap-&gt;flat\n\n\n\n\n\nvocab\n\nocr_runner.page_language\nvocabulary · grammar rows\n\n\n\nwrap-&gt;vocab\n\n\n\n\n\nprompt\n\nprompt composer\ncure_config.compose\n\n\n\nvocab-&gt;prompt\n\n\n\n\n\naudit\n\naudit · normalizer\n\n\n\nvocab-&gt;audit\n\n\n\n\n\ncss\n\npdai-page.css margins\ncollection page.css: measures\n\n\n\ncss-&gt;audit\n\n\n coherence check\n\n\n\n\n\n\nFigure 2.1: The page language. Each layer adds to the one below it; every consumer reads the vocabulary from the grammar.\nA collection grammar is a wrapper. It sets the entities it needs and declares only what the canonical page lacks; the first declaration of an entity or an attribute wins, so the overrides come before the include:\nDeployment writes a flattened copy of each grammar to the collection root on PDAI-1 (python -m ocr_runner.page_language deploy --collection &lt;c&gt;), with a GENERATED header that names the source files and their hash, so no reader resolves relative includes across volumes.\nMeasured. The restructuring was checked against every page XML on PDAI-1 (python -m ocr_runner.page_language census): of 159,170 pages, 93,279 were valid against their grammar before and 95,751 after; no document lost a valid page (2,444 documents compared). Reports: pipeline/ocr-runner/reports/page-language/census-{before,after}.json.",
+  "crumbs": [
+   "<span class='chapter-number'>2</span>  <span class='chapter-title'>The page language</span>"
+  ]
+ },
+ {
+  "objectID": "page-language.html#the-layers",
+  "href": "page-language.html#the-layers",
+  "title": "2  The page language",
+  "section": "",
+  "text": "Layer\nFile\nWhat it holds\n\n\n\n\nCore\npipeline/ai-scholar/src/ai_scholar/schemas/pdai-core.mod\nmarginal and its closed type list, meta with the partitur stamp, figure, the renditions of hi\n\n\nTables\n…/schemas/pdai-table.mod\ntable, tr, th, td; a margin may stand beside a row or in a cell\n\n\nPage\n…/schemas/page.dtd v4.0\npage, header, main, p, fn, footnotes; every content model is a parameter entity\n\n\nLetter page\n…/schemas/page_letter.dtd v4.2\na wrapper of page.dtd: letter-part, head, body, closing, enclosure and apparatus families\n\n\nCollection\ncollections/&lt;c&gt;/config/page.dtd\nentity overrides, the collection’s own elements, then the include\n\n\n\n\n&lt;!ENTITY % marginal-type.extra \"| doc-id\"&gt;          &lt;!-- KGW 19 --&gt;\n&lt;!ENTITY % main.content \"document-entry | p | marginal | figure | table | equation | section | parno\"&gt;\n&lt;!ENTITY % kepler-page SYSTEM \"../../page.dtd\"&gt;\n%kepler-page;",
+  "crumbs": [
+   "<span class='chapter-number'>2</span>  <span class='chapter-title'>The page language</span>"
+  ]
+ },
+ {
+  "objectID": "page-language.html#margins",
+  "href": "page-language.html#margins",
+  "title": "2  The page language",
+  "section": "2.2 Margins",
+  "text": "2.2 Margins\n\n\n\n\n\n\nNoteThe marginal\n\n\n\nEverything printed in a margin of the page is a &lt;marginal side=\"…\" type=\"…\"&gt;. It stands directly before the first word of the printed line it is printed beside, inside that paragraph, whichever margin it is in. Beside a table row it is a child of that &lt;tr&gt; — first for the left margin, last for the right — and the viewer draws it as a gutter cell of the row. side is the margin where it is printed.\n\n\nThe type is one word of a closed list. The list and its split are parameter entities of the core, so the prompt, the audit and the viewer read the same words:\n\n\n\n\n\n\n\n\nKind\nType\nPrinted as\n\n\n\n\nmarker\nline-number\nprinted line count (5, 10, 15 …)\n\n\nmarker\nfolio\nmanuscript folio or page of an earlier print (22v, Bl. 14)\n\n\nmarker\nsymbol\na sign (cross, dagger, hand)\n\n\nnote\ntopic\nthe author’s or editor’s marginal gloss or lemma\n\n\nnote\nreference\na cross-reference or source citation in the margin\n\n\nnote\ndate\na date printed in the margin\n\n\n\nnote, marginal-note, label and gloss are forbidden aliases; the shared normalizer maps them to topic, maps an untyped numeral to line-number, and maps &lt;note place=\"margin…\"&gt; of archival prompts to &lt;marginal type=\"topic\"&gt;. An untyped prose marginal stays untyped, because the page does not say whether it is a gloss or a reference. Collection extension types are declared by their wrapper, with their gloss in the wrapper’s comment: doc-id (KGW 19) and entry-number (medieval-sec).\n\n2.2.1 Display\nThe viewer renders a marginal as an inline span with data-side and data-kind (marker or note). pdai-page.css sets it position: absolute with no top, so it keeps the height of its own line and moves sideways into the margin. The sheet reserves a margin only on a side that carries marginals — a narrow marker gutter, a note column, or both, markers outermost. A post-render pass in repro-xml.js pushes a marginal down when it would overlap the previous one on the same side, and lets the sheet grow when a long note runs below the last paragraph. Notes are unboxed.\nA collection page.css sets only the measures (--pdai-note-width, --pdai-note-gap, --pdai-marker-gutter) and the typography of its types; pdai-coherence reports any rule that redeclares position, display, float or offsets of a margin (COH-CSS-MARGIN-GEOMETRY).\n\n\n\n\n\n\nFigure 2.2: KGW 3, printed p. 102, re-run on qwen3.8:27b-mlx through the composed partitur (2026-09-28). The line count 45 stands in the right margin of the first line, Kepler’s gloss on Brahe in the left margin beside Denique eadem, the line count 10 in the right margin of the first line of Etsi igitur.\n\n\n\n\n\n\n\n\n\nFigure 2.3: Copernicus GW-IV p. 446: line counts in the right margin, the folio mark in the left margin, from the same stylesheet.",
+  "crumbs": [
+   "<span class='chapter-number'>2</span>  <span class='chapter-title'>The page language</span>"
+  ]
+ },
+ {
+  "objectID": "page-language.html#the-prompt-composer",
+  "href": "page-language.html#the-prompt-composer",
+  "title": "2  The page language",
+  "section": "2.3 The prompt composer",
+  "text": "2.3 The prompt composer\nThe OCR prompt of every collection is built by one function, ocr_runner.cure_config.compose(collection, model, volume=…). Its layers, in fixed order:\n\npage language — agents/infrastructure/ai-instructions/ocr/pdai-page-language.j2, rendered with the vocabulary of the collection’s grammar (marker and note types, extension types, forbidden aliases);\nbase — collections/&lt;c&gt;/ai-instructions/&lt;prefix&gt;.base.j2;\nvolume — &lt;prefix&gt;.&lt;volume&gt;.j2, optional;\nengine — &lt;prefix&gt;.&lt;engine&gt;.j2, optional; engine notes only;\nvolume.engine — &lt;prefix&gt;.&lt;volume&gt;.&lt;engine&gt;.j2, optional.\n\nThe base holds the Jinja slots page_language and engine_notes; it also receives page_grammar, the admitted content of every element read from the DTD, for bases that list what may stand inside what. The engine key of a model comes from the one table at the top of collections/ocr_catalog.yaml (qwen3.8 → qwen38, qwen3-vl → qwen3vl, kimi → kimi, gemini-3.8 → gemini38). The instruction family of a collection is named in its cure.yaml or, without one, in its catalog entry.\nInstruction families live in the collection folder beside config/. The central store keeps only the universal fragment and generic templates (archival-letter-page.j2, full_page_scholarly.j2 …). Superseded versions are kept in ai-instructions/versions/&lt;engine&gt;/. ai-scholar’s own templates, which it renders without includes, carry the fragment as a generated block kept in step by python -m ocr_runner.page_language sync-ai-scholar (--check fails when a block has drifted).",
+  "crumbs": [
+   "<span class='chapter-number'>2</span>  <span class='chapter-title'>The page language</span>"
+  ]
+ },
+ {
+  "objectID": "page-language.html#partitur-control",
+  "href": "page-language.html#partitur-control",
+  "title": "2  The page language",
+  "section": "2.4 Partitur control",
+  "text": "2.4 Partitur control\nEvery page a runner saves carries the partitur that produced it:\n&lt;meta partitur=\"kepler-ocr@3f400c0df6fa\" layers=\"page-language,base,qwen38\"\n      overlay=\"kepler-ocr.qwen38.j2\" engine=\"qwen3.8:27b-mlx\" model=\"qwen3.8:27b-mlx\" …/&gt;\npartitur is the family prefix and the first twelve hex digits of the SHA-256 of the composed instruction with the page variables left as placeholders, so it is the same for every page of a model and volume and changes with any layer.\npdai-partitur check --collection kepler-prim     # per model: layers, hash, missing overlays, lint\npdai-partitur census --collection kepler-prim --write-status\ncheck exits non-zero when a model of the chain composes base-only or an overlay fails the lint (grammar declared in an overlay, a margin type outside the DTD). census counts, per document, the pages per model and partitur and merges them into status.json (ocr_partitur); legacy pages count under legacy:&lt;instruction_template&gt;. pdai-audit --all runs the census.\nState on 2026-09-28: check reports four models without an engine overlay — gemini-3.8-flash on medieval-sec and karman-nachlass, kimi and gemini-3.8-flash on kepleriana-munich-2024. They compose base-only until an overlay is measured.",
+  "crumbs": [
+   "<span class='chapter-number'>2</span>  <span class='chapter-title'>The page language</span>"
+  ]
+ },
+ {
+  "objectID": "page-language.html#content-control-and-dual-read",
+  "href": "page-language.html#content-control-and-dual-read",
+  "title": "2  The page language",
+  "section": "2.5 Content control and dual read",
+  "text": "2.5 Content control and dual read\nA partitur tells an engine what to write; it cannot tell anyone whether the engine did. For that the pipeline keeps an independent witness of every page: Apple Vision (fastimage --mode ocr, on device, about 0.5 s per page, no API cost) reads the scan into lines with their geometry. Vision structures nothing and misses signs such as †, but it is reliable about where text stands. ocr_runner.content_control turns that reading into a census:\n\n\n\n\n\n\n\n\nCensus item\nRead from\nExample (KGW 18)\n\n\n\n\nmargin items and their line\na number past the block edge, merged at the line end or standalone\n190 beside “Nunc igitur his dilucidatis”\n\n\nouter margin column\none short token right after a line number\nthe italic folio after 360\n\n\nunread marks\nink in the margin columns that no Vision line explains\nthe † beside “Mitto salutis loco”\n\n\nprinted page\nthe number of the running head\n12 on scan page 10\n\n\ntable rows\nseveral narrow cells at one height\nthe “(Randbemerkung:” insets\n\n\nfigure zones\na run of narrowed lines, or a gap no table fills\nthe lunar diagram on p. 12\n\n\nnote zone\nnumbered lines (“351) …”) in the lower quarter\nthe line note on p. 16\n\n\n\nVision reads KGW’s old-style figures as letters (“1o”, “4o”, “so”, “2°”, “390»”); a token counts as a margin number when it hangs into the margin, and is then read as 10, 40, 50, 20, 390v. The line counts of a page form one series; a reading outside it (“3720” for the folio 372v) is kept as uncertain and never inserted. When more than a quarter of the lines open with a number (a register), the page is a list and has no margin census. A figure zone must hold ink outside the boxes of the text lines, so the blank beside an indented address or signature block is not a figure.\ncheck(xml, census) measures a reading against it (missing, extra and misanchored margin items, flat tables, figures without zones, notes the scan does not print); repair_margins anchors margin numbers at the first word of their line, places a row’s number in its &lt;tr&gt;, moves a sign to the unread mark on its side, corrects the type (a sign is a symbol, a number that is not a line count is a folio) and removes notes and paragraphs the scan does not print; crop_figures cuts the zones out of the scan as page_NNN_fig_K.png when their number equals the number of &lt;figure&gt;s. What the census cannot read it reports and never fills: an italic folio that Vision and both engines misread stays a mark_unread gap.\npython -m ocr_runner.dual_read runs two engines on the same page, each under its own composed partitur, and scores both readings with the audit, the text-validity check against Vision (schema_audit.text_validity) and the content check. It lists where the two readings diverge — margin items, tables, figures, notes, and the word windows in which they disagree, each with the reading Vision supports — takes the better one (structure score plus half a point for every divergent window in which Vision supports the other reading; a text gap that resembles the transcription character by character is Vision misreading Fraktur, not lost text), repairs it, sets printed-page from the census, and writes only with --write (the old page is kept as page_NNN.xml.v&lt;n&gt;). Reports go to collections/&lt;c&gt;/quality/dual-read/&lt;doc&gt;/page_NNN.json; --reuse re-measures saved readings after a change of the repairs without calling an engine; --escalate 3 runs the second engine only when the first reading, repaired, still scores 3 or more.\nKGW 18, 2026-09-28: the two pages that opened the iteration (scan 10 and 14) and five random pages (seed 20260928), both engines under their current partitur, qwen3.8 at full image scale:\n\n\n\n\n\n\n\n\n\n\nPrinted page\nqwen3.8:27b-mlx\nkimi-k2.7-code:cloud\nVision supports (qwen : kimi)\nAfter repair\n\n\n\n\n12\n68.9 s, score 12\n12.1 s, score 3\n1 : 15\n0\n\n\n16\n72.9 s, 6\n15.4 s, 4\n2 : 9\n1 (illegible folio)\n\n\n49\n72.7 s, 2\n15.4 s, 4\n7 : 17\n4 (a line count at a Fraktur line)\n\n\n113\n84.0 s, 5\n20.2 s, 3\n2 : 34\n0\n\n\n236\n73.6 s, 3\n13.5 s, 2\n5 : 16\n1\n\n\n303\nno well-formed page\n15.1 s, 5\n—\n0\n\n\n579 (register)\n113.9 s, 15\n20.8 s, 15\n0 : 8\n15 (note-zone flags of the list layout)\n\n\n\nKimi’s reading is chosen on all seven pages. Qwen anchors right-margin numbers at the end of their line; Kimi invented one footnote (p. 12, repeating the word before the note sign). Both are caught by the census, not by the other engine. The first run of the pilot failed on qwen3.8 for every page: the composed prompt plus the image exceeded Rapid-MLX’s 8192-token vision cap (HTTP 400). Image scale does not help — the prompt text was the excess — so the qwen38 overlay was condensed (v7, 11.8k to about 5k characters) with every measured failure mode kept once.",
+  "crumbs": [
+   "<span class='chapter-number'>2</span>  <span class='chapter-title'>The page language</span>"
+  ]
+ },
+ {
+  "objectID": "page-language.html#letters-on-the-same-layers",
+  "href": "page-language.html#letters-on-the-same-layers",
+  "title": "2  The page language",
+  "section": "2.6 Letters on the same layers",
+  "text": "2.6 Letters on the same layers\nLetter pages speak page_letter.dtd v4.2, a wrapper of page.dtd. Records are assembled by one assembler, python -m ocr_runner.assemble_letters --collection &lt;c&gt; --doc &lt;d&gt; --write: consecutive letter parts with the same nr are one letter, nr=\"cont\" continues the open letter, nr=\"anhang\" is its enclosure. Records go to &lt;data&gt;/&lt;doc&gt;/segments/letters/letter_&lt;nr&gt;/letter_&lt;nr&gt;.xml and letters_assembled.jsonl, validated against the collection’s letter_record.dtd (or letter.dtd v4.2).\n\n\n\nCollection\nLetters\nof them multi-page\nValid\n\n\n\n\nkepler-prim KGW 13–16\n631\n442\n631\n\n\npirckheimer (korrespondenz)\n233\n182\n233\n\n\nkepleriana-munich-2024\n59\n0\n59\n\n\n\nPirckheimer’s legacy assembler (scripts/assemble_xml.py, letter.dtd v1) is retired. The production letters_resolved tables were not rebuilt from these records: for kepler-prim that would introduce a correspondence register the query router does not have today, a change that needs its own golden run.\nKarman-nachlass is the test of the letter layer for a flat collection (docs/cure/letter-dtd.qmd, pilot 2). Its partitur is karman-letter-ocr.base.j2 + karman-letter-ocr.kimi.j2 over the page language, with the collection’s convention names mapped to universal elements and the admitted children of every letter element read from the DTD.\n\n\n\n\n\n\nFigure 2.4: Karman-nachlass pilot 2, route (a): the side heading of the Cornell letterhead in the left margin; letterhead, addressee, salutation, body, closing and the handwritten postscript in their letter elements.",
+  "crumbs": [
+   "<span class='chapter-number'>2</span>  <span class='chapter-title'>The page language</span>"
+  ]
+ },
+ {
+  "objectID": "page-language.html#commands",
+  "href": "page-language.html#commands",
+  "title": "2  The page language",
+  "section": "2.7 Commands",
+  "text": "2.7 Commands\n\n\n\n\n\n\n\nTask\nCommand\n\n\n\n\nvocabulary of a document’s grammar\npython -m ocr_runner.page_language vocab --collection kepler-prim --doc kgw-19\n\n\nvalidity of every page\npython -m ocr_runner.page_language census --out census.json\n\n\ndeploy flattened grammars and page.css\npython -m ocr_runner.page_language deploy --collection &lt;c&gt;\n\n\nregenerate the viewer’s display DTD\npython -m ocr_runner.page_language display\n\n\nrefresh ai-scholar fragment blocks\npython -m ocr_runner.page_language sync-ai-scholar [--check]\n\n\npartitur check / census\npdai-partitur check … / pdai-partitur census …\n\n\nassemble letters\npython -m ocr_runner.assemble_letters --collection &lt;c&gt; --doc &lt;d&gt; [--write]\n\n\ndual read with Vision control\npython -m ocr_runner.dual_read --collection &lt;c&gt; --doc &lt;d&gt; --pages 10,14 [--reuse] [--write]",
+  "crumbs": [
+   "<span class='chapter-number'>2</span>  <span class='chapter-title'>The page language</span>"
+  ]
+ },
+ {
+  "objectID": "layer-ocr.html",
+  "href": "layer-ocr.html",
+  "title": "3  Layered OCR, and the Kirch reprocess",
+  "section": "",
+  "text": "3.1 One page, two prompts\nThe page grammar, the prompt, and the model are three separate decisions. Kirch was processed as if they were one.\nA page is tagged in the universal page language. The prompt that asks for those tags is built in layers, and each layer is stamped on the page. The model is chosen after that prompt exists, from a measurement on a real page. Kirch has none of the three: its pages were read in August 2026 by gemini-3.6-flash and qwen3.5:cloud, from templates that name elements page.dtd v4.0 does not admit.\nThe grammar itself is the page language. This chapter is what changed in the prompt and the model choice, and what that implies for Kirch.\nKGW 3, printed page 102, was read twice on 28 September 2026. The facsimile has a running header 102, line counts 45 and 10 in the right margin, and a gloss on Brahe in the left margin beside Denique eadem.\nThe first prompt was the older Kepler overlay, handed to the model as a single file. Kimi returned the gloss with type=\"marginal-note\", which is not a word of the margin list, and it missed the printed header. Qwen3.8 returned the gloss as type=\"note\". Gemini 3.8, on that same older file, returned XML that failed to parse. qwen3.5:cloud answered HTTP 410. deepseek-v4-pro:cloud answered HTTP 400: the model does not accept an image.\nThe second prompt was composed. ocr_runner.cure_config.compose stacks five layers, and stops at the last one that exists:\nKimi then ran as kepler-ocr@739ec396938e with layers page-language, base, kimi. Gemini 3.8 ran as kepler-ocr@ef4f29445dd4 with page-language, base, gemini38. Both returned the header 102, both line counts as line-number on the right, and the gloss as type=\"topic\" on the left. The audit reported 0 defects and 0 blockers. Kimi took 9.5 seconds; Gemini 3.8 took 11.0 seconds and $0.0074 at the promotional rate.\nThe hash is the first twelve hex digits of the composed instruction, with the page variables left as placeholders. It is the same for every page of one model and volume, and it changes when any layer changes. pdai-partitur check refuses a model that composes base-only or whose overlay names a tag outside the grammar.\nLocal qwen3.8:27b-mlx remains the engine for harvest and for a run that must stay on this machine. Rapid-MLX (rapid-mlx/Qwen3.8-27B-4bit-MTP-MLX, prefill step 8192, vision cap 800,000 pixels, thinking off, one request in flight) is a route for that same model. On this page it was legal and slower, and it dropped a line count the composed cloud prompts kept. It is a measured option for a local pilot, and the printed-page default stays kimi-k2.7-code:cloud, with gemini-3.8-flash only when Kimi fails on that page.",
+  "crumbs": [
+   "<span class='chapter-number'>3</span>  <span class='chapter-title'>Layered OCR, and the Kirch reprocess</span>"
+  ]
+ },
+ {
+  "objectID": "layer-ocr.html#one-page-two-prompts",
+  "href": "layer-ocr.html#one-page-two-prompts",
+  "title": "3  Layered OCR, and the Kirch reprocess",
+  "section": "",
+  "text": "the page-language fragment, filled with this collection’s margin types;\nthe collection base;\nthe volume note, when the volume has one;\nthe engine note;\nthe volume-and-engine note.\n\n\n\nThe same page, after the prompt was composed.\n&lt;meta partitur=\"kepler-ocr@739ec396938e\"\n      layers=\"page-language,base,kimi\"\n      overlay=\"kepler-ocr.kimi.j2\"\n      model=\"kimi-k2.7-code:cloud\"/&gt;\nKimi 0 defects, both line counts, gloss typed topic. Gemini 3.8 the same tags, $0.0074. Rapid-MLX local qwen3.8:27b-mlx via the server on port 5138: valid tags, the line count 45 absent, 75 seconds.",
+  "crumbs": [
+   "<span class='chapter-number'>3</span>  <span class='chapter-title'>Layered OCR, and the Kirch reprocess</span>"
+  ]
+ },
+ {
+  "objectID": "layer-ocr.html#what-kirch-actually-is",
+  "href": "layer-ocr.html#what-kirch-actually-is",
+  "title": "3  Layered OCR, and the Kirch reprocess",
+  "section": "3.2 What Kirch actually is",
+  "text": "3.2 What Kirch actually is\nThe steering catalog calls the collection Kirch Astronomical Correspondence and points it at generic page.dtd and ai-scholar process. The seventeen biblio.xml files name the Acta Calendariographica series edited around Gottfried Kirch and the early modern Schreibkalender: Klaus-Dieter Herbst’s Forschungsberichte and Biobibliographisches Handbuch der Kalendermacher, Anja Groß, Der kompilierte Schreibkalender, the Kalenderreihen, Johann Christoph Sturm’s Finsternissen-Calender, and Herbst’s Gottfried Kirch: Astronom, Kalendermacher, Pietist, Frühaufklärer.\nThere is no collections/kirch/ tree, no collection wrapper, and no partitur attribute on any page. The census of 28 September 2026 validated every page against page.dtd v4.0.\n\n\n\n\nPages\nValid\nInvalid\nMalformed\n\n\n\n\nKirch, 17 volumes\n4,668\n2,267 (48.6%)\n2,327\n74\n\n\n\nThe invalid pages fail in the vocabulary the August templates taught:\n\n\n\n\n\n\n\n\nWhat the files contain\nPages citing it\nWhat the page language admits\n\n\n\n\n&lt;section&gt; inside &lt;main&gt;\n405\np, figure, marginal, table\n\n\n&lt;i&gt;, &lt;em&gt;, &lt;b&gt;, &lt;strong&gt;\n254\n&lt;hi rend=\"italic\"&gt; or rend=\"bold\"\n\n\n&lt;sup&gt;\n191\n&lt;hi rend=\"superscript\"&gt;\n\n\n&lt;figure&gt; with description before caption, or with &lt;p&gt; inside\n160\n(caption?, description?)\n\n\n&lt;footnote&gt; as a child of &lt;page&gt;\n142\n&lt;footnotes&gt;&lt;footnote&gt;…\n\n\nbroken &\n38\na declared entity\n\n\n&lt;fn&gt; or &lt;footer&gt; with child elements\n7\ntext\n\n\ntype=\"catchword\", type=\"table\"\n2\nthe closed margin list\n\n\n\nThe former central template kirch-fraktur-ocr.j2 (retired on 29 September 2026; the Kirch prompts are now composed from collections/kirch/ai-instructions/) was explicit. It was scored 0.976 on a 35-page sample of volumes 0002, 0003, 0005, 0006, 0008, 0009 and 0010, and it tells the model to emit &lt;section l=\"2\"&gt;, a figure with &lt;description&gt; before &lt;caption&gt;, and a footnote. The sample score measured agreement with that template. The census measures the template against the grammar, and the template loses.\nThe same template was then used far outside that sample. Volumes 0011–0017 are the handbook, the essays on the Schreibkalender, and the Kirch biography: 3,434 pages, all stamped kirch-fraktur-ocr and gemini-3.6-flash. A Fraktur calendar prompt on a modern antiqua handbook is the wrong instruction, whatever the model.\n\n\n\n\n\n\n\n\n\n\nVolumes\nWhat the biblio names\nPages\nValid\nHow they were read\n\n\n\n\n0005, 0007, 0008\nKalenderreihen 1.6, 3.2, 1.4\n438\n287\n0005 on qwen3.5:cloud; 0007 and 0008 on the Fraktur template\n\n\n0006, 0009, 0010\nKalenderreihen 1.5, Sturm, 3.1\n314\n133\nFraktur template and full_page_scholarly, mixed inside the volume\n\n\n0001, 0003, 0011, 0015\nForschungsberichte\n1,022\n453\nFraktur template, except 0003 on full_page_scholarly\n\n\n0002\nGroß, Der kompilierte Schreibkalender\n110\n22\nfull_page_scholarly only — the lowest rate in the collection\n\n\n0004\nForschungsberichte 4\n108\n106\nqwen3.5:cloud — the highest rate, and a retired model\n\n\n0012, 0014, 0016, 0017\nHandbuch der Kalendermacher\n1,932\n877\nFraktur template on every page\n\n\n0013\nGottfried Kirch\n744\n389\nFraktur template on every page\n\n\n\nEngine stamps, collection-wide: 4,414 pages gemini-3.6-flash, 254 pages qwen3.5:cloud. Neither name is available for a new run. gemini-3.6-flash is outside the allowlist. qwen3.5:cloud was retired on 25 September 2026. A page that validates today was still produced by one of those two, and it carries no partitur hash, so a later audit cannot say which instruction wrote it.",
+  "crumbs": [
+   "<span class='chapter-number'>3</span>  <span class='chapter-title'>Layered OCR, and the Kirch reprocess</span>"
+  ]
+ },
+ {
+  "objectID": "layer-ocr.html#how-kirch-is-reprocessed",
+  "href": "layer-ocr.html#how-kirch-is-reprocessed",
+  "title": "3  Layered OCR, and the Kirch reprocess",
+  "section": "3.3 How Kirch is reprocessed",
+  "text": "3.3 How Kirch is reprocessed\nThe reprocess follows the document-grammar procedure: profile, grammar, layer, fit, run. Nothing is written to a volume before its gate passes.\nGrammar per document. Each of the 17 documents has a document_profile.yaml that names its page classes (kalendarium, computus, entry, table, register-table, facsimile-text, inset-facsimile, show-through, and the default) and a wrapper DTD that adds only what the front matter attests. The Vision classifier assigns a class to each page (three votes, gemini-3.5-flash-lite); the geometry census breaks ties.\nLayer per engine and class. The prompt is composed from the page language, the collection base, the volume layer, the engine overlay, and the class layer. Layers were trained on 46 pilot pages spread over all 17 documents.\nFit check. Every reading is compared with its facsimile by measurement only: DTD and audit, table rows and columns against the image census, text agreement with the Vision reading (Antiqua) or between two engine readings (Fraktur, mixed), figures, margins, and ink share (a leaf without ink must yield an empty &lt;main/&gt;). A page fits when no finding fails.\nPilot result (29 September 2026, 46 pages).\n\n\n\n\n\n\n\nReading\nPages that fit\n\n\n\n\nDecision of the dual read (Kimi, gemini-3.8-flash when the fit check doubts Kimi)\n46 of 46\n\n\nkimi-k2.7-code:cloud alone\n43 of 46\n\n\ngemini-3.8-flash alone\n43 of 46\n\n\nqwen3.8:27b-mlx on the Kalender volumes\n11 of 17\n\n\nProduction XML before the reprocess\n10 of 17 on the document-grammar pages\n\n\n\nKimi alone invents a calendar table on a faint page (0009 p. 60) and merges days into six rows on one register page (0007 p. 125). gemini-3.8-flash fits every Kalender page but is about three times slower. The two fail on different pages, so the decision reading is the measured winner, not either engine alone. The thresholds were calibrated on these pages; the per-volume gate below is the held-out check. Evidence: hub runs 84d67c2eed3c994bbf6f, 60ab00b1876fe63438bc, b131b7d26147f3dd7f00; Setting cure-kirch. A reproduction of a historical page inside a modern volume (inset-facsimile) is one &lt;figure&gt; without caption and description (owner decision, 29 September 2026).\nRun. collections/kirch/scripts/chain_kirch.sh runs one volume at a time in the order modern volumes, Handbuch, Kalenderreihen. For each volume, python -m ocr_runner.pilot gate reads five random pages the pilot has not seen and the volume is skipped if any does not fit. Otherwise ocr_runner.dual_read --write --resume --escalate 3 runs in batches of 40 pages, and every overwritten XML is kept as .xml.v&lt;n&gt;. The chain waits while another OCR runner is alive and stops after the current batch when STOP appears in /Volumes/PDAI-1/tmp/kirch-ocr/. New pages are stamped with partitur, layers, and the engine that wrote them.\nLetters stay out of this run. These volumes are not a correspondence register, and letters_resolved is not rebuilt from them.",
+  "crumbs": [
+   "<span class='chapter-number'>3</span>  <span class='chapter-title'>Layered OCR, and the Kirch reprocess</span>"
+  ]
+ },
+ {
+  "objectID": "document-grammar.html",
+  "href": "document-grammar.html",
+  "title": "4  One grammar per document",
+  "section": "",
+  "text": "4.1 What the profile establishes\nA collection is a set of documents, and its documents differ in format. The grammar, the prompt layer and the model are therefore fixed per document, in a fixed order, and each step is measured before the next begins.\nUntil version 1.1 of the Partitur pilot-gated-ocr-pipeline, a document took the grammar of its collection. That holds where the volumes of a collection share one format (the volumes of one critical edition). It fails where they do not: within the collection Kirch, the Forschungsberichte are modern prose, the Handbuch is a sequence of articles with fixed rubrics, and the Kalenderreihen are calendars whose pages are tables in two colours. Version 1.2 makes the document the unit.\nThe profile of a document (config/volumes/&lt;doc&gt;/document_profile.yaml, skill document-profile) records three things, each with an evidence grade.\nThe grades are those of the schema-first method: front-matter (stated in the edition), facsimile-only (observed, provisional), unattested (neither). A vocabulary item graded unattested is not declared in the grammar.\nPage OCR remains page-scoped. Entry types are the input of a separate segmentation pass that assembles records across pages; they do not change what one page reading contains.",
+  "crumbs": [
+   "<span class='chapter-number'>4</span>  <span class='chapter-title'>One grammar per document</span>"
+  ]
+ },
+ {
+  "objectID": "document-grammar.html#what-the-profile-establishes",
+  "href": "document-grammar.html#what-the-profile-establishes",
+  "title": "4  One grammar per document",
+  "section": "",
+  "text": "Question\nAnswer\nWhere it is used\n\n\n\n\nWhich part of the universal DTD does the document use, and what does it need beyond it?\nelement families in use; extension margin types (marginal-type.extra) and renditions (hi-rend.extra)\ngrammar derivation\n\n\nWhich page classes does the document contain?\nclass name, page count, specimen pages\npage-class grammar, class layers, fit specimens\n\n\nWhich entry types make up its structure?\nname, XML element, printed opener, independent count where stated\nsegmentation pass",
+  "crumbs": [
+   "<span class='chapter-number'>4</span>  <span class='chapter-title'>One grammar per document</span>"
+  ]
+ },
+ {
+  "objectID": "document-grammar.html#the-grammar-of-one-document",
+  "href": "document-grammar.html#the-grammar-of-one-document",
+  "title": "4  One grammar per document",
+  "section": "4.2 The grammar of one document",
+  "text": "4.2 The grammar of one document\nA document grammar is a wrapper of page.dtd v4.0 (Chapter 2): it overrides content-model parameter entities, then includes the universal DTD. The first declaration of a parameter entity wins, so the override comes first. Extension vocabulary enters only through the two extension entities.\n\n\n\n\n\n\n\n\nExtension\nEntity\nExample\n\n\n\n\nmargin type beyond the closed list\nmarginal-type.extra\ndoc-id in KGW 19\n\n\nhi rendition beyond the core list\nhi-rend.extra\n\\| red for the red type of a calendar\n\n\n\nocr_runner.page_language.page_dtd(collection, doc, page_class) resolves the grammar in this order and returns the first that exists:\n\nconfig/volumes/&lt;doc&gt;/&lt;page_class&gt;.dtd, when a page class is given;\nthe DTD named by config/audit_rules_&lt;doc&gt;.yaml;\nthe DTD named by the collection’s config/audit_rules.yaml;\nthe universal page.dtd.\n\nThe page class is stamped on the page (&lt;meta page_class&gt;), so the class grammar and the class layer can be recovered from a saved page.",
+  "crumbs": [
+   "<span class='chapter-number'>4</span>  <span class='chapter-title'>One grammar per document</span>"
+  ]
+ },
+ {
+  "objectID": "document-grammar.html#the-layer-for-one-document-and-one-engine",
+  "href": "document-grammar.html#the-layer-for-one-document-and-one-engine",
+  "title": "4  One grammar per document",
+  "section": "4.3 The layer for one document and one engine",
+  "text": "4.3 The layer for one document and one engine\nocr_runner.cure_config.compose builds the prompt from layers and stops at the last layer that exists. With a page class, four layers are added after the volume-and-engine layer.\n\n\n\n\n\n\n\nOrder\nLayer file\n\n\n\n\n1\npage-language fragment (filled from the document’s grammar)\n\n\n2\n&lt;prefix&gt;.base.j2\n\n\n3\n&lt;prefix&gt;.&lt;volume&gt;.j2\n\n\n4\n&lt;prefix&gt;.&lt;engine&gt;.j2\n\n\n5\n&lt;prefix&gt;.&lt;volume&gt;.&lt;engine&gt;.j2\n\n\n6\n&lt;prefix&gt;.&lt;class&gt;.j2, &lt;prefix&gt;.&lt;class&gt;.&lt;engine&gt;.j2\n\n\n7\n&lt;prefix&gt;.&lt;volume&gt;.&lt;class&gt;.j2, &lt;prefix&gt;.&lt;volume&gt;.&lt;class&gt;.&lt;engine&gt;.j2\n\n\n\nThe stamp &lt;meta partitur=\"&lt;prefix&gt;@&lt;sha12&gt;\" layers=\"…\" overlay=\"…\" page_class=\"…\"&gt; names every layer that was applied. A layer trained for one engine does not qualify another: each candidate engine is trained separately, with the A/B baseline measured on the unpatched layer first (skill ocr-instruction-learning).",
+  "crumbs": [
+   "<span class='chapter-number'>4</span>  <span class='chapter-title'>One grammar per document</span>"
+  ]
+ },
+ {
+  "objectID": "document-grammar.html#the-fit-check",
+  "href": "document-grammar.html#the-fit-check",
+  "title": "4  One grammar per document",
+  "section": "4.4 The fit check",
+  "text": "4.4 The fit check\npython -m ocr_runner.fit_check compares a reading with its facsimile. Every finding has a severity; a page fits when it has no fail.\n\n\n\n\n\n\n\n\nCode\nCompares\nfail when\n\n\n\n\nFIT-DTD\nreading against the document’s grammar\nthe reading is invalid\n\n\nFIT-AUDIT\ncollection audit rules\nthe audit reports a blocker\n\n\nFIT-TABLE-FLAT\nrows of cells in the image against table in the reading\nthe image has at least four rows of cells and the reading has no table\n\n\nFIT-TABLE-ROWS\nrow count, image against reading\nthe counts differ by more than 45 % (warn above 25 %)\n\n\nFIT-TABLE-COLS\nmodal column count\nthe modal columns differ by three or more (warn from one)\n\n\nFIT-MARGIN\nmargin items of the image against marginal\nan item of the image is missing\n\n\nFIT-TEXT\nword agreement with the text witness\nagreement is below 70 % (warn below 85 %)\n\n\nFIT-FIGURE\nfigure zones against figure\nnever; warn only\n\n\n\nThe image side is the geometry of Apple Vision (fastimage --mode ocr): the lines of a page with their position. It is a witness for structure everywhere, and for text only where it reads the script. The profile therefore records the text witness: vision for antiqua, a second reading for Fraktur and special scripts (dual_read.divergences).\nThe check also writes a review sheet per page: the facsimile beside the reading, rendered with pdai-page.css. The sheet is the input of the visual audit (skill visual-layout-audit), which attributes a remaining flaw to one layer — prompt layer, normalizer, CSS or DTD — before anything is changed. The sheet uses a structural rendering, not the viewer; the acceptance view remains the viewer on the document’s port.",
+  "crumbs": [
+   "<span class='chapter-number'>4</span>  <span class='chapter-title'>One grammar per document</span>"
+  ]
+ },
+ {
+  "objectID": "document-grammar.html#model-selection",
+  "href": "document-grammar.html#model-selection",
+  "title": "4  One grammar per document",
+  "section": "4.5 Model selection",
+  "text": "4.5 Model selection\nThe engine of the full run is the best measured engine among those with a passed layer: quality first, then latency, then cost. The measurements come from the Model Assessment Hub (ma_best_model), and each pilot run is recorded with ma_record_run. The default is kimi-k2.7-code:cloud; gemini-3.8-flash with thinking off runs only for a page on which Kimi failed. A different default is reported to the owner and is not adopted without confirmation.",
+  "crumbs": [
+   "<span class='chapter-number'>4</span>  <span class='chapter-title'>One grammar per document</span>"
+  ]
+ },
+ {
+  "objectID": "document-grammar.html#registered-contract",
+  "href": "document-grammar.html#registered-contract",
+  "title": "4  One grammar per document",
+  "section": "4.6 Registered contract",
+  "text": "4.6 Registered contract\nThe stages profile-document, derive-document-grammar, fit-check and select-model are registered in partitur_register.duckdb under the goal path pipeline/ocr/pilot-gated, with the result specification and verification of each stage (production pipeline). The former stage improvement-loop is now train-layer.",
+  "crumbs": [
+   "<span class='chapter-number'>4</span>  <span class='chapter-title'>One grammar per document</span>"
+  ]
+ },
+ {
+  "objectID": "production-pipeline.html",
+  "href": "production-pipeline.html",
+  "title": "5  The Production Pipeline",
+  "section": "",
+  "text": "5.1 What this chapter covers\nThis chapter describes the single, authoritative production pipeline that takes an incoming PDF or scan and delivers a certified, queryable PDAI document to the ai-viewer endpoint. The pipeline is unified: one pilot-gated-ocr-pipeline Partitur (v1.1.0), one pdai-audit engine, one learning loop. The per-collection forking that characterised earlier iterations is deprecated; this is the canonical path.\nflowchart LR\n  delivery[\"PDF or scan delivery\"] --&gt; ingest[\"ingest and classify\\nai-classifypdf\"]\n  ingest --&gt; profile[\"schema derivation\\ndocument profile\"]\n  profile --&gt; pilot[\"pilot gate\\n5-page sample\"]\n  pilot --&gt; ocr[\"schema-first OCR batch\\nqwen3.8:27b-mlx\"]\n  ocr --&gt; certify[\"certify-and-learn\\npdai-audit --all\"]\n  certify --&gt; learn[\"learning loop\\nannotations A/B\"]\n  learn -. \"regression gate\" .-&gt; ocr\n  certify --&gt; complete[\"corpus completion\\nstanza · lemma · gazetteer · lexicon\"]\n  complete --&gt; register[\"readiness manifest\\nedition registry\"]\n  register --&gt; viewer[\"ai-viewer endpoint\"]\nEvery arrow corresponds to a concrete command or service. Every node corresponds to a system component described below.",
+  "crumbs": [
+   "<span class='chapter-number'>5</span>  <span class='chapter-title'>The Production Pipeline</span>"
+  ]
+ },
+ {
+  "objectID": "production-pipeline.html#stage-1-ingest-and-classify",
+  "href": "production-pipeline.html#stage-1-ingest-and-classify",
+  "title": "5  The Production Pipeline",
+  "section": "5.2 Stage 1: Ingest and classify",
+  "text": "5.2 Stage 1: Ingest and classify\nCommand: ai-classifypdf ingest --collection &lt;name&gt; or ai-classifypdf prepare &lt;collection&gt; followed by ai-classifypdf run.\nWhat happens: The PDF is harvested into the collection folder on PDAI-1, page images are extracted at 300 DPI, and the document is classified into one of the recognised document-class templates: printed-scholarly, special-script, handwritten-archival, or catalogue. The preparation step produces ocr_classification.json and collection_profile.yaml — the plan the OCR stage reads.\nEngines: - fastapple backbone (Apple fastimage + Ollama vision LLM) for highspeed ingest; kimi-k2.7-code:cloud is the structuring model. - Classic ai-scholar process path (kimi-k2.7-code:cloud, per-page fallback gemini-3.8-flash) remains available via --classic.\nOutput: pages/page_NNN/ folder tree under /Volumes/PDAI-1/pdai-collections/&lt;collection&gt;/&lt;doc&gt;/, with one PNG per page and pdai-config.json recording the harvest provenance.\n\n\n\n\n\n\nImportantClassification precedes OCR\n\n\n\nNever begin production OCR without a completed ocr_classification.json. The template, DTD, and model are all determined here; guessing them inline is not permitted.",
+  "crumbs": [
+   "<span class='chapter-number'>5</span>  <span class='chapter-title'>The Production Pipeline</span>"
+  ]
+ },
+ {
+  "objectID": "production-pipeline.html#stage-2-schema-derivation",
+  "href": "production-pipeline.html#stage-2-schema-derivation",
+  "title": "5  The Production Pipeline",
+  "section": "5.3 Stage 2: Schema derivation",
+  "text": "5.3 Stage 2: Schema derivation\nCommand: ai-classifypdf prepare &lt;collection&gt; (also produced in Stage 1 for standard collections; for formalised editions, a dedicated schema-derive skill).\nFor formalised editions — catalogues, letter registers, ephemerides — the schema derivation reads the printed front matter of the volume and derives the record schema before any OCR. The derivation produces:\n\nconfig/page.dtd — grammar for one OCR’d page\nconfig/&lt;record&gt;.dtd — grammar for the assembled record\nconfig/audit_rules.yaml — declarative cue and vocabulary rules\nconfig/page.css — collection overlay on the shared book sheet: measures (--pdai-note-width, --pdai-marker-gutter) and typography; margin geometry is shared (Chapter 2)\n\nThe derivation is never retrospective: the DTD is written before the first production page is processed. Evidence grades: front-matter (authoritative), facsimile-only (provisional), unattested (do not invent).",
+  "crumbs": [
+   "<span class='chapter-number'>5</span>  <span class='chapter-title'>The Production Pipeline</span>"
+  ]
+ },
+ {
+  "objectID": "production-pipeline.html#stage-3-pilot-gate",
+  "href": "production-pipeline.html#stage-3-pilot-gate",
+  "title": "5  The Production Pipeline",
+  "section": "5.4 Stage 3: Pilot gate",
+  "text": "5.4 Stage 3: Pilot gate\nCommand: python3 scripts/pilot_gate.py --vol &lt;vol&gt; or via the Partitur stage draw-pilot-sample + execute-pilot-ocr + audit-structural-gate.\nIron rule: For any document with more than 50 pages, the pilot gate is mandatory before batch OCR is unlocked. Five pages are drawn randomly, OCR’d under the assumed DTD, and audited in three passes:\n\nDTD validation — the XML must be well-formed and valid.\naudit_rules.yaml — vocabulary, cue, and SCH-* checks.\nVisual facsimile comparison — every VIS-* class checked against the actual scan.\n\nIf any blocker is raised, the improvement loop runs before batch unlock.",
+  "crumbs": [
+   "<span class='chapter-number'>5</span>  <span class='chapter-title'>The Production Pipeline</span>"
+  ]
+ },
+ {
+  "objectID": "production-pipeline.html#stage-4-schema-first-ocr-batch",
+  "href": "production-pipeline.html#stage-4-schema-first-ocr-batch",
+  "title": "5  The Production Pipeline",
+  "section": "5.5 Stage 4: Schema-first OCR batch",
+  "text": "5.5 Stage 4: Schema-first OCR batch\nCommand: python3 scripts/&lt;collection&gt;_ocr_run.py --vol &lt;vol&gt; (or chain_&lt;collection&gt;.sh for multi-volume succession).\nPrimary model: qwen3.8:27b-mlx (Ollama local, M1 Ultra, think=false, image scale 0.5, num_ctx=8192, 1 worker — optimal on this hardware). Fallback: kimi-k2.7-code:cloud. Special-script / handwritten: kimi-k2.7-code:cloud directly.\nEvery page is processed against the collection config/page.dtd, rendered by ai-viewer at the collection’s dedicated port, and logged to a JSONL telemetry file under /Volumes/PDAI-1/tmp/&lt;collection&gt;-ocr/&lt;vol&gt;.jsonl. The live monitor is available at http://localhost:&lt;port&gt;/ocr-monitor?volume=&lt;vol&gt;.\nKey parameters (qwen3.8:27b-mlx, validated Aug 2026):\n\n\n\n\n\n\n\n\nParameter\nValue\nEffect\n\n\n\n\nnum_batch\n512\nPrefill latency: 0.1 s (vs 26 s at default)\n\n\nnum_ctx\n8192\nSufficient for one PDAI page\n\n\nnum_predict\n2048\nAvoids truncation on dense tables\n\n\nreasoning\nfalse\nRequired; thinking leaks in output otherwise\n\n\nWorkers\n1\nOptimal on M1 Ultra (2 workers do not increase throughput)",
+  "crumbs": [
+   "<span class='chapter-number'>5</span>  <span class='chapter-title'>The Production Pipeline</span>"
+  ]
+ },
+ {
+  "objectID": "production-pipeline.html#stage-5-certify-and-learn",
+  "href": "production-pipeline.html#stage-5-certify-and-learn",
+  "title": "5  The Production Pipeline",
+  "section": "5.6 Stage 5: Certify and learn",
+  "text": "5.6 Stage 5: Certify and learn\nCommand:\npdai-audit --collection &lt;name&gt; --vol &lt;vol&gt; --all --emit-annotations\nThis is the certify-and-learn stage of Partitur pilot-gated-ocr-pipeline v1.1.0, registered at pipeline/ocr/pilot-gated in partitur_register.duckdb. It is not optional. A volume is not certified until this stage passes with 0 structural blockers and 0 visual blockers.\n\n5.6.1 What --all runs\n\n\n\n\n\n\n\n\nSub-stage\nFlag\nOutput\n\n\n\n\nStructural audit\n(always)\nquality/&lt;vol&gt;_defects.json\n\n\nVisual layout scan\n--visual\nquality/&lt;vol&gt;_visual_audit.json\n\n\nTag hierarchy protocol\n--protocol\nquality/&lt;vol&gt;/tag_hierarchy_protocol.jsonl\n\n\nFigure completion census\n(part of --protocol)\nEmbedded in protocol manifest\n\n\nFault dossier assembly\n--dossier\nquality/&lt;vol&gt;/learning_fault_dossier.json\n\n\nLettreAI Typst PDF\n--typst\nquality/&lt;vol&gt;/audit_report_&lt;vol&gt;.pdf\n\n\n\n\n\n5.6.2 The tag hierarchy protocol\nEvery page in the volume is logged as a content-free structural fingerprint: tag names, nesting, and structural attributes only — no transcription content. Each page receives a SHA-256 hash of its pure S-expression. This creates the zero-regression anchor: when a prompt overlay or normalizer is updated, diff_tag_protocols() compares structural hashes in under 50 ms across all pages, catching any lost table, corrupted equation, or newly introduced element instantly.\n\n\n5.6.3 Figure completion census\nEvery &lt;figure&gt; element is audited for:\n\n@ref attribute (required)\n&lt;caption&gt; element (printed caption, if present in the facsimile)\n&lt;description&gt; element (rich geometric or diagrammatic description)\n\nCompletion rates are expressed as four states: complete_full (caption + description), complete_desc (description only, standard when no printed caption exists), caption_only, and empty. Target: 100% of figures at complete_full or complete_desc.\n\n\n5.6.4 The four-layer fault model\nEvery assembled fault case is attributed to one of four root-cause layers:\n\n\n\n\n\n\n\n\nLayer\nSystem\nExample fault\n\n\n\n\nLayer 1: Prompt/Vision LLM\ncomposed partitur: page language + &lt;prefix&gt;.base.j2 + engine overlay &lt;prefix&gt;.&lt;engine&gt;.j2 (qwen38, kimi, gemini38, qwen3vl)\nMissing &lt;description&gt; in figures; margin type or side wrong\n\n\nLayer 2: Runner Normalizer\n_clean_xml() in OCR runner\nUnjoined line-end hyphen before &lt;br/&gt;\n\n\nLayer 3: Typographic CSS\npdai-page.css margins; config/page.css measures\nA marginal in the text column; notes overlapping\n\n\nLayer 4: DTD/Record Schema\nconfig/page.dtd\n&lt;marginal&gt; not declared in &lt;footnote&gt;\n\n\n\n\n\n5.6.5 The learning bridge (--emit-annotations)\nEvery assembled fault case is posted to the ai-query server (POST /api/annotations, port 5113) as an ocr-audit annotation, carrying: the fault’s collection, volume, and page coordinates; the observed defect (full FaultCase dataclass); the targeted fix directive; and the regression prevention anchor. The payload is also persisted as quality/&lt;vol&gt;/learning_annotations_payload.json.\nOnce annotations are registered, the A/B-gated instruction learning loop is triggered via POST /api/learn/from-annotations. The loop proposes a patch to the responsible SKILL.md (Layer 1–2) or schema file (Layer 4), runs the golden test set before and after, and promotes the patch only when the pass rate improves with no regression. This is an iron rule: no ad-hoc fixes to generation errors of a Partitur — all corrections go through the versioned learning system.\n\n\n\n\n\n\n\nNoteRepairing a produced collection\n\n\n\nWhen certification finds defects in a collection that is already produced, the repair follows the cure method: diagnosis, attribution to a layer, a remedy tested on 3–5 specimen pages, application to the flagged pages only. See Improving collections.",
+  "crumbs": [
+   "<span class='chapter-number'>5</span>  <span class='chapter-title'>The Production Pipeline</span>"
+  ]
+ },
+ {
+  "objectID": "production-pipeline.html#stage-6-corpus-completion",
+  "href": "production-pipeline.html#stage-6-corpus-completion",
+  "title": "5  The Production Pipeline",
+  "section": "5.7 Stage 6: Corpus completion",
+  "text": "5.7 Stage 6: Corpus completion\nCommand: pdai-complete --collection &lt;name&gt;\nAfter the volume is certified, the corpus completion pipeline runs the remaining indexing stages in order, checking for each stage’s readiness before proceeding:\n\n\n\n\n\n\n\n\nStage\nEngine\nOutput\n\n\n\n\nOCR\n(already done)\npages/page_NNN/*.xml\n\n\nStructure\nai-scholar segment + materialise\nstructure.xml, segments/\n\n\nStanza ingest\nai_lemma_index stanza_ingest\nstz_sentences, stz_entities in corpus DuckDB\n\n\nLemma index\nai_lemma_index build_index\nlemma_index.parquet (postings)\n\n\nGazetteer\nai_lemma_index build_gazetteer\nGazetteer entries in DuckDB\n\n\nLWgrammar lexicon\nai_lemma_index lwgrammar_build\n&lt;collection&gt;_lwgrammar.duckdb\n\n\nChromaDB vectors\nai_lemma_index chroma_build\nPer-collection BGE-M3 vector store\n\n\nReadiness manifest\npdai-complete status\nstatus.json on the collection\n\n\n\n\n5.7.1 Contextual data stores\nAfter corpus completion, a PDAI collection maintains the following data stores that the query layer reads:\n\n\n\n\n\n\n\n\nStore\nLocation\nContents\n\n\n\n\nCorpus DuckDB\n/Volumes/PDAI-1/pdai-collections/&lt;name&gt;/&lt;name&gt;.duckdb\nDocuments, letters, persons, places, dates, sentences\n\n\nLemma parquet\nSame volume, lemma_index.parquet\nInverted postings: lemma → (doc, pidx, tid)\n\n\nEntity registry\nentity_registry.duckdb\nPerson/place aliases and canonical forms\n\n\nGazetteer\nEmbedded in corpus DuckDB\nstz_entities; gazetteer expansions\n\n\nLWgrammar lexicon\n&lt;collection&gt;_lwgrammar.duckdb\nOED-form usage entries per lemma\n\n\nPartitur register\ndevelopment/ai-agent-orchestrator/partitur_register.duckdb\nGoal contracts, plan paths, stage registry\n\n\nAudit vocabulary\nconfig/audit_rules.yaml\nCue rules, vocabulary, forbidden tokens",
+  "crumbs": [
+   "<span class='chapter-number'>5</span>  <span class='chapter-title'>The Production Pipeline</span>"
+  ]
+ },
+ {
+  "objectID": "production-pipeline.html#stage-7-registration-and-the-ai-viewer-endpoint",
+  "href": "production-pipeline.html#stage-7-registration-and-the-ai-viewer-endpoint",
+  "title": "5  The Production Pipeline",
+  "section": "5.8 Stage 7: Registration and the ai-viewer endpoint",
+  "text": "5.8 Stage 7: Registration and the ai-viewer endpoint\nCommand: ae-platform port register --project &lt;viewer&gt; (already registered) or via the editions.yaml and edition registry.\nWhen a volume passes pdai-complete and status.json reports ready, it is automatically visible in the ai-viewer instance for its collection. The edition registry maps collection names to viewer ports:\n\n\n\nCollection class\nViewer port\nInstance\n\n\n\n\nKepler (prim/sec)\n5104\nkepler-gw edition\n\n\nPirckheimer\n5108\npirckheimer edition\n\n\nAstronomical Diaries\n5112\ndiaries edition\n\n\nMedieval Sec (Bischoff)\n5112\nShared with diaries\n\n\nEnestroem\n5100\nenestroem edition\n\n\nKármán archive\n5725\nkarman edition (separate supervisor)\n\n\nEditions landing\n5111\nHub for all editions\n\n\n\nThe viewer serves: - Facsimile + structured transcription in a dual-pane split view - Segment navigation via manifest.json - Collection-specific typographic rendering (page.css) - The &lt;ai-query-chat&gt; web component (Shadow DOM) for inline query access - The integrated per-collection /audit page for live quality scoring",
+  "crumbs": [
+   "<span class='chapter-number'>5</span>  <span class='chapter-title'>The Production Pipeline</span>"
+  ]
+ },
+ {
+  "objectID": "production-pipeline.html#the-partitur-contract",
+  "href": "production-pipeline.html#the-partitur-contract",
+  "title": "5  The Production Pipeline",
+  "section": "5.9 The Partitur contract",
+  "text": "5.9 The Partitur contract\nThe full pipeline is formalised as Partitur pilot-gated-ocr-pipeline v1.2.0, registered at goal path pipeline/ocr/pilot-gated in development/ai-agent-orchestrator/partitur_register.duckdb.\n\n\n\n\n\n\n\nStage\nGoal contract\n\n\n\n\nassess-document-scale\ntotal_pages &gt; 50 → pilot_required == true\n\n\nprofile-document\nevery finding graded; page classes cover all pages\n\n\nderive-document-grammar\nDTD parses; no unattested vocabulary declared\n\n\ndraw-pilot-sample\nlen(sample_pages) == 5 and all pages unprocessed\n\n\nexecute-pilot-ocr\nAll pilot pages well-formed XML\n\n\naudit-structural-gate\nblockers == 0\n\n\ntrain-layer\nretested_defects == 0\n\n\nfit-check\nfit == pages and fails == []\n\n\nselect-model\nengine has a passed layer; a changed default is owner-confirmed\n\n\nunlock-and-execute-full\ndone == total_pages, failed == 0 (threshold 0.99)\n\n\ncertify-and-learn\nblockers == 0 and vis_blockers == 0; annotations_emitted == fault_cases\n\n\n\nThe Partitur is bound through a setting file (skills/pipeline/pilot-gated-ocr/settings/&lt;collection&gt;-&lt;vol&gt;.partitur.setting.yaml) that provides the concrete collection, volume, primary_model, and dtd_path inputs before execution. The Conductor never executes an unbound Partitur.",
+  "crumbs": [
+   "<span class='chapter-number'>5</span>  <span class='chapter-title'>The Production Pipeline</span>"
+  ]
+ },
+ {
+  "objectID": "production-pipeline.html#steering-catalog",
+  "href": "production-pipeline.html#steering-catalog",
+  "title": "5  The Production Pipeline",
+  "section": "5.10 Steering catalog",
+  "text": "5.10 Steering catalog\npdai/collections/ocr_catalog.yaml is the one file that maps every collection to its Partitur, model, ports, data roots, and DTD class. The pdai-audit CLI reads this catalog automatically so metadata (viewer port, model identities, edition label, volume titles) is always derived from the catalog rather than hardcoded in audit scripts.\n\n\n\n\n\n\nWarningOne audit engine, one entry point\n\n\n\npdai-audit --collection &lt;c&gt; --vol &lt;v&gt; --all is the only supported way to run a comprehensive audit. The per-collection scripts/audit_check.py files are deprecated forwarding shims — they inject --collection &lt;c&gt; and call schema_audit.cli.main. They continue to work for backward compatibility but should not be maintained further.\npdai-audit is the console script of the schema-audit package at pipeline/schema-audit/. The corpus-readiness audit of ai-lemma-index (status.json) is a separate command, pdai-corpus-audit.",
+  "crumbs": [
+   "<span class='chapter-number'>5</span>  <span class='chapter-title'>The Production Pipeline</span>"
+  ]
+ },
+ {
+  "objectID": "schema-architecture.html",
+  "href": "schema-architecture.html",
+  "title": "6  Schema Architecture",
+  "section": "",
+  "text": "6.1 The canonical page DTD (v4.0) and its core\nThe canonical page grammar lives at pdai/pipeline/ai-scholar/src/ai_scholar/schemas/page.dtd. Since v4.0 it includes two modules shared by every PDAI grammar (Chapter 2):\nEvery content model of page.dtd is a parameter entity (page.content, main.content, p.content, hi.content, fn.model, header.model, footnotes.model, footnote.content …). The page variants (page_letter.dtd v4.2, page_section.dtd, page_annotated.dtd, page_translated.dtd) are wrappers of page.dtd; the record grammars (letter.dtd, section.dtd, parno.dtd, the collections’ tablet.dtd, catalogue.dtd and KGW 19’s document.dtd) include pdai-core.mod.",
+  "crumbs": [
+   "<span class='chapter-number'>6</span>  <span class='chapter-title'>Schema Architecture</span>"
+  ]
+ },
+ {
+  "objectID": "schema-architecture.html#the-canonical-page-dtd-v4.0-and-its-core",
+  "href": "schema-architecture.html#the-canonical-page-dtd-v4.0-and-its-core",
+  "title": "6  Schema Architecture",
+  "section": "",
+  "text": "Module\nDeclares\n\n\n\n\npdai-core.mod\n&lt;marginal&gt; with the closed type list (markers line-number, folio, symbol; notes topic, reference, date), &lt;meta&gt; with the partitur stamp, &lt;figure&gt; / &lt;caption&gt; / &lt;description&gt;, the renditions of &lt;hi&gt;\n\n\npdai-table.mod\n&lt;table&gt;, &lt;tr&gt;, &lt;th&gt;, &lt;td&gt; (never flattened to &lt;p&gt;)\n\n\npage.dtd\n&lt;page&gt;, &lt;header&gt;, &lt;main&gt;, &lt;p&gt;, &lt;fn&gt;, &lt;parno&gt;, &lt;hi&gt;, &lt;br&gt;, &lt;footnotes&gt;, &lt;footnote&gt;, &lt;footer&gt;",
+  "crumbs": [
+   "<span class='chapter-number'>6</span>  <span class='chapter-title'>Schema Architecture</span>"
+  ]
+ },
+ {
+  "objectID": "schema-architecture.html#layer-1-generic-ai-scholar-stage-chain",
+  "href": "schema-architecture.html#layer-1-generic-ai-scholar-stage-chain",
+  "title": "6  Schema Architecture",
+  "section": "6.2 Layer 1: Generic ai-scholar stage chain",
+  "text": "6.2 Layer 1: Generic ai-scholar stage chain\nThe ai-scholar processing pipeline produces pages against page.dtd. Its OCR templates carry the page-language fragment as a generated block (python -m ocr_runner.page_language sync-ai-scholar). This is the layer that enestroem, Euler and the other unprofiled collections use.",
+  "crumbs": [
+   "<span class='chapter-number'>6</span>  <span class='chapter-title'>Schema Architecture</span>"
+  ]
+ },
+ {
+  "objectID": "schema-architecture.html#layer-2-collection-wrappers",
+  "href": "schema-architecture.html#layer-2-collection-wrappers",
+  "title": "6  Schema Architecture",
+  "section": "6.3 Layer 2: Collection wrappers",
+  "text": "6.3 Layer 2: Collection wrappers\nA collection with elements that have no canonical equivalent has a wrapper config/page.dtd: it sets the entities it needs, declares its own elements and attributes, and includes page.dtd. The first declaration of an entity or attribute wins, so the overrides stand before the include.\n\n\n\n\n\n\nImportant\n\n\n\nA collection grammar adds to the page language. It never removes or renames a core element or margin type, and it does not declare record elements (cross-page assembly belongs to the record grammar). It may add margin types (marginal-type.extra), widen what a margin or a cell may contain (marginal.content, cell.content) and relax meta / figure requirements (meta.req, figure.ref.req).\n\n\n\n\n\n\n\n\n\nCollection\nIts own elements (beyond the page language)\n\n\n\n\nkepler-prim\nrunning-header, letter-head / letter-closing families, section, lineno, fnmark, equation; KGW 19: document-entry, doc-*, margin type doc-id\n\n\ncopernicus-prim\napparatus / app, toc / toc-entry / label / title / pageref; fn is empty with @n\n\n\ndiaries\nblock with field, witness, copy, lbat, photo, bibliography, date, coverage, remark, comment, ref, row; typed section; legacy number, apparatus, comments, calendar\n\n\nmedieval-sec\nentryblock with the catalogue fields, register / row / term / gloss, supplied, ref; margin type entry-number\n\n\npirckheimer\nlegacy blocks / block grammar (production pages use page_letter.dtd)\n\n\nletter collections\npage_letter.dtd v4.2 wrappers (pirckheimer, kepler-prim KGW 13–16, kepleriana-munich-2024, eulerOO-IVA, karman-nachlass)\n\n\n\nThe flattened copy that deployment writes to PDAI-1 is what the viewer host and external readers see; the audit validates against the sources.",
+  "crumbs": [
+   "<span class='chapter-number'>6</span>  <span class='chapter-title'>Schema Architecture</span>"
+  ]
+ },
+ {
+  "objectID": "schema-architecture.html#the-page-record-split",
+  "href": "schema-architecture.html#the-page-record-split",
+  "title": "6  Schema Architecture",
+  "section": "6.4 The page / record split",
+  "text": "6.4 The page / record split\nA page DTD governs one physical page. Records assembled across two or more pages belong to a separate record DTD. This split keeps truncation visible: a page that begins mid-letter and ends mid-paragraph is valid XML against the page grammar; the assembler joins it (ocr_runner.assemble_letters for letters).\npage_letter.dtd → one physical scan page (letter-part per letter on it)\nletter.dtd      → one assembled letter from first to last page, &lt;pb/&gt; between pages\nNever declare the record root element as a required top-level child of &lt;page&gt;. Use optional children so a page with an open record at top and bottom is still DTD-valid.",
+  "crumbs": [
+   "<span class='chapter-number'>6</span>  <span class='chapter-title'>Schema Architecture</span>"
+  ]
+ },
+ {
+  "objectID": "schema-architecture.html#versions",
+  "href": "schema-architecture.html#versions",
+  "title": "6  Schema Architecture",
+  "section": "6.5 Versions",
+  "text": "6.5 Versions\npage.dtd v4.0, page_letter.dtd v4.2, letter.dtd v4.2, pdai-core.mod v1.0, pdai-table.mod v1.0 (schemas/registry.yml). Collection wrappers name the version of the grammar they wrap in their header comment; page XML names it in &lt;meta output_schema=\"…\"&gt;.",
+  "crumbs": [
+   "<span class='chapter-number'>6</span>  <span class='chapter-title'>Schema Architecture</span>"
+  ]
+ },
+ {
+  "objectID": "schema-architecture.html#agent-driven-schema-derivation",
+  "href": "schema-architecture.html#agent-driven-schema-derivation",
+  "title": "6  Schema Architecture",
+  "section": "6.6 Agent-driven schema derivation",
+  "text": "6.6 Agent-driven schema derivation\nNew collection schemas are derived by schema_derivation_agent (Partitur at development/ai-agent-orchestrator/agent-store/schema_derivation_agent/, registered at pipeline/ocr/schema-derive).\nThe agent has four stages:\n\nlocate-conventions — reads the edition’s front-matter statement of record form; stops if no declaration exists.\nemit-record-schema — writes config/&lt;record&gt;_schema.yaml with status: front-matter | facsimile-only grades for every field.\nverify-against-facsimile — checks the draft against 3–4 body pages and records corrections.\nemit-dtds — generates the collection wrapper config/page.dtd (entity overrides + own elements + include of page.dtd) and config/&lt;record&gt;.dtd.\n\nAll four stage instructions are externalized as SKILL.md files under pdai/skills/pipeline/schema-derive/.",
+  "crumbs": [
+   "<span class='chapter-number'>6</span>  <span class='chapter-title'>Schema Architecture</span>"
+  ]
+ },
+ {
+  "objectID": "dtd-derivation.html",
+  "href": "dtd-derivation.html",
+  "title": "7  DTD Derivation Playbook",
+  "section": "",
+  "text": "7.1 The iron rule\nEvery field in record_schema.yaml must carry:\nFields that appear on no checked page must not appear in the schema YAML. Use optional: true, not omission, when a front-matter section is absent from some body pages.",
+  "crumbs": [
+   "<span class='chapter-number'>7</span>  <span class='chapter-title'>DTD Derivation Playbook</span>"
+  ]
+ },
+ {
+  "objectID": "dtd-derivation.html#the-iron-rule",
+  "href": "dtd-derivation.html#the-iron-rule",
+  "title": "7  DTD Derivation Playbook",
+  "section": "",
+  "text": "WarningIron Rule\n\n\n\nA schema invented for an edition that never declared its own record form is a fabrication. The locate_conventions stage must stop and report when no front-matter declaration exists. The subsequent stages must not run.\n\n\n\n\ngenerated_from — the printed page, column, and line where the rule appears\nstatus: front-matter (authoritative) or status: facsimile-only (provisional)",
+  "crumbs": [
+   "<span class='chapter-number'>7</span>  <span class='chapter-title'>DTD Derivation Playbook</span>"
+  ]
+ },
+ {
+  "objectID": "dtd-derivation.html#running-the-agent",
+  "href": "dtd-derivation.html#running-the-agent",
+  "title": "7  DTD Derivation Playbook",
+  "section": "7.2 Running the agent",
+  "text": "7.2 Running the agent\n# Via the Conductor CLI\ncd ~/ai-mac-studio/development/ai-agent-orchestrator\nuv run python -m orchestrator.cli run schema-derive-agent \\\n  --input collection=medieval-sec \\\n  --input vol=bischoff-1 \\\n  --input front_matter_pages=[1,2,3,4,5,6,7,8]\nThe agent writes:\n\nconfig/catalogue_schema.yaml\nconfig/page.dtd\nconfig/catalogue.dtd\n\nand returns a summary JSON with element counts and evidence grades.",
+  "crumbs": [
+   "<span class='chapter-number'>7</span>  <span class='chapter-title'>DTD Derivation Playbook</span>"
+  ]
+ },
+ {
+  "objectID": "dtd-derivation.html#worked-example-medieval-sec-bischoff-katalog",
+  "href": "dtd-derivation.html#worked-example-medieval-sec-bischoff-katalog",
+  "title": "7  DTD Derivation Playbook",
+  "section": "7.3 Worked example: medieval-sec (Bischoff Katalog)",
+  "text": "7.3 Worked example: medieval-sec (Bischoff Katalog)\nFront matter source: “Aufbau der Beschreibung”, pp. 5–6.\nBischoff’s Katalog explicitly declares the order of fields in each catalogue entry:\n\nOrt · Bibliothek · Signatur — Inhalt — Datierung — Herkunft — Schrift — Literatur\n\nStage 1 extracts this declaration:\nrecord_sections:\n  - name: Ort\n    order: 1\n    xml_tag: ort\n    content_type: text\n    optional: false\n    generated_from: \"p. 5 col. 1, first field\"\n    status: front-matter\n  - name: Bibliothek\n    order: 2\n    xml_tag: bibliothek\n    content_type: text\n    optional: false\n    generated_from: \"p. 5 col. 1\"\n    status: front-matter\n  # ... 6 more sections\nStage 3 (verify-against-facsimile) found that Herkunft is absent from 2/4 checked pages — it was marked optional: true.\nStage 4 generated:\n&lt;!-- config/page.dtd — medieval-sec\n     Base: PDAI canonical page DTD v3.0\n     Extensions: catalogue apparatus\n     Generated: 2026-08-21 by schema_derivation_agent 1.0\n     Source: Aufbau der Beschreibung, pp. 5-6 --&gt;\n\n&lt;!ELEMENT ort (#PCDATA | hi)*&gt;\n&lt;!ELEMENT bibliothek (#PCDATA | hi)*&gt;\n&lt;!ELEMENT signatur (#PCDATA | hi | ref)*&gt;\n&lt;!ELEMENT inhalt (#PCDATA | hi)*&gt;\n&lt;!ELEMENT datierung (#PCDATA | hi)*&gt;\n&lt;!ATTLIST datierung certainty (certain|uncertain|ca) #IMPLIED&gt;\n&lt;!ELEMENT herkunft (#PCDATA | hi)*&gt;\n&lt;!ELEMENT schrift (#PCDATA | hi)*&gt;\n&lt;!ELEMENT literatur (#PCDATA | hi | ref)*&gt;",
+  "crumbs": [
+   "<span class='chapter-number'>7</span>  <span class='chapter-title'>DTD Derivation Playbook</span>"
+  ]
+ },
+ {
+  "objectID": "dtd-derivation.html#worked-example-diaries-adart-astronomical-diaries",
+  "href": "dtd-derivation.html#worked-example-diaries-adart-astronomical-diaries",
+  "title": "7  DTD Derivation Playbook",
+  "section": "7.4 Worked example: diaries (ADART Astronomical Diaries)",
+  "text": "7.4 Worked example: diaries (ADART Astronomical Diaries)\nFront matter source: Introduction to ADART vol. I, pp. xxi–xxv.\nThe front matter describes the tablet structure (obverse/reverse, column structure, transliteration conventions). The template was derived accordingly.\nNote that the diaries collection added repeat_penalty: 1.15 to the OCR options (via DIARIES_DELTA in diaries_ocr_run.py) because early transcriptions showed excessive repetition of Babylonian month names.",
+  "crumbs": [
+   "<span class='chapter-number'>7</span>  <span class='chapter-title'>DTD Derivation Playbook</span>"
+  ]
+ },
+ {
+  "objectID": "dtd-derivation.html#worked-example-kepler-prim-kgw",
+  "href": "dtd-derivation.html#worked-example-kepler-prim-kgw",
+  "title": "7  DTD Derivation Playbook",
+  "section": "7.5 Worked example: kepler-prim (KGW)",
+  "text": "7.5 Worked example: kepler-prim (KGW)\nFront matter source: KGW editorial introduction, and the Briefverzeichnis.\nKepler’s Gesammelte Werke is a mixed-content scholarly edition combining Latin and Early Modern German. The letter-head apparatus was not declared in one place but inferred from the consistent pattern across all letter pages. Fields derived from body observation rather than front matter carry status: facsimile-only.\nThe table ban documented in earlier KEpler collection READMEs was reversed by the 2025 schema-first approach: &lt;table&gt; is now required for all mathematical ephemerides and trigonometry grids.",
+  "crumbs": [
+   "<span class='chapter-number'>7</span>  <span class='chapter-title'>DTD Derivation Playbook</span>"
+  ]
+ },
+ {
+  "objectID": "dtd-derivation.html#css-scaffolding-after-dtd-generation",
+  "href": "dtd-derivation.html#css-scaffolding-after-dtd-generation",
+  "title": "7  DTD Derivation Playbook",
+  "section": "7.6 CSS scaffolding after DTD generation",
+  "text": "7.6 CSS scaffolding after DTD generation\nAfter emit-dtds completes, run css_coverage.py --scaffold to generate a starter page.css from the new DTD:\npython3 pdai/pipeline/schema-audit/src/schema_audit/css_coverage.py \\\n  --dtd collections/&lt;name&gt;/config/page.dtd \\\n  --scaffold &gt; collections/&lt;name&gt;/config/page.css\nThis produces a valid CSS with placeholder display rules for every declared element. Refine the visual rules against the facsimile using the visual-layout-audit skill.",
+  "crumbs": [
+   "<span class='chapter-number'>7</span>  <span class='chapter-title'>DTD Derivation Playbook</span>"
+  ]
+ },
+ {
+  "objectID": "page-xml-reference.html",
+  "href": "page-xml-reference.html",
+  "title": "8  Structured Page XML Reference",
+  "section": "",
+  "text": "8.1 Document structure\nEvery OCR’d page produces one XML document conforming to page.dtd. The root element is &lt;page&gt;:\nThe shared declarations (marginal, meta, figure, table, the renditions of hi) come from the page-language core; see Chapter 2.",
+  "crumbs": [
+   "<span class='chapter-number'>8</span>  <span class='chapter-title'>Structured Page XML Reference</span>"
+  ]
+ },
+ {
+  "objectID": "page-xml-reference.html#document-structure",
+  "href": "page-xml-reference.html#document-structure",
+  "title": "8  Structured Page XML Reference",
+  "section": "",
+  "text": "&lt;page pidx=\"57\" volume=\"kgw-13\"&gt;\n  &lt;meta model=\"qwen3.8:27b-mlx\" instruction_template=\"kepler-ocr\" lang=\"orig\"\n        processed_date=\"2026-09-28\" page_index=\"057\"\n        partitur=\"kepler-ocr@3f400c0df6fa\" layers=\"page-language,base,qwen38\"/&gt;\n  &lt;header&gt;KGW XIII · Brief 764&lt;/header&gt;\n  &lt;main&gt;\n    &lt;p&gt;&lt;marginal side=\"left\" type=\"line-number\"&gt;5&lt;/marginal&gt;Gott gebe daß es wol gehe. Ich bitte von hertzen&lt;/p&gt;\n  &lt;/main&gt;\n  &lt;footnotes&gt;\n    &lt;footnote&gt;&lt;fn&gt;1&lt;/fn&gt; Kepler an Hafenreffer, 11.2.1608&lt;/footnote&gt;\n  &lt;/footnotes&gt;\n&lt;/page&gt;",
+  "crumbs": [
+   "<span class='chapter-number'>8</span>  <span class='chapter-title'>Structured Page XML Reference</span>"
+  ]
+ },
+ {
+  "objectID": "page-xml-reference.html#element-reference",
+  "href": "page-xml-reference.html#element-reference",
+  "title": "8  Structured Page XML Reference",
+  "section": "8.2 Element reference",
+  "text": "8.2 Element reference\n\n8.2.1 &lt;page&gt; (root)\nAttributes:\n\n\n\n\n\n\n\n\n\nAttribute\nType\nRequired\nDescription\n\n\n\n\npidx\ninteger\nyes\n0-based page index within the volume\n\n\nvolume\nstring\nyes\nVolume identifier, e.g. kgw-13\n\n\nlang\nNMTOKEN\nno\nISO 639-1 language code (de, la, en, …)\n\n\nsource\nstring\nno\nPDF path used for OCR\n\n\n\n\n\n8.2.2 &lt;header&gt;, &lt;footer&gt;\nRunning head / foot content, verbatim from the facsimile. May contain &lt;hi&gt;.\n\n\n8.2.3 &lt;p&gt; (paragraph)\nMain text paragraph. May contain: #PCDATA | hi | fn | marginal | equation | ref.\nNever flatten a table or figure into &lt;p&gt;. A &lt;p&gt; is linear prose.\n\n\n8.2.4 &lt;hi&gt; (typographic emphasis)\nAttribute rend: closed vocabulary — italic, bold, spaced, smallcaps, superscript, subscript.\nMissing rend is an audit violation (SCH-REND-MISSING). Never use &lt;hi&gt; without rend.\n\n\n8.2.5 &lt;marginal&gt;\nEverything printed in a margin (Chapter 2). A &lt;marginal&gt; stands directly before the first word of the printed line it is printed beside, inside that paragraph (or cell, or letter element).\nAttributes (declared in pdai-core.mod; #IMPLIED in the grammar, required by the audit on pages produced by a composed partitur):\n\n\n\n\n\n\n\nAttribute\nValues\n\n\n\n\nside\nleft, right — the margin where it is printed\n\n\ntype\nmarkers line-number, folio, symbol; notes topic, reference, date; collection extensions doc-id (KGW 19), entry-number (medieval-sec)\n\n\n\nnote, marginal-note, label and gloss are not types; the normalizer maps them to topic. A marginal is never a &lt;p&gt; of its own and never the last thing in a paragraph.\n\n\n8.2.6 &lt;figure&gt;\n&lt;figure ref=\"fig_057_1\"&gt;\n  &lt;caption&gt;Fig. 1: Epicycle diagram&lt;/caption&gt;\n  &lt;description&gt;Circle with inner circle, labeled P and O&lt;/description&gt;\n&lt;/figure&gt;\nNever replace a figure with an image crop. The &lt;description&gt; element is the text transcription of what the figure contains; &lt;caption&gt; is the printed label.\n\n\n8.2.7 &lt;table&gt;, &lt;tr&gt;, &lt;th&gt;, &lt;td&gt;\nMathematical ephemerides, trigonometry grids, and data tables must be transcribed as genuine HTML-style table markup — never flattened to &lt;p&gt;. Column counts must be consistent across all &lt;tr&gt; within a &lt;table&gt;. Inline mathematics within cells uses LaTeX syntax ($formula$).\n\n\n8.2.8 &lt;equation&gt;\nDisplay-mode mathematical expression. Placed as a direct child of &lt;page&gt; or as a block child of &lt;p&gt; (the latter triggers a CSS layout violation that the coherence audit flags).\n&lt;equation display=\"true\"&gt;$$\\sin 30° = \\frac{1}{2}$$&lt;/equation&gt;\n\n\n8.2.9 &lt;footnotes&gt;, &lt;footnote&gt;, &lt;fn&gt;\nFootnotes always appear at the bottom of the page inside &lt;footnotes&gt;. &lt;fn&gt; is the inline superscript marker; &lt;footnote&gt; is the note entry.\n&lt;p&gt;The comet appeared&lt;fn&gt;3&lt;/fn&gt; on the 12th.&lt;/p&gt;\n&lt;footnotes&gt;\n  &lt;footnote&gt;&lt;fn&gt;3&lt;/fn&gt; Observed by Kepler, KGW III p.~47.&lt;/footnote&gt;\n&lt;/footnotes&gt;\n\n\n8.2.10 Epistolary apparatus (kepler-prim, pirckheimer, karman-nachlass)\n&lt;letter-head&gt; contains: &lt;reference&gt;, &lt;date&gt;, &lt;archive&gt;, &lt;salutation&gt;.\n&lt;letter-closing&gt; contains: &lt;greeting&gt;, &lt;signature&gt;, &lt;address&gt;, &lt;postscriptum&gt;.\nThese elements are collection-specific extensions beyond canonical v3.0.",
+  "crumbs": [
+   "<span class='chapter-number'>8</span>  <span class='chapter-title'>Structured Page XML Reference</span>"
+  ]
+ },
+ {
+  "objectID": "page-xml-reference.html#evidence-grades-for-schema-fields",
+  "href": "page-xml-reference.html#evidence-grades-for-schema-fields",
+  "title": "8  Structured Page XML Reference",
+  "section": "8.3 Evidence grades for schema fields",
+  "text": "8.3 Evidence grades for schema fields\nEvery field in the schema YAML carries one of these grades, which determines how confidently OCR can generate it:\n\n\n\n\n\n\n\n\nGrade\nMeaning\nInstruction implication\n\n\n\n\nfront-matter\nDeclared explicitly in the edition’s front matter\nAuthoritative; OCR must produce this element\n\n\nfacsimile-only\nObserved in body pages but not declared in front matter\nProvisional; OCR should produce it but cannot cite authority\n\n\nunattested\nNot seen anywhere\nMust not appear in schema; do not generate",
+  "crumbs": [
+   "<span class='chapter-number'>8</span>  <span class='chapter-title'>Structured Page XML Reference</span>"
+  ]
+ },
+ {
+  "objectID": "page-xml-reference.html#production-rules",
+  "href": "page-xml-reference.html#production-rules",
+  "title": "8  Structured Page XML Reference",
+  "section": "8.4 Production rules",
+  "text": "8.4 Production rules\n\nPage OCR is page-scoped. No cross-page inference. Assemble records in a separate segmentation pass after all pages are complete.\nXML must be escaped for editorial angle brackets: use &lt; / &gt;.\n&lt;think&gt; blocks and markdown fences from the model must be stripped by the normalizer (ocr_runner.normalize) before the XML is stored.\nAmpersands must be escaped to &amp; in all text content.\nHTML tags (&lt;b&gt;, &lt;i&gt;, &lt;sup&gt;, &lt;sub&gt;, &lt;br&gt;) are forbidden in PDAI XML and trigger audit code SCH-HTML-TAG.",
+  "crumbs": [
+   "<span class='chapter-number'>8</span>  <span class='chapter-title'>Structured Page XML Reference</span>"
+  ]
+ },
+ {
+  "objectID": "engine-options.html",
+  "href": "engine-options.html",
+  "title": "9  Engine and Option Reference",
+  "section": "",
+  "text": "9.1 Model selection by document type\nUse kimi-k2.7-code:cloud (Ollama :cloud tag) as the default for new printed and handwritten collections. ai-scholar process --fallback gemini-3.8-flash (the default) re-runs a page with Gemini only when the Kimi call fails or returns no text, and stamps the engine that produced the page in &lt;meta model&gt;. qwen3.5:cloud is retired (HTTP 410 since 2026-09-25). Do not use fastimage for schema-first work (Apple Vision returns unstructured text; the PDAI pipeline requires typed XML).",
+  "crumbs": [
+   "<span class='chapter-number'>9</span>  <span class='chapter-title'>Engine and Option Reference</span>"
+  ]
+ },
+ {
+  "objectID": "engine-options.html#model-selection-by-document-type",
+  "href": "engine-options.html#model-selection-by-document-type",
+  "title": "9  Engine and Option Reference",
+  "section": "",
+  "text": "Document class\nDefault engine\nNotes\n\n\n\n\nPrinted scholarly PDFs (Euler, Kepler, Copernicus, Bischoff, Waefler)\nkimi-k2.7-code:cloud via ai-scholar process\nStandard PDAI default (owner decision 2026-09-26)\n\n\nHandwritten / archival correspondence at scale\nkimi-k2.7-code:cloud\nValidated on Karman Nachlass (1,066 docs, 38,172 pages)\n\n\nHarvest and local-only runs\nqwen3.8:27b-mlx (local MLX)\nHarvest scripts must not import cloud APIs\n\n\nLarge-format printed with Fraktur + Latin + math\nqwen3.8:27b-mlx (local MLX)\nValidated on Kepler KGW 13–15\n\n\nFallback (any class)\ngemini-3.8-flash\nOnly when Kimi fails on the page (HTTP error, timeout, empty answer); incurs API cost",
+  "crumbs": [
+   "<span class='chapter-number'>9</span>  <span class='chapter-title'>Engine and Option Reference</span>"
+  ]
+ },
+ {
+  "objectID": "engine-options.html#validated-option-profiles-ocr_runner",
+  "href": "engine-options.html#validated-option-profiles-ocr_runner",
+  "title": "9  Engine and Option Reference",
+  "section": "9.2 Validated option profiles (ocr_runner)",
+  "text": "9.2 Validated option profiles (ocr_runner)\nThe ocr_runner package (pdai/pipeline/ocr-runner/) provides named option presets:\n\n9.2.1 MLX_FAST — validated default for local qwen3.8:27b-mlx\nMLX_FAST = {\n    \"num_ctx\":     8192,\n    \"num_predict\": 2048,\n    \"num_batch\":   512,\n    \"temperature\": 0.1,\n    \"reasoning\":   False,\n    \"think\":       False,\n}\nMeasured on KGW-13, page 57 (qwen3.8:27b-mlx, M1 Ultra):\n\n\n\n\n\n\n\n\n\nProfile\nWall clock\nPrefill\nDecode\n\n\n\n\nLegacy (16384/4096, no num_batch)\n61.0 s\n26 637 ms\n30 859 ms\n\n\nMLX_FAST (8192/2048/512)\n31.7 s\n126 ms\n31 359 ms\n\n\n\nPrefill collapses 211×. Decode is unchanged (memory-bandwidth bound). In production the validated fast profile yields ~34 s/page vs. ~97 s baseline.\n\n\n9.2.2 CLOUD — for :cloud Ollama endpoints\nCLOUD = {\n    \"temperature\": 0.1,\n    \"think\":       False,\n}\nnum_batch and num_ctx are ignored by remote API endpoints; they are omitted from the CLOUD preset to avoid confusing log output.\n\n\n9.2.3 Per-collection deltas\nCollections may declare a small delta applied on top of the base preset. The diaries collection adds repeat_penalty: 1.15 to suppress repetition of Babylonian month names:\nDIARIES_DELTA = {\"repeat_penalty\": 1.15}",
+  "crumbs": [
+   "<span class='chapter-number'>9</span>  <span class='chapter-title'>Engine and Option Reference</span>"
+  ]
+ },
+ {
+  "objectID": "engine-options.html#worker-count-why-1-is-correct",
+  "href": "engine-options.html#worker-count-why-1-is-correct",
+  "title": "9  Engine and Option Reference",
+  "section": "9.3 Worker count: why 1 is correct",
+  "text": "9.3 Worker count: why 1 is correct\nOn an M1 Ultra running qwen3.8:27b-mlx, two concurrent Ollama requests share one model instance. The model is memory-bandwidth bound, not compute bound.\nMeasured concurrency impact (KGW-13):\n\n\n\nWorkers\nPer-page latency\nThroughput\n\n\n\n\n1\n~34 s\n~1.76 pages/min\n\n\n2\n~62–68 s\n~1.8–1.9 pages/min\n\n\n\nTwo workers roughly doubles per-page latency for a marginal throughput gain (~8%). The memory cost is disproportionate. Default workers is 1 in all production runners. Never label 2 workers as “2× throughput”.\nThe OLLAMA_NUM_PARALLEL=2 environment variable and --workers 2 flag remain available for experimentation but should not be used in production on M1 Ultra.",
+  "crumbs": [
+   "<span class='chapter-number'>9</span>  <span class='chapter-title'>Engine and Option Reference</span>"
+  ]
+ },
+ {
+  "objectID": "engine-options.html#image-scale",
+  "href": "engine-options.html#image-scale",
+  "title": "9  Engine and Option Reference",
+  "section": "9.4 Image scale",
+  "text": "9.4 Image scale\nLocal qwen3.8:27b-mlx: use --scale 0.5 (50% of original resolution). Higher resolution does not improve OCR quality on this model but increases memory pressure and decode time.\nKarman kimi-k2.7-code:cloud: images downscaled to 1200 px max width. The Kimi API bills by image dimensions; the 1200 px ceiling provides good quality at reasonable cost.\nGemini gemini-3.8-flash (cloud fallback): bills fixed 1120 tokens/image at high resolution regardless of pixel count.",
+  "crumbs": [
+   "<span class='chapter-number'>9</span>  <span class='chapter-title'>Engine and Option Reference</span>"
+  ]
+ },
+ {
+  "objectID": "engine-options.html#engine-capabilities",
+  "href": "engine-options.html#engine-capabilities",
+  "title": "9  Engine and Option Reference",
+  "section": "9.5 Engine capabilities",
+  "text": "9.5 Engine capabilities\n\n\n\nEngine\nFraktur\nHandwriting\nMath/tables\nLocal\nCost\n\n\n\n\nqwen3.8:27b-mlx\n✓\n△\n✓\nyes\n$0\n\n\nqwen3.5:cloud\nretired\n—\n—\nHTTP 410 since 2026-09-25\n—\n\n\nkimi-k2.7-code:cloud\n✓\n✓✓\n✓\nvia Ollama :cloud\nAPI\n\n\ngemini-3.8-flash\n✓\n✓\n✓\nno (API only)\nAPI\n\n\nApple fastimage\n✗\n✗\n✗\nyes\n$0\n\n\n\nfastimage (Apple Vision) returns unstructured plain text and must not be used for schema-first OCR work. It remains available as the backbone for non-schema classification tasks in ai-classifypdf.",
+  "crumbs": [
+   "<span class='chapter-number'>9</span>  <span class='chapter-title'>Engine and Option Reference</span>"
+  ]
+ },
+ {
+  "objectID": "engine-options.html#mlx-compile-and-python-version-notes",
+  "href": "engine-options.html#mlx-compile-and-python-version-notes",
+  "title": "9  Engine and Option Reference",
+  "section": "9.6 MLX compile and Python version notes",
+  "text": "9.6 MLX compile and Python version notes\n\nqwen3.8:27b-mlx runs via the Ollama mlx-community backend; no recompile needed.\nThe Python 3.15rc1 environment on mac-studio does not have a pydantic_core wheel. Run new FastAPI/pydantic projects from the platform venv with PYTHONPATH rather than creating a fresh venv.\nmlx-vlm breaks on transformers&gt;=5.6 — pin transformers==5.5.0 if using mlx-vlm directly (e.g. for the GLM-OCR experiment).",
+  "crumbs": [
+   "<span class='chapter-number'>9</span>  <span class='chapter-title'>Engine and Option Reference</span>"
+  ]
+ },
+ {
+  "objectID": "audit-taxonomy.html",
+  "href": "audit-taxonomy.html",
+  "title": "10  Audit Reference",
+  "section": "",
+  "text": "10.1 One audit engine\nAll OCR quality auditing for the PDAI workspace is owned by a single package:\nEntry point:\nMetadata (edition label, model names, viewer port, template paths) is read automatically from collections/ocr_catalog.yaml and each collection’s config/volumes.yaml. No hardcoded collection-specific logic exists in the shared package.",
+  "crumbs": [
+   "<span class='chapter-number'>10</span>  <span class='chapter-title'>Audit Reference</span>"
+  ]
+ },
+ {
+  "objectID": "audit-taxonomy.html#one-audit-engine",
+  "href": "audit-taxonomy.html#one-audit-engine",
+  "title": "10  Audit Reference",
+  "section": "",
+  "text": "pdai/pipeline/schema-audit/\n  src/schema_audit/\n    cli.py          — entry point: pdai-audit\n    auditor.py      — structural + vocabulary checks\n    visual_audit.py — VIS-* visual layout scan\n    figure_audit.py — figure completion census\n    tag_protocol.py — content-free tag hierarchy + SHA-256 hashing\n    fault_dossier.py — fault case assembly + four-layer attribution\n    typst_report.py  — LettreAI Typst PDF generation\n    learn_bridge.py  — fault → ai-query annotation bridge\n\npdai-audit --collection &lt;c&gt; --vol &lt;v&gt; [--all] [--emit-annotations]\n\n\n10.1.1 Per-collection shims (deprecated)\nThe per-collection scripts/audit_check.py files are deprecated forwarding shims. They inject --collection &lt;name&gt; and forward every other argument to schema_audit.cli.main. They work for backward compatibility but must not be maintained further. Run pdai-audit directly.",
+  "crumbs": [
+   "<span class='chapter-number'>10</span>  <span class='chapter-title'>Audit Reference</span>"
+  ]
+ },
+ {
+  "objectID": "audit-taxonomy.html#cli-flags",
+  "href": "audit-taxonomy.html#cli-flags",
+  "title": "10  Audit Reference",
+  "section": "10.2 CLI flags",
+  "text": "10.2 CLI flags\n\n\n\n\n\n\n\n\nFlag\nStage triggered\nOutput file\n\n\n\n\n(none)\nStructural audit only\nquality/&lt;vol&gt;_defects.json\n\n\n--visual\nVisual layout scan\nquality/&lt;vol&gt;_visual_audit.json\n\n\n--protocol\nTag hierarchy protocol + figure census\nquality/&lt;vol&gt;/tag_hierarchy_protocol.jsonl\n\n\n--dossier\nFault dossier assembly\nquality/&lt;vol&gt;/learning_fault_dossier.json\n\n\n--typst\nLettreAI Typst PDF\nquality/&lt;vol&gt;/audit_report_&lt;vol&gt;.pdf\n\n\n--all\nAll of the above\nAll output files\n\n\n--emit-annotations\nBridge fault cases to ai-query\nquality/&lt;vol&gt;/learning_annotations_payload.json\n\n\n\n\nThe PDAI cure uses these codes and the text-validity codes (TXT-*, FN-*, SEG-ORDER) as its diagnosis and assigns each code a layer; see Attribution.",
+  "crumbs": [
+   "<span class='chapter-number'>10</span>  <span class='chapter-title'>Audit Reference</span>"
+  ]
+ },
+ {
+  "objectID": "audit-taxonomy.html#defect-code-namespace",
+  "href": "audit-taxonomy.html#defect-code-namespace",
+  "title": "10  Audit Reference",
+  "section": "10.3 Defect code namespace",
+  "text": "10.3 Defect code namespace\nAll defect codes use the shared schema_audit package. The taxonomy has four namespaces:\n\n\n\n\n\n\n\n\nPrefix\nLayer\nExamples\n\n\n\n\nSYN-*\nStructural / XML syntax\nSYN-MALFORMED, SYN-FENCE, SYN-THINK-LEAK\n\n\nCHR-*\nCharacter / encoding\nCHR-FORBIDDEN, CHR-AMP-UNESCAPED\n\n\nSCH-*\nSchema / DTD conformance\nSCH-REND-MISSING, SCH-HTML-TAG, SCH-UNKNOWN-ELEM\n\n\nVIS-*\nVisual layout (CSS rendering)\nVIS-BR-IN-P, VIS-HYPHEN-SPLIT, VIS-TABLE-FLATTENED",
+  "crumbs": [
+   "<span class='chapter-number'>10</span>  <span class='chapter-title'>Audit Reference</span>"
+  ]
+ },
+ {
+  "objectID": "audit-taxonomy.html#syn-codes",
+  "href": "audit-taxonomy.html#syn-codes",
+  "title": "10  Audit Reference",
+  "section": "10.4 SYN codes",
+  "text": "10.4 SYN codes\n\n\n\nCode\nTrigger\nSeverity\n\n\n\n\nSYN-MALFORMED\nXML is not well-formed\nblocker\n\n\nSYN-DTD-FAIL\nXML fails DTD validation\nblocker\n\n\nSYN-FENCE\nMarkdown code fence in output\nrepair\n\n\nSYN-THINK-LEAK\n&lt;think&gt; or &lt;/think&gt; in output\nrepair\n\n\nSYN-EMPTY\nPage contains no text content\nwarn",
+  "crumbs": [
+   "<span class='chapter-number'>10</span>  <span class='chapter-title'>Audit Reference</span>"
+  ]
+ },
+ {
+  "objectID": "audit-taxonomy.html#chr-codes",
+  "href": "audit-taxonomy.html#chr-codes",
+  "title": "10  Audit Reference",
+  "section": "10.5 CHR codes",
+  "text": "10.5 CHR codes\n\n\n\nCode\nTrigger\nSeverity\n\n\n\n\nCHR-FORBIDDEN\nForbidden Unicode code point\nblocker\n\n\nCHR-AMP-UNESCAPED\nLiteral & in text content\nrepair\n\n\nCHR-ANGLE-UNESCAPED\nLiteral &lt; or &gt; in text content\nrepair",
+  "crumbs": [
+   "<span class='chapter-number'>10</span>  <span class='chapter-title'>Audit Reference</span>"
+  ]
+ },
+ {
+  "objectID": "audit-taxonomy.html#sch-codes",
+  "href": "audit-taxonomy.html#sch-codes",
+  "title": "10  Audit Reference",
+  "section": "10.6 SCH codes",
+  "text": "10.6 SCH codes\n\n\n\n\n\n\n\n\nCode\nTrigger\nSeverity\n\n\n\n\nSCH-REND-MISSING\n&lt;hi&gt; without rend attribute\nrepair\n\n\nSCH-REND-UNKNOWN\nrend value not in closed vocabulary\nrepair\n\n\nSCH-HTML-TAG\n&lt;b&gt;, &lt;i&gt;, &lt;sup&gt;, &lt;sub&gt;, &lt;br&gt; in output\nrepair\n\n\nSCH-UNKNOWN-ELEM\nElement not declared in page.dtd\nblocker\n\n\nSCH-CUE-MISSING\nPrinted table cue without &lt;table&gt; element\nblocker\n\n\nSCH-TABLE-FLAT\nTable rendered as consecutive &lt;p&gt;\nblocker\n\n\nSCH-LEGACY-FLAT\n(diaries) flat text where &lt;tablet&gt; expected\nblocker\n\n\nSCH-NUMBER-KIND\n(diaries) unrecognised line-number kind\nwarn\n\n\nSCH-SECTION-UNKNOWN\n(diaries) unknown section type\nwarn\n\n\nSCH-REF-MISSING\n(diaries) cross-reference without @ref\nwarn",
+  "crumbs": [
+   "<span class='chapter-number'>10</span>  <span class='chapter-title'>Audit Reference</span>"
+  ]
+ },
+ {
+  "objectID": "audit-taxonomy.html#vis-codes",
+  "href": "audit-taxonomy.html#vis-codes",
+  "title": "10  Audit Reference",
+  "section": "10.7 VIS codes",
+  "text": "10.7 VIS codes\nVisual defects detected by visual_audit.py after comparing the CSS-rendered XML with the facsimile page image.\n\n\n\n\n\n\n\n\nCode\nTrigger\nRoot cause layer\n\n\n\n\nVIS-BR-IN-P\nLine break inside paragraph causes layout fragmentation\nPrompt/normalizer\n\n\nVIS-HYPHEN-SPLIT\nHyphenated word split across two &lt;p&gt; elements\nPrompt\n\n\nVIS-ILLEGAL-INLINE\nBlock element (&lt;equation&gt;, &lt;figure&gt;) inside &lt;p&gt;\nPrompt\n\n\nVIS-TABLE-FLATTENED\nTable visible in facsimile but rendered as prose\nPrompt\n\n\nVIS-MARGINAL-GUTTER\nMarginal note overflows into main text column\nCSS",
+  "crumbs": [
+   "<span class='chapter-number'>10</span>  <span class='chapter-title'>Audit Reference</span>"
+  ]
+ },
+ {
+  "objectID": "audit-taxonomy.html#the-tag-hierarchy-protocol",
+  "href": "audit-taxonomy.html#the-tag-hierarchy-protocol",
+  "title": "10  Audit Reference",
+  "section": "10.8 The tag hierarchy protocol",
+  "text": "10.8 The tag hierarchy protocol\nThe tag hierarchy protocol provides a content-free structural fingerprint of each page for sub-50 ms regression testing after OCR improvements.\nWhat is stored: For each page, the protocol logs the S-expression tree of XML tag names, nesting order, and structural attributes only — no transcription text. A SHA-256 hash of the S-expression serves as the page’s structural identity.\nHow regression testing works:\nfrom schema_audit.tag_protocol import diff_tag_protocols\ndeltas = diff_tag_protocols(protocol_v1, protocol_v2)\n# Returns per-page structural changes: gained/lost elements, depth shifts\nA prompt overlay update that inadvertently drops all &lt;table&gt; elements will surface within 50 ms as a mass structural delta on table pages. A fix that correctly joins hyphenated words across &lt;p&gt; boundaries shows no structural change (the same elements remain, differently populated).\nThe protocol JSONL file is:\nquality/&lt;vol&gt;/tag_hierarchy_protocol.jsonl\nOne JSON object per page, with fields pidx, sha256, depth_histogram, element_counts, and s_expr_truncated (first 512 chars of the S-expression).",
+  "crumbs": [
+   "<span class='chapter-number'>10</span>  <span class='chapter-title'>Audit Reference</span>"
+  ]
+ },
+ {
+  "objectID": "audit-taxonomy.html#figure-completion-census",
+  "href": "audit-taxonomy.html#figure-completion-census",
+  "title": "10  Audit Reference",
+  "section": "10.9 Figure completion census",
+  "text": "10.9 Figure completion census\nEvery &lt;figure&gt; element in the volume is audited for three completion components:\n\n\n\n\n\n\n\n\nComponent\nXML\nMeaning\n\n\n\n\n@ref\nRequired attribute\nLinks figure to extracted image file\n\n\n&lt;caption&gt;\nChild element\nTranscribed printed caption\n\n\n&lt;description&gt;\nChild element\nRich description of the figure content\n\n\n\nCompletion is reported in four states:\n\n\n\n\n\n\n\nState\nMeaning\n\n\n\n\ncomplete_full\nBoth &lt;caption&gt; and &lt;description&gt; present\n\n\ncomplete_desc\n&lt;description&gt; only (standard when no printed caption)\n\n\ncaption_only\n&lt;caption&gt; but no &lt;description&gt; — a repair target\n\n\nempty\nNeither element present — a blocker in the Typst report\n\n\n\nTarget: 100% of figures at complete_full or complete_desc. Any empty figure is registered as a fault case in the dossier.",
+  "crumbs": [
+   "<span class='chapter-number'>10</span>  <span class='chapter-title'>Audit Reference</span>"
+  ]
+ },
+ {
+  "objectID": "audit-taxonomy.html#the-fault-dossier",
+  "href": "audit-taxonomy.html#the-fault-dossier",
+  "title": "10  Audit Reference",
+  "section": "10.10 The fault dossier",
+  "text": "10.10 The fault dossier\nThe fault dossier (learning_fault_dossier.json) is the machine-readable artefact that feeds the OCR learning loop. It assembles all non-trivial defects into structured FaultCase records.\nEach FaultCase contains:\n@dataclass\nclass FaultCase:\n    fault_id: str          # e.g. \"FAULT-kgw15-p042-001\"\n    collection: str\n    volume: str\n    page: str              # pidx\n    defect_code: str       # SYN-*, SCH-*, VIS-*, or composite\n    fault_summary: str     # one sentence\n    fault_description: str # precise description for the learning loop\n    root_cause_layer: int  # 1=Prompt, 2=Normalizer, 3=CSS, 4=DTD\n    root_cause_detail: str\n    targeted_fix: dict     # {target_file, rule, regression_anchor}\n    regression_anchors: list[str]  # pidx values that must not regress\n    severity: str          # \"blocker\", \"repair\", or \"warn\"\n    xml_evidence: str      # the offending XML fragment\nThe targeted fix names the file to patch and the rule to add or amend. The regression anchors are page indices that the fix must not break. Both fields are consumed by the learning loop when it proposes an instruction patch.\n\n10.10.1 Four root-cause layers\n\n\n\n\n\n\n\n\nLayer\nSystem\nTypical fix target\n\n\n\n\n1 — Prompt/Vision LLM\nJinja2 overlay\nconfig/&lt;collection&gt;-ocr.qwen38.j2\n\n\n2 — Runner Normalizer\nPython normaliser\n_clean_xml() in OCR runner\n\n\n3 — Typographic CSS\nStylesheet\nconfig/page.css\n\n\n4 — DTD/Record Schema\nGrammar file\nconfig/page.dtd\n\n\n\nA fault cannot be fixed by patching the wrong layer: a CSS rendering artefact fixed by a prompt patch will reappear on new pages; a prompt omission patched in CSS will not fix historical pages. The layer attribution is the learning loop’s routing signal.",
+  "crumbs": [
+   "<span class='chapter-number'>10</span>  <span class='chapter-title'>Audit Reference</span>"
+  ]
+ },
+ {
+  "objectID": "audit-taxonomy.html#the-learning-bridge---emit-annotations",
+  "href": "audit-taxonomy.html#the-learning-bridge---emit-annotations",
+  "title": "10  Audit Reference",
+  "section": "10.11 The learning bridge (--emit-annotations)",
+  "text": "10.11 The learning bridge (--emit-annotations)\nWhen --emit-annotations is passed to pdai-audit, every FaultCase in the dossier is posted to the ai-query server as an ocr-audit annotation:\nPOST http://127.0.0.1:5113/api/annotations\nContent-Type: application/json\n\n{\n  \"phase\": \"ocr-audit\",\n  \"subagent\": \"ocr:kepler-prim\",\n  \"raw_query\": \"kepler-prim/kgw-15/p042\",\n  \"observed\": { ...FaultCase fields... },\n  \"comment\": \"[FAULT-kgw15-p042-001] Table flattened to &lt;p&gt; on p042 ...\",\n  \"expected\": \"SCH-TABLE-FLAT rule: require &lt;table&gt; when | cue present\",\n  \"instruction_ref\": \"config/kepler-ocr.qwen38.j2\",\n  \"status\": \"open\"\n}\nThe payload is also persisted as quality/&lt;vol&gt;/learning_annotations_payload.json for traceability and offline re-ingestion when the server is unreachable.\n\n10.11.1 What happens after posting\nThe ai-query annotation loop (port 5113, assessment.duckdb) receives the annotation and queues it for the A/B-gated learning pass:\n\nPOST /api/learn/from-annotations proposes a patch to the SKILL.md or schema file named in instruction_ref.\nThe patched instruction is stored as a new version in instruction_versions with status candidate.\nThe golden test suite is re-run with the patched instruction.\nIf the golden pass rate improves with no regression on the regression_anchors pages, the version is promoted to active.\nIf it does not improve, the candidate is rejected and kept in the registry for forensic purposes.\n\nIron rule: Every OCR defect that reaches the fault dossier must enter the annotation system and be addressed through the versioned learning loop. No ad-hoc fix to a prompt or normalizer is permitted outside this flow. Code-side probes are supporting signal only; the responsible SKILL.md is the patch target.",
+  "crumbs": [
+   "<span class='chapter-number'>10</span>  <span class='chapter-title'>Audit Reference</span>"
+  ]
+ },
+ {
+  "objectID": "audit-taxonomy.html#audit_rules.yaml-structure",
+  "href": "audit-taxonomy.html#audit_rules.yaml-structure",
+  "title": "10  Audit Reference",
+  "section": "10.12 audit_rules.yaml structure",
+  "text": "10.12 audit_rules.yaml structure\nEach collection maintains a config/audit_rules.yaml consumed by the shared Auditor class. The file has four sections:\nsyntax:\n  strip_think: true      # &lt;think&gt; blocks → SYN-THINK-LEAK\n  strip_fences: true     # ``` fences → SYN-FENCE\n  validate_dtd: true     # DTD validation → SYN-DTD-FAIL\n\nforbidden_tokens:\n  - pattern: \"&lt;b&gt;\"\n    code: SCH-HTML-TAG\n    severity: repair\n  - pattern: \"&(?!amp;|lt;|gt;|apos;|quot;)\"\n    code: CHR-AMP-UNESCAPED\n    severity: repair\n\nvocabulary_rules:\n  - element: hi\n    attribute: rend\n    allowed: [italic, bold, spaced, smallcaps, superscript, subscript]\n    code: SCH-REND-UNKNOWN\n    severity: repair\n  - element: marginal            # the page-language vocabulary, read from the DTD\n    attribute: type\n    allowed: dtd                 # pdai-core.mod + the collection's marginal-type.extra\n    require_on: partitur         # a missing @type is a defect on pages with &lt;meta partitur&gt;\n    code: SCH-MARGINAL-TYPE\n    severity: repair\n\ncue_rules:\n  - pattern: \"\\\\|\"        # pipe character often signals a table\n    required_element: table\n    code: SCH-CUE-MISSING\n    severity: blocker",
+  "crumbs": [
+   "<span class='chapter-number'>10</span>  <span class='chapter-title'>Audit Reference</span>"
+  ]
+ },
+ {
+  "objectID": "audit-taxonomy.html#negative-control-requirement",
+  "href": "audit-taxonomy.html#negative-control-requirement",
+  "title": "10  Audit Reference",
+  "section": "10.13 Negative control requirement",
+  "text": "10.13 Negative control requirement\nEvery audit_rules.yaml must be validated with a negative control test suite (test_audit_rules.py) that:\n\nInjects each defect type deliberately into a known-good XML sample.\nAsserts that the expected code is raised.\nAsserts that no code is raised for the clean control.\n\npython3 collections/&lt;name&gt;/scripts/test_audit_rules.py\n# Expected: 10/10 PASS\nA rule that does not trigger on a deliberately injected defect is not a rule.",
+  "crumbs": [
+   "<span class='chapter-number'>10</span>  <span class='chapter-title'>Audit Reference</span>"
+  ]
+ },
+ {
+  "objectID": "audit-taxonomy.html#running-audits",
+  "href": "audit-taxonomy.html#running-audits",
+  "title": "10  Audit Reference",
+  "section": "10.14 Running audits",
+  "text": "10.14 Running audits\n# Full audit for any collection volume, all stages\npdai-audit --collection kepler-prim --vol kgw-15 --all --emit-annotations\n\n# Structural audit only\npdai-audit --collection medieval-sec --vol Bischoff1998\n\n# Structural + visual without Typst report\npdai-audit --collection diaries --vol adrt1 --visual --protocol --dossier\n\n# Legacy (deprecated shim — still works)\npython3 collections/kepler-prim/scripts/audit_check.py check --vol kgw-13",
+  "crumbs": [
+   "<span class='chapter-number'>10</span>  <span class='chapter-title'>Audit Reference</span>"
+  ]
+ },
+ {
+  "objectID": "audit-taxonomy.html#composite-scoring-in-the-learning-loop",
+  "href": "audit-taxonomy.html#composite-scoring-in-the-learning-loop",
+  "title": "10  Audit Reference",
+  "section": "10.15 Composite scoring in the learning loop",
+  "text": "10.15 Composite scoring in the learning loop\nThe AuditEvaluator (development/ai-agent-orchestrator/src/orchestrator/learning/audit_evaluator.py) blends objective defect counts into the learning loop grade:\ncomposite = llm_score × (1 − penalty)\npenalty   = blocker_fraction × 0.5 + repair_fraction × 0.2\nA promoted overlay must reduce measured blockers and repairs compared to the baseline, not merely win a self-assessment. The regression_anchors from the fault dossier are the exact pages that must show 0 blockers after promotion.",
+  "crumbs": [
+   "<span class='chapter-number'>10</span>  <span class='chapter-title'>Audit Reference</span>"
+  ]
+ },
+ {
+  "objectID": "audit-taxonomy.html#naming-collision-note",
+  "href": "audit-taxonomy.html#naming-collision-note",
+  "title": "10  Audit Reference",
+  "section": "10.16 Naming collision note",
+  "text": "10.16 Naming collision note\n“Audit” appears in two places in the PDAI workspace:\n\npdai-audit (this document): the OCR quality engine in pipeline/schema-audit/ — structural, visual, figure, dossier, report, bridge.\npdai-complete status: the corpus-readiness audit in ai-lemma-index — checks whether OCR, stanza, lemma, gazetteer, and Chroma stages are complete.\n\nThey are orthogonal. pdai-audit is about transcription quality; pdai-complete is about corpus stage completion. Both write a status.json into their respective domains (quality/ and the collection root on PDAI-1).",
+  "crumbs": [
+   "<span class='chapter-number'>10</span>  <span class='chapter-title'>Audit Reference</span>"
+  ]
+ },
+ {
+  "objectID": "relax-ng.html",
+  "href": "relax-ng.html",
+  "title": "11  RELAX NG Layer",
+  "section": "",
+  "text": "11.1 What RELAX NG governs\nThe RELAX NG schema pdai-structure.rnc governs structure.xml, not page XML. It is orthogonal to the DTD system: page DTDs govern single OCR’d pages; RELAX NG governs the assembled document-level argumentative structure.\nThe two systems operate at different granularities:",
+  "crumbs": [
+   "<span class='chapter-number'>11</span>  <span class='chapter-title'>RELAX NG Layer</span>"
+  ]
+ },
+ {
+  "objectID": "relax-ng.html#what-relax-ng-governs",
+  "href": "relax-ng.html#what-relax-ng-governs",
+  "title": "11  RELAX NG Layer",
+  "section": "",
+  "text": "Scope\nGrammar\nFile\n\n\n\n\nOne OCR’d page\nDTD\nconfig/page.dtd\n\n\nAssembled record (letter, catalogue entry)\nDTD\nconfig/&lt;record&gt;.dtd\n\n\nDocument-level argument structure\nRELAX NG\npdai-structure.rnc",
+  "crumbs": [
+   "<span class='chapter-number'>11</span>  <span class='chapter-title'>RELAX NG Layer</span>"
+  ]
+ },
+ {
+  "objectID": "relax-ng.html#structure.xml",
+  "href": "relax-ng.html#structure.xml",
+  "title": "11  RELAX NG Layer",
+  "section": "11.2 Structure.xml",
+  "text": "11.2 Structure.xml\nstructure.xml is the PDAI document-level source of truth for running text organised by argumentative hierarchy. It is produced by the ai-scholar structure sub-app:\nai-scholar structure extract --doc-id E57\nai-scholar structure validate --doc-id E57\nai-scholar structure ingest --doc-id E57\nThe RELAX NG schema lives at format/lettre-pdai/src/lettre_pdai/schemas/pdai-structure.rnc.",
+  "crumbs": [
+   "<span class='chapter-number'>11</span>  <span class='chapter-title'>RELAX NG Layer</span>"
+  ]
+ },
+ {
+  "objectID": "relax-ng.html#structure-element-inventory",
+  "href": "relax-ng.html#structure-element-inventory",
+  "title": "11  RELAX NG Layer",
+  "section": "11.3 Structure element inventory",
+  "text": "11.3 Structure element inventory\n&lt;structure doc_id=\"E57\" collection=\"enestroem\" lang=\"la\"&gt;\n  &lt;section type=\"chapter\" n=\"1\"&gt;\n    &lt;heading&gt;De viribus electricis&lt;/heading&gt;\n    &lt;argument&gt;\n      &lt;claim&gt;...&lt;/claim&gt;\n      &lt;evidence ref=\"page_057_3\"/&gt;\n      &lt;reasoning&gt;...&lt;/reasoning&gt;\n    &lt;/argument&gt;\n    &lt;section type=\"subsection\" n=\"1.1\"&gt;\n      ...\n    &lt;/section&gt;\n  &lt;/section&gt;\n&lt;/structure&gt;\nKey element types:\n\n\n\n\n\n\n\nElement\nRole\n\n\n\n\n&lt;structure&gt;\nRoot; carries doc_id, collection, lang\n\n\n&lt;section&gt;\nHierarchical division; type ∈ chapter, section, subsection\n\n\n&lt;heading&gt;\nSection title text\n\n\n&lt;argument&gt;\nOne argumentative unit\n\n\n&lt;claim&gt;\nThe stated proposition\n\n\n&lt;evidence&gt;\nPage-level source reference via ref\n\n\n&lt;reasoning&gt;\nLogical connection between evidence and claim",
+  "crumbs": [
+   "<span class='chapter-number'>11</span>  <span class='chapter-title'>RELAX NG Layer</span>"
+  ]
+ },
+ {
+  "objectID": "relax-ng.html#relax-ng-vs-dtd-tradeoffs",
+  "href": "relax-ng.html#relax-ng-vs-dtd-tradeoffs",
+  "title": "11  RELAX NG Layer",
+  "section": "11.4 RELAX NG vs DTD tradeoffs",
+  "text": "11.4 RELAX NG vs DTD tradeoffs\nPDAI uses DTDs for page and record grammars because: - DTD validation is available in all standard XML parsers (lxml, Python xml.etree) without additional dependencies. - OCR runners write XML and validate in the same process; DTD validation adds negligible overhead.\nRELAX NG is used for structure.xml because: - structure.xml has interleaved content models that are inexpressible in DTD. - The &lt;argument&gt; / &lt;evidence&gt; relationship is context-dependent in ways that require RELAX NG’s interleave and choice operators. - structure.xml is produced by an AI agent, not directly by the OCR runner, so the validation toolchain (Jing, lxml relaxng) is already available.",
+  "crumbs": [
+   "<span class='chapter-number'>11</span>  <span class='chapter-title'>RELAX NG Layer</span>"
+  ]
+ },
+ {
+  "objectID": "relax-ng.html#connection-to-ai-query",
+  "href": "relax-ng.html#connection-to-ai-query",
+  "title": "11  RELAX NG Layer",
+  "section": "11.5 Connection to ai-query",
+  "text": "11.5 Connection to ai-query\nThe structure.xml layer feeds into the ai-query artifact engine (proof-structure from structure.xml, D3 force graph, timeline, KWIC). When ai-query resolves a query about argumentative structure in an edition, it reads structure.xml through the pdai_document_agent sub-system.\nThe RELAX NG contract file is documented in format/lettre-pdai/docs/structure-contract.md (previously an unlinked file; it is now referenced from the main Quarto book index).",
+  "crumbs": [
+   "<span class='chapter-number'>11</span>  <span class='chapter-title'>RELAX NG Layer</span>"
+  ]
+ },
+ {
+  "objectID": "cure/index.html",
+  "href": "cure/index.html",
+  "title": "12  The cure method",
+  "section": "",
+  "text": "12.1 Purpose\nA PDAI collection that is already produced can still carry defects: lost footnotes, flattened tables, generation loops, apparatus entries filed as body text. The cure is the method for removing them. It differs from production in one respect: it never processes a collection as a whole. It measures, selects the defective pages, tests a remedy on a few of them, and applies it only where the measurement found the defect.\nThe method is written down in three places that state the same thing at different levels:",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>12</span>  <span class='chapter-title'>The cure method</span>"
+  ]
+ },
+ {
+  "objectID": "cure/index.html#purpose",
+  "href": "cure/index.html#purpose",
+  "title": "12  The cure method",
+  "section": "",
+  "text": "Level\nLocation\n\n\n\n\nDocumentation (this part)\npdai/docs/cure/\n\n\nInstructions for agents\npdai/skills/pipeline/pdai-cure/SKILL.md and one sub-skill per stage\n\n\nExecutable plan\nPartitur pdai-cure, pdai/skills/pipeline/pdai-cure/partitur.yaml, goal_path pipeline/cure/collection",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>12</span>  <span class='chapter-title'>The cure method</span>"
+  ]
+ },
+ {
+  "objectID": "cure/index.html#four-rules",
+  "href": "cure/index.html#four-rules",
+  "title": "12  The cure method",
+  "section": "12.2 Four rules",
+  "text": "12.2 Four rules\n\n\n\n\n\n\nNoteRules of the cure\n\n\n\n\nDiagnose before repairing. No repair starts without a measured defect.\nTest before applying. A remedy is tried on 3–5 specimen pages before it touches a collection.\nTouch only defective pages. Pages with verdict ok are never processed again.\nRecompute downstream incrementally. Only changed pages go to later stages.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>12</span>  <span class='chapter-title'>The cure method</span>"
+  ]
+ },
+ {
+  "objectID": "cure/index.html#the-loop",
+  "href": "cure/index.html#the-loop",
+  "title": "12  The cure method",
+  "section": "12.3 The loop",
+  "text": "12.3 The loop\n\n\n\n\n\n\n\ncure\n\n\n\ns0\n\n0 Scope\n\n\n\ns1\n\n1 Diagnose\n\n\n\ns0-&gt;s1\n\n\n\n\n\ns2\n\n2 Attribute\n\n\n\ns1-&gt;s2\n\n\n\n\n\ns3\n\n3 Remedy\n3–5 specimen pages\n\n\n\ns2-&gt;s3\n\n\n\n\n\ns4\n\n4 Gate\n\n\n\ns3-&gt;s4\n\n\n\n\n\ns4-&gt;s3\n\n\nfail\n\n\n\ns5\n\n5 Apply\nflagged pages only\n\n\n\ns4-&gt;s5\n\n\npass\n\n\n\ns8\n\n8 Learn\n\n\n\ns8-&gt;s2\n\n\nnext defect class\n\n\n\ns7\n\n7 Downstream delta\n\n\n\ns7-&gt;s8\n\n\n\n\n\ns6\n\n6 Certify\n\n\n\ns6-&gt;s7\n\n\n\n\n\ns5-&gt;s6\n\n\n\n\n\n\n\n\n\n\nOne iteration handles one defect class. After stage 8 the next iteration begins at stage 2 with the next class of the attribution.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>12</span>  <span class='chapter-title'>The cure method</span>"
+  ]
+ },
+ {
+  "objectID": "cure/index.html#iteration-budget-and-stop-criterion",
+  "href": "cure/index.html#iteration-budget-and-stop-criterion",
+  "title": "12  The cure method",
+  "section": "12.4 Iteration budget and stop criterion",
+  "text": "12.4 Iteration budget and stop criterion\nEvery iteration runs within a page budget and a time budget, declared in the collection’s config/cure.yaml:\nbudget:\n  pages_per_iteration: 40\n  minutes_per_iteration: 90\n  specimen_min: 3\n  specimen_max: 5\nThe runner reports pages beyond the budget as deferred and does not process them. A pilot with deferred pages fails. An iteration whose target metric does not improve ends with a report of the measurement; it does not start another run of the same remedy. This rule answers the failure that gave rise to the method: a repair session on copernicus-prim ran for half a day because each unsatisfactory result started a new collection-wide run instead of a narrower test (see the Copernicus case).",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>12</span>  <span class='chapter-title'>The cure method</span>"
+  ]
+ },
+ {
+  "objectID": "cure/index.html#one-processing-agent-at-a-time",
+  "href": "cure/index.html#one-processing-agent-at-a-time",
+  "title": "12  The cure method",
+  "section": "12.5 One processing agent at a time",
+  "text": "12.5 One processing agent at a time\nOnly one process that writes page XML or occupies the OCR engines runs at a time: the targeted re-OCR runner (ocr_runner.cure_run), the normalizer application (normalize_apply --apply), the overlay learning loop (ocr_runner.cure_learn) or a production run (ai-scholar process). On the M1 Ultra a second request to qwen3.8:27b-mlx saturates the GPU; it does not double throughput. The gate and apply ops of the Partitur refuse to start while another such process is live.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>12</span>  <span class='chapter-title'>The cure method</span>"
+  ]
+ },
+ {
+  "objectID": "cure/index.html#chapters-of-this-part",
+  "href": "cure/index.html#chapters-of-this-part",
+  "title": "12  The cure method",
+  "section": "12.6 Chapters of this part",
+  "text": "12.6 Chapters of this part\n\n\n\nChapter\nStages\n\n\n\n\nDiagnosis\n0 Scope, 1 Diagnose\n\n\nAttribution\n2 Attribute\n\n\nRemedy and gate\n3 Remedy, 4 Gate\n\n\nApplication\n5 Apply\n\n\nCertification and downstream\n6 Certify, 7 Downstream\n\n\nLearning\n8 Learn\n\n\nReference\nmetrics, thresholds, models, CLI, schema package\n\n\nThe Copernicus case\nmeasured numbers and anti-patterns\n\n\n\nThe production pipeline that creates a collection is described in The Production Pipeline; the defect codes in Audit taxonomy.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>12</span>  <span class='chapter-title'>The cure method</span>"
+  ]
+ },
+ {
+  "objectID": "cure/diagnose.html",
+  "href": "cure/diagnose.html",
+  "title": "13  Diagnosis",
+  "section": "",
+  "text": "13.1 Stage 0 — Scope\nThe scope fixes what an iteration may touch. It reads three sources:\nIt then checks the schema package: config/cure.yaml, config/page.dtd, config/audit_rules.yaml, config/volumes.yaml, page.css and the OCR templates in ai-instructions/. A missing data directory fails the stage. Missing package files do not stop a diagnosis; they are listed as gaps and mark the collection as not ready for repair.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>13</span>  <span class='chapter-title'>Diagnosis</span>"
+  ]
+ },
+ {
+  "objectID": "cure/diagnose.html#stage-0-scope",
+  "href": "cure/diagnose.html#stage-0-scope",
+  "title": "13  Diagnosis",
+  "section": "",
+  "text": "pdai/collections/ocr_catalog.yaml — data root on PDAI-1, tmp directory, viewer port and engine_chain of the collection;\npdai/collections/&lt;c&gt;/config/cure.yaml — what the catalog does not hold (instructions, rules, engine keys, reject codes, normalizer module, budget);\n&lt;data&gt;/status.json — the corpus readiness written by pdai-complete.\n\n\ncd ~/ai-mac-studio/development/ai-agent-orchestrator\n.venv/bin/python -c \"from ocr_runner.cure_config import load_cure, describe; \\\nprint(describe(load_cure('copernicus-prim')))\"",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>13</span>  <span class='chapter-title'>Diagnosis</span>"
+  ]
+ },
+ {
+  "objectID": "cure/diagnose.html#stage-1-diagnose",
+  "href": "cure/diagnose.html#stage-1-diagnose",
+  "title": "13  Diagnosis",
+  "section": "13.2 Stage 1 — Diagnose",
+  "text": "13.2 Stage 1 — Diagnose\nTwo measurements run per scope. Both are deterministic.\n\n13.2.1 Text validity\npdai-validity --collection &lt;c&gt;              # all documents\npdai-validity --collection &lt;c&gt; --doc &lt;d&gt;    # merged into the stored report\npdai-validity --report &lt;c&gt;\npdai-validity --worklist &lt;c&gt;\npdai-validity (check version text-validity/1.10) reads every scan with Apple Vision and compares the reading with the page XML, zone by zone (header, main, footnotes, marginalia). Vision results are cached per image modification time; a rerun compares only the XML again and takes seconds for the 3,644 pages of copernicus-prim.\nEach page receives one verdict:\n\n\n\n\n\n\n\n\nVerdict\nMeaning\nConsequence\n\n\n\n\nok\nthe XML covers the scan text\nnever processed again\n\n\nwarn\na partial defect, for example FN-PARTIAL\nlisted for review\n\n\nfail\ntext lost or misplaced\non the re-OCR worklist\n\n\nunverifiable\nVision confidence below 0.45\nfacsimile review only\n\n\n\n\n\n\n\n\n\nWarningwarn can hide text loss\n\n\n\nIn copernicus-prim a footnote of Copernicus1873 p. 100 had lost two of its three paragraphs, and the page was reported as TXT-GAP of the main zone, because Vision had not separated the note zone. Before a class of warn pages is accepted, one specimen is compared with the facsimile.\n\n\nOutputs:\n\n\n\n\n\n\n\nFile\nContent\n\n\n\n\n&lt;data&gt;/text_validity.json\nverdict counts, fail rate, overall grade, flags per document and model\n\n\n&lt;data&gt;/quality/text_validity/&lt;d&gt;.pages.jsonl\nverdict, flags, recall, precision and producing model per page\n\n\n&lt;data&gt;/quality/text_validity/reocr/&lt;d&gt;.json\nthe worklist: failing pages with the next engine to try\n\n\n\nThe overall grade is valid at a fail rate up to 1 %, minor-defects up to 5 %, defective above, and unverifiable when more than half of the pages cannot be read.\n\n\n13.2.2 Structural audit\npdai-audit --collection &lt;c&gt; --vol &lt;d&gt; --dossier --protocol --quiet\nThe audit checks each page against page.dtd and the structure rules of audit_rules.yaml and writes, in pdai/collections/&lt;c&gt;/quality/&lt;d&gt;/:\n\nlearning_fault_dossier.json — fault cases with codes, severity, layer, targeted fix and regression anchor;\ntag_hierarchy_protocol.json — the content-free tag structure of every page as an S-expression with its hash; the certification compares it with the protocol after the repair.\n\nIt also prints the figure census. On GW-IV it runs in 2.4 seconds.\n\n\n13.2.3 Further measurements\n\nVisual audit on the collection’s viewer port: facsimile next to the rendering, every flaw assigned to a layer (skill visual-layout-audit).\nCorpus audit pdai-corpus-audit --collection &lt;c&gt;: sentence counts per language, coverage and staleness of the corpus stages.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>13</span>  <span class='chapter-title'>Diagnosis</span>"
+  ]
+ },
+ {
+  "objectID": "cure/diagnose.html#in-the-partitur",
+  "href": "cure/diagnose.html#in-the-partitur",
+  "title": "13  Diagnosis",
+  "section": "13.3 In the Partitur",
+  "text": "13.3 In the Partitur\nStages scope and diagnose (ops pdai:cure_scope, pdai:cure_diagnose). The diagnosis op fails when pdai-validity or an audit exits with an error, or when the validity report does not cover the scope.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>13</span>  <span class='chapter-title'>Diagnosis</span>"
+  ]
+ },
+ {
+  "objectID": "cure/attribute.html",
+  "href": "cure/attribute.html",
+  "title": "14  Attribution",
+  "section": "",
+  "text": "14.1 Why attribution comes first\nA repair removes a defect class only if it changes the layer that produced it. A normalizer cannot restore text that the engine never transcribed; a new OCR pass cannot correct a DTD that forbids a structure the source prints. The attribution assigns each class one layer before any remedy is chosen.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>14</span>  <span class='chapter-title'>Attribution</span>"
+  ]
+ },
+ {
+  "objectID": "cure/attribute.html#layers",
+  "href": "cure/attribute.html#layers",
+  "title": "14  Attribution",
+  "section": "14.2 Layers",
+  "text": "14.2 Layers\n\n\n\n\n\n\n\n\nLayer\nThe defect is\nThe remedy changes\n\n\n\n\nreocr\ntext missing from the page\nnothing in code; the next engine of the chain transcribes the page\n\n\nprompt-overlay\nwrong structure produced by the engine\nthe engine’s overlay (or the shared base template)\n\n\nnormalizer\na deterministic rewrite of the XML repairs it\nthe collection’s normalizer module\n\n\ncss\nthe XML is right, the rendering is wrong\npage.css\n\n\ndtd\nthe schema lacks a structure the source prints\npage.dtd via schema-derive\n\n\nengine\none engine fails where another succeeds\nthe order of engine_chain\n\n\nsource\nthe scan is defective\na new scan",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>14</span>  <span class='chapter-title'>Attribution</span>"
+  ]
+ },
+ {
+  "objectID": "cure/attribute.html#sources-of-the-assignment",
+  "href": "cure/attribute.html#sources-of-the-assignment",
+  "title": "14  Attribution",
+  "section": "14.3 Sources of the assignment",
+  "text": "14.3 Sources of the assignment\n\nThe collection’s config/audit_rules.yaml: the field layer of a structure rule or a cue rule. It takes precedence.\npdai/skills/pipeline/pdai-cure/defect_layers.yaml assigns the text-validity codes, which have no per-collection rule.\nThe fault dossier of pdai-audit: the fix type of its cases (prompt_overlay, normalizer, normalizer_map, dtd_schema). A code whose cases name one layer takes it; the compound type prompt_and_normalizer names two layers and leaves the code unattributed.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>14</span>  <span class='chapter-title'>Attribution</span>"
+  ]
+ },
+ {
+  "objectID": "cure/attribute.html#defect-codes-and-their-layers",
+  "href": "cure/attribute.html#defect-codes-and-their-layers",
+  "title": "14  Attribution",
+  "section": "14.4 Defect codes and their layers",
+  "text": "14.4 Defect codes and their layers\nStructure codes (layer from audit_rules.yaml of copernicus-prim):\n\n\n\n\n\n\n\n\nCode\nDefect\nLayer\n\n\n\n\nLOOP-REP\ngeneration loop: padding or one unit repeated\nprompt-overlay\n\n\nTRUNC\noutput stops before &lt;/page&gt;\nprompt-overlay\n\n\nNORM-REOCR\nthe normalizer cut a loop or closed a truncated page\nreocr\n\n\nEMPTY-MAIN\n&lt;main&gt; nearly empty although the scan carries ink\nreocr\n\n\nTABLE-FLAT\na number grid transcribed as pipe-separated &lt;p&gt; rows\nprompt-overlay\n\n\nDUP-BLOCK\nan apparatus entry or note transcribed twice\nprompt-overlay\n\n\nFN-BIJECTION\na marker without its note\nprompt-overlay\n\n\nFN-MARKER\na note without a marker\nnormalizer\n\n\nTAG-VARIANT\nHTML tags or legacy footnote forms\nnormalizer\n\n\n\nText-validity codes (layer from defect_layers.yaml):\n\n\n\n\n\n\n\n\nCode\nDefect\nLayer\n\n\n\n\nTXT-PAGE-LOST\nmost of the page text is missing\nreocr\n\n\nTXT-GAP\ntwo or more consecutive scan lines missing\nreocr\n\n\nFN-MISSING\na printed note number without &lt;footnote&gt;\nreocr\n\n\nFN-PARTIAL\na footnote shorter than its scan lines\nreocr\n\n\nTXT-EXCESS\nXML text without a counterpart in the scan\nprompt-overlay\n\n\nBODY-IN-FN\nbody lines filed as a note\nprompt-overlay\n\n\nFN-IN-BODY\nnote lines filed as body text\nprompt-overlay\n\n\nSEG-ORDER\nzones out of the scan’s reading order\nprompt-overlay\n\n\n\nCodes of the collection’s cue rules (SCH-*) carry no layer until the owner assigns one. On 2026-09-26 the baseline found SCH-APPARATUS (copernicus-prim, GW-II and GW-IV, 7 pages) and SCH-REGEST-MISSING, SCH-SALUTATION-MISSING (pirckheimer, 3 pages) unattributed. LN-DRIFT (marginal line numbers out of step with the lines) is a candidate code of the line-numbered editions without a rule.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>14</span>  <span class='chapter-title'>Attribution</span>"
+  ]
+ },
+ {
+  "objectID": "cure/attribute.html#output-and-gate",
+  "href": "cure/attribute.html#output-and-gate",
+  "title": "14  Attribution",
+  "section": "14.5 Output and gate",
+  "text": "14.5 Output and gate\nThe op pdai:cure_attribute collects the flags of fail and warn pages, every code of the pdai-audit defect register (quality/&lt;doc&gt;_defects.json) and the codes of the fault dossier, and produces one class per code: page count, layer, anchor, the source of the layer and the first five pages as specimen candidates. A code without a layer from any source is listed as unattributed and fails the stage. The role attribute-uncoded (kimi-k2.7-code:cloud, fallback gemini-3.8-flash) may propose a layer; the owner confirms it before it is written into the rule file.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>14</span>  <span class='chapter-title'>Attribution</span>"
+  ]
+ },
+ {
+  "objectID": "cure/remedy-gate.html",
+  "href": "cure/remedy-gate.html",
+  "title": "15  Remedy and gate",
+  "section": "",
+  "text": "15.1 Stage 3 — Remedy\nA remedy is the smallest change on the attributed layer. The iteration declares it as input of the Partitur:\nWithout a specimen list the first pages of the class are taken. All specimen pages come from one document, so that the gate runs against one document’s settings and placement rule.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>15</span>  <span class='chapter-title'>Remedy and gate</span>"
+  ]
+ },
+ {
+  "objectID": "cure/remedy-gate.html#stage-3-remedy",
+  "href": "cure/remedy-gate.html#stage-3-remedy",
+  "title": "15  Remedy and gate",
+  "section": "",
+  "text": "remedy:\n  kind: normalizer          # normalizer | reocr | overlay\n  code: FN-MARKER\n  specimen: [copernicusGW-IV/page_127, copernicusGW-IV/page_347, copernicusGW-IV/page_553]\n\n\n\n\n\n\n\n\nKind\nHow the remedy is made\n\n\n\n\nnormalizer\na rule in the collection’s normalizer module, loaded through cure.yaml normalizer.module; generic tree rules live in ocr_runner/tree_rules.py\n\n\nreocr\nno code change; the next engine of engine_chain transcribes the page\n\n\noverlay\na new overlay version proposed and A/B-tested by ocr_runner.cure_learn\n\n\n\n\n15.1.1 Document normalizers\nA collection registers its document-level normalizer in the shared registry of ocr_runner/normalize.py:\nfrom .normalize import DocumentNormalizer, register_document\nregister_document(\"copernicus-prim\", DocumentNormalizer(\n    id=NORMALIZER_ID, normalize_document=normalize_document, page_hook=copernicus_hook))\nnormalize_apply and the runner find the module through cure.yaml; a module that does not register itself raises an error instead of running without rules.\n\n\n15.1.2 Overlay revision\n.venv/bin/python -m ocr_runner.cure_learn --collection &lt;c&gt; --engine kimi --rounds 1\nThe learning sample is the sample_pages list of agent-store/ocr_instruction_learning_agent/&lt;c&gt;.partitur.setting.yaml. It must contain pages with the defect. On copernicus-prim, three screenshot pages already scored 1.000 under the current kimi overlay; an A/B on those three pages could not show any difference between two authors (see Reference).",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>15</span>  <span class='chapter-title'>Remedy and gate</span>"
+  ]
+ },
+ {
+  "objectID": "cure/remedy-gate.html#stage-4-gate",
+  "href": "cure/remedy-gate.html#stage-4-gate",
+  "title": "15  Remedy and gate",
+  "section": "15.2 Stage 4 — Gate",
+  "text": "15.2 Stage 4 — Gate\n# normalizer: specimen normalized in memory, nothing written\n.venv/bin/python -m ocr_runner.normalize_apply --collection &lt;c&gt; --doc &lt;d&gt; --specimen 127,347,553\n# re-OCR or overlay: pilot tree under &lt;tmp&gt;/pilot/&lt;d&gt;/&lt;stamp&gt;/\n.venv/bin/python -m ocr_runner.cure_run --collection &lt;c&gt; --doc &lt;d&gt; --pilot --sample 5 --also 127,347,553\nThe two gates check different properties.\n\n\n\n\n\n\n\nGate\nA specimen page passes when\n\n\n\n\nnormalizer (normalize_apply --specimen)\nthe rule changes the page (a no-op fails), the result is well-formed, applying the rule again changes nothing (idempotent), and the word sequence is preserved except for rejoined hyphenations\n\n\nre-OCR and overlay (cure_run --pilot)\nthe best engine answer reaches verdict ok without a reject code (LOOP-REP, TRUNC, SYN-WELLFORMED), or the current XML is already valid and is kept; no page is deferred by the budget\n\n\n\nThe normalizer gate stores for every passed page the hash of the source XML and the structural_hash of the result in &lt;data&gt;/quality/&lt;d&gt;_norm_gate.json. --apply refuses when the gate is missing, belongs to another normalizer version, or when a specimen page changed after the gate.\nFor a document of more than 50 pages the pilot adds five random pages to the specimen. That is the obligatory pilot gate of book-sized documents; the random pages show whether the remedy damages pages that were not defective.\nBoth commands exit 0 only on PASS. The op pdai:cure_gate reads the exit code and the verdict and publishes a FAIL as an error, so the stage grades FAILED and the Partitur does not reach stage 5.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>15</span>  <span class='chapter-title'>Remedy and gate</span>"
+  ]
+ },
+ {
+  "objectID": "cure/apply.html",
+  "href": "cure/apply.html",
+  "title": "16  Application",
+  "section": "",
+  "text": "16.1 Commands\nnormalize_apply --apply refuses unless the specimen gate passed for the same normalizer version. cure_run --worklist processes the document’s worklist from pdai-validity.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>16</span>  <span class='chapter-title'>Application</span>"
+  ]
+ },
+ {
+  "objectID": "cure/apply.html#commands",
+  "href": "cure/apply.html#commands",
+  "title": "16  Application",
+  "section": "",
+  "text": "pgrep -fl \"cure_run|cure_learn|normalize_apply|ai-scholar process\"    # must print nothing\n.venv/bin/python -m ocr_runner.normalize_apply --collection &lt;c&gt; --doc &lt;d&gt; --apply [--only 127,347]\n.venv/bin/python -m ocr_runner.cure_run --collection &lt;c&gt; --doc &lt;d&gt; --worklist \\\n    --max-pages 40 --max-minutes 90",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>16</span>  <span class='chapter-title'>Application</span>"
+  ]
+ },
+ {
+  "objectID": "cure/apply.html#the-worklist",
+  "href": "cure/apply.html#the-worklist",
+  "title": "16  Application",
+  "section": "16.2 The worklist",
+  "text": "16.2 The worklist\nThe worklist holds only pages with verdict fail. For each page it names the next engine to try: the page walks the collection’s engine_chain, skipping engines already tried on it, including the one that produced the current XML. gemini-3.8-flash comes only after every engine of the chain has failed on the page. Pages with verdict warn are listed for review; pages with verdict ok never appear.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>16</span>  <span class='chapter-title'>Application</span>"
+  ]
+ },
+ {
+  "objectID": "cure/apply.html#runner-guards",
+  "href": "cure/apply.html#runner-guards",
+  "title": "16  Application",
+  "section": "16.3 Runner guards",
+  "text": "16.3 Runner guards\n\n\n\n\n\n\n\n\nGuard\nValue (copernicus-prim)\nEffect\n\n\n\n\nnum_predict\n4096\nbounds a generation loop\n\n\nrepeat_penalty\n1.1\nreduces repeated units\n\n\nreject codes\nLOOP-REP, TRUNC, SYN-WELLFORMED\nthe answer is discarded, the next engine is tried\n\n\npage budget\n40 pages\nlater pages are deferred\n\n\ntime budget\n90 minutes\nlater pages are deferred\n\n\n\nEvery overwritten page XML is kept as a backup next to it. Each engine answer is ranked by the audit (blockers, validity verdict); the best answer is written, and a page whose best answer is not better than the current XML keeps its XML.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>16</span>  <span class='chapter-title'>Application</span>"
+  ]
+ },
+ {
+  "objectID": "cure/apply.html#adjudication-by-audit",
+  "href": "cure/apply.html#adjudication-by-audit",
+  "title": "16  Application",
+  "section": "16.4 Adjudication by audit",
+  "text": "16.4 Adjudication by audit\nAn engine answer is accepted by measurement only: the runner assesses each answer with the same validity check and structural audit as the diagnosis. A page is written when its verdict improves; it is accepted as repaired when the verdict is ok.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>16</span>  <span class='chapter-title'>Application</span>"
+  ]
+ },
+ {
+  "objectID": "cure/apply.html#billing",
+  "href": "cure/apply.html#billing",
+  "title": "16  Application",
+  "section": "16.5 Billing",
+  "text": "16.5 Billing\nEvery Gemini call of the runner is recorded in the ocr-billing DuckDB (agents/document-processing/ocr_billing.duckdb) with collection, document, page and template label. Before this method was set up, the billing path of ocr_runner/client.py pointed to a non-existent directory and failed silently; copernicus-prim has no billing rows for its earlier Gemini fallback calls.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>16</span>  <span class='chapter-title'>Application</span>"
+  ]
+ },
+ {
+  "objectID": "cure/apply.html#in-the-partitur",
+  "href": "cure/apply.html#in-the-partitur",
+  "title": "16  Application",
+  "section": "16.6 In the Partitur",
+  "text": "16.6 In the Partitur\nStage apply (op pdai:cure_apply). Without the input apply: true the op runs the dry run (--dry-run, or the specimen for a normalizer) and reports the plan. It refuses to start when the gate did not pass or another processing agent is running.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>16</span>  <span class='chapter-title'>Application</span>"
+  ]
+ },
+ {
+  "objectID": "cure/certify-downstream.html",
+  "href": "cure/certify-downstream.html",
+  "title": "17  Certification and downstream",
+  "section": "",
+  "text": "17.1 Stage 6 — Certify\npdai-audit --all produces, in pdai/collections/&lt;c&gt;/quality/&lt;d&gt;/:\npdai-coherence checks whether the CSS rules and the DTD agree with the tags that occur in the XML. Its classification step uses the role css-classify (kimi-k2.7-code:cloud, fallback gemini-3.8-flash).",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>17</span>  <span class='chapter-title'>Certification and downstream</span>"
+  ]
+ },
+ {
+  "objectID": "cure/certify-downstream.html#stage-6-certify",
+  "href": "cure/certify-downstream.html#stage-6-certify",
+  "title": "17  Certification and downstream",
+  "section": "",
+  "text": "pdai-validity --collection &lt;c&gt; --doc &lt;d&gt;\npdai-audit --collection &lt;c&gt; --vol &lt;d&gt; --all --quiet\npdai-coherence --collection &lt;c&gt; --vol &lt;d&gt;\n\n\nthe LettreAI Typst report audit_report_&lt;d without hyphens&gt;.pdf;\nthe figure census (complete_full, complete_desc, caption_only, empty, omitted);\nthe tag protocol, compared with the protocol of the diagnosis by diff_tag_protocols (tag_protocol_diff.json);\nthe fault dossier.\n\n\n\n17.1.1 Gate\n\nthe validity fail count of the scope is not higher than in the diagnosis;\nthe structural defect count is not higher;\nno code appears that the diagnosis did not report;\none repaired page is inspected on the viewer port, facsimile next to the rendering, before the iteration is reported as done.\n\nThe op pdai:cure_certify compares the counts of the diagnosis with the new counts and fails on a new class or a higher count.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>17</span>  <span class='chapter-title'>Certification and downstream</span>"
+  ]
+ },
+ {
+  "objectID": "cure/certify-downstream.html#stage-7-downstream",
+  "href": "cure/certify-downstream.html#stage-7-downstream",
+  "title": "17  Certification and downstream",
+  "section": "17.2 Stage 7 — Downstream",
+  "text": "17.2 Stage 7 — Downstream\n~/ai-mac-studio/pdai/index/ai-lemma-index/.venv/bin/pdai-complete --collection &lt;c&gt; --dry-run\n~/ai-mac-studio/pdai/index/ai-lemma-index/.venv/bin/pdai-complete --collection &lt;c&gt;\n~/ai-mac-studio/pdai/index/ai-lemma-index/.venv/bin/pdai-corpus-audit --collection &lt;c&gt;\npdai-complete runs stanza → corpus → lemma → gazetteer → chroma, with a corpus audit at start and end. It does not run OCR or structure.xml; those gaps are reported. Changed pages are detected by the content hash text_sha256 of the page, not by the file modification time; a normalizer that only rewrites attributes therefore does not make a page stale.\n\n\n\n\n\n\nNoteCommand names\n\n\n\nThe corpus audit is pdai-corpus-audit (package ai-lemma-index). The name pdai-audit belongs to the structural audit of pipeline/schema-audit. Both packages used to define pdai-audit; whichever was installed last shadowed the other.\n\n\n\n17.2.1 Gate\n\nstatus.json reports search_ready, or names the gaps;\nthe language gate passes: no language with at least 100 sentences before the run loses more than 5 % of them, unless the run is given --allow-lang-drop on purpose;\na Glider query (port 5890) returns a hit from a repaired page.\n\nThe language gate exists because of an observed failure: a Stanza cache without the Latin and French models dropped those sentences and still reported every page as processed (see the Copernicus case).",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>17</span>  <span class='chapter-title'>Certification and downstream</span>"
+  ]
+ },
+ {
+  "objectID": "cure/certify-downstream.html#in-the-partitur",
+  "href": "cure/certify-downstream.html#in-the-partitur",
+  "title": "17  Certification and downstream",
+  "section": "17.3 In the Partitur",
+  "text": "17.3 In the Partitur\nStages certify and downstream (ops pdai:cure_certify, pdai:cure_downstream). downstream runs pdai-complete --dry-run unless the input apply is true.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>17</span>  <span class='chapter-title'>Certification and downstream</span>"
+  ]
+ },
+ {
+  "objectID": "cure/learn.html",
+  "href": "cure/learn.html",
+  "title": "18  Learning",
+  "section": "",
+  "text": "18.1 What is recorded\nThe annotation’s target names the instructable that must learn the lesson: normalizer:&lt;c&gt;, dtd:&lt;c&gt;, css:&lt;c&gt;, reocr:&lt;c&gt;, or ocr-base:&lt;c&gt; for prompt faults. This follows the targets of the fault-dossier bridge (schema_audit.learn_bridge).",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>18</span>  <span class='chapter-title'>Learning</span>"
+  ]
+ },
+ {
+  "objectID": "cure/learn.html#what-is-recorded",
+  "href": "cure/learn.html#what-is-recorded",
+  "title": "18  Learning",
+  "section": "",
+  "text": "Record\nWhere\nWritten by\n\n\n\n\nthe iteration: class, layer, remedy, counts before and after\nai-query annotations, POST :5113/api/annotations\nop pdai:cure_learn\n\n\nstructural fault cases\nai-query annotations\npdai-audit --emit-annotations\n\n\noverlay versions and rejected candidates\ninstruction version tree\nocr_runner.cure_learn --apply\n\n\nmodel A/B evidence\npdai/skills/pipeline/pdai-cure/model_evidence.jsonl\nevery cure_learn run\n\n\nvalidator false positives, checked against the facsimile\n&lt;data&gt;/quality/text_validity/adjudications.jsonl\npdai-validity --adjudicate\n\n\nthe case of the collection\npdai/docs/cure/case-&lt;collection&gt;.qmd\nby hand",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>18</span>  <span class='chapter-title'>Learning</span>"
+  ]
+ },
+ {
+  "objectID": "cure/learn.html#rules",
+  "href": "cure/learn.html#rules",
+  "title": "18  Learning",
+  "section": "18.2 Rules",
+  "text": "18.2 Rules\n\nA lesson is an audit rule, a normalizer rule, a layer assignment, an overlay version or an adjudication. A page XML edited by hand is not a lesson; the next production run would reproduce the defect.\nAn adjudication records that a flag is a validator false positive for the page’s current XML. It is limited to zone and partial codes (FN-IN-BODY, BODY-IN-FN, FN-PARTIAL, FN-MISSING, TXT-GAP, SEG-ORDER); text loss cannot be adjudicated away.\nAn A/B run whose sample already scores the maximum records improved: false. Such a run is not evidence for or against a model.\nGolden queries on the repaired pages are the acceptance criteria for query use.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>18</span>  <span class='chapter-title'>Learning</span>"
+  ]
+ },
+ {
+  "objectID": "cure/learn.html#model-role",
+  "href": "cure/learn.html#model-role",
+  "title": "18  Learning",
+  "section": "18.3 Model role",
+  "text": "18.3 Model role\nlearning-text (kimi-k2.7-code:cloud, fallback gemini-3.8-flash) writes goal, metric and promotion text in the Partitur ocr-instruction-learning-agent. The promotion decision is the metric threshold, not a model judgement.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>18</span>  <span class='chapter-title'>Learning</span>"
+  ]
+ },
+ {
+  "objectID": "cure/reference.html",
+  "href": "cure/reference.html",
+  "title": "19  Reference",
+  "section": "",
+  "text": "19.1 Metrics and thresholds",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>19</span>  <span class='chapter-title'>Reference</span>"
+  ]
+ },
+ {
+  "objectID": "cure/reference.html#metrics-and-thresholds",
+  "href": "cure/reference.html#metrics-and-thresholds",
+  "title": "19  Reference",
+  "section": "",
+  "text": "19.1.1 Page verdict (text validity)\npdai-validity (check version text-validity/1.10) compares the Apple Vision reading of the scan with the text of the page XML. The verdict of a page follows from its flags:\n\n\n\n\n\n\n\nVerdict\nCondition\n\n\n\n\nfail\nat least one severe flag: TXT-PAGE-LOST, FN-MISSING, TXT-EXCESS, BODY-IN-FN, FN-IN-BODY\n\n\nwarn\nflags, none of them severe (e.g. TXT-GAP, FN-PARTIAL, SEG-ORDER)\n\n\nok\nno flag\n\n\nunverifiable\nmean Vision confidence below 0.45, or the collection class is not readable by Vision (handwritten-archival, special-script)\n\n\n\nDetector parameters: a scan line counts as missing below a token coverage of 0.5; two consecutive missing body lines with confidence ≥ 0.5 make a TXT-GAP; fewer than 12 scan tokens mark a (near) blank page; TXT-EXCESS requires more than 1.8 × the scan tokens + 40 and a precision below 0.6.\n\n\n19.1.2 Collection verdict\n\n\n\n\n\n\n\nVerdict\nCondition (n = pages)\n\n\n\n\nvalid\nfail rate ≤ 1 %\n\n\nminor-defects\nfail rate ≤ 5 %\n\n\ndefective\nfail rate &gt; 5 %\n\n\nunverifiable\nmore than half of the pages unverifiable, or class not readable\n\n\n\n\n\n19.1.3 Iteration metrics\n\n\n\n\n\n\n\n\nMetric\nSource\nCondition in the cure\n\n\n\n\nfail count\ntext_validity.json\nnot higher after the iteration (certify)\n\n\nstructural defect count per code\npdai-audit defect register\nnot higher (certify)\n\n\nnew defect class\ndiagnosis vs. certification\nnone (certify)\n\n\nblockers on specimen pages\npdai-audit\n0 (gate)\n\n\ncomposite score of an overlay\ncure_learn: mean inner score × (1 − audit penalty)\ncandidate above baseline (learn)\n\n\n\nThe inner score of a page in cure_learn is 0 with any audit blocker, otherwise the validity verdict mapped to ok 1, warn 0.75, unverifiable 0.5, fail 0. The audit penalty is blocker_fraction × 0.5 + repair_fraction × 0.2.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>19</span>  <span class='chapter-title'>Reference</span>"
+  ]
+ },
+ {
+  "objectID": "cure/reference.html#model-policy",
+  "href": "cure/reference.html#model-policy",
+  "title": "19  Reference",
+  "section": "19.2 Model policy",
+  "text": "19.2 Model policy\nThe roles are defined in pdai/skills/pipeline/pdai-cure/models.yaml and resolved by ocr_runner.cure_models.resolve_role. A collection overrides a role with models: {&lt;role&gt;: &lt;model&gt;} in its config/cure.yaml.\n\n\n\n\n\n\nNotePolicy\n\n\n\n\nNo LLM where a deterministic check exists (scope, validity and audit checks, gates, normalizer, certification, downstream).\nThe default of every LLM role, text and vision, is kimi-k2.7-code:cloud via Ollama Cloud (owner decision 2026-09-26).\ngemini-3.8-flash is only the fallback of the Kimi default. It runs when Kimi fails on the item: an HTTP error, a timeout, an empty answer, or an answer that fails the step’s check. With the environment variable PDAI_CURE_FALLBACK=off a run has no fallback: a failed Kimi item is recorded as an error and no Gemini call is made.\nLocal qwen3.8:27b-mlx is the route for harvest and for runs that must stay local.\nEvery A/B run is recorded in model_evidence.jsonl. No untested model is adopted.\n\n\n\n\n\n\n\n\n\n\n\n\n\nRole\nStage\nKind\nDefault\nFallback\n\n\n\n\nreocr\napply\nvision\nhead of the catalog engine_chain (kimi-k2.7-code:cloud, then qwen3.8:27b-mlx)\ngemini-3.8-flash, only after every chain engine failed on the page\n\n\nprint-first-pass\napply\nvision\nkimi-k2.7-code:cloud (local: qwen3.8:27b-mlx)\ngemini-3.8-flash\n\n\nvalidity-judge\ndiagnose\nvision\nhead of the catalog chain\ngemini-3.8-flash\n\n\nattribute-uncoded\nattribute\ntext\nkimi-k2.7-code:cloud\ngemini-3.8-flash\n\n\noverlay-propose\nremedy\ntext\nkimi-k2.7-code:cloud\ngemini-3.8-flash\n\n\nlearning-text\nlearn\ntext\nkimi-k2.7-code:cloud\ngemini-3.8-flash\n\n\nschema-derive\nremedy\ntext\nkimi-k2.7-code:cloud\ngemini-3.8-flash\n\n\nfacsimile-check\ncertify\nvision\nkimi-k2.7-code:cloud (candidate: qwen3.8:27b-mlx first tier)\ngemini-3.8-flash\n\n\ncss-classify\ncertify\ntext\nkimi-k2.7-code:cloud\ngemini-3.8-flash\n\n\ndownstream-nlp\ndownstream\nlocal\nStanza + GLiNER2.5 + BGE-M3\n—\n\n\n\nText roles run through ocr_runner.cure_models.runtime_for_role, which calls the default and hands the item to the fallback on an exception, an empty answer or an answer that the step’s check rejects; the route taken is recorded with the result (author_route in the cure_learn summary).\nOllama call options from live probes: kimi-k2.7-code:cloud, deepseek-v4.1-flash:cloud and qwen3.8:27b-mlx run with think: false.\n\n19.2.1 Retired and not adopted models\n\n\n\n\n\n\n\n\nModel\nStatus\nReason\n\n\n\n\nqwen3.5:cloud\nretired\nHTTP 410: Ollama withdrew qwen3.5:397b on 2026-09-25 (probe 2026-09-26)\n\n\nkimi-k3:cloud\nretired\nHTTP 402 without extra-usage credits\n\n\ndeepseek-v4-flash:cloud\nnot adopted\ntext only, HTTP 400 on images\n\n\nglm-5.3:cloud\nnot adopted\noverlay-propose A/B: candidate 0.714 against baseline 0.855, one new blocker\n\n\ngemma4:31b-cloud\nnot adopted\nuntested on page OCR\n\n\nqwen3-vl:235b-cloud\nnot adopted\nuntested on page OCR\n\n\n\nresolve_role refuses a model outside the Gemini allowlist, a retired model and a not adopted model.\n\n\n19.2.2 Model evidence\nEach run of ocr_runner.cure_learn appends one record to pdai/skills/pipeline/pdai-cure/model_evidence.jsonl. The A/B of the role overlay-propose on 2026-09-26 revised the overlay ocr-overlay:copernicus-prim:kimi (engine kimi-k2.7-code:cloud) for one round with each author:\n\n\n\nSample\nAuthor\nBaseline\nCandidate\nDuration\n\n\n\n\n3 pages\nglm-5.3:cloud\n1.000\n1.000\n155 s\n\n\n3 pages\ngemini-3.8-flash\n1.000\n1.000\n66 s\n\n\n7 pages\nglm-5.3:cloud\n0.855\n0.714\n292 s\n\n\n7 pages\ngemini-3.8-flash\n0.857\n0.857\n171 s\n\n\n7 pages\nkimi-k2.7-code:cloud\n0.857\n0.857\n206 s\n\n\n\nThe 3-page sample does not separate the authors, because the baseline already scores 1.000. On 7 pages the candidate of glm-5.3:cloud introduced one blocker (GW-IV page 19: XML not well-formed, page text lost); the candidates of gemini-3.8-flash and kimi-k2.7-code:cloud left every page verdict unchanged. No candidate solved the FN-MISSING of Copernicus1873 page 50. The baseline runs differ by at most 0.0017, so the drop of the glm candidate exceeds the run-to-run variation, while Kimi and Gemini are equal on this sample. One round on one sample is weak evidence; the Kimi default rests on the owner decision, the evidence only excludes glm-5.3:cloud.\nThe two-tier setup of facsimile-check needs visual-audit specimens with adjudicated discrepancies before its A/B can run; none are registered yet.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>19</span>  <span class='chapter-title'>Reference</span>"
+  ]
+ },
+ {
+  "objectID": "cure/reference.html#commands",
+  "href": "cure/reference.html#commands",
+  "title": "19  Reference",
+  "section": "19.3 Commands",
+  "text": "19.3 Commands\nAll commands run from ~/ai-mac-studio/pdai. The ocr-runner modules run with the orchestrator venv (~/ai-mac-studio/development/ai-agent-orchestrator/.venv/bin/python -m …).\n\n\n\n\n\n\n\n\nStage\nCommand\nWrites\n\n\n\n\ndiagnose\npdai-validity --collection C [--doc D]\ntext_validity.json, pages.jsonl\n\n\ndiagnose\npdai-validity --worklist C\n&lt;data&gt;/quality/text_validity/reocr/&lt;doc&gt;.json\n\n\ndiagnose\npdai-audit --collection C --vol D --dossier --protocol --quiet\ndossier, tag protocol\n\n\ncertify\npdai-audit --collection C --vol D --all\n+ Typst report audit_report_&lt;vol&gt;.pdf\n\n\ncertify\npdai-coherence --collection C --vol D\nCSS coherence report\n\n\ncertify\npdai-validity --adjudicate C --page P --codes X --evidence E --by B\nadjudication register\n\n\ngate\npython -m ocr_runner.normalize_apply --collection C --doc D --specimen P1,P2,P3\n&lt;data&gt;/quality/&lt;doc&gt;_norm_gate.json\n\n\napply\npython -m ocr_runner.normalize_apply --collection C --doc D --apply\npage XML (gated normalizer only)\n\n\ngate\npython -m ocr_runner.cure_run --collection C --doc D --pilot --also P… --sample N --targeted 0\npilot tree under the collection tmp directory\n\n\napply\npython -m ocr_runner.cure_run --collection C --doc D --worklist --max-pages N --max-minutes M\npage XML of flagged pages, backups page_NNN.xml.vN\n\n\nremedy\npython -m ocr_runner.cure_learn --collection C --engine E --rounds R [--author M] [--apply]\nversion tree, model_evidence.jsonl; overlay only with --apply\n\n\nsetup\npython -m ocr_runner.cure_settings --collection C [--force]\ndocument settings from setting_defaults\n\n\ndownstream\npdai-complete --collection C [--dry-run]\ncorpus stages of changed pages\n\n\n\n--dry-run of cure_run lists the pages it would process without calling an engine.\nThe Partitur runs through the Conductor:\ncd ~/ai-mac-studio/development/ai-agent-orchestrator\n.venv/bin/orchestrator run ~/ai-mac-studio/pdai/skills/pipeline/pdai-cure/partitur.yaml \\\n    --setting cure-copernicus-prim [--input-file iteration.yaml]\nThe input file carries remedy, until and apply for one iteration. Setting ids are global in partitur_register.duckdb; the Settings of pdai-cure are named cure-&lt;collection&gt;.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>19</span>  <span class='chapter-title'>Reference</span>"
+  ]
+ },
+ {
+  "objectID": "cure/reference.html#the-schema-package-of-a-collection",
+  "href": "cure/reference.html#the-schema-package-of-a-collection",
+  "title": "19  Reference",
+  "section": "19.4 The schema package of a collection",
+  "text": "19.4 The schema package of a collection\nA collection is ready for the cure when its code folder pdai/collections/&lt;c&gt;/ holds:\n\n\n\n\n\n\n\nFile\nContent\n\n\n\n\nconfig/cure.yaml\ninstruction prefix, audit rules path, placement_rule, reject_codes, guard options, normalizer module, setting_defaults, doc_notes, budget, model overrides\n\n\nconfig/page.dtd\npage grammar the audit validates against\n\n\nconfig/audit_rules.yaml\nstructure rules; the rule named by placement_rule carries the note placement map per document; layer per rule overrides defect_layers.yaml\n\n\nconfig/volumes.yaml\ndocument metadata for pdai-audit\n\n\nconfig/page.css\nmeasures and typography over the shared sheet (margin geometry is shared, Chapter 2); the viewer reads the deployed copy &lt;data&gt;/page.css, written by python -m ocr_runner.page_language deploy\n\n\nai-instructions/&lt;prefix&gt;.base.j2\nshared OCR instruction\n\n\nai-instructions/&lt;prefix&gt;.&lt;engine&gt;.j2\none overlay per engine key; keys from the one table at the top of ocr_catalog.yaml; composed by cure_config.compose after the page-language fragment; pdai-partitur check lists missing overlays\n\n\nai-instructions/settings/&lt;doc&gt;.partitur.setting.yaml\nbound values per document (engine chain, image scale, notes)\n\n\n\nand when collections/ocr_catalog.yaml has an entry with data path, tmp directory, viewer port and engine_chain. The cure’s stage scope lists every missing part as a gap. The data themselves stay on /Volumes/PDAI-1/pdai-collections/&lt;c&gt;/.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>19</span>  <span class='chapter-title'>Reference</span>"
+  ]
+ },
+ {
+  "objectID": "cure/case-copernicus.html",
+  "href": "cure/case-copernicus.html",
+  "title": "20  The Copernicus case",
+  "section": "",
+  "text": "20.1 The collection\ncopernicus-prim holds ten documents with 3,644 pages: the critical edition Nicolaus Copernicus Gesamtausgabe (GW-II, GW-IV, GW-V, GW-VI-1, GW-VI-2, GW-IX), Copernicus1873, Copernicus1990, Rheticus1540 and Rosen1937. The texts are Latin and German, with English and French passages, critical apparatus, commentary notes, record-end notes that stand pages after their markers, and astronomical tables.\nThe repair of this collection is the origin of the cure method. It reached its result, but by a procedure that the method now forbids: each unsatisfactory measurement started another run over the collection. The session took half a day. This chapter records what was measured and which rule each finding produced.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>20</span>  <span class='chapter-title'>The Copernicus case</span>"
+  ]
+ },
+ {
+  "objectID": "cure/case-copernicus.html#result",
+  "href": "cure/case-copernicus.html#result",
+  "title": "20  The Copernicus case",
+  "section": "20.2 Result",
+  "text": "20.2 Result\nState of 2026-09-25 (text_validity.json, check text-validity/1.10):\n\n\n\nVerdict\nPages\n\n\n\n\nok\n3,508\n\n\nwarn\n134\n\n\nfail\n1\n\n\nunverifiable\n1\n\n\ntotal\n3,644\n\n\n\nFail rate 0.03 %, collection verdict valid. The corpus holds 79,908 sentences: 43,044 German, 30,442 Latin, 3,471 English, 1,525 French, and 1,426 labelled Hungarian. The Hungarian sentences are Latin misread by the language detection; this defect is open.\nThe page XML comes from several engines, as recorded in the page metadata:\n\n\n\nEngine\nPages (ok / warn / fail)\n\n\n\n\nqwen3.5:cloud\n2,994 / 101 / 0\n\n\ngemini-3.1-flash-lite-preview (earlier production)\n317 / 26 / 0\n\n\nqwen3.8:27b-mlx\n127 / 5 / 1\n\n\nkimi-k2.7-code:cloud\n47 / 2 / 0\n\n\ngemini-3.8-flash\n22 / 0 / 0",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>20</span>  <span class='chapter-title'>The Copernicus case</span>"
+  ]
+ },
+ {
+  "objectID": "cure/case-copernicus.html#findings-and-the-rules-they-produced",
+  "href": "cure/case-copernicus.html#findings-and-the-rules-they-produced",
+  "title": "20  The Copernicus case",
+  "section": "20.3 Findings and the rules they produced",
+  "text": "20.3 Findings and the rules they produced\n\n20.3.1 A tool that reports success while it loses a language\nAfter an upgrade to Stanza 1.12.0 the model cache lacked the Latin proiel tokenizer and the French model. The page parser skipped the sentences of these languages and reported every page as processed, with 0 failures. The corpus fell to 46,515 sentences; GW-II, a Latin edition, had 0 Latin sentences. After the models were restored the corpus held 79,908 sentences, GW-II 6,938 Latin ones. Before the defect was found, the corpus had been rebuilt twice in full, without a test on a few documents.\nRule: the downstream update passes a language gate (a language with at least 100 sentences before the run must not lose more than 5 % of them), and a rebuild of the whole corpus is not a test.\n\n\n20.3.2 Modification time is not a change\nThe normalizer writes a stamp into every page it inspects. The downstream stages compared modification times, so every page counted as changed, and the incremental update became a full one. The stages now compare the hash of the page text (text_sha256).\nRule: change detection is by content.\n\n\n20.3.3 warn can hide a loss\nThe earlier version of Copernicus1873 page 100 (qwen3.5:cloud) held two of the three note paragraphs of the page: the 46-word paragraph “Für den »burggrabius castri« …” was missing, and the print markers * and ** were numbered 1 and 2. A lost note paragraph falls under FN-PARTIAL or TXT-GAP, which are warn-level codes; a collection can be valid while such losses remain. The current version (qwen3.8:27b-mlx) holds all three paragraphs.\nRule: the diagnosis lists warn pages by code, and codes that stand for lost text are remedied like failures.\n\n\n20.3.4 An engine that invents a page\nGW-IV page 25 is a blank scan: the Vision reading has 0 tokens. The earlier production version by gemini-3.1-flash-lite-preview contained a full page of invented English prose (“The study of the celestial mechanics of the solar system …”); its backups page_025.xml.v0 and .v1 keep the evidence. On GW-II page 236 the structured apparatus contains an entry 25 with a wrong reading, while the copy of the apparatus in the page footer is correct.\nRules: TXT-EXCESS is a severe code; a generation error goes into the fault dossier and the learning loop, not into a hand edit of the page.\n\n\n20.3.5 A rule tested on the pages that need it\nThe GW-II normalizer rule for apparatus-only pages was run on the whole document as a dry run before it was applied: 174 pages would change, 3 were rejected (pages 337, 374, 376) because their note keys are letters, which the rule did not expect.\nRule: a normalizer is applied only after its specimen gate passes, and the application rejects every page on which the word sequence would change.\n\n\n20.3.6 Engine calls on detector false positives\nThe footnote zone of the validity check comes from Vision geometry alone. Notes in the middle of a page, or set at body leading, produce FN-IN-BODY and BODY-IN-FN flags although the XML is right. Re-OCR of such pages spent engine time without a possible gain. The adjudication register now holds 35 facsimile decisions, 9 of them on GW-V (7 BODY-IN-FN, 2 FN-IN-BODY); each binds to the hash of the page XML and lapses when the page changes.\nRule: before a re-OCR of a zone flag, a facsimile check decides whether the flag is a validator false positive.\n\n\n20.3.7 No stop criterion\nEvery step above was followed by another run over the collection or the corpus: the full Stanza rebuilds, full audits after each rule, re-OCR over all pages of a flag class. None of these runs had a page or time budget, and none ended with the decision “no improvement, report”.\nRule: one defect class per iteration, 3–5 specimen pages before any application, a page and time budget per iteration, and a report instead of another run when the metric does not improve (see the cure method).",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>20</span>  <span class='chapter-title'>The Copernicus case</span>"
+  ]
+ },
+ {
+  "objectID": "cure/case-copernicus.html#the-model-review-of-the-same-session",
+  "href": "cure/case-copernicus.html#the-model-review-of-the-same-session",
+  "title": "20  The Copernicus case",
+  "section": "20.4 The model review of the same session",
+  "text": "20.4 The model review of the same session\nThe review of the models used in the cure found qwen3.5:cloud, the engine of most pages of this collection, retired by Ollama (HTTP 410). The cure’s default for a first print pass is qwen3.8:27b-mlx; the A/B of the overlay authors is recorded in Reference.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>20</span>  <span class='chapter-title'>The Copernicus case</span>"
+  ]
+ },
+ {
+  "objectID": "cure/letter-dtd.html",
+  "href": "cure/letter-dtd.html",
+  "title": "21  Universal letter DTD",
+  "section": "",
+  "text": "21.1 Purpose\nFour collections contain letters: the Pirckheimer Briefwechsel (pirckheimer), the letter volumes 13–16 of the Kepler Gesammelte Werke (kepler-prim), the Euler correspondence volumes of series IVA (eulerOO-IVA) and the Kármán archive (karman-nachlass). Each was transcribed under its own page grammar. A query about the sender, the date or the closing of a letter therefore needed one reader per collection. The universal letter DTD page_letter.dtd (v4.2 since 2026-09-28; pdai/pipeline/ai-scholar/src/ai_scholar/schemas/) is one page grammar that holds every letter convention attested in these editions. It is a wrapper of the canonical page.dtd v4.0: margins, meta, figures, tables, p, hi, fn and footnotes come from the page language (Chapter 2), and this file adds the letter families. v4.1 added the diplomatic marks del / add.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>21</span>  <span class='chapter-title'>Universal letter DTD</span>"
+  ]
+ },
+ {
+  "objectID": "cure/letter-dtd.html#derivation",
+  "href": "cure/letter-dtd.html#derivation",
+  "title": "21  Universal letter DTD",
+  "section": "21.2 Derivation",
+  "text": "21.2 Derivation\nThe grammar was derived per collection and then unified; no element was declared from general expectations.\n\nPer collection — the schema-derive Partitur read the printed front matter of each edition and a sample of body pages and wrote a config/letter_schema.yaml. Each section carries an evidence grade: front-matter (the edition’s own editorial principles state the convention), facsimile-only (observed on pages, not stated) or unattested.\n\n\n\nCollection\nSections\nfront-matter\nfacsimile-only\n\n\n\n\npirckheimer\n20\n0\n20\n\n\neulerOO-IVA\n17\n14\n3\n\n\nkarman-nachlass\n16\n0\n16\n\n\n\nUnion — the unify-letter-schema instruction merged the three schemas into letter_union.yaml: 34 elements, 0 rejected, 15 unattested generic page elements, 9 excluded.\nGrammar — page_letter.dtd declares the union. Each letter element carries a provenance comment naming the collections that attest it and the evidence grade. tests/test_letter_dtd_union.py (ocr-runner) checks both directions: every union element is declared, and every declared letter element is in the union or in the listed structural containers.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>21</span>  <span class='chapter-title'>Universal letter DTD</span>"
+  ]
+ },
+ {
+  "objectID": "cure/letter-dtd.html#the-page-structure",
+  "href": "cure/letter-dtd.html#the-page-structure",
+  "title": "21  Universal letter DTD",
+  "section": "21.3 The page structure",
+  "text": "21.3 The page structure\nA page holds its content in main. A letter’s share of the page is one letter-part; a page on which two letters meet holds two.\n\n\n\n\n\n\n\nElement\nContent\n\n\n\n\nletter-part[nr, partial]\nthe part of one letter on this page, in page order; partial=\"start\" when the letter continues on the next page\n\n\nletter-head\nreference, sender, addressee, place, date, dateline, archive, witness, regest, printed letterhead, file reference, attention line\n\n\nsalutation, p\nsalutation and letter text\n\n\nletter-closing\nvalediction, place-date, signature, postscriptum, address, endorsement, enclosure\n\n\nenclosure, translation[lang]\nenclosed documents and printed translations\n\n\nfootnotes / footnote\nthe edition’s apparatus on this page\n\n\nregister[type]\nnon-letter matter printed in a letter edition: registers, indexes, afterword commentary\n\n\nletter-starts / letter-ends with letter-ref[nr]\npage-level list of the letters that begin or end on the page\n\n\n\nmain admits no letter-head outside a letter-part or register: a head without its letter is a structural defect.\nThe record grammar letter.dtd (v4.2) describes one assembled letter across pages; it replaces anhang by enclosure | translation. Its %inline; carries the diplomatic marks del, add, supplied since v4.2 (before, the record’s entity silently overrode the page grammar’s and Kepleriana records with these marks were invalid).",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>21</span>  <span class='chapter-title'>Universal letter DTD</span>"
+  ]
+ },
+ {
+  "objectID": "cure/letter-dtd.html#one-assembler",
+  "href": "cure/letter-dtd.html#one-assembler",
+  "title": "21  Universal letter DTD",
+  "section": "21.4 One assembler",
+  "text": "21.4 One assembler\nRecords are assembled by python -m ocr_runner.assemble_letters --collection &lt;c&gt; --doc &lt;d&gt; --write for every collection whose pages are v4: consecutive letter parts with the same nr are one letter, nr=\"cont\" continues the open letter, nr=\"anhang\" is its enclosure, and a page boundary inside a letter becomes &lt;pb n=\"printed page\" pidx=\"…\"/&gt;. Records and letters_assembled.jsonl go to &lt;data&gt;/&lt;doc&gt;/segments/letters/. Run of 2026-09-28: KGW 13–16 631 letters (442 multi-page), pirckheimer 233 (182), kepleriana-munich-2024 59 — all valid. Pirckheimer’s legacy assembler (letter.dtd v1) is retired.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>21</span>  <span class='chapter-title'>Universal letter DTD</span>"
+  ]
+ },
+ {
+  "objectID": "cure/letter-dtd.html#collection-overlays",
+  "href": "cure/letter-dtd.html#collection-overlays",
+  "title": "21  Universal letter DTD",
+  "section": "21.5 Collection overlays",
+  "text": "21.5 Collection overlays\nEach collection receives two overlays in its config/ folder, page_letter.dtd and letter_record.dtd. Both include the universal file as an external entity; a collection-specific restriction is declared before the inclusion, since the first declaration of an entity binds. Flat pages (main &gt; p) of eulerOO-IVA and karman-nachlass are valid v4 pages; their letter markup is added only through the gated pilot (see Flat collections). karman-nachlass has an audit_rules.yaml naming its page_letter.dtd since 2026-09-28.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>21</span>  <span class='chapter-title'>Universal letter DTD</span>"
+  ]
+ },
+ {
+  "objectID": "cure/letter-dtd.html#transformation-of-the-structured-collections",
+  "href": "cure/letter-dtd.html#transformation-of-the-structured-collections",
+  "title": "21  Universal letter DTD",
+  "section": "21.6 Transformation of the structured collections",
+  "text": "21.6 Transformation of the structured collections\npirckheimer and KGW 13–16 already carried letter structure in another form. A declarative mapping (config/letter_mapping.yaml) and the normalizer letter-universal (ocr_runner.normalize_letter) convert it. The normalizer never changes the order of the page text; its ID contains the hash of the mapping file, so a changed mapping invalidates every earlier gate.\nEach document passed the specimen gate of ocr_runner.normalize_apply on five pages before any page was written. Every written page is backed up as .vN.\n\n\n\nDocument\nLetter pages\nRegister pages\nBroken anchors\n\n\n\n\npirckheimer korrespondenz\n526\n—\n0\n\n\nKGW 13\n369\n59\n0\n\n\nKGW 14\n421\n63\n0\n\n\nKGW 15\n479\n69\n0\n\n\nKGW 16\n390\n75\n0\n\n\n\n39 KGW pages were not converted, because they are invalid against Kepler’s own earlier page DTD already (undeclared MathML math/mrow, misplaced elements). They remain in the register as SYN-DTD for the cure.\n\n21.6.1 Afterword pages\nThe first audit after the transformation found 15 unchanged afterword pages (running head NACHBERICHT) invalid against v4.0; 13 of them had been valid under the old grammar. The OCR had set the commentary heading for each letter as letter-head directly in main. An afterword page is non-letter editorial matter; the mapping now names such pages in register_page_if, and the normalizer places their content unchanged in register[type] (nachbericht, register, verzeichnis). The page reader of the lemma index returns identical text for all 266 register pages before and after.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>21</span>  <span class='chapter-title'>Universal letter DTD</span>"
+  ]
+ },
+ {
+  "objectID": "cure/letter-dtd.html#audit-after-the-transformation",
+  "href": "cure/letter-dtd.html#audit-after-the-transformation",
+  "title": "21  Universal letter DTD",
+  "section": "21.7 Audit after the transformation",
+  "text": "21.7 Audit after the transformation\nThe collection audit rules name the v4.0 overlays (audit_rules.yaml for pirckheimer, audit_rules_kgw-13.yaml … audit_rules_kgw-16.yaml for the KGW letter volumes; pdai-audit --vol selects the volume file when it exists).\n\n\n\nVolume\nPages\nPages with repair defects\nSYN-DTD pages\n\n\n\n\npirckheimer korrespondenz\n526\n3\n0\n\n\nKGW 13\n446\n11\n0\n\n\nKGW 14\n516\n57\n24\n\n\nKGW 15\n567\n29\n9\n\n\nKGW 16\n478\n50\n6\n\n\n\nThe SYN-DTD pages are exactly the 39 excluded pages. For KGW 15 an audit register from before the transformation exists: pages with repair defects fell from 52 to 29, SYN-DTD pages from 32 to 9, and no page received a defect code it did not have before. For the other volumes no earlier register was kept.\nThe vocabulary rules of the new grammar (SCH-WITNESS-TYPE, SCH-FNTYPE-UNKNOWN, SCH-REGISTER-TYPE, SCH-FOREIGNLANG-UNKNOWN) fire on no page. The structural codes without a layer received layer proposals (quality/attribute_proposals.json); none is in force until the owner confirms it.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>21</span>  <span class='chapter-title'>Universal letter DTD</span>"
+  ]
+ },
+ {
+  "objectID": "cure/letter-dtd.html#flat-collections",
+  "href": "cure/letter-dtd.html#flat-collections",
+  "title": "21  Universal letter DTD",
+  "section": "21.8 Flat collections",
+  "text": "21.8 Flat collections\neulerOO-IVA and karman-nachlass carry letter text in plain paragraphs without letter structure. A mapping cannot convert them; the letter structure has to be produced by a model. The Partitur letter-flat-pilot compares two routes on five body pages per document:\n\n(a) overlay re-OCR — the page image is transcribed again under the letter-ocr-overlay instruction;\n(b) restructuring — the existing page XML is restructured into v4.0 by a text model; the word sequence must remain unchanged.\n\nNo volume is processed before the owner’s decision.\n\n21.8.1 Pilot result (26 September 2026)\nBoth routes ran on kimi-k2.7-code:cloud via Ollama with four concurrent calls and without the Gemini fallback (PDAI_CURE_FALLBACK=off); every answer came from Kimi. Run trees: /Volumes/PDAI-1/tmp/schema-derive/&lt;collection&gt;/pilot1/.\n\n\n\n\n\n\n\n\n\n\n\nCollection\nRoute\nDTD-valid\nWord sequence kept\nMean word agreement\nPilot pass\n\n\n\n\neulerOO-IVA\n(a) re-OCR\n0/5\n—\n0.994\n0/5\n\n\neulerOO-IVA\n(b) restructuring\n5/5\n5/5\n1.000\n2/5\n\n\nkarman-nachlass\n(a) re-OCR\n2/5\n—\n0.977\n2/5\n\n\nkarman-nachlass\n(b) restructuring\n0/5\n5/5\n1.000\n0/5\n\n\n\nThree of the eulerOO-IVA sample pages are no letter pages (introduction p. 825, subject index p. 1144, section title “VII ANHÄNGE”). Route (b) set no letter part on them and placed the index in register; the pilot’s pass condition (at least one letter part) counts these correct answers as failures. Measured by content, route (b) is correct on 5 of 5 eulerOO-IVA pages. Route (a) failed on eulerOO-IVA because the model introduced header elements the grammar does not declare (running-header, parno, p in header).\nOn karman-nachlass neither route passed in run 1. The errors of route (b) were content-model violations — attributes the grammar does not declare (marginal@place, file-reference@place) and children of letter-part in an order the grammar does not admit; the words are kept on every page.\n\n\n21.8.2 Pilot 2: karman-nachlass through the page-language partitur (28 September 2026)\nSame five pages, kimi-k2.7-code:cloud, no Gemini fallback. Route (a) uses the composed partitur karman-letter-ocr (page language + karman-letter-ocr.base.j2 + karman-letter-ocr.kimi.j2): the base maps the collection’s convention names (line, body, closing, marginal_note …) onto the universal elements and lists the admitted children of every letter element, read from the DTD; the Kimi overlay names the run-1 errors. Route (b) gives the restructuring instruction the same grammar rows, convention map and page-language fragment. The word measure now counts a &lt;br/&gt; as a word boundary (before, Professor&lt;br/&gt;Th. became one word and failed the word-sequence gate); &lt;lb/&gt; is normalized to &lt;br/&gt;. Run tree /Volumes/PDAI-1/tmp/schema-derive/karman-nachlass/pilot2/, summary collections/karman-nachlass/quality/letter-pilot-2026-09-28/pilot.json.\n\n\n\n\n\n\n\n\n\n\n\nRoute\nDTD-valid\nLetter parts\nMargin-type defects\nWord sequence kept / agreement\nPilot pass\n\n\n\n\n(a) re-OCR, composed partitur\n5/5\n5/5\n0\nagreement 0.977 (≥ 0.95 on 5/5)\n5/5\n\n\n(b) restructuring\n5/5\n5/5\n0\n2/5 exact, agreement 0.987\n2/5\n\n\n\nRoute (a) passes the gate on all five pages; its word differences to the existing transcription are mostly joined line-end hyphenations and diacritics the old reading lacked. No mapping is registered and no volume is converted: route (a) is a re-OCR, not a deterministic remap, and the owner decides whether karman-nachlass is re-read under this partitur.\nThe sample draw found one eulerOO-IVA page with a facsimile but no page XML (978-3-319-33989-4/page_752); it was replaced by the next drawn page.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>21</span>  <span class='chapter-title'>Universal letter DTD</span>"
+  ]
+ },
+ {
+  "objectID": "cure/letter-dtd.html#viewer",
+  "href": "cure/letter-dtd.html#viewer",
+  "title": "21  Universal letter DTD",
+  "section": "21.9 Viewer",
+  "text": "21.9 Viewer\nThe viewer renders the letter elements through the book-sheet renderer window.ReproXML (config/scripts/repro-xml.js; xmlToStructuredHtml in viewer.html is only its fallback), which sets data-el and data-&lt;attr&gt; on each element; the collection’s page.css styles them by [data-el=\"…\"] selectors only and takes its colours from the variables of pdai-page.css, so that the light and the dark scheme both stay legible. letter-ref is not displayed; it is navigation data. The letter-head handler renders the head’s reference chips and then every further child in document order.",
+  "crumbs": [
+   "Improving collections",
+   "<span class='chapter-number'>21</span>  <span class='chapter-title'>Universal letter DTD</span>"
+  ]
+ }
+]

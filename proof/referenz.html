@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Famulus-Referenz – Famulus Proof</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d5b4e69c7e37b49c6591bcc5116dd748.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-0a7ffee50ecdcac772426c46f9339f28.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Keine Treffer",
+    "search-matching-documents-text": "Treffer",
+    "search-copy-link-title": "Link in die Suche kopieren",
+    "search-hide-matches-text": "Zusätzliche Treffer verbergen",
+    "search-more-match-text": "weitere Treffer in diesem Dokument",
+    "search-more-matches-text": "weitere Treffer in diesem Dokument",
+    "search-clear-button-title": "Zurücksetzen",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Abbrechen",
+    "search-submit-button-title": "Abschicken",
+    "search-label": "Suchen"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Famulus Proof</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Suchen"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navigation umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Übersicht</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-filterung" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Filterung</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-filterung">    
+        <li>
+    <a class="dropdown-item" href="./filterung.html">
+ <span class="dropdown-text">Filterung von Evidenzräumen</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./evidenzobjekte.html">
+ <span class="dropdown-text">Evidenzobjekte</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./attribute.html">
+ <span class="dropdown-text">Attribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./gebrauch.html">
+ <span class="dropdown-text">Lesart des Gebrauchs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ablauf.html">
+ <span class="dropdown-text">Ablauf</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./geschichte.html">
+ <span class="dropdown-text">Geschichte</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./satzrecord.html">
+ <span class="dropdown-text">Satzrecord</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hnlichkeitssuche" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ähnlichkeitssuche</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hnlichkeitssuche">    
+        <li>
+    <a class="dropdown-item" href="./aehnlichkeitssuche.html">
+ <span class="dropdown-text">Ähnlichkeitssuche</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pruefverfahren-aehnlichkeit.html">
+ <span class="dropdown-text">Prüfverfahren</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./validitaetsbaum.html"> 
+<span class="menu-text">Validitätsbaum</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./integration.html"> 
+<span class="menu-text">Sidecar-Integration</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./referenz.html" aria-current="page"> 
+<span class="menu-text">Famulus-Referenz</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./landkarte.html"> 
+<span class="menu-text">Landkarte</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#was-eine-famulus-referenz-ist" id="toc-was-eine-famulus-referenz-ist" class="nav-link active" data-scroll-target="#was-eine-famulus-referenz-ist">Was eine Famulus-Referenz ist</a></li>
+  <li><a href="#die-fr-adresse" id="toc-die-fr-adresse" class="nav-link" data-scroll-target="#die-fr-adresse">Die fr:-Adresse</a>
+  <ul class="collapse">
+  <li><a href="#die-adresse-als-clause.address" id="toc-die-adresse-als-clause.address" class="nav-link" data-scroll-target="#die-adresse-als-clause.address">Die Adresse als <code>Clause.address</code></a></li>
+  </ul></li>
+  <li><a href="#figuren-als-belege" id="toc-figuren-als-belege" class="nav-link" data-scroll-target="#figuren-als-belege">Figuren als Belege</a></li>
+  <li><a href="#was-resolve_fr-zurückgibt" id="toc-was-resolve_fr-zurückgibt" class="nav-link" data-scroll-target="#was-resolve_fr-zurückgibt">Was <code>resolve_fr</code> zurückgibt</a></li>
+  <li><a href="#lake-modus-famulus_lake1" id="toc-lake-modus-famulus_lake1" class="nav-link" data-scroll-target="#lake-modus-famulus_lake1">Lake-Modus: <code>FAMULUS_LAKE=1</code></a>
+  <ul class="collapse">
+  <li><a href="#primärer-katalog-und-lese-replik" id="toc-primärer-katalog-und-lese-replik" class="nav-link" data-scroll-target="#primärer-katalog-und-lese-replik">Primärer Katalog und Lese-Replik</a></li>
+  </ul></li>
+  <li><a href="#zitate-werden-nicht-zusammengesetzt" id="toc-zitate-werden-nicht-zusammengesetzt" class="nav-link" data-scroll-target="#zitate-werden-nicht-zusammengesetzt">Zitate werden nicht zusammengesetzt</a></li>
+  <li><a href="#reproduzierbarkeit-über-den-snapshot" id="toc-reproduzierbarkeit-über-den-snapshot" class="nav-link" data-scroll-target="#reproduzierbarkeit-über-den-snapshot">Reproduzierbarkeit über den Snapshot</a></li>
+  <li><a href="#mcp-werkzeuge-für-begründungsanfragen" id="toc-mcp-werkzeuge-für-begründungsanfragen" class="nav-link" data-scroll-target="#mcp-werkzeuge-für-begründungsanfragen">MCP-Werkzeuge für Begründungsanfragen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Famulus-Referenz</h1>
+<p class="subtitle lead">Belege mit Adresse, Zitat und Herkunft</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">14. Oktober 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled" title="Die Famulus-Referenz in einem Satz">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tipp</span>Die Famulus-Referenz in einem Satz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Eine Famulus-Referenz ist eine Referenzdatenquelle, die Famulus Proof als Grundlage für Belege braucht: Jedes Item einer Collection hat eine fr:-Adresse, ein Zitat aus erfassten bibliographischen Daten, eine Herkunftskette und Prüfvermerke, und alles steht in einem DuckLake zu einem benannten Snapshot.</p>
+</div>
+</div>
+<section id="was-eine-famulus-referenz-ist" class="level2">
+<h2 class="anchored" data-anchor-id="was-eine-famulus-referenz-ist">Was eine Famulus-Referenz ist</h2>
+<p>Eine Collection von PDAI-1 wird zur Famulus-Referenz, wenn jedes ihrer Items (Dokument, Seite, Segment) vier Dinge hat:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Bestandteil</th>
+<th>Inhalt</th>
+<th>Tabelle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>fr:-Adresse</td>
+<td>stabile Adresse des Items</td>
+<td><code>fr_document</code>, <code>fr_page</code>, <code>fr_segment</code></td>
+</tr>
+<tr class="even">
+<td>Zitat</td>
+<td>BibTeX, CSL-JSON, Textzitat, Fundstelle; nur aus <code>biblio.xml</code> oder dem Deskriptor</td>
+<td><code>fr_citation</code></td>
+</tr>
+<tr class="odd">
+<td>Herkunft</td>
+<td>Schritt, Werkzeug, Modell, Anweisung, sha256 von Eingabe und Ausgabe</td>
+<td><code>fr_provenance</code>, <code>fr_source</code></td>
+</tr>
+<tr class="even">
+<td>Prüfvermerk</td>
+<td>Prüfung, Grad DOCUMENTED / INFERRED / HYPOTHESIS / GAP, Zertifikat</td>
+<td><code>fr_validation</code></td>
+</tr>
+</tbody>
+</table>
+<p>Das Paket <code>famulus-reference</code> (<code>pdai/famulus-reference</code>) baut daraus je Collection ein Sammlungsschema im DuckLake <code>pdai-collections/_lake/famulus.ducklake</code> nach dem Schema <code>famulus-reference/1</code>. Die Sidecars einer Collection (<code>*_fql</code>, <code>*_stanza</code>) stehen als Kopie im Schema <code>legacy_&lt;coll&gt;</code>; die Kopie ist bei der Migration auf Gleichheit mit dem Original geprüft (<code>fr_migration_log</code>). Geschrieben wird der DuckLake nur auf mac-studio; alle anderen Rechner lesen ihn schreibgeschützt.</p>
+<p>Famulus Proof verwendet die Famulus-Referenz an zwei Stellen: als Quelle der Tabellen, auf die FQL und Zielentfaltung ihre Anfragen stellen (Lake-Modus), und als Auflösung der Adresse eines Belegs (<code>famulus_proof.lake.resolve_fr</code>).</p>
+</section>
+<section id="die-fr-adresse" class="level2">
+<h2 class="anchored" data-anchor-id="die-fr-adresse">Die fr:-Adresse</h2>
+<pre class="text"><code>fr:&lt;collection&gt;/&lt;doc&gt;[/&lt;pidx:04d&gt;[/&lt;segment&gt;]]</code></pre>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Teil</th>
+<th>Bedeutung</th>
+<th>Beispiel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>&lt;collection&gt;</code></td>
+<td>Name der Collection, zugleich ihr Sammlungsschema</td>
+<td><code>hartmann</code></td>
+</tr>
+<tr class="even">
+<td><code>&lt;doc&gt;</code></td>
+<td>Ordner des Dokuments</td>
+<td><code>bsb00028171</code></td>
+</tr>
+<tr class="odd">
+<td><code>&lt;pidx&gt;</code></td>
+<td>Seitenindex, vierstellig</td>
+<td><code>0137</code></td>
+</tr>
+<tr class="even">
+<td><code>&lt;segment&gt;</code></td>
+<td>Bezeichner des Segments oder <code>s</code> und 8 Hexziffern eines Inhaltshashs</td>
+<td><code>print1</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>fr:hartmann/bsb00028171/0137/print1</code> bezeichnet das Segment <code>print1</code> auf Seite 137 des Dokuments <code>bsb00028171</code> der Collection <code>hartmann</code>. Kürzere Adressen bezeichnen die Seite, das Dokument oder die Collection. Globale Kennungen (URN, ARK, DOI, GND, Signatur, IIIF) stehen nicht in der Adresse, sondern in <code>fr_identifier</code>.</p>
+<section id="die-adresse-als-clause.address" class="level3">
+<h3 class="anchored" data-anchor-id="die-adresse-als-clause.address">Die Adresse als <code>Clause.address</code></h3>
+<p>Eine Klausel der Grundresolution (<code>famulus_proof.resolution.Clause</code>) trägt ihre Fundstelle im Feld <code>address</code>. Für einen Beleg aus einer Famulus-Referenz ist das die fr:-Adresse, unverändert. <code>lake.beleg(adresse)</code> liefert die Felder dafür: <code>label</code> ist das Zitat (oder die Adresse, wenn es keines gibt), <code>excerpt</code> die ersten 400 Zeichen der ersten Textschicht.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> famulus_proof <span class="im">import</span> lake</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> famulus_proof.resolution <span class="im">import</span> Clause</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> lake.beleg(<span class="st">"fr:hartmann/bsb00028171/0137/print1"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> Clause(<span class="bu">frozenset</span>({(<span class="va">True</span>, <span class="st">"Druck(fr:hartmann/bsb00028171/0137/print1)"</span>)}),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>           kind<span class="op">=</span><span class="st">"beleg"</span>, label<span class="op">=</span>b[<span class="st">"label"</span>], address<span class="op">=</span>b[<span class="st">"address"</span>], excerpt<span class="op">=</span>b[<span class="st">"excerpt"</span>])</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>beleg()</code> gibt außerdem <code>found</code> und <code>snapshot</code> zurück. Ist <code>found</code> falsch, ist die Klausel kein Beleg; der Aufrufer nimmt sie nicht in die Klauselmenge auf und vermerkt eine Lücke.</p>
+</section>
+</section>
+<section id="figuren-als-belege" class="level2">
+<h2 class="anchored" data-anchor-id="figuren-als-belege">Figuren als Belege</h2>
+<p>Jede Abbildung einer Seite (Foto, Porträt, Diagramm, Karte, Zeichnung, Logo) ist ein Segment mit eigener Adresse <code>fr:&lt;collection&gt;/&lt;doc&gt;/&lt;pidx:04d&gt;/fig&lt;NN&gt;</code>, nummeriert in der Lesefolge der Seite. Eine Nummer wird nie wiederverwendet: Verschwindet eine Figur in einem späteren Lauf, bleibt sie mit <code>status="widerrufen"</code> stehen. Ein Bild, das Teil einer größeren Figur ist (ein Porträt in einer Zeitleiste, ein Foto in einer Collage), hat eine eigene Adresse und nennt das Ganze in <code>teil_von</code>.</p>
+<p>Quelle der Wahrheit je Dokument ist <code>&lt;doc&gt;/figures.xml</code> (DTD <code>famulus-figure/1</code>, Modul <code>famulus_proof.figur</code>, Werkzeug <code>famulus-figur</code>):</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feld</th>
+<th>Inhalt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>bbox</code></td>
+<td>Region auf dem Seitenbild, normiert <code>x,y,w,h</code></td>
+</tr>
+<tr class="even">
+<td><code>quelle</code></td>
+<td><code>pdf-bild</code> (eingebettetes Bild, Originalpixel), <code>pdf-vektor</code> (Zeichnungscluster mit seinen Beschriftungen), <code>pdf-verbund</code> (mehrere Bilder als eine Figur), <code>regionen</code> (Regionenliste eines Projekts)</td>
+</tr>
+<tr class="odd">
+<td><code>datei</code>, <code>sha256</code></td>
+<td>Ausschnitt <code>pages/page_NNN/page_NNN_fig_M.png</code>, den ai-viewer lädt</td>
+</tr>
+<tr class="even">
+<td><code>bildunterschrift</code></td>
+<td>wie gedruckt (<code>ocr</code> gegen den Textzeugen geprüft, <code>pdf-text</code> aus dem PDF neben dem Bild) oder leer mit <code>luecke</code></td>
+</tr>
+<tr class="odd">
+<td><code>beschreibung</code></td>
+<td>was die Figur zeigt, eine Lesung mit Modell; nie ein Grund und nie Titel eines Zitats</td>
+</tr>
+<tr class="even">
+<td><code>kontext</code></td>
+<td>Überschriften der Seite und die Nachbarabsätze als <code>P:</code>-Adressen</td>
+</tr>
+<tr class="odd">
+<td><code>iiif_region</code></td>
+<td>Region im IIIF-Bilddienst der haltenden Institution, wenn bekannt</td>
+</tr>
+</tbody>
+</table>
+<p>Die Seiten-XML trägt an <code>&lt;figure&gt;</code> die Attribute <code>fr</code>, <code>src</code>, <code>bbox</code>, <code>kind</code> (pdai-core.mod v1.2), so dass ai-viewer den Ausschnitt mit Adresse und Kopierknopf zeigt; <code>?fig=&lt;label&gt;</code> springt zur Figur. Der Build (<code>famulus-reference build</code>) liest <code>figures.xml</code> in <code>fr_segment</code> mit Region, <code>fr_text</code> (<code>caption</code>, <code>description</code>), <code>fr_provenance</code> (<code>figure-crop</code>) und <code>fr_validation</code> (Lücken, Beschreibung <code>INFERRED</code>). Ein Notebook bindet eine Figur mit <code>{{&lt; famulus fr:&lt;collection&gt;/&lt;doc&gt;/&lt;pidx&gt;/fig&lt;NN&gt; &gt;}}</code> ein; beim Bauen werden Ausschnitt, Unterschrift, Beschreibung, Kontext und Zitat eingesetzt.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">famulus-figur</span> extrahieren <span class="at">--collection</span> karman-context <span class="at">--doc</span> sto-70-years-1952-2022</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">famulus-figur</span> extrahieren <span class="at">--collection</span> hartmann <span class="at">--doc</span> bsb00028171 <span class="dt">\</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--regionen</span> ~/ai-mac-studio/scholarly/research/sundial-hartmann/selection/drawings.jsonl</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">famulus-figur</span> pruefen <span class="at">--collection</span> hartmann        <span class="co"># quality/figures/summary.json</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">famulus-figur</span> zeige fr:hartmann/bsb00028171/0008/fig01</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="was-resolve_fr-zurückgibt" class="level2">
+<h2 class="anchored" data-anchor-id="was-resolve_fr-zurückgibt">Was <code>resolve_fr</code> zurückgibt</h2>
+<p><code>famulus_proof.lake.resolve_fr(adresse)</code> liest das Item aus dem DuckLake:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Schlüssel</th>
+<th>Inhalt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>adresse</code></td>
+<td>die angefragte fr:-Adresse</td>
+</tr>
+<tr class="even">
+<td><code>found</code></td>
+<td><code>true</code>, wenn der DuckLake das Item oder einen Text dazu hat</td>
+</tr>
+<tr class="odd">
+<td><code>item</code></td>
+<td>die Zeile aus <code>fr_segment</code>, <code>fr_page</code> oder <code>fr_document</code>, je nach Länge der Adresse</td>
+</tr>
+<tr class="even">
+<td><code>texte</code></td>
+<td>Textschichten (<code>ocr</code>, <code>diplomatic</code>, <code>normalised</code>, <code>translation</code>), je mit <code>text</code> und <code>sha256</code></td>
+</tr>
+<tr class="odd">
+<td><code>zitat</code>, <code>bibtex</code></td>
+<td>Textzitat und BibTeX des Items oder des nächsten Vorfahren mit erfasstem Zitat</td>
+</tr>
+<tr class="even">
+<td><code>zitiert_als</code></td>
+<td>die Adresse, deren Zitat verwendet ist: das Item selbst, wenn es ein eigenes Zitat hat, sonst der nächste Vorfahr mit erfasstem Zitat</td>
+</tr>
+<tr class="odd">
+<td><code>luecken</code></td>
+<td>Felder, die in den bibliographischen Daten fehlen; <code>["citation"]</code>, wenn kein Zitat erfasst ist</td>
+</tr>
+<tr class="even">
+<td><code>herkunft</code></td>
+<td>Schritte der Herkunftskette: Schritt, Werkzeug, Modell, sha256, Datei</td>
+</tr>
+<tr class="odd">
+<td><code>snapshot</code></td>
+<td>Nummer des DuckLake-Snapshots, zu dem gelesen wurde</td>
+</tr>
+</tbody>
+</table>
+<p>Eine unbekannte Adresse ergibt <code>{"found": false, "luecke": …}</code> mit dem Grund (Collection nicht im DuckLake oder Adresse nicht im DuckLake), nie eine leere Antwort, die als Beleg gelesen werden könnte. Eine Zeichenkette, die keine fr:-Adresse ist, ergibt einen <code>ValueError</code>.</p>
+</section>
+<section id="lake-modus-famulus_lake1" class="level2">
+<h2 class="anchored" data-anchor-id="lake-modus-famulus_lake1">Lake-Modus: <code>FAMULUS_LAKE=1</code></h2>
+<p>Ohne die Umgebungsvariable lesen alle Verbindungen die Sidecar-Datei wie bisher. Mit <code>FAMULUS_LAKE=1</code> gilt:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Funktion</th>
+<th>Verhalten im Lake-Modus</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>famulus_proof.fql.engine.connect(collection, stanza=…)</code></td>
+<td>liest aus dem DuckLake, wenn er eine Kopie der Collection hält</td>
+</tr>
+<tr class="even">
+<td><code>famulus_proof.entfaltung.evidence.connect(collection, stanza=…)</code></td>
+<td>ebenso, die Stanza-Tabellen unter <code>stz</code></td>
+</tr>
+<tr class="odd">
+<td><code>famulus_proof.fql.engine.has_sidecar(collection)</code></td>
+<td>wahr, wenn Sidecar-Datei oder Kopie im DuckLake vorhanden ist</td>
+</tr>
+</tbody>
+</table>
+<p>Die Verbindung ist eine DuckDB im Arbeitsspeicher, an die der DuckLake schreibgeschützt als <code>lk</code> angehängt ist. Die Tabellen <code>fql__&lt;t&gt;</code> und <code>stanza__&lt;t&gt;</code> des Schemas <code>legacy_&lt;coll&gt;</code> erscheinen als Sichten unter ihren ursprünglichen Namen (<code>fq_documents</code>, <code>stz.stz_tokens</code> …). Jede bestehende SQL-Anweisung läuft daher unverändert.</p>
+<p>Hält der DuckLake keine Kopie der Collection, oder fehlt der Katalog, verwenden beide <code>connect()</code>-Funktionen die Sidecar-Datei.</p>
+<section id="primärer-katalog-und-lese-replik" class="level3">
+<h3 class="anchored" data-anchor-id="primärer-katalog-und-lese-replik">Primärer Katalog und Lese-Replik</h3>
+<p>Der primäre Katalog ist <code>FAMULUS_LAKE_CATALOG</code> oder <code>&lt;collections_root&gt;/_lake/famulus.ducklake</code>. <code>famulus_proof.lake.catalog_path()</code> liest jedoch die Lese-Replik daneben (<code>pdai-collections/_lake/famulus.read.ducklake</code>), wenn sie vorhanden ist. Grund: Eine DuckDB-Katalogdatei ist während eines Schreiblaufs (Export, Migration, Wartung auf mac-studio) für andere Prozesse gesperrt. Jeder Schreiblauf veröffentlicht an seinem Ende eine Kopie des Katalogs als Lese-Replik, durch atomares Umbenennen. Leser werden dadurch nie blockiert und sehen den neuen Stand, sobald der Schreiblauf abgeschlossen ist; bis dahin lesen sie den Stand des vorigen Schreiblaufs.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Lage</th>
+<th>gelesener Katalog</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Lese-Replik vorhanden</td>
+<td><code>famulus.read.ducklake</code></td>
+</tr>
+<tr class="even">
+<td>keine Lese-Replik</td>
+<td><code>famulus.ducklake</code></td>
+</tr>
+<tr class="odd">
+<td><code>FAMULUS_LAKE_PRIMARY</code> gesetzt (etwa <code>=1</code>)</td>
+<td><code>famulus.ducklake</code>, auch wenn eine Lese-Replik vorhanden ist</td>
+</tr>
+</tbody>
+</table>
+<p>Die Lese-Replik liegt immer neben dem primären Katalog; ein mit <code>FAMULUS_LAKE_CATALOG</code> gesetzter Katalog <code>x.ducklake</code> hat die Lese-Replik <code>x.read.ducklake</code>.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Volltextsuche">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warnung</span>Volltextsuche
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Die Volltextindizes (<code>fts_main_*</code>) sind nicht Teil des DuckLake. FQL-Formen, die <code>match_bm25</code> aufrufen, brauchen weiter die Sidecar-Datei.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="zitate-werden-nicht-zusammengesetzt" class="level2">
+<h2 class="anchored" data-anchor-id="zitate-werden-nicht-zusammengesetzt">Zitate werden nicht zusammengesetzt</h2>
+<p>Ein Zitat stammt nur aus erfassten bibliographischen Daten (<code>biblio.xml</code> oder Deskriptor der Collection). Hat ein Item kein eigenes Zitat, gilt das des nächsten Vorfahren (Seite, Dokument, Collection), und die fr:-Adresse des Items ist die Fundstelle; <code>zitiert_als</code> nennt den Vorfahren. Hat auch kein Vorfahr ein Zitat, setzt weder <code>resolve_fr</code> noch der MCP-Server eines aus Titel, Autor oder Dateinamen zusammen: Das Ergebnis ist eine Lücke (<code>luecken: ["citation"]</code>, beim MCP-Server <code>status: "gap"</code>). Einzelne fehlende Felder eines erfassten Zitats stehen ebenso in <code>luecken</code> und werden nicht ergänzt.</p>
+</section>
+<section id="reproduzierbarkeit-über-den-snapshot" class="level2">
+<h2 class="anchored" data-anchor-id="reproduzierbarkeit-über-den-snapshot">Reproduzierbarkeit über den Snapshot</h2>
+<p>Jede Antwort von <code>resolve_fr</code>, <code>beleg</code> und den Werkzeugen des MCP-Servers nennt den Snapshot des DuckLake, zu dem gelesen wurde. Ein Beleg ist damit relativ zu diesem Snapshot bestimmt: Wer die Begründung später prüft, liest die Tabellen zu demselben Snapshot. Die Wartung (<code>famulus-reference maintain</code>) lässt Snapshots nach sieben Tagen verfallen, ausgenommen die in <code>fr_release</code> festgehaltenen und alle Snapshots, die <code>fr_cite</code> oder <code>fr_bibtex</code> ausgegeben haben.</p>
+</section>
+<section id="mcp-werkzeuge-für-begründungsanfragen" class="level2">
+<h2 class="anchored" data-anchor-id="mcp-werkzeuge-für-begründungsanfragen">MCP-Werkzeuge für Begründungsanfragen</h2>
+<p>Der MCP-Server <code>famulus-reference</code> läuft auf mac-studio, Port 5135. Für die Begründung einer Antwort dienen drei Werkzeuge:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Werkzeug</th>
+<th>Eingabe</th>
+<th>Antwort</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>fr_cite</code></td>
+<td>fr:-Adresse, Stil (<code>all</code>, <code>bibtex</code>, <code>csl</code>, <code>text</code>)</td>
+<td>Zitat, <code>cited_as</code>, Fundstelle, Lücken, Snapshot; <code>status</code> ist <code>ok</code>, <code>ancestor</code> oder <code>gap</code></td>
+</tr>
+<tr class="even">
+<td><code>fr_trace</code></td>
+<td>fr:-Adresse</td>
+<td>Item, sha256 der Textschichten, Herkunft, Prüfvermerke, Belegqualität (<code>evidence_grade</code>), Zitat, Kennungen, Snapshot</td>
+</tr>
+<tr class="odd">
+<td><code>fr_trace_run</code></td>
+<td><code>run_id</code></td>
+<td>die gelesenen Items, der Snapshot und die SQL-Anweisungen eines früheren Laufs</td>
+</tr>
+</tbody>
+</table>
+<p><code>fr_cite</code>, <code>fr_bibtex</code>, <code>fr_trace</code>, <code>fr_ground</code> und <code>fr_sql</code> zeichnen jeden Aufruf als Lauf auf (<code>fr_run</code>, <code>fr_run_step</code>) und geben dessen <code>run_id</code> zurück. Eine Begründungsanfrage zu einer früheren Antwort wird mit <code>fr_trace_run(run_id)</code> beantwortet: Sie nennt, welche Items mit welchem Snapshot gelesen wurden. Mit <code>fr_trace</code> auf jedes dieser Items folgt die Herkunft und der Prüfvermerk jedes Belegs.</p>
+<p>Weitere Werkzeuge (<code>fr_describe_collection</code>, <code>fr_get_item</code>, <code>fr_get_provenance</code>, <code>fr_ground</code>, <code>fr_sql</code>, <code>fr_snapshot_info</code> …) und die Ernte-Endpunkte (<code>/oai</code>, <code>/jsonld</code>, <code>/iiif</code>, <code>/peers</code>) beschreibt <code>pdai/famulus-reference/README.md</code>. Die Einordnung in die Schichten zeigt die <a href="./landkarte.html">Landkarte</a>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Kopiert");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Kopiert");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,2659 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.5">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Datenmodell und Fehler – Famulus Notebook</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-3b9ea68436acb9022c2fbce6dbb58b06.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-3539258d83e02f63d0acd0d18fda38b6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Keine Treffer",
+    "search-matching-documents-text": "Treffer",
+    "search-copy-link-title": "Link in die Suche kopieren",
+    "search-hide-matches-text": "Zusätzliche Treffer verbergen",
+    "search-more-match-text": "weitere Treffer in diesem Dokument",
+    "search-more-matches-text": "weitere Treffer in diesem Dokument",
+    "search-clear-button-title": "Zurücksetzen",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Abbrechen",
+    "search-submit-button-title": "Abschicken",
+    "search-label": "Suchen"
+  }
+}</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;family=Inter:wght@400;600&amp;display=swap">
+
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Zum Hauptinhalt springen</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Website">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Famulus Notebook</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Suchen"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Navigation umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Überblick</span></a>
+  </li>  
+  <li class="nav-item">
+    <span class="nav-link"> 
+<span class="menu-text">Installation</span></span>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./syntax.html"> 
+<span class="menu-text">Schreiben</span></a>
+  </li>  
+  <li class="nav-item">
+    <span class="nav-link"> 
+<span class="menu-text">Verknüpfung</span></span>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./abfragen.html"> 
+<span class="menu-text">Abfragen</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./famulus-query-language.html"> 
+<span class="menu-text">FQL</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./begruendung.html"> 
+<span class="menu-text">Begründung</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./validierung.html"> 
+<span class="menu-text">Validität</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./mac-app.html"> 
+<span class="menu-text">Mac-App</span></a>
+  </li>  
+  <li class="nav-item">
+    <span class="nav-link"> 
+<span class="menu-text">Betrieb</span></span>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projekte" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projekte</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-projekte">    
+        <li>
+    <a class="dropdown-item" href="./lesen/hevelius/referenz.html">
+ <span class="dropdown-text">Hevelius befragen: Register, Briefe, Kommentar</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/karman-nachlass/hitler.html">
+ <span class="dropdown-text">Korrespondenz befragen: Kármán und Euler–Goldbach: Nannte Kármán Hitler? Protokoll einer Zielentfaltung</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/karman-nachlass/korrespondenz.html">
+ <span class="dropdown-text">Korrespondenz befragen: Kármán und Euler–Goldbach: Korrespondenz befragen: Kármán und Euler–Goldbach</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/karman-nachlass/prandtl-briefe.html">
+ <span class="dropdown-text">Korrespondenz befragen: Kármán und Euler–Goldbach: Prandtl und Kármán: zwei Anfrageformen der Zielentfaltung</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-anima-vis/anima-vis.html">
+ <span class="dropdown-text">Kepler: von der anima motrix zur vis motrix</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/geschichte-kepler-kommission.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: Die Geschichte der Kepler-Kommission</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t1-vorbemerkungen.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: Teil 1: Vorbemerkungen</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t2-1-nachlass.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: 2.1 Vorgeschichte des Kepler-Nachlasses (1630–1928)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t2-2-vorgeschichte-edition.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: 2.2 Vorgeschichte der Edition (1858–1928)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t2-3-kommissionsgruendung.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: 2.3 Der Weg zur Kommissionsgründung (1927–1935)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t2-4-edition-bis-2017.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: 2.4 Die Edition bis 2017</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t3-1-vergleich-euler.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: 3.1 Vergleich: der Petersburger Beitrag und die Euler-Opera-omnia</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t3-2-zerstreuung.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: 3.2 Die Zerstreuung der Kepler-Handschriften</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t3-3-kepleriana.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: 3.3 Die Münchner Kepleriana</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t3-4-ausblick-kgw-ai.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: 3.4 Ausblick: KGW-ai</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t4-faksimile.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: Editionsgrundsätze</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/anhang.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: Anhang</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-lex-naturae/lex-naturae.html">
+ <span class="dropdown-text">Kepler: lex und natura</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lehrbuch/lehrbuch.html">
+ <span class="dropdown-text">Famulus Notebook: the examples of the book: Famulus Notebook: the examples of the book</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lehrbuch/ch01.html">
+ <span class="dropdown-text">Famulus Notebook: the examples of the book: Chapter 1: A first notebook</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lehrbuch/ch02.html">
+ <span class="dropdown-text">Famulus Notebook: the examples of the book: Chapter 2: The block</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lehrbuch/ch03.html">
+ <span class="dropdown-text">Famulus Notebook: the examples of the book: Chapter 3: Results and their display</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lehrbuch/ch04.html">
+ <span class="dropdown-text">Famulus Notebook: the examples of the book: Chapter 4: Checking an answer</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lehrbuch/ch06.html">
+ <span class="dropdown-text">Famulus Notebook: the examples of the book: Chapter 6: Names and references</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lehrbuch/ch07.html">
+ <span class="dropdown-text">Famulus Notebook: the examples of the book: Chapter 7: Versions and smart refresh</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lehrbuch/ch08.html">
+ <span class="dropdown-text">Famulus Notebook: the examples of the book: Chapter 8: Scope and data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lwgrammar-evaluation/famulus-plattform.html">
+ <span class="dropdown-text">LWgrammar: die Formulierungsprüfung am Aufsatz famulus-plattform</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/pirckheimer-briefwechsel/briefpartner-1520-1530.html">
+ <span class="dropdown-text">Pirckheimers Briefpartner 1520–1530</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/schoener-saphea/saphea.html">
+ <span class="dropdown-text">Schöner: Saphea und Sonnenuhr</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/validitaet-koerper/pruefungen.html">
+ <span class="dropdown-text">Validität relativ zu Belegkörpern: Messkörper und Lektorat</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" aria-label="Symbolleiste">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="Pfad"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./begruendung.html">Begründete Antworten</a></li><li class="breadcrumb-item"><a href="./fql-datenmodell.html">Datenmodell und Fehler</a></li></ol></nav>
+        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto" aria-label="Bereich">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Überblick</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <span class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installation</span></span>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./syntax.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Ein Notebook schreiben</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bloecke.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Blöcke und Partituren</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./projekt.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Paket und Log</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <span class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Verknüpfung</span></span>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./viewer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Viewer und Lektor</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./validierung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sachliche Validität</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mac-app.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mac-App</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./abfragen.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Abfragen und Lernen</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./famulus-query-language.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Query Language</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-1-label">Begründete Antworten</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./begruendung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Methode</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./begruendung-umsetzung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Umsetzung</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./begruendung-lernen.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lernen aus Begründungen</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fql-datenmodell.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Datenmodell und Fehler</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./zitieren-fr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zitieren mit fr:-Adressen</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <span class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Betrieb</span></span>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./entwicklung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entwicklung</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-controls="quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-2-label">Projekte</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <ul id="quarto-sidebar-section-2" aria-labelledby="quarto-sidebar-section-2-label" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/hevelius/referenz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hevelius befragen: Register, Briefe, Kommentar</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/karman-nachlass/hitler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Korrespondenz befragen: Kármán und Euler–Goldbach: Nannte Kármán Hitler? Protokoll einer Zielentfaltung</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/karman-nachlass/korrespondenz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Korrespondenz befragen: Kármán und Euler–Goldbach: Korrespondenz befragen: Kármán und Euler–Goldbach</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/karman-nachlass/prandtl-briefe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Korrespondenz befragen: Kármán und Euler–Goldbach: Prandtl und Kármán: zwei Anfrageformen der Zielentfaltung</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-anima-vis/anima-vis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Kepler: von der anima motrix zur vis motrix</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/geschichte-kepler-kommission.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: Die Geschichte der Kepler-Kommission</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t1-vorbemerkungen.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: Teil 1: Vorbemerkungen</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t2-1-nachlass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: 2.1 Vorgeschichte des Kepler-Nachlasses (1630–1928)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t2-2-vorgeschichte-edition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: 2.2 Vorgeschichte der Edition (1858–1928)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t2-3-kommissionsgruendung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: 2.3 Der Weg zur Kommissionsgründung (1927–1935)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t2-4-edition-bis-2017.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: 2.4 Die Edition bis 2017</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t3-1-vergleich-euler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: 3.1 Vergleich: der Petersburger Beitrag und die Euler-Opera-omnia</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t3-2-zerstreuung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: 3.2 Die Zerstreuung der Kepler-Handschriften</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t3-3-kepleriana.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: 3.3 Die Münchner Kepleriana</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t3-4-ausblick-kgw-ai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: 3.4 Ausblick: KGW-ai</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t4-faksimile.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: Editionsgrundsätze</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/anhang.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: Anhang</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-lex-naturae/lex-naturae.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Kepler: lex und natura</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lehrbuch/lehrbuch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Notebook: the examples of the book: Famulus Notebook: the examples of the book</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lehrbuch/ch01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Notebook: the examples of the book: Chapter 1: A first notebook</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lehrbuch/ch02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Notebook: the examples of the book: Chapter 2: The block</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lehrbuch/ch03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Notebook: the examples of the book: Chapter 3: Results and their display</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lehrbuch/ch04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Notebook: the examples of the book: Chapter 4: Checking an answer</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lehrbuch/ch06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Notebook: the examples of the book: Chapter 6: Names and references</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lehrbuch/ch07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Notebook: the examples of the book: Chapter 7: Versions and smart refresh</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lehrbuch/ch08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Notebook: the examples of the book: Chapter 8: Scope and data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lwgrammar-evaluation/famulus-plattform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LWgrammar: die Formulierungsprüfung am Aufsatz famulus-plattform</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/pirckheimer-briefwechsel/briefpartner-1520-1530.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pirckheimers Briefpartner 1520–1530</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/schoener-saphea/saphea.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Schöner: Saphea und Sonnenuhr</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/validitaet-koerper/pruefungen.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Validität relativ zu Belegkörpern: Messkörper und Lektorat</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#drei-schichten" id="toc-drei-schichten" class="nav-link active" data-scroll-target="#drei-schichten">Drei Schichten</a></li>
+  <li><a href="#die-tabellen" id="toc-die-tabellen" class="nav-link" data-scroll-target="#die-tabellen">Die Tabellen</a>
+  <ul class="collapse">
+  <li><a href="#die-stanza-datenbank-sammlung_stanza.duckdb" id="toc-die-stanza-datenbank-sammlung_stanza.duckdb" class="nav-link" data-scroll-target="#die-stanza-datenbank-sammlung_stanza.duckdb">Die Stanza-Datenbank <code>&lt;sammlung&gt;_stanza.duckdb</code></a></li>
+  <li><a href="#das-fql-sidecar-sammlung_fql.duckdb" id="toc-das-fql-sidecar-sammlung_fql.duckdb" class="nav-link" data-scroll-target="#das-fql-sidecar-sammlung_fql.duckdb">Das FQL-Sidecar <code>&lt;sammlung&gt;_fql.duckdb</code></a></li>
+  </ul></li>
+  <li><a href="#gruende" id="toc-gruende" class="nav-link" data-scroll-target="#gruende">Gründe und Bericht</a></li>
+  <li><a href="#messwerte" id="toc-messwerte" class="nav-link" data-scroll-target="#messwerte">Gemessene Güte der Schichten</a>
+  <ul class="collapse">
+  <li><a href="#sprachetikett-der-sätze" id="toc-sprachetikett-der-sätze" class="nav-link" data-scroll-target="#sprachetikett-der-sätze">Sprachetikett der Sätze</a></li>
+  <li><a href="#briefe-parteien-daten-zuordnung" id="toc-briefe-parteien-daten-zuordnung" class="nav-link" data-scroll-target="#briefe-parteien-daten-zuordnung">Briefe, Parteien, Daten, Zuordnung</a></li>
+  <li><a href="#stichproben-präzision-mit-95--intervall-wilson" id="toc-stichproben-präzision-mit-95--intervall-wilson" class="nav-link" data-scroll-target="#stichproben-präzision-mit-95--intervall-wilson">Stichproben: Präzision mit 95-%-Intervall (Wilson)</a></li>
+  <li><a href="#satzfilter-rezepte-über-stanza" id="toc-satzfilter-rezepte-über-stanza" class="nav-link" data-scroll-target="#satzfilter-rezepte-über-stanza">Satzfilter-Rezepte über Stanza</a></li>
+  </ul></li>
+  <li><a href="#anfragen-über-die-satzstruktur" id="toc-anfragen-über-die-satzstruktur" class="nav-link" data-scroll-target="#anfragen-über-die-satzstruktur">Anfragen über die Satzstruktur</a></li>
+  <li><a href="#fehler-jeder-form" id="toc-fehler-jeder-form" class="nav-link" data-scroll-target="#fehler-jeder-form">Fehler jeder Form</a>
+  <ul class="collapse">
+  <li><a href="#fehlerarten" id="toc-fehlerarten" class="nav-link" data-scroll-target="#fehlerarten">Fehlerarten</a></li>
+  <li><a href="#fehlerarten-je-form" id="toc-fehlerarten-je-form" class="nav-link" data-scroll-target="#fehlerarten-je-form">Fehlerarten je Form</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="Pfad"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./begruendung.html">Begründete Antworten</a></li><li class="breadcrumb-item"><a href="./fql-datenmodell.html">Datenmodell und Fehler</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Datenmodell und Fehler</h1>
+<p class="subtitle lead">Was die Datenbanken einer Sammlung enthalten, wie gut ihre Schichten sind und welche Fehler jede Anfrageform zeigen kann</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">1. Oktober 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled" title="In einem Satz">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tipp</span>In einem Satz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Eine PDAI-Sammlung hat drei Datenbanken übereinander: die Stanza-Datenbank der Sätze und Tokens, das Register und das FQL-Sidecar; jede Schicht hat gemessene Fehler, und jede Anfrageform erbt die Fehler der Schichten, die sie liest.</p>
+</div>
+</div>
+<section id="drei-schichten" class="level2">
+<h2 class="anchored" data-anchor-id="drei-schichten">Drei Schichten</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  seiten["Seiten-XML: Text, Fußnoten, Abbildungen"] --&gt; stanza["stanza.duckdb: Sätze, Tokens, Lemmata, Abhängigkeiten, Entitäten"]
+  register["Register: Briefe, Parteien, Daten, Regesten"] --&gt; sidecar["fql.duckdb: Briefe, Seiten, Sätze, Erwähnungen, Themen, Handlungen, Perioden, Verweise"]
+  stanza --&gt; sidecar
+  modell["Modelllesungen: Themen, Handlungen"] --&gt; sidecar
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Datei</th>
+<th>Inhalt</th>
+<th>Schlüssel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>&lt;sammlung&gt;_stanza.duckdb</code></td>
+<td>Sätze mit Sprachetikett, Tokens mit Form, Lemma, Wortart, Merkmalen und Kopf, Entitäten nach Typ</td>
+<td>Satz = <code>(doc_id, pidx, sent_idx)</code>; <code>sent_idx</code> beginnt auf jeder Seite neu</td>
+</tr>
+<tr class="even">
+<td><code>&lt;sammlung&gt;.duckdb</code> (Kármán)</td>
+<td>Das Register: Briefe, aufgelöste Parteien, Personen-, Orts- und Institutionsindex, Mappen</td>
+<td><code>letter_id</code></td>
+</tr>
+<tr class="odd">
+<td><code>register/*.parquet</code> (Euler)</td>
+<td>Das Register der Descriptio und die Textbände IVA 2–8</td>
+<td><code>letter_id</code></td>
+</tr>
+<tr class="even">
+<td><code>&lt;sammlung&gt;_fql.duckdb</code></td>
+<td>Das Sidecar: alle FQL-Tabellen, mit Fundstelle in jeder Zeile</td>
+<td><code>letter_id</code>, Satzschlüssel</td>
+</tr>
+<tr class="odd">
+<td><code>status.json</code>, <code>quality/</code></td>
+<td>Bereitschaft der Sammlung, Prüfberichte</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Das Sidecar wird mit <code>fql_build.py</code> gebaut (Stufen <code>base</code>, <code>persons</code>, <code>segment</code>, <code>pages</code>, <code>text</code>, <code>mentions</code>, <code>regest</code>, <code>topics</code>, <code>acts</code>, <code>periods</code>, <code>refs</code>, <code>fts</code>) und atomar veröffentlicht. Die Stufe <code>refs</code> schreibt <code>fq_documents</code> (Titel und Zitiergrundlage aus der Bibliographie der Sammlung oder dem Mappenblatt des Archivs) und <code>fq_page_labels</code> (die gedruckte Seitenzahl aus dem Kolumnentitel). Fehlt eine Angabe, bleibt sie leer und der Verweis nennt die Lücke.</p>
+</section>
+<section id="die-tabellen" class="level2">
+<h2 class="anchored" data-anchor-id="die-tabellen">Die Tabellen</h2>
+<!-- generiert von famulus_proof.fql.docs aus site/data/fql_quality.json; nicht von Hand ändern -->
+<section id="die-stanza-datenbank-sammlung_stanza.duckdb" class="level3">
+<h3 class="anchored" data-anchor-id="die-stanza-datenbank-sammlung_stanza.duckdb">Die Stanza-Datenbank <code>&lt;sammlung&gt;_stanza.duckdb</code></h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tabelle</th>
+<th style="text-align: right;">Kármán</th>
+<th style="text-align: right;">Euler</th>
+<th>Spalten</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>stz_corpus_meta</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td>built_at, collection, n_docs, n_pages, n_sentences, n_tokens, n_feats, elapsed_s, version</td>
+</tr>
+<tr class="even">
+<td><code>stz_deps</code></td>
+<td style="text-align: right;">8.711.986</td>
+<td style="text-align: right;">2.093.268</td>
+<td>doc_id, pidx, sent_idx, dep_tok, head_tok, deprel, dep_lemma, dep_upos, head_lemma, head_upos</td>
+</tr>
+<tr class="odd">
+<td><code>stz_docs</code></td>
+<td style="text-align: right;">1.066</td>
+<td style="text-align: right;">8</td>
+<td>doc_id, n_pages, n_sentences, n_tokens, built_at</td>
+</tr>
+<tr class="even">
+<td><code>stz_entities</code></td>
+<td style="text-align: right;">424.144</td>
+<td style="text-align: right;">23.389</td>
+<td>doc_id, pidx, sent_idx, ent_no, ent_type, text</td>
+</tr>
+<tr class="odd">
+<td><code>stz_feats</code></td>
+<td style="text-align: right;">11.891.315</td>
+<td style="text-align: right;">3.821.301</td>
+<td>doc_id, pidx, sent_idx, tid, feat, val</td>
+</tr>
+<tr class="even">
+<td><code>stz_letter_map</code></td>
+<td style="text-align: right;">39.031</td>
+<td style="text-align: right;">—</td>
+<td>doc_id, pidx, letter_nr, sender, recipient, date_when, language</td>
+</tr>
+<tr class="odd">
+<td><code>stz_pages</code></td>
+<td style="text-align: right;">38.197</td>
+<td style="text-align: right;">5.829</td>
+<td>doc_id, pidx, primary_lang, n_sentences, n_tokens, n_math_inline, n_math_display</td>
+</tr>
+<tr class="even">
+<td><code>stz_sentences</code></td>
+<td style="text-align: right;">663.972</td>
+<td style="text-align: right;">153.669</td>
+<td>doc_id, pidx, sent_idx, lang, text</td>
+</tr>
+<tr class="odd">
+<td><code>stz_tokens</code></td>
+<td style="text-align: right;">8.711.986</td>
+<td style="text-align: right;">2.093.268</td>
+<td>doc_id, pidx, sent_idx, tid, form, lemma, upos, xpos, head, deprel, is_math</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="das-fql-sidecar-sammlung_fql.duckdb" class="level3">
+<h3 class="anchored" data-anchor-id="das-fql-sidecar-sammlung_fql.duckdb">Das FQL-Sidecar <code>&lt;sammlung&gt;_fql.duckdb</code></h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tabelle</th>
+<th style="text-align: right;">Kármán</th>
+<th style="text-align: right;">Euler</th>
+<th>Spalten</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>fq_acts</code></td>
+<td style="text-align: right;">5.121</td>
+<td style="text-align: right;">2.142</td>
+<td>act_id, letter_id, act_type, agent, agent_id, addressee, addressee_id, beneficiary, beneficiary_id, object_kind, object, amount, currency, amount_text, quote, evidence, doc_id, pidx, sent_idx, model, instruction</td>
+</tr>
+<tr class="even">
+<td><code>fq_build_meta</code></td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">14</td>
+<td>stage, built_at, model, instruction, n_rows, seconds, llm_calls, cached_calls, note</td>
+</tr>
+<tr class="odd">
+<td><code>fq_documents</code></td>
+<td style="text-align: right;">1.066</td>
+<td style="text-align: right;">8</td>
+<td>doc_id, title, kind, citation, volume, section, source</td>
+</tr>
+<tr class="even">
+<td><code>fq_entities</code></td>
+<td style="text-align: right;">23.219</td>
+<td style="text-align: right;">322</td>
+<td>ent_id, kind, canonical, n_sent, n_received</td>
+</tr>
+<tr class="odd">
+<td><code>fq_figures</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">90</td>
+<td>doc_id, pidx, ref, caption, description, letter_id</td>
+</tr>
+<tr class="even">
+<td><code>fq_footnotes</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">236</td>
+<td>doc_id, pidx, fn_no, text, letter_id</td>
+</tr>
+<tr class="odd">
+<td><code>fq_letter_entities</code></td>
+<td style="text-align: right;">78.266</td>
+<td style="text-align: right;">—</td>
+<td>letter_id, ent_id, surface, kind</td>
+</tr>
+<tr class="even">
+<td><code>fq_letter_pages</code></td>
+<td style="text-align: right;">39.318</td>
+<td style="text-align: right;">1.019</td>
+<td>letter_id, doc_id, pidx, part, method</td>
+</tr>
+<tr class="odd">
+<td><code>fq_letter_period</code></td>
+<td style="text-align: right;">Sicht</td>
+<td style="text-align: right;">Sicht</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>fq_letter_sentences</code></td>
+<td style="text-align: right;">684.471</td>
+<td style="text-align: right;">13.683</td>
+<td>letter_id, doc_id, pidx, sent_idx, part, lang</td>
+</tr>
+<tr class="odd">
+<td><code>fq_letter_topics</code></td>
+<td style="text-align: right;">47.031</td>
+<td style="text-align: right;">9.005</td>
+<td>letter_id, topic_id, top_id, n_tags</td>
+</tr>
+<tr class="even">
+<td><code>fq_letters</code></td>
+<td style="text-align: right;">15.976</td>
+<td style="text-align: right;">3.393</td>
+<td>letter_id, doc_id, letter_nr, sender_id, recipient_id, sender_raw, recipient_raw, sender, recipient, place, date_when, year, date_day, date_text, language, regest, regest_source, tags, pidx_from, pidx_to, basis, volume, edition_nr, register_nr, lost</td>
+</tr>
+<tr class="odd">
+<td><code>fq_llm_cache</code></td>
+<td style="text-align: right;">959</td>
+<td style="text-align: right;">513</td>
+<td>key, stage, model, response, ms, prompt_tokens, eval_tokens, ts</td>
+</tr>
+<tr class="even">
+<td><code>fq_mentions</code></td>
+<td style="text-align: right;">424.144</td>
+<td style="text-align: right;">23.389</td>
+<td>doc_id, pidx, sent_idx, ent_no, ent_type, surface, ent_id, letter_id</td>
+</tr>
+<tr class="odd">
+<td><code>fq_page_labels</code></td>
+<td style="text-align: right;">38.213</td>
+<td style="text-align: right;">6.369</td>
+<td>doc_id, pidx, label, method</td>
+</tr>
+<tr class="even">
+<td><code>fq_paragraphs</code></td>
+<td style="text-align: right;">478.081</td>
+<td style="text-align: right;">14.479</td>
+<td>doc_id, pidx, par_idx, kind, style, text, letter_id, par_key</td>
+</tr>
+<tr class="odd">
+<td><code>fq_periods</code></td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td>period_id, label, kind, date_from, date_to, region, source, status</td>
+</tr>
+<tr class="even">
+<td><code>fq_segments</code></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">1.256</td>
+<td>doc_id, pidx, letter_nr, part, running_head</td>
+</tr>
+<tr class="odd">
+<td><code>fq_tag_topic</code></td>
+<td style="text-align: right;">11.097</td>
+<td style="text-align: right;">3.257</td>
+<td>tag, topic_id</td>
+</tr>
+<tr class="even">
+<td><code>fq_topics</code></td>
+<td style="text-align: right;">168</td>
+<td style="text-align: right;">168</td>
+<td>topic_id, label, parent_id, description</td>
+</tr>
+<tr class="odd">
+<td><code>fq_variants</code></td>
+<td style="text-align: right;">23.240</td>
+<td style="text-align: right;">641</td>
+<td>variant_norm, ent_id</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="gruende" class="level2">
+<h2 class="anchored" data-anchor-id="gruende">Gründe und Bericht</h2>
+<p>Jede Antwort einer Anfrage hat ein Argument; seine Fundstellen werden zu <strong>Gründen</strong> mit einer einheitlichen Adresse im Belegkörper: <code>&lt;sammlung&gt;@&lt;version&gt;#&lt;art&gt;/&lt;ort&gt;</code>. Die Version ist der Hash der Selbstbeschreibung der Sammlung (Baulog des Sidecars, Register, <code>status.json</code>, Zeilen der Indizes); ändert sich eine davon, ändert sich die Version, und jedes Urteil sagt, relativ zu welcher es gilt.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Art</th>
+<th>Ort</th>
+<th>Auszug aus</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>satz</code></td>
+<td><code>doc_id/pidx/sent_idx</code></td>
+<td><code>stz_sentences.text</code></td>
+</tr>
+<tr class="even">
+<td><code>seite</code></td>
+<td><code>doc_id/pidx</code></td>
+<td>den Sätzen der Seite, sonst dem Seiten-XML</td>
+</tr>
+<tr class="odd">
+<td><code>brief</code></td>
+<td><code>letter_id</code></td>
+<td><code>fq_letters</code>: Datum, Absender, Empfänger</td>
+</tr>
+<tr class="even">
+<td><code>person</code></td>
+<td><code>ent_id</code></td>
+<td><code>fq_entities.canonical</code></td>
+</tr>
+<tr class="odd">
+<td><code>thema</code></td>
+<td><code>topic_id</code></td>
+<td><code>fq_topics.label</code></td>
+</tr>
+<tr class="even">
+<td><code>tabelle</code></td>
+<td>Tabellenname</td>
+<td>Zeilenzahl der Tabelle</td>
+</tr>
+</tbody>
+</table>
+<p>Der Auszug ist immer der Text des Körpers an dieser Adresse, nie die Lesung eines Modells; die Lesung steht daneben. Die Gründe stehen im Bericht <code>famulus-enfolding/1</code> der Anfrage. Sein Schema ist <code>development/famulus-proof/src/famulus_proof/entfaltung/schema/famulus-enfolding-1.schema.json</code>; das Register der Belegkörper ist <code>rules/bodies.yaml</code> desselben Pakets.</p>
+</section>
+<section id="messwerte" class="level2">
+<h2 class="anchored" data-anchor-id="messwerte">Gemessene Güte der Schichten</h2>
+<p>Die folgenden Zahlen sind Messungen, keine Schätzungen. Drei Arten sind zu unterscheiden: <strong>Strukturprüfungen</strong> (ein Satz hat genau eine Wurzel; ein Brief hat eine aufgelöste Partei), <strong>Übereinstimmungen</strong> zweier unabhängiger Wege (das Sprachetikett gegen eine Abstimmung über Funktionswörter) und <strong>Stichproben</strong> mit gelesenem Urteil. Nur Stichproben messen Präzision.</p>
+<p>Drei Befunde bestimmen die Grenzen der Anfragen am stärksten:</p>
+<ul>
+<li><strong>Das Etikett <code>la</code> ist bei Kármán meist falsch.</strong> Von den entscheidbaren Sätzen mit Etikett Latein stimmen 4,7 % der Abstimmung zu; die meisten sind englisch. Diese Sätze wurden mit dem lateinischen Modell gelesen: Ihre Lemmata sind unbrauchbar und sie haben keine Entitäten. Bei Euler ist das Etikett <code>la</code> für die Textbände IVA 2–8 überwiegend deutsch oder französisch, für die Briefe des Bands IVA 4 zu 72 % richtig.</li>
+<li><strong>42 % der Kármán-Briefe haben keine aufgelöste Partei.</strong> Jede Zählung über Personen ist eine Untergrenze. Bei 1.525 dieser Briefe nennt die Mappe einen Korrespondenten; das ist eine mögliche zweite Quelle.</li>
+<li><strong>Der Volltextindex nutzt englische Stoppwörter und Stammformen für alle Sprachen.</strong> Lateinische Funktionswörter wie <em>et</em>, <em>non</em>, <em>in</em> werden gestrichen; <em>numerus</em>, <em>numeri</em> und <em>numerorum</em> sind drei Suchbegriffe (280, 267 und 85 Absätze bei Euler). Der Lemmaweg findet <em>numerus</em> in 1.052 Sätzen, die Zeichenkette in 508.</li>
+</ul>
+<!-- generiert von famulus_proof.fql.docs; nicht von Hand ändern -->
+<p>Gemessen am 2026-10-01 mit <code>scripts/fql_quality.py</code> (nur lesend, jede Zahl aus einer Abfrage).</p>
+<section id="sprachetikett-der-sätze" class="level3">
+<h3 class="anchored" data-anchor-id="sprachetikett-der-sätze">Sprachetikett der Sätze</h3>
+<p>Das Etikett wählt das Stanza-Modell. Eine Abstimmung über Funktionswörter (de, la, en, fr) prüft es unabhängig; sie entscheidet nur bei mindestens zwei Funktionswörtern mit klarem Vorsprung.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Sammlung</th>
+<th>Etikett</th>
+<th style="text-align: right;">Sätze</th>
+<th style="text-align: right;">entscheidbar</th>
+<th style="text-align: right;">davon übereinstimmend</th>
+<th>häufigste andere Stimme</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kármán (Korpus)</td>
+<td><code>en</code></td>
+<td style="text-align: right;">414.820</td>
+<td style="text-align: right;">49,4 %</td>
+<td style="text-align: right;"><strong>99,6 %</strong></td>
+<td>fr (440)</td>
+</tr>
+<tr class="even">
+<td>Kármán (Korpus)</td>
+<td><code>de</code></td>
+<td style="text-align: right;">135.909</td>
+<td style="text-align: right;">44,7 %</td>
+<td style="text-align: right;"><strong>96,8 %</strong></td>
+<td>en (1.613)</td>
+</tr>
+<tr class="odd">
+<td>Kármán (Korpus)</td>
+<td><code>la</code></td>
+<td style="text-align: right;">50.040</td>
+<td style="text-align: right;">21,8 %</td>
+<td style="text-align: right;"><strong>4,7 %</strong></td>
+<td>en (8.269)</td>
+</tr>
+<tr class="even">
+<td>Kármán (Korpus)</td>
+<td><code>fr</code></td>
+<td style="text-align: right;">43.111</td>
+<td style="text-align: right;">45,6 %</td>
+<td style="text-align: right;"><strong>92,6 %</strong></td>
+<td>en (1.367)</td>
+</tr>
+<tr class="odd">
+<td>Kármán (Briefe)</td>
+<td><code>en</code></td>
+<td style="text-align: right;">427.842</td>
+<td style="text-align: right;">49,0 %</td>
+<td style="text-align: right;"><strong>99,6 %</strong></td>
+<td>fr (445)</td>
+</tr>
+<tr class="even">
+<td>Kármán (Briefe)</td>
+<td><code>de</code></td>
+<td style="text-align: right;">139.119</td>
+<td style="text-align: right;">44,2 %</td>
+<td style="text-align: right;"><strong>96,7 %</strong></td>
+<td>en (1.654)</td>
+</tr>
+<tr class="odd">
+<td>Kármán (Briefe)</td>
+<td><code>la</code></td>
+<td style="text-align: right;">51.369</td>
+<td style="text-align: right;">21,5 %</td>
+<td style="text-align: right;"><strong>4,7 %</strong></td>
+<td>en (8.404)</td>
+</tr>
+<tr class="even">
+<td>Kármán (Briefe)</td>
+<td><code>fr</code></td>
+<td style="text-align: right;">44.206</td>
+<td style="text-align: right;">45,5 %</td>
+<td style="text-align: right;"><strong>92,6 %</strong></td>
+<td>en (1.394)</td>
+</tr>
+<tr class="odd">
+<td>Euler (Korpus)</td>
+<td><code>la</code></td>
+<td style="text-align: right;">139.676</td>
+<td style="text-align: right;">41,2 %</td>
+<td style="text-align: right;"><strong>14,2 %</strong></td>
+<td>de (32.894)</td>
+</tr>
+<tr class="even">
+<td>Euler (Korpus)</td>
+<td><code>en</code></td>
+<td style="text-align: right;">7.521</td>
+<td style="text-align: right;">59,8 %</td>
+<td style="text-align: right;"><strong>99,3 %</strong></td>
+<td>de (14)</td>
+</tr>
+<tr class="odd">
+<td>Euler (Korpus)</td>
+<td><code>de</code></td>
+<td style="text-align: right;">5.621</td>
+<td style="text-align: right;">44,5 %</td>
+<td style="text-align: right;"><strong>95,4 %</strong></td>
+<td>en (55)</td>
+</tr>
+<tr class="even">
+<td>Euler (Korpus)</td>
+<td><code>fr</code></td>
+<td style="text-align: right;">676</td>
+<td style="text-align: right;">41,3 %</td>
+<td style="text-align: right;"><strong>85,3 %</strong></td>
+<td>en (35)</td>
+</tr>
+<tr class="odd">
+<td>Euler (Briefe)</td>
+<td><code>en</code></td>
+<td style="text-align: right;">6.416</td>
+<td style="text-align: right;">58,7 %</td>
+<td style="text-align: right;"><strong>99,2 %</strong></td>
+<td>de (13)</td>
+</tr>
+<tr class="even">
+<td>Euler (Briefe)</td>
+<td><code>de</code></td>
+<td style="text-align: right;">4.629</td>
+<td style="text-align: right;">44,0 %</td>
+<td style="text-align: right;"><strong>95,2 %</strong></td>
+<td>la (48)</td>
+</tr>
+<tr class="odd">
+<td>Euler (Briefe)</td>
+<td><code>la</code></td>
+<td style="text-align: right;">2.137</td>
+<td style="text-align: right;">40,0 %</td>
+<td style="text-align: right;"><strong>71,9 %</strong></td>
+<td>de (145)</td>
+</tr>
+<tr class="even">
+<td>Euler (Briefe)</td>
+<td><code>fr</code></td>
+<td style="text-align: right;">334</td>
+<td style="text-align: right;">21,6 %</td>
+<td style="text-align: right;"><strong>50,0 %</strong></td>
+<td>en (30)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="briefe-parteien-daten-zuordnung" class="level3">
+<h3 class="anchored" data-anchor-id="briefe-parteien-daten-zuordnung">Briefe, Parteien, Daten, Zuordnung</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Messung</th>
+<th style="text-align: right;">Kármán</th>
+<th style="text-align: right;">Euler</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Briefe</td>
+<td style="text-align: right;">15.976</td>
+<td style="text-align: right;">3.393</td>
+</tr>
+<tr class="even">
+<td>Absender nicht aufgelöst</td>
+<td style="text-align: right;">43,2 %</td>
+<td style="text-align: right;">0,0 %</td>
+</tr>
+<tr class="odd">
+<td>Empfänger nicht aufgelöst</td>
+<td style="text-align: right;">56,8 %</td>
+<td style="text-align: right;">0,0 %</td>
+</tr>
+<tr class="even">
+<td>keine Partei aufgelöst</td>
+<td style="text-align: right;">42,4 %</td>
+<td style="text-align: right;">0,0 %</td>
+</tr>
+<tr class="odd">
+<td>ohne Datum</td>
+<td style="text-align: right;">45,4 %</td>
+<td style="text-align: right;">2,0 %</td>
+</tr>
+<tr class="even">
+<td>nur Jahr</td>
+<td style="text-align: right;">3,0 %</td>
+<td style="text-align: right;">0,0 %</td>
+</tr>
+<tr class="odd">
+<td>Seiten, die zwei Briefe teilen</td>
+<td style="text-align: right;">2,9 %</td>
+<td style="text-align: right;">0,0 %</td>
+</tr>
+<tr class="even">
+<td>Briefsätze auf geteilten Seiten</td>
+<td style="text-align: right;">6,0 %</td>
+<td style="text-align: right;">0,0 %</td>
+</tr>
+<tr class="odd">
+<td>Briefe ohne Text</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3.197</td>
+</tr>
+<tr class="even">
+<td>Namensformen, die mehrere Einträge treffen</td>
+<td style="text-align: right;">223</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td>Personennennungen mit Registerverknüpfung</td>
+<td style="text-align: right;">41,7 %</td>
+<td style="text-align: right;">15,3 %</td>
+</tr>
+<tr class="even">
+<td>Handlungen mit Satzbeleg</td>
+<td style="text-align: right;">59,4 %</td>
+<td style="text-align: right;">9,3 %</td>
+</tr>
+<tr class="odd">
+<td>Geldhandlungen ohne Betrag</td>
+<td style="text-align: right;">44,9 %</td>
+<td style="text-align: right;">70,5 %</td>
+</tr>
+<tr class="even">
+<td>Briefe ohne Thema</td>
+<td style="text-align: right;">2,0 %</td>
+<td style="text-align: right;">17,8 %</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="stichproben-präzision-mit-95--intervall-wilson" class="level3">
+<h3 class="anchored" data-anchor-id="stichproben-präzision-mit-95--intervall-wilson">Stichproben: Präzision mit 95-%-Intervall (Wilson)</h3>
+<p>Gelesen von: agent (not owner-validated); Ziehung mit Seed 20261001 (<code>scripts/fql_audit_sample.py</code>). Eine Stichprobe dessen, was ein Filter liefert, misst Präzision, nicht Vollständigkeit.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Stichprobe</th>
+<th>Behauptung</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">richtig</th>
+<th style="text-align: right;">Präzision</th>
+<th>95 %</th>
+<th style="text-align: right;">nicht entscheidbar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>acts_karman</code></td>
+<td>the sentence expresses the act of this type, and agent and addressee are the right way round</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;"><strong>73,3 %</strong></td>
+<td>55,6 % – 85,8 %</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td><code>acts_karman_handlung</code></td>
+<td>the act of this type with these roles is stated in the letter (the shown sentence may be a neighbour)</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;"><strong>90,0 %</strong></td>
+<td>74,4 % – 96,5 %</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td><code>acts_regest_karman</code></td>
+<td>the regest states the act of this type</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;"><strong>93,3 %</strong></td>
+<td>78,7 % – 98,2 %</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td><code>topics_karman</code></td>
+<td>the regest supports the assigned topic</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;"><strong>90,0 %</strong></td>
+<td>74,4 % – 96,5 %</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td><code>mentions_karman</code></td>
+<td>the surface in the sentence denotes the register person it is linked to</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;"><strong>87,5 %</strong></td>
+<td>69,0 % – 95,7 %</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td><code>promise_dep_karman</code></td>
+<td>the sentence states a promise made by its grammatical subject (lemma promise, VERB, nsubj + obj/ccomp/xcomp)</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;"><strong>83,3 %</strong></td>
+<td>66,4 % – 92,7 %</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td><code>imperative_karman</code></td>
+<td>the sentence is an instruction or request addressed to the reader (not a salutation, quotation or fragment)</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;"><strong>13,3 %</strong></td>
+<td>5,3 % – 29,7 %</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td><code>will_karman</code></td>
+<td>the sentence is a commitment by the writer to do something (I will / I shall + verb)</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;"><strong>40,0 %</strong></td>
+<td>24,6 % – 57,7 %</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td><code>topics_euler</code></td>
+<td>the regest supports the assigned topic</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;"><strong>86,7 %</strong></td>
+<td>70,3 % – 94,7 %</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td><code>mentions_karman_2</code></td>
+<td>the surface in the sentence denotes the register person it is linked to</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;"><strong>80,0 %</strong></td>
+<td>58,4 % – 91,9 %</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td><code>lemma_numerus_euler</code></td>
+<td>the token’s form is an inflected form of ‘numerus’ (lemma correct)</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;"><strong>100,0 %</strong></td>
+<td>88,6 % – 100,0 %</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td><code>citations_hevelius</code></td>
+<td>the passage cites this letter or register entry (number, date and parties, or shelfmark), and the builder resolved it to the right one</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;"><strong>95,0 %</strong></td>
+<td>83,5 % – 98,6 %</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dependenzfilter am Beispiel <em>promise</em> (Kármán).</strong> Lemma + VERB: 137 Sätze; mit Subjekt und Objekt: 93; zusätzlich belebtes Subjekt: 80. Unter den 57 verworfenen Sätzen waren 29 echte Zusagen (passive and participle forms (‘has been promised’, ‘the promised copy’), subjects that are common nouns (‘Our Company has promised’), conjoined or coordinated predicates). Geschätzt: Lemma-Weg Präzision 80 %, Vollständigkeit 100 %; Dependenzweg Präzision 100 %, Vollständigkeit 73 % (real promises = 80 kept (precision 24/24 on the judged sample) + 29 read among the dropped = about 109; the unclear sentence and promise tagged NOUN are not counted).</p>
+</section>
+<section id="satzfilter-rezepte-über-stanza" class="level3">
+<h3 class="anchored" data-anchor-id="satzfilter-rezepte-über-stanza">Satzfilter-Rezepte über Stanza</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rezept</th>
+<th>Sammlung</th>
+<th style="text-align: right;">Sätze</th>
+<th style="text-align: right;">davon in Briefen</th>
+<th style="text-align: right;">Briefe</th>
+<th style="text-align: right;">ms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>J1 · Zwei Lemmata im selben Satz</td>
+<td>Kármán</td>
+<td style="text-align: right;">1.269</td>
+<td style="text-align: right;">1.269</td>
+<td style="text-align: right;">563</td>
+<td style="text-align: right;">24.9</td>
+</tr>
+<tr class="even">
+<td>J2 · Zwei Lemmata im Abstand von höchstens vier Wörtern</td>
+<td>Kármán</td>
+<td style="text-align: right;">1.251</td>
+<td style="text-align: right;">1.251</td>
+<td style="text-align: right;">560</td>
+<td style="text-align: right;">23.0</td>
+</tr>
+<tr class="odd">
+<td>J3 · Prädikat mit Subjekt und Objekt (Dependenz)</td>
+<td>Kármán</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">38.1</td>
+</tr>
+<tr class="even">
+<td>J4 · Handelnder als grammatisches Subjekt eines Verbs</td>
+<td>Kármán</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">14.3</td>
+</tr>
+<tr class="odd">
+<td>J5 · Verneinte Sätze mit einem Lemma</td>
+<td>Kármán</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">43.4</td>
+</tr>
+<tr class="even">
+<td>J6 · Zukunft in der ersten Person (Zusagen: ‘I will send’)</td>
+<td>Kármán</td>
+<td style="text-align: right;">904</td>
+<td style="text-align: right;">904</td>
+<td style="text-align: right;">722</td>
+<td style="text-align: right;">37.1</td>
+</tr>
+<tr class="odd">
+<td>J7 · Imperativ (Mood=Imp): Bitten und Anweisungen</td>
+<td>Kármán</td>
+<td style="text-align: right;">17.295</td>
+<td style="text-align: right;">17.295</td>
+<td style="text-align: right;">5.192</td>
+<td style="text-align: right;">116.3</td>
+</tr>
+<tr class="even">
+<td>J8 · Frage (Satz endet auf Fragezeichen)</td>
+<td>Kármán</td>
+<td style="text-align: right;">2.695</td>
+<td style="text-align: right;">2.695</td>
+<td style="text-align: right;">1.257</td>
+<td style="text-align: right;">34.5</td>
+</tr>
+<tr class="odd">
+<td>J9 · Entität eines Typs und ein Lemma im selben Satz (Geld und zahlen)</td>
+<td>Kármán</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">15.9</td>
+</tr>
+<tr class="even">
+<td>J10 · Personennamen (PERSON/PER) in Sätzen mit einem Lemma</td>
+<td>Kármán</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">13.9</td>
+</tr>
+<tr class="odd">
+<td>J11 · Lateinisches Lemma nur dort, wo das Etikett Latein ist</td>
+<td>Euler</td>
+<td style="text-align: right;">962</td>
+<td style="text-align: right;">250</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">41.5</td>
+</tr>
+<tr class="even">
+<td>J12 · Satz mit Gleichung ausschließen (Mathematik-Token)</td>
+<td>Euler</td>
+<td style="text-align: right;">313</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">50.7</td>
+</tr>
+</tbody>
+</table>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>J1 Zwei Lemmata im selben Satz (a = wind, b = tunnel)</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-filename="J1 Zwei Lemmata im selben Satz (a = wind, b = tunnel)"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> a.doc_id, a.pidx, a.sent_idx <span class="kw">FROM</span> stz.stz_tokens a</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> stz.stz_tokens b <span class="kw">ON</span> b.doc_id <span class="op">=</span> a.doc_id <span class="kw">AND</span> b.pidx <span class="op">=</span> a.pidx <span class="kw">AND</span> b.sent_idx <span class="op">=</span> a.sent_idx</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> a.lemma <span class="op">=</span> $a <span class="kw">AND</span> b.lemma <span class="op">=</span> $b <span class="kw">AND</span> a.upos <span class="kw">IN</span> (<span class="st">'NOUN'</span>,<span class="st">'PROPN'</span>,<span class="st">'VERB'</span>,<span class="st">'ADJ'</span>) <span class="kw">AND</span> b.upos <span class="kw">IN</span> (<span class="st">'NOUN'</span>,<span class="st">'PROPN'</span>,<span class="st">'VERB'</span>,<span class="st">'ADJ'</span>)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>J2 Zwei Lemmata im Abstand von höchstens vier Wörtern (a = wind, b = tunnel)</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-filename="J2 Zwei Lemmata im Abstand von höchstens vier Wörtern (a = wind, b = tunnel)"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> a.doc_id, a.pidx, a.sent_idx <span class="kw">FROM</span> stz.stz_tokens a</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> stz.stz_tokens b <span class="kw">ON</span> b.doc_id <span class="op">=</span> a.doc_id <span class="kw">AND</span> b.pidx <span class="op">=</span> a.pidx <span class="kw">AND</span> b.sent_idx <span class="op">=</span> a.sent_idx <span class="kw">AND</span> <span class="fu">abs</span>(b.tid <span class="op">-</span> a.tid) <span class="kw">BETWEEN</span> <span class="dv">1</span> <span class="kw">AND</span> <span class="dv">4</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> a.lemma <span class="op">=</span> $a <span class="kw">AND</span> b.lemma <span class="op">=</span> $b</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>J3 Prädikat mit Subjekt und Objekt (Dependenz) (verb = promise)</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-filename="J3 Prädikat mit Subjekt und Objekt (Dependenz) (verb = promise)"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> v.doc_id, v.pidx, v.sent_idx <span class="kw">FROM</span> stz.stz_tokens v</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> stz.stz_tokens s <span class="kw">ON</span> s.doc_id <span class="op">=</span> v.doc_id <span class="kw">AND</span> s.pidx <span class="op">=</span> v.pidx <span class="kw">AND</span> s.sent_idx <span class="op">=</span> v.sent_idx <span class="kw">AND</span> s.head <span class="op">=</span> v.tid <span class="kw">AND</span> s.deprel <span class="kw">LIKE</span> <span class="st">'nsubj%'</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> stz.stz_tokens o <span class="kw">ON</span> o.doc_id <span class="op">=</span> v.doc_id <span class="kw">AND</span> o.pidx <span class="op">=</span> v.pidx <span class="kw">AND</span> o.sent_idx <span class="op">=</span> v.sent_idx <span class="kw">AND</span> o.head <span class="op">=</span> v.tid <span class="kw">AND</span> o.deprel <span class="kw">IN</span> (<span class="st">'obj'</span>,<span class="st">'ccomp'</span>,<span class="st">'xcomp'</span>,<span class="st">'iobj'</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> v.lemma <span class="op">=</span> $verb <span class="kw">AND</span> v.upos <span class="op">=</span> <span class="st">'VERB'</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span> ((s.upos <span class="op">=</span> <span class="st">'PRON'</span> <span class="kw">AND</span> s.lemma <span class="kw">IN</span> (<span class="st">'I'</span>,<span class="st">'you'</span>,<span class="st">'he'</span>,<span class="st">'she'</span>,<span class="st">'we'</span>,<span class="st">'they'</span>,<span class="st">'who'</span>,<span class="st">'one'</span>)) <span class="kw">OR</span> s.upos <span class="op">=</span> <span class="st">'PROPN'</span>)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>J4 Handelnder als grammatisches Subjekt eines Verbs (actor = Putnam, verb = send)</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-filename="J4 Handelnder als grammatisches Subjekt eines Verbs (actor = Putnam, verb = send)"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> v.doc_id, v.pidx, v.sent_idx <span class="kw">FROM</span> stz.stz_tokens v</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> stz.stz_tokens s <span class="kw">ON</span> s.doc_id <span class="op">=</span> v.doc_id <span class="kw">AND</span> s.pidx <span class="op">=</span> v.pidx <span class="kw">AND</span> s.sent_idx <span class="op">=</span> v.sent_idx <span class="kw">AND</span> s.head <span class="op">=</span> v.tid <span class="kw">AND</span> s.deprel <span class="kw">LIKE</span> <span class="st">'nsubj%'</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> v.lemma <span class="op">=</span> $verb <span class="kw">AND</span> v.upos <span class="op">=</span> <span class="st">'VERB'</span> <span class="kw">AND</span> s.form <span class="op">=</span> $actor</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>J5 Verneinte Sätze mit einem Lemma (lemma = grant)</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-filename="J5 Verneinte Sätze mit einem Lemma (lemma = grant)"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> t.doc_id, t.pidx, t.sent_idx <span class="kw">FROM</span> stz.stz_tokens t</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> t.lemma <span class="op">=</span> $lemma <span class="kw">AND</span> <span class="kw">EXISTS</span> (<span class="kw">SELECT</span> <span class="dv">1</span> <span class="kw">FROM</span> stz.stz_tokens n <span class="kw">WHERE</span> n.doc_id <span class="op">=</span> t.doc_id <span class="kw">AND</span> n.pidx <span class="op">=</span> t.pidx <span class="kw">AND</span> n.sent_idx <span class="op">=</span> t.sent_idx</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span> n.head <span class="op">=</span> t.tid <span class="kw">AND</span> n.deprel <span class="op">=</span> <span class="st">'advmod'</span> <span class="kw">AND</span> <span class="fu">lower</span>(n.form) <span class="kw">IN</span> (<span class="st">'not'</span>,<span class="st">'never'</span>,<span class="st">'no'</span>,<span class="st">'n</span><span class="ch">''</span><span class="st">t'</span>))</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>J6 Zukunft in der ersten Person (Zusagen: 'I will send')</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-filename="J6 Zukunft in der ersten Person (Zusagen: 'I will send')"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> v.doc_id, v.pidx, v.sent_idx <span class="kw">FROM</span> stz.stz_tokens v</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> stz.stz_tokens s <span class="kw">ON</span> s.doc_id <span class="op">=</span> v.doc_id <span class="kw">AND</span> s.pidx <span class="op">=</span> v.pidx <span class="kw">AND</span> s.sent_idx <span class="op">=</span> v.sent_idx <span class="kw">AND</span> s.head <span class="op">=</span> v.tid <span class="kw">AND</span> s.deprel <span class="kw">LIKE</span> <span class="st">'nsubj%'</span> <span class="kw">AND</span> s.lemma <span class="op">=</span> <span class="st">'I'</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> stz.stz_tokens m <span class="kw">ON</span> m.doc_id <span class="op">=</span> v.doc_id <span class="kw">AND</span> m.pidx <span class="op">=</span> v.pidx <span class="kw">AND</span> m.sent_idx <span class="op">=</span> v.sent_idx <span class="kw">AND</span> m.head <span class="op">=</span> v.tid <span class="kw">AND</span> m.deprel <span class="op">=</span> <span class="st">'aux'</span> <span class="kw">AND</span> <span class="fu">lower</span>(m.form) <span class="kw">IN</span> (<span class="st">'will'</span>,<span class="st">'shall'</span>,<span class="st">'</span><span class="ch">''</span><span class="st">ll'</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> v.upos <span class="op">=</span> <span class="st">'VERB'</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>J7 Imperativ (Mood=Imp): Bitten und Anweisungen</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-filename="J7 Imperativ (Mood=Imp): Bitten und Anweisungen"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> t.doc_id, t.pidx, t.sent_idx <span class="kw">FROM</span> stz.stz_tokens t</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> stz.stz_feats f <span class="kw">ON</span> f.doc_id <span class="op">=</span> t.doc_id <span class="kw">AND</span> f.pidx <span class="op">=</span> t.pidx <span class="kw">AND</span> f.sent_idx <span class="op">=</span> t.sent_idx <span class="kw">AND</span> f.tid <span class="op">=</span> t.tid <span class="kw">AND</span> f.feat <span class="op">=</span> <span class="st">'Mood'</span> <span class="kw">AND</span> f.val <span class="op">=</span> <span class="st">'Imp'</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> t.upos <span class="op">=</span> <span class="st">'VERB'</span> <span class="kw">AND</span> t.deprel <span class="op">=</span> <span class="st">'root'</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>J8 Frage (Satz endet auf Fragezeichen)</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-filename="J8 Frage (Satz endet auf Fragezeichen)"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> doc_id, pidx, sent_idx <span class="kw">FROM</span> (<span class="kw">SELECT</span> doc_id, pidx, sent_idx, arg_max(form, tid) <span class="kw">AS</span> f <span class="kw">FROM</span> stz.stz_tokens <span class="kw">GROUP</span> <span class="kw">BY</span> <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>) <span class="kw">WHERE</span> f <span class="op">=</span> <span class="st">'?'</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>J9 Entität eines Typs und ein Lemma im selben Satz (Geld und zahlen) (lemma = pay)</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" data-filename="J9 Entität eines Typs und ein Lemma im selben Satz (Geld und zahlen) (lemma = pay)"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> e.doc_id, e.pidx, e.sent_idx <span class="kw">FROM</span> stz.stz_entities e</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> stz.stz_tokens t <span class="kw">ON</span> t.doc_id <span class="op">=</span> e.doc_id <span class="kw">AND</span> t.pidx <span class="op">=</span> e.pidx <span class="kw">AND</span> t.sent_idx <span class="op">=</span> e.sent_idx</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> e.ent_type <span class="kw">IN</span> (<span class="st">'MONEY'</span>) <span class="kw">AND</span> t.lemma <span class="op">=</span> $lemma <span class="kw">AND</span> t.upos <span class="op">=</span> <span class="st">'VERB'</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>J10 Personennamen (PERSON/PER) in Sätzen mit einem Lemma (lemma = thank)</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" data-filename="J10 Personennamen (PERSON/PER) in Sätzen mit einem Lemma (lemma = thank)"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> e.doc_id, e.pidx, e.sent_idx <span class="kw">FROM</span> stz.stz_entities e</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> stz.stz_tokens t <span class="kw">ON</span> t.doc_id <span class="op">=</span> e.doc_id <span class="kw">AND</span> t.pidx <span class="op">=</span> e.pidx <span class="kw">AND</span> t.sent_idx <span class="op">=</span> e.sent_idx</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> e.ent_type <span class="kw">IN</span> (<span class="st">'PERSON'</span>,<span class="st">'PER'</span>) <span class="kw">AND</span> t.lemma <span class="op">=</span> $lemma <span class="kw">AND</span> t.upos <span class="op">=</span> <span class="st">'VERB'</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>J11 Lateinisches Lemma nur dort, wo das Etikett Latein ist (lemma = numerus)</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-filename="J11 Lateinisches Lemma nur dort, wo das Etikett Latein ist (lemma = numerus)"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> t.doc_id, t.pidx, t.sent_idx <span class="kw">FROM</span> stz.stz_tokens t</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> stz.stz_sentences s <span class="kw">ON</span> s.doc_id <span class="op">=</span> t.doc_id <span class="kw">AND</span> s.pidx <span class="op">=</span> t.pidx <span class="kw">AND</span> s.sent_idx <span class="op">=</span> t.sent_idx</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> t.lemma <span class="op">=</span> $lemma <span class="kw">AND</span> s.lang <span class="op">=</span> <span class="st">'la'</span> <span class="kw">AND</span> <span class="kw">NOT</span> t.is_math</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>J12 Satz mit Gleichung ausschließen (Mathematik-Token) (lemma = numerus)</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-filename="J12 Satz mit Gleichung ausschließen (Mathematik-Token) (lemma = numerus)"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> t.doc_id, t.pidx, t.sent_idx <span class="kw">FROM</span> stz.stz_tokens t</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> t.lemma <span class="op">=</span> $lemma <span class="kw">AND</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> (<span class="kw">SELECT</span> <span class="dv">1</span> <span class="kw">FROM</span> stz.stz_tokens m <span class="kw">WHERE</span> m.doc_id <span class="op">=</span> t.doc_id <span class="kw">AND</span> m.pidx <span class="op">=</span> t.pidx</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">AND</span> m.sent_idx <span class="op">=</span> t.sent_idx <span class="kw">AND</span> m.is_math)</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="anfragen-über-die-satzstruktur" class="level2">
+<h2 class="anchored" data-anchor-id="anfragen-über-die-satzstruktur">Anfragen über die Satzstruktur</h2>
+<p>Die Stanza-Datenbank erlaubt Filter, die über Wörter hinausgehen: zwei Lemmata im selben Satz oder in kurzem Abstand, ein Prädikat mit Subjekt und Objekt, Verneinung, Zeit und Modus, Fragen, eine Entität eines Typs neben einem Lemma. Die Rezepte J1–J12 oben sind ausgeführt; ihre Präzision ist für drei von ihnen gelesen:</p>
+<ul>
+<li><strong>Zusagen über das Lemma <em>promise</em></strong> (J3): Der Lemmaweg (VERB) liefert 137 Sätze, geschätzt 80 % davon echte Zusagen. Der Abhängigkeitsweg mit belebtem Subjekt liefert 80 Sätze, in der Stichprobe alle richtig, aber er verfehlt etwa ein Viertel der Zusagen: Passiv („has been promised“), Partizip („the promised copy“), Subjekte, die Substantive sind („Our Company has promised“).</li>
+<li><strong>Imperativ als Bitte</strong> (J7): 13 % Präzision. Der Imperativ trifft vor allem Darstellungsformen von Manuskripten („Let us consider“, „Assume“), Tabellenzeilen und Fragmente. Ohne Einschränkung auf Briefe und eine Anrede taugt er nicht als Filter für Bitten.</li>
+<li><strong>„I will / I shall“ als Zusage</strong> (J6): 40 % Präzision. Ankündigungen des Textes („I shall restrict myself …“), höfliche Bitten („I shall appreciate …“) und Voraussagen sind keine Zusagen.</li>
+</ul>
+<p>Daraus folgt für die Formen: Satzfilter sind gute Zeugen für das Vorkommen eines Wortes in einer bestimmten Funktion, schlechte für Sprechhandlungen. Die Handlungen der Formen E1–E8 kommen deshalb aus einer Lesung des Modells mit gemessener Präzision, nicht aus einem Satzfilter; ein Satzfilter kann als zweiter, unabhängiger Zeuge dienen.</p>
+</section>
+<section id="fehler-jeder-form" class="level2">
+<h2 class="anchored" data-anchor-id="fehler-jeder-form">Fehler jeder Form</h2>
+<p>Jede Form erbt die Fehler der Schichten, die sie liest. <code>error_model.yaml</code> nennt sie, mit der Richtung (übersehen, falsch gefunden, verschoben) und mit der Art der Zahl, die die Form liefert: exakt, Untergrenze, Obergrenze, Schätzung, Beleg. Die <a href="./begruendung.html">Begründung</a> macht aus jeder Fehlerart eine kritische Frage.</p>
+<!-- generiert von famulus_proof.fql.docs aus fql/error_model.yaml; nicht von Hand ändern -->
+<section id="fehlerarten" class="level3">
+<h3 class="anchored" data-anchor-id="fehlerarten">Fehlerarten</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Code</th>
+<th>Fehlerart</th>
+<th>Richtung</th>
+<th>Schicht</th>
+<th>Wirkung</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>OCR</code></td>
+<td>Lesefehler der Texterkennung</td>
+<td>both</td>
+<td>text</td>
+<td>Falsch gelesene Zeichen verändern Wortformen. Die Suche nach der richtigen Form verfehlt den Satz (FN); eine falsch gelesene Form trifft einen fremden Namen (FP).</td>
+</tr>
+<tr class="even">
+<td><code>SEG</code></td>
+<td>Zuordnung von Seiten und Sätzen zu Briefen</td>
+<td>both</td>
+<td>text</td>
+<td>Ein Brief ist eine Seitenspanne. Auf einer Seite, die zwei Briefe teilt, gehören Sätze zum Nachbarbrief; ein Satz wird dann zweimal gezählt oder dem falschen Brief belegt.</td>
+</tr>
+<tr class="odd">
+<td><code>COV</code></td>
+<td>Abdeckung des Bestands</td>
+<td>FN</td>
+<td>register</td>
+<td>Was das Sidecar nicht enthält, kann keine Form finden. Eine leere Antwort heißt dann nicht, dass es das Gesuchte nicht gibt.</td>
+</tr>
+<tr class="even">
+<td><code>PARTY</code></td>
+<td>Absender oder Empfänger nicht aufgelöst</td>
+<td>FN</td>
+<td>register</td>
+<td>Das Register nennt bei manchen Briefen keine Partei. Jeder Filter auf eine Person lässt diese Briefe aus; Zählungen sind Untergrenzen.</td>
+</tr>
+<tr class="odd">
+<td><code>LINK</code></td>
+<td>Verknüpfung mit dem Register (Namensauflösung)</td>
+<td>both</td>
+<td>register</td>
+<td>Eine Namensform wird einer Person des Registers zugeordnet. Gleiche Familiennamen verschiedener Personen verschmelzen (FP); eine nicht verzeichnete Schreibweise bleibt ungebunden (FN).</td>
+</tr>
+<tr class="even">
+<td><code>NER</code></td>
+<td>Fehler der Namenserkennung</td>
+<td>both</td>
+<td>stanza</td>
+<td>Spanne oder Typ falsch, Name übersehen. Die Typsysteme der Sprachmodelle unterscheiden sich (PERSON, PER), und für Latein gibt es keine Namenserkennung.</td>
+</tr>
+<tr class="odd">
+<td><code>LANG</code></td>
+<td>Falsches Sprachetikett (falsches Stanza-Modell)</td>
+<td>both</td>
+<td>stanza</td>
+<td>Das Etikett eines Satzes wählt das Modell. Ein englischer Satz mit Etikett Latein wird mit dem lateinischen Modell gelesen; Lemma, Wortart und Entitäten sind dann Unsinn oder fehlen.</td>
+</tr>
+<tr class="even">
+<td><code>LEMMA</code></td>
+<td>Lemma- und Wortartfehler</td>
+<td>both</td>
+<td>stanza</td>
+<td>Falsche Grundform (problema zu problemus) oder falsche Wortart. Ein Lemmafilter verfehlt dann den Satz oder trifft eine fremde Wortform.</td>
+</tr>
+<tr class="odd">
+<td><code>PARSE</code></td>
+<td>Fehler der Abhängigkeitsanalyse</td>
+<td>both</td>
+<td>stanza</td>
+<td>Falsche Köpfe und Relationen. Filter über Subjekt, Objekt oder Verneinung verlieren Sätze mit anderer Struktur (Passiv, Koordination) oder behalten Sätze mit übertragener Bedeutung.</td>
+</tr>
+<tr class="even">
+<td><code>SENT</code></td>
+<td>Satzgrenzen und Satzeinheiten</td>
+<td>both</td>
+<td>stanza</td>
+<td>Briefzeilen, Anreden und Tabellenzeilen sind eigene Sätze; ein Satz über einen Seitenumbruch ist in zwei geschnitten. Satzweise Filter sehen nur eine Hälfte.</td>
+</tr>
+<tr class="odd">
+<td><code>DATE</code></td>
+<td>Datum fehlt oder ist grob</td>
+<td>FN</td>
+<td>register</td>
+<td>Briefe ohne Datum fallen aus jedem Zeit- und Periodenfilter; Jahresangaben ohne Monat und Tag fallen aus Filtern auf Monat oder Tag.</td>
+</tr>
+<tr class="even">
+<td><code>TOPIC</code></td>
+<td>Thema durch das Modell zugeordnet</td>
+<td>both</td>
+<td>llm</td>
+<td>Ein Schlagwort des Regests wird einem Thema zugeordnet; falsche Zuordnung (FP) oder kein Thema (FN).</td>
+</tr>
+<tr class="odd">
+<td><code>ACT</code></td>
+<td>Handlung durch das Modell gelesen</td>
+<td>both</td>
+<td>llm</td>
+<td>Art (Bitte, Zusage, Zahlung), Rollen (wer an wen) oder Gegenstand falsch gelesen; eine Handlung übersehen. Das Modell liest meist das Regest, selten den Satz.</td>
+</tr>
+<tr class="even">
+<td><code>LOCUS</code></td>
+<td>Belegsatz nicht der Satz der Handlung</td>
+<td>FP</td>
+<td>llm</td>
+<td>Die Handlung stimmt für den Brief, der angezeigte Satz ist aber ein Nachbarsatz (Einleitung, Listenrest). Der Beleg trägt die Handlung dann nicht.</td>
+</tr>
+<tr class="odd">
+<td><code>PERIOD</code></td>
+<td>Periodengrenzen nicht bestätigt</td>
+<td>bias</td>
+<td>register</td>
+<td>Kriegs- und Friedenszeiten sind konventionelle Grenzen mit dem Status proposed; Briefe nahe der Grenze und Briefe ohne Datum sind unsicher oder fehlen.</td>
+</tr>
+<tr class="even">
+<td><code>BIND</code></td>
+<td>Bindung der Parameter</td>
+<td>both</td>
+<td>harness</td>
+<td>Das Modell bindet einen Namen an die falsche Person oder bei doppelten Registereinträgen an einen der beiden.</td>
+</tr>
+<tr class="odd">
+<td><code>FORM</code></td>
+<td>Wahl der Anfrageform</td>
+<td>both</td>
+<td>harness</td>
+<td>Die Frage wird einer Form zugeordnet, die etwas Verwandtes beantwortet. Die Wahl wurde nur an Fragen des Katalogautors gemessen.</td>
+</tr>
+<tr class="even">
+<td><code>POST</code></td>
+<td>Formulierung der Antwort</td>
+<td>bias</td>
+<td>harness</td>
+<td>Die Antwort fasst höchstens vierzig Zeilen zusammen und kann eine Untergrenze als Gesamtzahl sprechen.</td>
+</tr>
+<tr class="odd">
+<td><code>COUNT</code></td>
+<td>Zählmodus und Doppelzählung</td>
+<td>bias</td>
+<td>register</td>
+<td>Ob Briefe, Sätze oder Erwähnungen gezählt werden, bestimmt die Zahl; ein Satz in zwei Briefen oder ein doppelter Registereintrag zählt doppelt.</td>
+</tr>
+<tr class="even">
+<td><code>FTS</code></td>
+<td>Volltextsuche (BM25) über Wortformen</td>
+<td>both</td>
+<td>text</td>
+<td>Der Index nutzt englische Stoppwörter und englische Stammformen für alle Sprachen. Flexionsformen sind verschiedene Suchbegriffe; lateinische Funktionswörter wie et, non, in werden als Stoppwörter gestrichen.</td>
+</tr>
+<tr class="odd">
+<td><code>MATH</code></td>
+<td>Formeln als Namen oder Wörter erkannt</td>
+<td>FP</td>
+<td>stanza</td>
+<td>In mathematischen Texten werden Formeln als Personen, Orte oder Wörter erkannt und gezählt.</td>
+</tr>
+<tr class="even">
+<td><code>ZERO</code></td>
+<td>Leere Antwort ist keine Verneinung</td>
+<td>FN</td>
+<td>harness</td>
+<td>Die Null einer Zählung bedeutet nur, dass das Sidecar nichts enthält. Jede der anderen Fehlerarten kann sie erzeugen.</td>
+</tr>
+<tr class="odd">
+<td><code>CITE</code></td>
+<td>Anführung eines Briefs durch das Modell gelesen</td>
+<td>both</td>
+<td>llm</td>
+<td>Das Modell liest aus einer Anmerkung oder einem Absatz, welchen Brief die Herausgeber anführen; der Bau löst Datum, Parteien und Nummer gegen Register und Briefe auf. Eine falsch gelesene oder falsch aufgelöste Anführung hängt die Stelle an einen fremden Brief (FP); eine übersehene fehlt (FN).</td>
+</tr>
+<tr class="even">
+<td><code>SCAN</code></td>
+<td>Kommentarseiten nicht gescannt</td>
+<td>FN</td>
+<td>text</td>
+<td>Von den Essays und Einleitungen fehlen Seiten (Tome I und Tome II, aufgeführt in completeness.md der Sammlung). Was dort steht, findet keine Form.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="fehlerarten-je-form" class="level3">
+<h3 class="anchored" data-anchor-id="fehlerarten-je-form">Fehlerarten je Form</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Form</th>
+<th>Fehlerarten (wichtigste zuerst)</th>
+<th>Zahlen sind</th>
+<th>Wie der Fehler aussieht</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-A1-bestand">A1</a> Bestand der Sammlung</td>
+<td><code>COV</code> <code>PARTY</code> <code>SEG</code></td>
+<td>exakt</td>
+<td>Zählt, was das Sidecar enthält. Fehlende Texte erscheinen als kleinere Zahl, nicht als Fehlermeldung.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-A2-briefe-pro-jahr">A2</a> Briefe pro Jahr</td>
+<td><code>DATE</code> <code>PARTY</code> <code>COV</code></td>
+<td>Untergrenze</td>
+<td>Briefe ohne Datum fehlen in jedem Jahr; mit Personenfilter fehlen zusätzlich Briefe ohne aufgelöste Partei.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-A3-briefe-im-zeitraum">A3</a> Briefe in einem Zeitraum</td>
+<td><code>DATE</code> <code>PARTY</code> <code>COV</code></td>
+<td>Untergrenze</td>
+<td>Wie A2; ein Zeitraum aus Tagen verlangt zudem ein Tagesdatum, Jahresangaben fallen heraus.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-A4-brieftext">A4</a> Text eines Briefs</td>
+<td><code>SEG</code> <code>OCR</code> <code>COV</code></td>
+<td>Beleg</td>
+<td>Zeigt die Absätze der Seitenspanne; auf einer geteilten Seite stehen auch Absätze des Nachbarbriefs.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-A5-briefdaten">A5</a> Daten eines Briefs</td>
+<td><code>DATE</code> <code>PARTY</code></td>
+<td>exakt</td>
+<td>Gibt die Registerangaben wieder; ein Fehler liegt im Register, nicht in der Abfrage.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-B1-person-register">B1</a> Person im Register</td>
+<td><code>LINK</code> <code>COV</code></td>
+<td>Schätzung</td>
+<td>Sucht Namensformen im Register; verschiedene Personen mit gleichem Familiennamen und nicht verzeichnete Schreibweisen.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-B2-briefe-einer-person">B2</a> Briefe von und an eine Person</td>
+<td><code>PARTY</code> <code>LINK</code> <code>DATE</code></td>
+<td>Untergrenze</td>
+<td>Briefe ohne aufgelöste Partei fehlen; bei zwei Personen gleichen Namens werden ihre Briefe vermischt.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-B3-schreiber-an-einem-ort">B3</a> Wer schrieb von einem Ort</td>
+<td><code>PARTY</code> <code>COV</code> <code>LINK</code></td>
+<td>Untergrenze</td>
+<td>Der Ort wird als Teilzeichenkette der Registerangabe gesucht (ein kurzer Name trifft auch längere Ortsnamen, FP); andere Schreibweisen desselben Ortes fehlen (FN).</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-B4-orte-einer-person">B4</a> Orte, von denen jemand schrieb</td>
+<td><code>PARTY</code> <code>LINK</code> <code>COV</code></td>
+<td>Untergrenze</td>
+<td>Nur Briefe mit Ortsangabe und aufgelöster Person gehen in die Liste ein.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-B5-ner-haeufigkeit">B5</a> Häufigst genannte Namen (NER)</td>
+<td><code>NER</code> <code>LANG</code> <code>LINK</code> <code>SENT</code> <code>MATH</code></td>
+<td>Schätzung</td>
+<td>Zählt Erwähnungen, nicht Personen. Lateinische Sätze haben keine Entitäten, und Sätze mit falschem Etikett verlieren sie.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-B6-erwaehnung">B6</a> Wer nennt eine Person, mit Beleg</td>
+<td><code>NER</code> <code>LINK</code> <code>LANG</code> <code>OCR</code> <code>SENT</code></td>
+<td>Beleg</td>
+<td>Die Belegsätze sind echte Sätze des Textes; ein Teil der Verknüpfungen ist falsch oder aus dem Satz nicht entscheidbar (Stichprobe), und es fehlen Briefe, in denen der Name nicht erkannt oder nicht verknüpft wurde.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-B7-ko-erwaehnung">B7</a> Wer wird zusammen mit einer Person genannt</td>
+<td><code>NER</code> <code>LINK</code> <code>COUNT</code> <code>SENT</code></td>
+<td>Schätzung</td>
+<td>Zählt Briefe, in denen beide Namen erkannt wurden; was ein Brief zweimal nennt, zählt einmal.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-B8-institutionen">B8</a> Institutionen in Briefen</td>
+<td><code>NER</code> <code>LINK</code> <code>COV</code></td>
+<td>Schätzung</td>
+<td>Institutionen nur dort, wo die Namenserkennung ORG oder ein Registereintrag vorliegt; Abkürzungen und Firmennamen als Personen verwechselt.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-B9-geldbetraege-genannt">B9</a> Genannte Geldbeträge (NER), mit Beleg</td>
+<td><code>NER</code> <code>LANG</code> <code>OCR</code></td>
+<td>Untergrenze</td>
+<td>Nur Beträge, die als MONEY erkannt wurden; Beträge als bloße Zahl (CARDINAL) fehlen.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-C1-briefpartner">C1</a> Briefpartner einer Person</td>
+<td><code>PARTY</code> <code>LINK</code> <code>COUNT</code></td>
+<td>Untergrenze</td>
+<td>Die Zahl der Partner und Briefe ist eine Untergrenze; verschmolzene Namen senken sie, nicht verknüpfte Namensformen heben sie.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-C2-paar-zaehlung">C2</a> Briefe zwischen zwei Personen</td>
+<td><code>PARTY</code> <code>LINK</code> <code>ZERO</code></td>
+<td>Untergrenze</td>
+<td>Null Briefe heißt keine registrierten Briefe zwischen beiden, nicht, dass sie sich nicht schrieben.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-C3-wer-schrieb-an">C3</a> Wer schrieb an eine Person</td>
+<td><code>PARTY</code> <code>LINK</code></td>
+<td>Untergrenze</td>
+<td>Absender ohne aufgelöste Partei fehlen.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-C4-an-wen-schrieb">C4</a> An wen schrieb eine Person</td>
+<td><code>PARTY</code> <code>LINK</code></td>
+<td>Untergrenze</td>
+<td>Empfänger ohne aufgelöste Partei fehlen.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-C5-paar-chronik">C5</a> Chronik eines Briefwechsels</td>
+<td><code>PARTY</code> <code>DATE</code> <code>LINK</code></td>
+<td>Untergrenze</td>
+<td>Die Chronik zeigt nur Briefe mit beiden Parteien; undatierte stehen am Ende.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-C6-absendeorte">C6</a> Absendeorte eines Briefwechsels</td>
+<td><code>PARTY</code> <code>COV</code></td>
+<td>Untergrenze</td>
+<td>Nur Briefe mit Ortsangabe.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-C7-pausen">C7</a> Pausen im Briefwechsel</td>
+<td><code>DATE</code> <code>PARTY</code> <code>ZERO</code></td>
+<td>Obergrenze</td>
+<td>Fehlende oder undatierte Briefe erzeugen scheinbare Pausen; die Pausenlänge ist eine Obergrenze.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-C8-netz">C8</a> Korrespondenznetz einer Person</td>
+<td><code>PARTY</code> <code>LINK</code></td>
+<td>Untergrenze</td>
+<td>Kanten nur zwischen aufgelösten Parteien; ein verschmolzener Name verbindet fremde Netze.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-C9-gemeinsame-partner">C9</a> Gemeinsame Briefpartner</td>
+<td><code>PARTY</code> <code>LINK</code> <code>ZERO</code></td>
+<td>Untergrenze</td>
+<td>Null gemeinsame Partner kann an nicht aufgelösten Briefen liegen.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-C10-erster-letzter">C10</a> Erster und letzter Brief</td>
+<td><code>DATE</code> <code>PARTY</code></td>
+<td>Untergrenze</td>
+<td>Der erste datierte Brief; ein undatierter früherer Brief wird nicht gefunden.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-D1-themen-paar">D1</a> Worüber X an Y schrieb (Themen)</td>
+<td><code>TOPIC</code> <code>PARTY</code> <code>LINK</code></td>
+<td>Schätzung</td>
+<td>Themen aus dem Regest durch das Modell; Briefe ohne Thema fehlen, einzelne Zuordnungen sind falsch.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-D2-regesten-paar">D2</a> Worüber X an Y schrieb (Regesten)</td>
+<td><code>PARTY</code> <code>LINK</code></td>
+<td>Beleg</td>
+<td>Zeigt Regesten des Herausgebers; Fehler liegen nur in der Auswahl der Briefe, nicht im Inhalt.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-D3-wer-schrieb-zu-thema">D3</a> Wer schrieb an X über ein Thema</td>
+<td><code>TOPIC</code> <code>PARTY</code> <code>LINK</code></td>
+<td>Schätzung</td>
+<td>Briefe ohne Thema oder mit falschem Thema; Briefe ohne aufgelöste Partei fehlen.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-D4-themenverteilung">D4</a> Themenverteilung</td>
+<td><code>TOPIC</code> <code>PARTY</code> <code>COV</code></td>
+<td>Schätzung</td>
+<td>Anteile über Briefe mit Thema; Euler hat für etwa jeden sechsten Brief kein Thema.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-D5-themenwandel">D5</a> Wandel der Themen über die Jahre</td>
+<td><code>TOPIC</code> <code>DATE</code> <code>COUNT</code></td>
+<td>Schätzung</td>
+<td>Der Verlauf über die Jahre zählt nur datierte Briefe mit Thema; Jahre mit wenigen Briefen schwanken stark.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-D6-erstes-auftreten">D6</a> Erstes Auftreten eines Themas</td>
+<td><code>TOPIC</code> <code>DATE</code></td>
+<td>Untergrenze</td>
+<td>Das früheste datierte Auftreten; ein früher undatierter Brief oder ein falsch zugeordnetes Thema verschiebt es.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-D7-regestsuche">D7</a> Suche in den Regesten (BM25)</td>
+<td><code>FTS</code> <code>PARTY</code></td>
+<td>Schätzung</td>
+<td>Stoppwörter und englische Stammformen; eine Flexionsform findet die anderen Formen nicht.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-D8-volltextsuche">D8</a> Suche im Brieftext (BM25)</td>
+<td><code>FTS</code> <code>OCR</code> <code>SEG</code> <code>LANG</code></td>
+<td>Schätzung</td>
+<td>Sucht Wortformen im OCR-Text; Schreibvarianten und Lesefehler verfehlen den Absatz, lateinische Stoppwörter werden gestrichen.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-E1-bitten-an">E1</a> Wer bat X um etwas</td>
+<td><code>ACT</code> <code>LOCUS</code> <code>PARTY</code> <code>LINK</code></td>
+<td>Schätzung</td>
+<td>Die Handlung wurde vom Modell gelesen, meist aus dem Regest; Rollen können vertauscht, die Art falsch sein.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-E2-finanzielle-unterstuetzung">E2</a> Wer bat X um finanzielle Unterstützung</td>
+<td><code>ACT</code> <code>LOCUS</code> <code>LINK</code> <code>PARTY</code></td>
+<td>Schätzung</td>
+<td>Gehaltsforderungen und Rechnungen werden als Bitte um Geld gelesen (FP); Bitten ohne Regestnennung fehlen.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-E3-zugesagte-betraege">E3</a> Welche Beträge X zusagte</td>
+<td><code>ACT</code> <code>LOCUS</code> <code>COV</code></td>
+<td>Untergrenze</td>
+<td>Bei einem großen Teil der Geldhandlungen fehlt der Betrag; es zählen nur Zusagen mit gelesenem Betrag.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-E4-empfehlungen">E4</a> Empfehlungen</td>
+<td><code>ACT</code> <code>LINK</code></td>
+<td>Schätzung</td>
+<td>Technische Vorschläge werden bisweilen als Empfehlung gelesen; Empfehlungen von Personen in anderer Wortwahl fehlen.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-E5-publikationswuensche">E5</a> Bitten um Bücher und Publikationen</td>
+<td><code>ACT</code> <code>LINK</code></td>
+<td>Schätzung</td>
+<td>Bitten um Sonderdrucke und Bücher sind stabil; Wünsche in Nebensätzen fehlen.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-E6-geld-ueber-zeit">E6</a> Geldbeträge über die Zeit</td>
+<td><code>ACT</code> <code>DATE</code> <code>COUNT</code></td>
+<td>Untergrenze</td>
+<td>Summiert nur Beträge, die gelesen wurden und ein Datum haben; Währungen werden nicht umgerechnet.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-E7-handlungen-eines-briefs">E7</a> Handlungen in einem Brief</td>
+<td><code>ACT</code> <code>LOCUS</code> <code>SEG</code></td>
+<td>Schätzung</td>
+<td>Alle Handlungen eines Briefs; auf geteilten Seiten gehört der Belegsatz bisweilen zum Nachbarbrief.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-E8-handlungsprofil">E8</a> Handlungsprofil einer Person</td>
+<td><code>ACT</code> <code>LINK</code> <code>COUNT</code></td>
+<td>Schätzung</td>
+<td>Die Verteilung der Handlungsarten folgt dem Modell; seltene Arten haben kleine Zahlen.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-F1-perioden">F1</a> Briefe in Kriegs- und Friedenszeiten</td>
+<td><code>PERIOD</code> <code>DATE</code> <code>PARTY</code></td>
+<td>Untergrenze</td>
+<td>Briefe ohne Datum sind keiner Periode zuzuordnen; die Grenzen sind noch nicht bestätigt.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-F2-krieg-frieden-themen">F2</a> Themen in Krieg und Frieden</td>
+<td><code>PERIOD</code> <code>DATE</code> <code>TOPIC</code></td>
+<td>Schätzung</td>
+<td>Zwei Unsicherheiten verbinden sich: Periodengrenze und Themenzuordnung.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-F3-krieg-frieden-handlungen">F3</a> Handlungen in Krieg und Frieden</td>
+<td><code>PERIOD</code> <code>DATE</code> <code>ACT</code></td>
+<td>Schätzung</td>
+<td>Periodengrenze und Handlungsart; seltene Handlungen je Periode sind zu klein für Vergleiche.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-F4-zeitreihe-perioden">F4</a> Zeitreihe mit Kriegsperioden</td>
+<td><code>PERIOD</code> <code>DATE</code></td>
+<td>Untergrenze</td>
+<td>Die Zeitreihe zählt datierte Briefe; die Kriegsbalken sind konventionelle Grenzen.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-F5-monate">F5</a> Briefe nach Monaten</td>
+<td><code>DATE</code></td>
+<td>Untergrenze</td>
+<td>Nur Briefe mit Tagesdatum (date_day); Angaben nur mit Monat oder Jahr fehlen, bei Karman fast die Hälfte der Briefe.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-G1-sprachen">G1</a> Sprachen der Briefe</td>
+<td><code>LANG</code> <code>COUNT</code></td>
+<td>Schätzung</td>
+<td>Zählt Sätze nach Etikett; mit falschem Etikett wächst die Zahl der lateinischen Sätze.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-G2-lemma-belege">G2</a> Belege eines Wortes (Lemma)</td>
+<td><code>LEMMA</code> <code>LANG</code> <code>SENT</code> <code>OCR</code> <code>SEG</code> <code>MATH</code></td>
+<td>Schätzung</td>
+<td>Die Grundform findet Flexionsformen (hoher Gewinn gegenüber der Zeichenkette); es fehlen Sätze mit falscher Grundform oder falschem Modell.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-G3-mathematik">G3</a> Mathematische Passagen und Formeln</td>
+<td><code>MATH</code> <code>OCR</code> <code>SEG</code></td>
+<td>Schätzung</td>
+<td>Zählt Absätze mit Gleichungen oder Dollarzeichen; Formeln im Fließtext ohne Zeichen fehlen.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-G4-fussnoten">G4</a> Fußnoten und Anmerkungen</td>
+<td><code>COV</code></td>
+<td>exakt</td>
+<td>Karman hat keine Fußnoten im Sidecar; ein leeres Ergebnis gilt nur für das Sidecar.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-G5-abbildungen">G5</a> Abbildungen in Briefen</td>
+<td><code>COV</code></td>
+<td>exakt</td>
+<td>Abbildungen nur dort, wo die OCR sie als Figur ausgezeichnet hat.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-H1-sammlungsvergleich">H1</a> Vergleich zweier Sammlungen</td>
+<td><code>COV</code> <code>COUNT</code></td>
+<td>Schätzung</td>
+<td>Zwei Sammlungen mit verschiedener Grundlage (Registerbriefe, Volltext); die Zahlen sind nur im Verhältnis zum Bestand vergleichbar.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-H2-bitte-und-antwort">H2</a> Bitte und Antwort</td>
+<td><code>ACT</code> <code>LOCUS</code> <code>PARTY</code></td>
+<td>Schätzung</td>
+<td>Verbindet zwei gelesene Handlungen über Personen und Zeit; ein Fehler in einer der beiden bricht die Antwort.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-H3-themen-der-bittsteller">H3</a> Worüber Bittsteller sonst schrieben</td>
+<td><code>ACT</code> <code>TOPIC</code> <code>PARTY</code></td>
+<td>Schätzung</td>
+<td>Handlung und Thema sind beide modellgelesen; die Fehler multiplizieren sich.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-I1-erschliessung">I1</a> Erschließungsgrad</td>
+<td><code>COV</code></td>
+<td>exakt</td>
+<td>Zeigt, wo Lücken sind; selbst frei von Inferenz.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-I2-faehigkeiten">I2</a> Tabellen der Sammlung</td>
+<td><code>COV</code></td>
+<td>exakt</td>
+<td>Nennt vorhandene Tabellen; sagt nichts über ihre Qualität.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-I3-bauprotokoll">I3</a> Bauprotokoll der Erschließung</td>
+<td>—</td>
+<td>exakt</td>
+<td>Gibt das Protokoll des Aufbaus wieder.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-K1-kommentar-thema">K1</a> Was die Edition über einen Gegenstand sagt</td>
+<td><code>SCAN</code> <code>FTS</code> <code>OCR</code></td>
+<td>Beleg</td>
+<td>Findet Stellen der Herausgeber, deren Text die Suchwörter enthält; ungescannte Kommentarseiten und andere Wortformen fehlen.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-K2-kommentar-zu-brief">K2</a> Was die Edition zu einem Brief sagt</td>
+<td><code>CITE</code> <code>SCAN</code> <code>OCR</code></td>
+<td>Untergrenze</td>
+<td>Zeigt die Stellen, die den Brief nach der Lesung des Modells anführen; eine Anführung ohne Datum oder Namen wird nicht aufgelöst.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-K3-kommentar-paar">K3</a> Kommentar zum Briefwechsel zweier Personen</td>
+<td><code>CITE</code> <code>LINK</code> <code>SCAN</code></td>
+<td>Untergrenze</td>
+<td>Stellen, die Briefe zwischen beiden Personen anführen; Briefe mit nicht aufgelöster Partei fehlen.</td>
+</tr>
+<tr class="even">
+<td><a href="./famulus-query-language.html#fql-K4-briefe-eines-kapitels">K4</a> Welche Briefe ein Kapitel anführt</td>
+<td><code>CITE</code> <code>SCAN</code></td>
+<td>Untergrenze</td>
+<td>Die Briefe, die ein Abschnitt anführt; auf fehlenden Seiten des Abschnitts angeführte Briefe fehlen.</td>
+</tr>
+<tr class="odd">
+<td><a href="./famulus-query-language.html#fql-K5-register-ohne-text">K5</a> Im Register verzeichnete, nicht edierte Briefe</td>
+<td><code>COV</code> <code>SEG</code> <code>PARTY</code></td>
+<td>Untergrenze</td>
+<td>Registereinträge ohne zugeordneten edierten Text; ein edierter Brief, dessen Registereintrag nicht gefunden wurde, lässt seinen Eintrag hier fälschlich erscheinen.</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Kopiert");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Kopiert");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<script>
+window.addEventListener("load", function () {
+  var file = function (href) {
+    var name = new URL(href, location.href).pathname.split("/").pop();
+    return name || "index.html";
+  };
+  var here = file(location.href);
+  document.querySelectorAll(".navbar a.nav-link").forEach(function (a) {
+    if (a.classList.contains("dropdown-toggle")) return;
+    var on = file(a.href) === here;
+    a.classList.toggle("active", on);
+    if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+  });
+  if (location.pathname.indexOf("/lesen/") !== -1) {
+    var menu = document.getElementById("nav-menu-projekte");
+    if (menu) menu.classList.add("active");
+  }
+});
+</script>
+
+
+
+
+</body></html>

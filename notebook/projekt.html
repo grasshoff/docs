@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.5">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Projekt – Famulus Notebook</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-3b9ea68436acb9022c2fbce6dbb58b06.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-3539258d83e02f63d0acd0d18fda38b6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Keine Treffer",
+    "search-matching-documents-text": "Treffer",
+    "search-copy-link-title": "Link in die Suche kopieren",
+    "search-hide-matches-text": "Zusätzliche Treffer verbergen",
+    "search-more-match-text": "weitere Treffer in diesem Dokument",
+    "search-more-matches-text": "weitere Treffer in diesem Dokument",
+    "search-clear-button-title": "Zurücksetzen",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Abbrechen",
+    "search-submit-button-title": "Abschicken",
+    "search-label": "Suchen"
+  }
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&amp;family=Inter:wght@400;600&amp;display=swap">
+
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Zum Hauptinhalt springen</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Website">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Famulus Notebook</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Suchen"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Navigation umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Überblick</span></a>
+  </li>  
+  <li class="nav-item">
+    <span class="nav-link"> 
+<span class="menu-text">Installation</span></span>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./syntax.html"> 
+<span class="menu-text">Schreiben</span></a>
+  </li>  
+  <li class="nav-item">
+    <span class="nav-link"> 
+<span class="menu-text">Verknüpfung</span></span>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./abfragen.html"> 
+<span class="menu-text">Abfragen</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./famulus-query-language.html"> 
+<span class="menu-text">FQL</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./begruendung.html"> 
+<span class="menu-text">Begründung</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./validierung.html"> 
+<span class="menu-text">Validität</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./mac-app.html"> 
+<span class="menu-text">Mac-App</span></a>
+  </li>  
+  <li class="nav-item">
+    <span class="nav-link"> 
+<span class="menu-text">Betrieb</span></span>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projekte" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projekte</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-projekte">    
+        <li>
+    <a class="dropdown-item" href="./lesen/hevelius/referenz.html">
+ <span class="dropdown-text">Hevelius befragen: Register, Briefe, Kommentar</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/karman-nachlass/hitler.html">
+ <span class="dropdown-text">Korrespondenz befragen: Kármán und Euler–Goldbach: Nannte Kármán Hitler? Protokoll einer Zielentfaltung</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/karman-nachlass/korrespondenz.html">
+ <span class="dropdown-text">Korrespondenz befragen: Kármán und Euler–Goldbach: Korrespondenz befragen: Kármán und Euler–Goldbach</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/karman-nachlass/prandtl-briefe.html">
+ <span class="dropdown-text">Korrespondenz befragen: Kármán und Euler–Goldbach: Prandtl und Kármán: zwei Anfrageformen der Zielentfaltung</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-anima-vis/anima-vis.html">
+ <span class="dropdown-text">Kepler: von der anima motrix zur vis motrix</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/geschichte-kepler-kommission.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: Die Geschichte der Kepler-Kommission</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t1-vorbemerkungen.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: Teil 1: Vorbemerkungen</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t2-1-nachlass.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: 2.1 Vorgeschichte des Kepler-Nachlasses (1630–1928)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t2-2-vorgeschichte-edition.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: 2.2 Vorgeschichte der Edition (1858–1928)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t2-3-kommissionsgruendung.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: 2.3 Der Weg zur Kommissionsgründung (1927–1935)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t2-4-edition-bis-2017.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: 2.4 Die Edition bis 2017</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t3-1-vergleich-euler.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: 3.1 Vergleich: der Petersburger Beitrag und die Euler-Opera-omnia</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t3-2-zerstreuung.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: 3.2 Die Zerstreuung der Kepler-Handschriften</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t3-3-kepleriana.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: 3.3 Die Münchner Kepleriana</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t3-4-ausblick-kgw-ai.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: 3.4 Ausblick: KGW-ai</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/t4-faksimile.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: Editionsgrundsätze</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-kommission/anhang.html">
+ <span class="dropdown-text">Die Geschichte der Kepler-Kommission: Anhang</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/kepler-lex-naturae/lex-naturae.html">
+ <span class="dropdown-text">Kepler: lex und natura</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lehrbuch/lehrbuch.html">
+ <span class="dropdown-text">Famulus Notebook: the examples of the book: Famulus Notebook: the examples of the book</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lehrbuch/ch01.html">
+ <span class="dropdown-text">Famulus Notebook: the examples of the book: Chapter 1: A first notebook</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lehrbuch/ch02.html">
+ <span class="dropdown-text">Famulus Notebook: the examples of the book: Chapter 2: The block</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lehrbuch/ch03.html">
+ <span class="dropdown-text">Famulus Notebook: the examples of the book: Chapter 3: Results and their display</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lehrbuch/ch04.html">
+ <span class="dropdown-text">Famulus Notebook: the examples of the book: Chapter 4: Checking an answer</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lehrbuch/ch06.html">
+ <span class="dropdown-text">Famulus Notebook: the examples of the book: Chapter 6: Names and references</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lehrbuch/ch07.html">
+ <span class="dropdown-text">Famulus Notebook: the examples of the book: Chapter 7: Versions and smart refresh</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lehrbuch/ch08.html">
+ <span class="dropdown-text">Famulus Notebook: the examples of the book: Chapter 8: Scope and data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/lwgrammar-evaluation/famulus-plattform.html">
+ <span class="dropdown-text">LWgrammar: die Formulierungsprüfung am Aufsatz famulus-plattform</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/pirckheimer-briefwechsel/briefpartner-1520-1530.html">
+ <span class="dropdown-text">Pirckheimers Briefpartner 1520–1530</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/schoener-saphea/saphea.html">
+ <span class="dropdown-text">Schöner: Saphea und Sonnenuhr</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/validitaet-koerper/pruefungen.html">
+ <span class="dropdown-text">Validität relativ zu Belegkörpern: Messkörper und Lektorat</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" aria-label="Symbolleiste">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="Pfad"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./projekt.html">Paket und Log</a></li></ol></nav>
+        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto" aria-label="Bereich">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Überblick</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <span class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installation</span></span>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./syntax.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Ein Notebook schreiben</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bloecke.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Blöcke und Partituren</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./projekt.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Paket und Log</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <span class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Verknüpfung</span></span>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./viewer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Viewer und Lektor</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./validierung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sachliche Validität</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mac-app.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mac-App</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./abfragen.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Abfragen und Lernen</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./famulus-query-language.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Query Language</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-1-label">Begründete Antworten</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./begruendung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Methode</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./begruendung-umsetzung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Umsetzung</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./begruendung-lernen.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lernen aus Begründungen</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fql-datenmodell.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Datenmodell und Fehler</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./zitieren-fr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Zitieren mit fr:-Adressen</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <span class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Betrieb</span></span>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./entwicklung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entwicklung</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-controls="quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-2-label">Projekte</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <ul id="quarto-sidebar-section-2" aria-labelledby="quarto-sidebar-section-2-label" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/hevelius/referenz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hevelius befragen: Register, Briefe, Kommentar</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/karman-nachlass/hitler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Korrespondenz befragen: Kármán und Euler–Goldbach: Nannte Kármán Hitler? Protokoll einer Zielentfaltung</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/karman-nachlass/korrespondenz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Korrespondenz befragen: Kármán und Euler–Goldbach: Korrespondenz befragen: Kármán und Euler–Goldbach</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/karman-nachlass/prandtl-briefe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Korrespondenz befragen: Kármán und Euler–Goldbach: Prandtl und Kármán: zwei Anfrageformen der Zielentfaltung</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-anima-vis/anima-vis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Kepler: von der anima motrix zur vis motrix</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/geschichte-kepler-kommission.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: Die Geschichte der Kepler-Kommission</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t1-vorbemerkungen.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: Teil 1: Vorbemerkungen</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t2-1-nachlass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: 2.1 Vorgeschichte des Kepler-Nachlasses (1630–1928)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t2-2-vorgeschichte-edition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: 2.2 Vorgeschichte der Edition (1858–1928)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t2-3-kommissionsgruendung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: 2.3 Der Weg zur Kommissionsgründung (1927–1935)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t2-4-edition-bis-2017.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: 2.4 Die Edition bis 2017</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t3-1-vergleich-euler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: 3.1 Vergleich: der Petersburger Beitrag und die Euler-Opera-omnia</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t3-2-zerstreuung.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: 3.2 Die Zerstreuung der Kepler-Handschriften</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t3-3-kepleriana.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: 3.3 Die Münchner Kepleriana</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t3-4-ausblick-kgw-ai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: 3.4 Ausblick: KGW-ai</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/t4-faksimile.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: Editionsgrundsätze</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-kommission/anhang.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Die Geschichte der Kepler-Kommission: Anhang</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/kepler-lex-naturae/lex-naturae.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Kepler: lex und natura</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lehrbuch/lehrbuch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Notebook: the examples of the book: Famulus Notebook: the examples of the book</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lehrbuch/ch01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Notebook: the examples of the book: Chapter 1: A first notebook</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lehrbuch/ch02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Notebook: the examples of the book: Chapter 2: The block</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lehrbuch/ch03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Notebook: the examples of the book: Chapter 3: Results and their display</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lehrbuch/ch04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Notebook: the examples of the book: Chapter 4: Checking an answer</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lehrbuch/ch06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Notebook: the examples of the book: Chapter 6: Names and references</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lehrbuch/ch07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Notebook: the examples of the book: Chapter 7: Versions and smart refresh</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lehrbuch/ch08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Notebook: the examples of the book: Chapter 8: Scope and data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/lwgrammar-evaluation/famulus-plattform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LWgrammar: die Formulierungsprüfung am Aufsatz famulus-plattform</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/pirckheimer-briefwechsel/briefpartner-1520-1530.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pirckheimers Briefpartner 1520–1530</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/schoener-saphea/saphea.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Schöner: Saphea und Sonnenuhr</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/validitaet-koerper/pruefungen.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Validität relativ zu Belegkörpern: Messkörper und Lektorat</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#famulus.yml" id="toc-famulus.yml" class="nav-link active" data-scroll-target="#famulus.yml"><span class="header-section-number">1</span> <code>famulus.yml</code></a></li>
+  <li><a href="#notebook" id="toc-notebook" class="nav-link" data-scroll-target="#notebook"><span class="header-section-number">2</span> Notebook</a></li>
+  <li><a href="#laufablage-und-versionen" id="toc-laufablage-und-versionen" class="nav-link" data-scroll-target="#laufablage-und-versionen"><span class="header-section-number">3</span> Laufablage und Versionen</a></li>
+  <li><a href="#aktuell-veraltet-wartet" id="toc-aktuell-veraltet-wartet" class="nav-link" data-scroll-target="#aktuell-veraltet-wartet"><span class="header-section-number">4</span> Aktuell, veraltet, wartet</a></li>
+  <li><a href="#famulus.lock" id="toc-famulus.lock" class="nav-link" data-scroll-target="#famulus.lock"><span class="header-section-number">5</span> <code>famulus.lock</code></a></li>
+  <li><a href="#alte-pakete" id="toc-alte-pakete" class="nav-link" data-scroll-target="#alte-pakete"><span class="header-section-number">6</span> Alte Pakete</a></li>
+  <li><a href="#rollen" id="toc-rollen" class="nav-link" data-scroll-target="#rollen"><span class="header-section-number">7</span> Rollen</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Projekt</h1>
+<p class="subtitle lead">Ordner, Notebooks, Laufablage, Versionen</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">23. September 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled" title="In einem Satz">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tipp</span>In einem Satz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ein Projekt ist ein Ordner mit einer Datei <code>famulus.yml</code> und einem oder mehreren Notebooks <code>*.fam</code>; was die Läufe erzeugen, legt der Runner unter <code>_famulus/</code> ab, jede neue Fassung eines Ergebnisses als eigene Version.</p>
+</div>
+</div>
+<p>Die Partituren bleiben im Register. Das Projekt führt sie nicht mit.</p>
+<pre class="text"><code>&lt;projekt&gt;/
+  famulus.yml               Kennung, Titel, Vorgaben, Importe
+  &lt;notebook&gt;.fam            ein Notebook; es darf mehrere geben
+  kapitel/&lt;teil&gt;.fam        Kapitel eines integrierenden Notebooks
+  settings/&lt;partitur&gt;.setting.yaml
+  data/  bibliography.bib   Hilfsdaten des Autors
+  famulus.lock              gelesene und erzeugte Versionen, vom Runner geschrieben
+  _famulus/                 vom Runner geschrieben, nie von Hand
+    store/&lt;notebook&gt;/index.json
+    store/&lt;notebook&gt;/&lt;block&gt;/current.json
+    store/&lt;notebook&gt;/&lt;block&gt;/v0001/
+      manifest.json trace.json report.json verdict.json result.json
+      artefacts/&lt;name&gt;.&lt;ext&gt;
+    cache/extern/&lt;peer&gt;/…   Kopien ferner Artefakte mit Herkunftsangabe
+    build/&lt;notebook&gt;.qmd    Schattenkopie für Quarto</code></pre>
+<p>Die Beispielprojekte unter <code>site/projekte/</code> zeigen diesen Baum für je eine Arbeit; die Leseseiten stehen im Menü <strong>Projekte</strong>.</p>
+<section id="famulus.yml" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="famulus.yml"><span class="header-section-number">1</span> <code>famulus.yml</code></h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">id</span><span class="kw">:</span><span class="at"> pirckheimer-briefwechsel</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> Pirckheimers Briefpartner 1520–1530</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">defaults</span><span class="kw">:</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">collections</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">pirckheimer</span><span class="kw">]</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">client</span><span class="kw">:</span><span class="at"> gemini-3.5-flash-lite</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">evidence</span><span class="kw">:</span><span class="at"> grounding</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">duckdb_root</span><span class="kw">:</span><span class="at"> $PDAI_COLLECTIONS</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">imports</span><span class="kw">:</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">kepler</span><span class="kw">:</span><span class="at"> fam:kepler-lex-naturae/lex-naturae</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">moved</span><span class="kw">:</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">briefpartner</span><span class="kw">:</span><span class="at"> briefpartner-1520-1530</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Schlüssel</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>id</code></td>
+<td>Kennung des Projekts: Kleinbuchstaben, Ziffern, Bindestrich. Sie steht in jedem Verweis <code>fam:&lt;id&gt;/…</code>.</td>
+</tr>
+<tr class="even">
+<td><code>title</code></td>
+<td>Titel im Viewer und in der Navigation</td>
+</tr>
+<tr class="odd">
+<td><code>defaults</code></td>
+<td>Vorgaben aller Blöcke. Ein Schlüssel in der Präambel eines Blocks ersetzt denselben Schlüssel; Listen werden ersetzt, nicht aneinandergereiht.</td>
+</tr>
+<tr class="even">
+<td><code>imports</code></td>
+<td>Kurznamen für Notebooks anderer Projekte, gültig in allen Notebooks dieses Projekts</td>
+</tr>
+<tr class="odd">
+<td><code>moved</code></td>
+<td>alte Kennung → neue Kennung, für Notebooks (<code>alt: neu</code>) oder Blöcke (<code>nb/alt: nb/neu</code>). Ein Verweis auf den alten Namen wird aufgelöst und als verschoben gemeldet.</td>
+</tr>
+<tr class="even">
+<td><code>main</code></td>
+<td>das integrierende Notebook, wenn es mehrere gibt</td>
+</tr>
+</tbody>
+</table>
+<p><code>duckdb_root</code> ist der Wert, den der Runner für <code>$PDAI_COLLECTIONS</code> einsetzt, wenn die Umgebungsvariable fehlt. Ist weder die Variable noch die Datei vorhanden, ist das ein Fehler der Klasse „Sammlung nicht da“.</p>
+</section>
+<section id="notebook" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="notebook"><span class="header-section-number">2</span> Notebook</h2>
+<p>Ein Notebook ist eine Datei <code>&lt;name&gt;.fam</code>: Quarto-Markdown mit Blöcken der Sprache <code>famulus</code>. Die Kennung ist <code>famulus.id</code> in der Präambel, sonst der Dateiname ohne Endung. Der Schlüssel eines Notebooks ist <code>&lt;projekt&gt;/&lt;notebook&gt;</code>; unter diesem Schlüssel adressieren es der Viewer, der Lektor und die HTTP-Schnittstelle.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> Pirckheimers Briefpartner 1520–1530</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">famulus</span><span class="kw">:</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">id</span><span class="kw">:</span><span class="at"> briefpartner-1520-1530</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">uses</span><span class="kw">:</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">lex</span><span class="kw">:</span><span class="at"> fam:kepler-lex-naturae/lex-naturae@latest</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">chapters</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">kapitel/einleitung.fam</span><span class="kw">,</span><span class="at"> kapitel/zaehlung.fam</span><span class="kw">]</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>uses</code> gibt Kurznamen, die nur in diesem Notebook gelten. <code>chapters</code> macht das Notebook zum integrierenden Notebook: die Kapitel sind eigene Notebooks desselben Projekts, das Hauptnotebook nennt ihre Reihenfolge.</p>
+<p>Die <code>.fam</code>-Datei ist die einzige Quelle. Quarto sieht sie nie direkt: <code>famulus-notebook build</code> schreibt eine Schattenkopie <code>.qmd</code> mit einem Block <code>famulus-build</code> in der Präambel, der für jeden Block den Ordner der aktuellen Version und für jeden Shortcode die aufgelöste Datei nennt. Die Quarto-Extension liest nur diesen Block. Für die Site liegen die Kopien unter <code>site/lesen/&lt;projekt&gt;/</code>; <code>famulus-notebook render</code> baut sie und rendert dann.</p>
+</section>
+<section id="laufablage-und-versionen" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="laufablage-und-versionen"><span class="header-section-number">3</span> Laufablage und Versionen</h2>
+<p>Jeder Block hat unter <code>_famulus/store/&lt;notebook&gt;/&lt;block&gt;/</code> eine Folge von Versionen <code>v0001</code>, <code>v0002</code>, … und eine Datei <code>current.json</code>, die auf die aktuelle zeigt. Eine neue Version entsteht nur, wenn sich der Inhalt eines Artefakts ändert. Bringt ein neuer Lauf dasselbe Ergebnis, bleibt die Version; das Manifest zählt dann nur <code>runs</code> hoch.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Datei</th>
+<th>Inhalt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>manifest.json</code></td>
+<td><code>input_hash</code>, <code>input_parts</code>, <code>status</code>, <code>version</code>, <code>runs</code>, <code>consumes</code> (gelesene Artefakte mit Version und Prüfsumme), <code>artefacts</code></td>
+</tr>
+<tr class="even">
+<td><code>trace.json</code></td>
+<td>Spur des Laufs, geschrieben aus dem <code>RunResult</code></td>
+</tr>
+<tr class="odd">
+<td><code>result.json</code></td>
+<td>Antwort, Urteil, Anzeigeform und <code>herkunft</code> (Partitur, Modell, Sammlungen, Dauer), gelesen vom Viewer</td>
+</tr>
+<tr class="even">
+<td><code>report.json</code></td>
+<td><code>question</code>, <code>answer</code>, <code>verdict</code>, <code>method</code>, <code>counts</code>, <code>findings</code>, <code>by_document</code>, <code>specification</code>, <code>provenance</code></td>
+</tr>
+<tr class="odd">
+<td><code>verdict.json</code></td>
+<td>Vergleich mit <code>golden</code> oder <code>oracle</code>: <code>id</code>, <code>golden</code>, <code>status</code>, <code>oracle</code>, <code>observed</code></td>
+</tr>
+<tr class="even">
+<td><code>artefacts/&lt;name&gt;.&lt;ext&gt;</code></td>
+<td>eine Datei je Eintrag von <code>artefacts</code>, mit Kopf <code>famulus</code></td>
+</tr>
+</tbody>
+</table>
+<p>Der Kopf eines Artefakts sagt, was es ist und woher es kommt. So steht er im Roster des Kármán-Projekts; <code>migrated_from</code> zeigt, dass diese Version aus einem alten Paket übertragen wurde, und <code>input_hash</code> ist der Hash jenes Laufs:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"famulus"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"ref"</span><span class="fu">:</span> <span class="st">"fam:karman-nachlass/korrespondenz/karman-roster.roster"</span><span class="fu">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"version"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"sha256"</span><span class="fu">:</span> <span class="st">"3e891ae0550d35912026bf59197ff5718c0a9e7d86439a4b0bd02f3208193fec"</span><span class="fu">,</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"created"</span><span class="fu">:</span> <span class="st">"2026-09-23T14:27:05+00:00"</span><span class="fu">,</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"produced_by"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"notebook"</span><span class="fu">:</span> <span class="st">"karman-nachlass/korrespondenz"</span><span class="fu">,</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"block"</span><span class="fu">:</span> <span class="st">"karman-roster"</span><span class="fu">,</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"input_hash"</span><span class="fu">:</span> <span class="st">"6cf53ffe769935ca"</span><span class="fu">,</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"migrated_from"</span><span class="fu">:</span> <span class="st">".../site/beispiele/karman-korrespondenz/log/karman-roster"</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"derived_from"</span><span class="fu">:</span> <span class="ot">[]</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"data"</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">"..."</span><span class="fu">:</span> <span class="st">"die Nutzlast des Artefakts"</span> <span class="fu">}</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ein neuer Lauf trägt unter <code>produced_by</code> statt <code>migrated_from</code> die Partitur und das Modell ein.</p>
+<p>Ein Lauf, der das Ziel nicht erreicht, hinterlässt <code>trace.json</code> und <code>verdict.json</code> mit <code>status: fail</code> oder <code>gap</code>. Die Artefakte der vorigen Version bleiben stehen; die Kette dahinter stoppt.</p>
+</section>
+<section id="aktuell-veraltet-wartet" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="aktuell-veraltet-wartet"><span class="header-section-number">4</span> Aktuell, veraltet, wartet</h2>
+<p>Der Eingabe-Hash eines Blocks setzt sich aus drei Teilen zusammen: Präambel, Instruktion und Vorgaben; die gelesenen Dateien (Größe und Zeitstempel); die Versionen der gelesenen Artefakte. Weicht einer davon vom Manifest ab, ist der Block <strong>veraltet</strong>, und <code>famulus-notebook status --why</code> nennt den Teil: „Präambel, Instruktion oder Voreinstellungen verändert“, „gelesene Datei verändert“, „Eingaben verändert“. Ein Block, der noch nie lief, <strong>fehlt</strong>. Ein Block, dessen Vorgänger nicht aktuell ist, <strong>wartet</strong>. Ein Block mit <code>status: error</code> ist immer veraltet.</p>
+<p><code>rerun</code> in der Präambel entscheidet, was ein Lauf mit einem Block tut:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Wert</th>
+<th>Wirkung</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>if-stale</code> (Voreinstellung; <code>if-missing</code> ist dasselbe)</td>
+<td>ausführen, wenn veraltet oder fehlend</td>
+</tr>
+<tr class="even">
+<td><code>always</code></td>
+<td>bei jedem Lauf ausführen</td>
+</tr>
+<tr class="odd">
+<td><code>never</code></td>
+<td>nie von selbst ausführen; nur als veraltet melden</td>
+</tr>
+</tbody>
+</table>
+<p><code>famulus-notebook refresh &lt;projekt&gt;</code> führt genau die nicht aktuellen Blöcke aus, Erzeuger zuerst. Liest das Projekt ein Artefakt eines anderen lokalen Projekts mit <code>@latest</code>, frischt es dieses Projekt vorher auf. Im Viewer tut der Knopf <strong>Aktualisieren</strong> dasselbe.</p>
+</section>
+<section id="famulus.lock" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="famulus.lock"><span class="header-section-number">5</span> <code>famulus.lock</code></h2>
+<p>Nach jedem Lauf schreibt der Runner <code>famulus.lock</code>: für jeden Block <code>input_hash</code>, <code>status</code>, <code>version</code>, die gelesenen Artefakte (<code>consumes</code>) und die erzeugten (<code>produces</code>) mit Prüfsumme. Ein Verweis mit dem Wähler <code>@locked</code> liest genau die hier eingetragene Version. So lässt sich ein veröffentlichter Stand wiederholen, auch wenn der Erzeuger inzwischen neuere Versionen hat.</p>
+</section>
+<section id="alte-pakete" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="alte-pakete"><span class="header-section-number">6</span> Alte Pakete</h2>
+<p>Ein Ordner mit <code>notebook.qmd</code> und <code>_famulus.yml</code> ist ein altes Paket. Der Runner liest es weiter; seine Läufe liegen unter <code>log/</code>. <code>famulus-notebook project migrate &lt;alt&gt; --id &lt;projekt&gt; --notebook &lt;name&gt; --to &lt;ziel&gt;</code> macht daraus ein Projekt: die Vorgaben wandern nach <code>famulus.yml</code>, das Notebook wird <code>&lt;name&gt;.fam</code>, die letzte Fassung jedes Blocks wird <code>v0001</code> mit Kopf, und die Prüfsummen bleiben gleich. Die Beispiele dieser Site wurden so übertragen.</p>
+</section>
+<section id="rollen" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="rollen"><span class="header-section-number">7</span> Rollen</h2>
+<p>Die Rollen der Dateien entsprechen den Rollen in einem LaTeX-Projekt, und zwar nur als Rollen.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Datei</th>
+<th>Rolle im Famulus-Projekt</th>
+<th>Rolle im LaTeX-Projekt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>&lt;notebook&gt;.fam</code></td>
+<td>das Dokument, das der Autor bearbeitet</td>
+<td>die Hauptdatei</td>
+</tr>
+<tr class="even">
+<td><code>kapitel/*.fam</code></td>
+<td>Kapitel des integrierenden Notebooks</td>
+<td><code>\include</code>-Dateien</td>
+</tr>
+<tr class="odd">
+<td><code>famulus.yml</code></td>
+<td>Vorgaben und Importe aller Notebooks</td>
+<td>die Dokumentklasse, soweit sie Pfade und Sammlung festlegt</td>
+</tr>
+<tr class="even">
+<td><code>settings/*.setting.yaml</code></td>
+<td>die Bindung der freien Eingaben</td>
+<td>eine Konfigurationsdatei, die das Dokument benennt</td>
+</tr>
+<tr class="odd">
+<td><code>data/</code>, <code>bibliography.bib</code></td>
+<td>Hilfsdaten und Bibliographie</td>
+<td><code>\input</code>-Dateien und die <code>.bib</code></td>
+</tr>
+<tr class="even">
+<td><code>_famulus/store/…/vNNNN/</code></td>
+<td>Trace, Bericht, Urteil, Artefakte einer Version</td>
+<td>die vom Lauf erzeugten Dateien</td>
+</tr>
+<tr class="odd">
+<td><code>famulus.lock</code></td>
+<td>welche Version aus welcher entstand</td>
+<td>kein Gegenstück; am nächsten kommt eine Paketliste mit Versionen</td>
+</tr>
+<tr class="even">
+<td>das Partitur-Register, außerhalb des Projekts</td>
+<td>die Pläne, die jede Arbeit beim Namen nennt</td>
+<td>Dokumentklasse und Pakete, die das Projekt benennt und nicht mitführt</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Kopiert");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Kopiert");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<script>
+window.addEventListener("load", function () {
+  var file = function (href) {
+    var name = new URL(href, location.href).pathname.split("/").pop();
+    return name || "index.html";
+  };
+  var here = file(location.href);
+  document.querySelectorAll(".navbar a.nav-link").forEach(function (a) {
+    if (a.classList.contains("dropdown-toggle")) return;
+    var on = file(a.href) === here;
+    a.classList.toggle("active", on);
+    if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+  });
+  if (location.pathname.indexOf("/lesen/") !== -1) {
+    var menu = document.getElementById("nav-menu-projekte");
+    if (menu) menu.classList.add("active");
+  }
+});
+</script>
+
+
+
+
+</body></html>

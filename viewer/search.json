@@ -1,0 +1,1635 @@
+[
+ {
+  "objectID": "quickstart.html",
+  "href": "quickstart.html",
+  "title": "Quick Start",
+  "section": "",
+  "text": "This guide covers starting the viewer and integrating with AI-Scholar. You’ll be viewing AI-processed documents within minutes.",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Quick Start"
+  ]
+ },
+ {
+  "objectID": "quickstart.html#overview",
+  "href": "quickstart.html#overview",
+  "title": "Quick Start",
+  "section": "",
+  "text": "This guide covers starting the viewer and integrating with AI-Scholar. You’ll be viewing AI-processed documents within minutes.",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Quick Start"
+  ]
+ },
+ {
+  "objectID": "quickstart.html#starting-the-viewer",
+  "href": "quickstart.html#starting-the-viewer",
+  "title": "Quick Start",
+  "section": "Starting the Viewer",
+  "text": "Starting the Viewer\nThe AI-Viewer is a static HTML application that runs via any HTTP server. The simplest approach uses Python’s built-in server.\n\nStep 1: Start the Server\n# Navigate to project root (parent of ai-viewer and pdai)\ncd /path/to/2026project\n\n# Start HTTP server on port 4100\npython -m http.server 4100\n\n\n\n\n\n\nImportant\n\n\n\nImportant: The server must run from the project root, not from inside ai-viewer or pdai. This ensures both the viewer and document data are accessible.\n\n\n\n\nStep 2: Open Your Browser\nNavigate to: http://localhost:4100/ai-viewer/viewer.html\nYou’ll see the home catalog with all available documents from pdai/index.json.\n\n\nStep 3: View a Document\nClick “View” on any document, or navigate directly:\nhttp://localhost:4100/ai-viewer/viewer.html?doc=pdai/E57\nhttp://localhost:4100/ai-viewer/viewer.html?doc=pdai/Goldbach&page=10\n\n\nStep 4: Navigate the Document\nUse keyboard shortcuts:\n\n\n\nKey\nAction\n\n\n\n\n←\nPrevious page\n\n\n→\nNext page\n\n\n↑\nZoom in\n\n\n↓\nZoom out\n\n\nD\nDocument mode (dual pane)\n\n\nA\nAgent mode (three pane)\n\n\nH\nToggle navigation bar\n\n\nF\nToggle fullscreen",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Quick Start"
+  ]
+ },
+ {
+  "objectID": "quickstart.html#complete-workflow-with-ai-scholar",
+  "href": "quickstart.html#complete-workflow-with-ai-scholar",
+  "title": "Quick Start",
+  "section": "Complete Workflow with AI-Scholar",
+  "text": "Complete Workflow with AI-Scholar\nAI-Viewer displays documents processed by AI-Scholar. Here’s the complete workflow:\n\n1. Process the PDF\n# OCR processing - creates pages/page_NNN/ structure\nai-scholar process ../pdai/E57/E57.pdf --model gemini-3-flash-preview\n\n\n2. Run Segmentation\n# Identify logical structure - creates manifest.json\nai-scholar segment ../pdai/E57\n\n\n3. Add Translations (Optional)\n# Translate to English - creates pages/page_NNN/page_NNN_translation_english.xml\nai-scholar agent ../pdai/E57 translation-english --pages 0-50\n\n\n4. View the Result\n# Start server from project root\ncd /path/to/2026project\npython -m http.server 4100\n\n# Open browser\nopen \"http://localhost:4100/ai-viewer/viewer.html?doc=pdai/E57\"",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Quick Start"
+  ]
+ },
+ {
+  "objectID": "quickstart.html#document-structure",
+  "href": "quickstart.html#document-structure",
+  "title": "Quick Start",
+  "section": "Document Structure",
+  "text": "Document Structure\nAfter processing, your document has this page-centric structure:\npdai/DocumentName/\n├── DocumentName.pdf              # Original PDF\n├── manifest.json                 # Segment mappings\n├── ai-orchestrator.yml           # Agent configuration\n├── css/                          # Display styles\n├── templates/                    # Document templates\n├── pages/                        # ALL page-level content\n│   ├── page_000/                 # Folder per page\n│   │   ├── page_000.png          # Page image\n│   │   ├── page_000.xml          # OCR XML\n│   │   ├── page_000.html         # HTML conversion\n│   │   ├── page_000_translation_english.xml  # Agent output\n│   │   └── page_000_fig_1.png    # Extracted figure\n│   ├── page_001/\n│   │   └── ...\n│   └── ...\n└── segments/                     # Document segments (optional)\n    └── letters/\n        ├── letter_000/\n        └── letter_001/",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Quick Start"
+  ]
+ },
+ {
+  "objectID": "quickstart.html#viewing-modes",
+  "href": "quickstart.html#viewing-modes",
+  "title": "Quick Start",
+  "section": "Viewing Modes",
+  "text": "Viewing Modes\n\nDocument Mode (Press D)\nDual-pane view for reading:\n\nLeft pane: High-resolution page image\nRight pane: OCR text or translation\n\nUse the language dropdown to switch between:\n\nOriginal → pages/page_NNN/page_NNN.html\nDeutsch → pages/page_NNN/page_NNN_translation_german.xml\nEnglish → pages/page_NNN/page_NNN_translation_english.xml\n\n\n\nAgent Mode (Press A)\nThree-pane view for agent work:\n\nLeft pane: Source input (image or XML)\nMiddle pane: Agent output\nRight pane: Agent navigator and controls\n\nSelect an agent from the navigator to view its output. Click “Brew Agent” to generate new translations.",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Quick Start"
+  ]
+ },
+ {
+  "objectID": "quickstart.html#segment-navigation",
+  "href": "quickstart.html#segment-navigation",
+  "title": "Quick Start",
+  "section": "Segment Navigation",
+  "text": "Segment Navigation\nIf the document has segments defined in manifest.json:\n\nSelect segment type from the dropdown (letters, chapters, paragraphs)\nChoose a segment to jump to its start page\nView metadata for the selected segment\n\n\nExample: Letter Edition\nopen \"http://localhost:4100/ai-viewer/viewer.html?doc=pdai/Goldbach\"\nThe segment dropdown shows letters. Selecting “Letter 42” jumps to its first page and displays metadata (sender, recipient, date).\n\n\nExample: Scholarly Treatise\nopen \"http://localhost:4100/ai-viewer/viewer.html?doc=pdai/E57\"\nNavigate by chapter or paragraph number. Mathematical formulas render with MathJax.",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Quick Start"
+  ]
+ },
+ {
+  "objectID": "quickstart.html#url-parameters",
+  "href": "quickstart.html#url-parameters",
+  "title": "Quick Start",
+  "section": "URL Parameters",
+  "text": "URL Parameters\n\n\n\nParameter\nDescription\nExample\n\n\n\n\ndoc\nDocument path\ndoc=pdai/E57\n\n\npage\nStarting page (0-indexed)\npage=5\n\n\nmode\nView mode\nmode=agent\n\n\nlang\nLanguage\nlang=english\n\n\n\nFull example:\nhttp://localhost:4100/ai-viewer/viewer.html?doc=pdai/E57&page=10&mode=agent",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Quick Start"
+  ]
+ },
+ {
+  "objectID": "quickstart.html#troubleshooting",
+  "href": "quickstart.html#troubleshooting",
+  "title": "Quick Start",
+  "section": "Troubleshooting",
+  "text": "Troubleshooting\n\nDocument Won’t Load\n# Check document exists\nls -la ../pdai/DocumentName/\n\n# Verify structure\nls ../pdai/DocumentName/pages/page_000/\n\n\nMissing Pages\n# Check page count\nls ../pdai/DocumentName/pages/ | wc -l\n\n# Verify page content\nls ../pdai/DocumentName/pages/page_000/\n\n\nMath Not Rendering\nThe viewer loads MathJax from CDN. Ensure:\n\nInternet connection is available\nBrowser allows external scripts\nNo ad blockers interfering\n\n\n\nPort Already in Use\n# Check what's using the port\nlsof -i :4100\n\n# Use different port\npython -m http.server 4101\n\n\nServer 404 Errors\nEnsure the server is running from the project root:\n# Wrong - from ai-viewer\ncd ai-viewer\npython -m http.server 4100  # ❌ pdai not accessible\n\n# Correct - from project root\ncd /path/to/2026project\npython -m http.server 4100  # ✓ both ai-viewer and pdai accessible",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Quick Start"
+  ]
+ },
+ {
+  "objectID": "quickstart.html#next-steps",
+  "href": "quickstart.html#next-steps",
+  "title": "Quick Start",
+  "section": "Next Steps",
+  "text": "Next Steps\n\nFeatures — Complete feature overview\nPDAI Standard — Document format specification\nIntegration — Three-package workflow\nCLI Reference — All command options",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Quick Start"
+  ]
+ },
+ {
+  "objectID": "installation.html",
+  "href": "installation.html",
+  "title": "Installation",
+  "section": "",
+  "text": "Requirement\nMinimum\nRecommended\n\n\n\n\nPython\n3.10+\n3.12+\n\n\nMemory\n2GB RAM\n4GB+ RAM\n\n\nStorage\n500MB free\n2GB+ free\n\n\nNetwork\nInternet for MathJax\nStable connection\n\n\n\n\n\n\n\nPython 3.10+: Download from python.org\nModern browser: Chrome, Firefox, Safari, or Edge",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Installation"
+  ]
+ },
+ {
+  "objectID": "installation.html#prerequisites",
+  "href": "installation.html#prerequisites",
+  "title": "Installation",
+  "section": "",
+  "text": "Requirement\nMinimum\nRecommended\n\n\n\n\nPython\n3.10+\n3.12+\n\n\nMemory\n2GB RAM\n4GB+ RAM\n\n\nStorage\n500MB free\n2GB+ free\n\n\nNetwork\nInternet for MathJax\nStable connection\n\n\n\n\n\n\n\nPython 3.10+: Download from python.org\nModern browser: Chrome, Firefox, Safari, or Edge",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Installation"
+  ]
+ },
+ {
+  "objectID": "installation.html#installation",
+  "href": "installation.html#installation",
+  "title": "Installation",
+  "section": "Installation",
+  "text": "Installation\nAI-Viewer is a static HTML application that requires only an HTTP server. No Python package installation is strictly necessary.\n\nMethod 1: Direct Use (Recommended)\nSimply serve the project directory with any HTTP server:\n# Navigate to project root\ncd /path/to/2026project\n\n# Start Python HTTP server\npython -m http.server 4100\n\n# Open browser\nopen http://localhost:4100/ai-viewer/viewer.html\n\n\nMethod 2: Package Installation\nFor Python integration and CLI tools:\n# Navigate to ai-viewer\ncd ai-viewer\n\n# Install in development mode\npip install -e .\n\n# Verify installation\npython -c \"from ai_viewer import quick_serve; print('OK')\"\n\n\nMethod 3: Using uv (Fastest)\n# Install uv if not present\ncurl -LsSf https://astral.sh/uv/install.sh | sh\n\n# Install ai-viewer\ncd ai-viewer\nuv pip install -e .",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Installation"
+  ]
+ },
+ {
+  "objectID": "installation.html#verification",
+  "href": "installation.html#verification",
+  "title": "Installation",
+  "section": "Verification",
+  "text": "Verification\n\nTest Static Viewer\n# Start server from project root\ncd /path/to/2026project\npython -m http.server 4100\n\n# Open in browser\nopen http://localhost:4100/ai-viewer/viewer.html\nYou should see the home catalog with available documents.\n\n\nTest with a Document\n# Open specific document\nopen \"http://localhost:4100/ai-viewer/viewer.html?doc=pdai/E57\"",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Installation"
+  ]
+ },
+ {
+  "objectID": "installation.html#project-structure",
+  "href": "installation.html#project-structure",
+  "title": "Installation",
+  "section": "Project Structure",
+  "text": "Project Structure\nThe viewer requires this directory structure:\n2026project/              ← HTTP server runs from here\n├── ai-viewer/\n│   ├── viewer.html       ← Main viewer application\n│   ├── docs/             ← Documentation\n│   └── config/           ← Configuration files\n├── pdai/\n│   ├── index.json        ← Document catalog\n│   ├── E57/\n│   │   └── pages/        ← Page-centric structure\n│   │       └── page_000/\n│   └── Goldbach/\n└── ai-scholar/           ← Processing package\n\nKey Files\n\n\n\nFile\nPurpose\n\n\n\n\nai-viewer/viewer.html\nMain viewer application\n\n\npdai/index.json\nDocument catalog\n\n\npdai/{doc}/manifest.json\nDocument metadata\n\n\npdai/{doc}/pages/\nPage content",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Installation"
+  ]
+ },
+ {
+  "objectID": "installation.html#configuration",
+  "href": "installation.html#configuration",
+  "title": "Installation",
+  "section": "Configuration",
+  "text": "Configuration\n\nDefault Settings\nAI-Viewer works with sensible defaults:\n\n\n\nSetting\nDefault\n\n\n\n\nServer Port\n4100\n\n\nTheme\nDark\n\n\nMath Renderer\nMathJax (CDN)\n\n\n\n\n\nDocument Catalog\nCreate or update pdai/index.json:\n{\n  \"documents\": [\n    {\n      \"name\": \"E57\",\n      \"title\": \"Euler E57 - Tidal Theory\",\n      \"path\": \"E57\",\n      \"page_count\": 107\n    },\n    {\n      \"name\": \"Goldbach\",\n      \"title\": \"Euler-Goldbach Correspondence\",\n      \"path\": \"Goldbach\",\n      \"page_count\": 483\n    }\n  ]\n}",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Installation"
+  ]
+ },
+ {
+  "objectID": "installation.html#alternative-http-servers",
+  "href": "installation.html#alternative-http-servers",
+  "title": "Installation",
+  "section": "Alternative HTTP Servers",
+  "text": "Alternative HTTP Servers\n\nNode.js\nnpx serve -p 4100\n# or\nnpx http-server -p 4100\n\n\nPHP\nphp -S localhost:4100\n\n\nnginx\nserver {\n    listen 4100;\n    root /path/to/2026project;\n    \n    location / {\n        try_files $uri $uri/ =404;\n    }\n}",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Installation"
+  ]
+ },
+ {
+  "objectID": "installation.html#troubleshooting",
+  "href": "installation.html#troubleshooting",
+  "title": "Installation",
+  "section": "Troubleshooting",
+  "text": "Troubleshooting\n\nPort Already in Use\n# Check what's using the port\nlsof -i :4100\n\n# Use different port\npython -m http.server 4101\n\n\n404 Errors\nEnsure the server is running from the project root:\n# Wrong - from inside ai-viewer\ncd ai-viewer\npython -m http.server 4100  # ❌\n\n# Correct - from project root\ncd /path/to/2026project\npython -m http.server 4100  # ✓\n\n\nMath Not Rendering\nMathJax loads from CDN. Ensure:\n\nInternet connection is available\nBrowser allows external scripts\nNo ad blockers interfering\n\n\n\nCORS Errors\nIf accessing from different origin:\n# Use CORS-enabled server\nnpx http-server -p 4100 --cors",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Installation"
+  ]
+ },
+ {
+  "objectID": "installation.html#docker-deployment",
+  "href": "installation.html#docker-deployment",
+  "title": "Installation",
+  "section": "Docker Deployment",
+  "text": "Docker Deployment\nFROM python:3.12-slim\nWORKDIR /app\nCOPY . .\nEXPOSE 4100\nCMD [\"python\", \"-m\", \"http.server\", \"4100\"]\n# Build and run\ndocker build -t ai-viewer .\ndocker run -p 4100:4100 -v $(pwd):/app ai-viewer",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Installation"
+  ]
+ },
+ {
+  "objectID": "installation.html#next-steps",
+  "href": "installation.html#next-steps",
+  "title": "Installation",
+  "section": "Next Steps",
+  "text": "Next Steps\n\nQuick Start — View your first document\nCLI Reference — Server setup options\nFeatures — Viewer capabilities\nPDAI Standard — Document format specification",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "Installation"
+  ]
+ },
+ {
+  "objectID": "architecture.html",
+  "href": "architecture.html",
+  "title": "Viewer Architecture",
+  "section": "",
+  "text": "AI-Viewer is a static HTML/JavaScript application that runs in any web browser. It serves PDAI documents through a simple HTTP server, with no backend framework required.",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Viewer Architecture"
+  ]
+ },
+ {
+  "objectID": "architecture.html#overview",
+  "href": "architecture.html#overview",
+  "title": "Viewer Architecture",
+  "section": "",
+  "text": "AI-Viewer is a static HTML/JavaScript application that runs in any web browser. It serves PDAI documents through a simple HTTP server, with no backend framework required.",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Viewer Architecture"
+  ]
+ },
+ {
+  "objectID": "architecture.html#system-architecture",
+  "href": "architecture.html#system-architecture",
+  "title": "Viewer Architecture",
+  "section": "System Architecture",
+  "text": "System Architecture\n\n\n\n\n\nflowchart TB\n    subgraph Client[\"Web Browser\"]\n        VIEWER[viewer.html]\n        JS[JavaScript Engine]\n        UI[Interactive UI]\n    end\n    \n    subgraph Server[\"HTTP Server\"]\n        PYTHON[python -m http.server]\n        STATIC[Static File Serving]\n    end\n    \n    subgraph Storage[\"PDAI Documents\"]\n        PAGES[\"pages/page_NNN/\"]\n        SEGS[\"segments/\"]\n        CONFIG[\"manifest.json\"]\n    end\n    \n    VIEWER --&gt; JS\n    JS --&gt; UI\n    JS --&gt; STATIC\n    PYTHON --&gt; STATIC\n    STATIC --&gt; PAGES\n    STATIC --&gt; SEGS\n    STATIC --&gt; CONFIG\n\n\n AI-Viewer architecture",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Viewer Architecture"
+  ]
+ },
+ {
+  "objectID": "architecture.html#core-components",
+  "href": "architecture.html#core-components",
+  "title": "Viewer Architecture",
+  "section": "Core Components",
+  "text": "Core Components\n\nStatic HTTP Server\nThe viewer works with any HTTP server. Python’s built-in server is recommended:\n# Start from project root\ncd /path/to/2026project\npython -m http.server 4100\nKey requirements:\n\nServes static files from project root\nNo special configuration needed\nWorks with nginx, Apache, or any HTTP server\n\n\n\nViewer Application (viewer.html)\nSingle-page application with all logic embedded:\n&lt;!DOCTYPE html&gt;\n&lt;html&gt;\n&lt;head&gt;\n    &lt;title&gt;AI Scholar&lt;/title&gt;\n    &lt;script src=\"https://cdn.jsdelivr.net/npm/mathjax@3/...\"&gt;&lt;/script&gt;\n    &lt;style&gt;/* All styles inline */&lt;/style&gt;\n&lt;/head&gt;\n&lt;body&gt;\n    &lt;nav&gt;&lt;!-- Navigation bar --&gt;&lt;/nav&gt;\n    &lt;main&gt;&lt;!-- Content panels --&gt;&lt;/main&gt;\n    &lt;script&gt;\n        class DocumentViewer {\n            // All viewer logic\n        }\n    &lt;/script&gt;\n&lt;/body&gt;\n&lt;/html&gt;\nKey features:\n\nSelf-contained HTML file\nNo build process required\nMathJax loaded from CDN\nAll styles and scripts inline\n\n\n\nDocument Discovery\nThe viewer discovers documents through multiple sources:\n\n\n\n\n\nflowchart LR\n    VIEWER[viewer.html]\n    INDEX[pdai/index.json]\n    CACHE[pdai-documents.json]\n    FALLBACK[Known documents]\n    \n    VIEWER --&gt; INDEX\n    INDEX --&gt;|success| CATALOG\n    INDEX --&gt;|fail| CACHE\n    CACHE --&gt;|fail| FALLBACK\n    \n    CATALOG[Document Catalog]\n\n\n Document discovery flow \n\n\n\n\nPrimary: pdai/index.json — Canonical document list\nFallback: pdai-documents.json — Cached copy at project root\nLast resort: Hardcoded list of known documents",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Viewer Architecture"
+  ]
+ },
+ {
+  "objectID": "architecture.html#page-centric-structure",
+  "href": "architecture.html#page-centric-structure",
+  "title": "Viewer Architecture",
+  "section": "Page-Centric Structure",
+  "text": "Page-Centric Structure\nAll path resolution uses the page-centric structure:\npdai/DocumentName/\n└── pages/\n    └── page_NNN/\n        ├── page_NNN.png           # Image\n        ├── page_NNN.xml           # OCR XML\n        ├── page_NNN.html          # HTML conversion\n        ├── page_NNN_translation_english.xml  # Agent output\n        └── page_NNN_fig_1.png     # Extracted figure\n\nPath Helper Functions\nclass DocumentViewer {\n    getPagePath(pageIdx, ext) {\n        const p = String(pageIdx).padStart(3, '0');\n        return `${this.apiBase}/pages/page_${p}/page_${p}.${ext}`;\n    }\n\n    getAgentPath(pageIdx, agentName) {\n        const p = String(pageIdx).padStart(3, '0');\n        const agent = agentName.replace(/-/g, '_');\n        return `${this.apiBase}/pages/page_${p}/page_${p}_${agent}.xml`;\n    }\n\n    getFigurePath(pageIdx, figNum) {\n        const p = String(pageIdx).padStart(3, '0');\n        return `${this.apiBase}/pages/page_${p}/page_${p}_fig_${figNum}.png`;\n    }\n}",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Viewer Architecture"
+  ]
+ },
+ {
+  "objectID": "architecture.html#viewing-modes",
+  "href": "architecture.html#viewing-modes",
+  "title": "Viewer Architecture",
+  "section": "Viewing Modes",
+  "text": "Viewing Modes\n\nDocument Mode\nDual-pane layout for reading:\n\n\n\n\n\nflowchart LR\n    subgraph Left[\"Left Pane\"]\n        IMG[Page Image]\n    end\n    \n    subgraph Right[\"Right Pane\"]\n        TEXT[OCR Text / Translation]\n    end\n    \n    Left --&gt; Right\n\n\n Document mode layout \n\n\n\nContent loading:\n\nImage: pages/page_NNN/page_NNN.png\nOriginal: pages/page_NNN/page_NNN.html\nTranslation: pages/page_NNN/page_NNN_translation_{lang}.xml\n\n\n\nAgent Mode\nThree-pane layout for agent work:\n\n\n\n\n\nflowchart LR\n    subgraph Left[\"Source Input\"]\n        SRC[Image or XML]\n    end\n    \n    subgraph Middle[\"Agent Output\"]\n        OUT[Translation / Analysis]\n    end\n    \n    subgraph Right[\"Agent Control\"]\n        NAV[Navigator]\n        CFG[Configuration]\n        ENGINE[AI Engine]\n    end\n    \n    Left --&gt; Middle --&gt; Right\n\n\n Agent mode layout",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Viewer Architecture"
+  ]
+ },
+ {
+  "objectID": "architecture.html#data-flow",
+  "href": "architecture.html#data-flow",
+  "title": "Viewer Architecture",
+  "section": "Data Flow",
+  "text": "Data Flow\n\nPage Load Sequence\n\n\n\n\n\nsequenceDiagram\n    participant Browser\n    participant Server\n    participant PDAI\n    \n    Browser-&gt;&gt;Server: GET /ai-viewer/viewer.html\n    Server--&gt;&gt;Browser: viewer.html\n    \n    Browser-&gt;&gt;Server: GET /pdai/E57/pages/page_000/page_000.png\n    Server-&gt;&gt;PDAI: Read image\n    PDAI--&gt;&gt;Server: Image bytes\n    Server--&gt;&gt;Browser: Image response\n    \n    Browser-&gt;&gt;Server: GET /pdai/E57/pages/page_000/page_000.html\n    Server-&gt;&gt;PDAI: Read HTML\n    PDAI--&gt;&gt;Server: HTML content\n    Server--&gt;&gt;Browser: HTML response\n    \n    Note over Browser: Render page with MathJax\n\n\n Page load sequence \n\n\n\n\n\nAgent Output Loading\n\n\n\n\n\nsequenceDiagram\n    participant Browser\n    participant Server\n    participant PDAI\n    \n    Note over Browser: User selects \"English Translation\"\n    \n    Browser-&gt;&gt;Server: GET /pdai/E57/pages/page_000/page_000_translation_english.xml\n    \n    alt File exists\n        Server-&gt;&gt;PDAI: Read XML\n        PDAI--&gt;&gt;Server: Translation XML\n        Server--&gt;&gt;Browser: XML response\n        Note over Browser: Display translation\n    else File not found\n        Server--&gt;&gt;Browser: 404 Not Found\n        Note over Browser: Show \"Not yet generated\" placeholder\n    end\n\n\n Agent output loading",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Viewer Architecture"
+  ]
+ },
+ {
+  "objectID": "architecture.html#configuration",
+  "href": "architecture.html#configuration",
+  "title": "Viewer Architecture",
+  "section": "Configuration",
+  "text": "Configuration\n\nDocument Configuration\nEach document can have an ai-orchestrator.yml:\nversion: \"1.0\"\ndocument: E57\nmodel: gemini-3-flash-preview\n\nagents:\n  translation-english:\n    display_name: English Translation\n    model: gemini-3-flash-preview\n    instruction: translation.j2\n    variables:\n      target_lang: en\n      target_lang_full: English\n    \n  translation-german:\n    display_name: German Translation\n    model: gemini-3-flash-preview\n    instruction: translation.j2\n    variables:\n      target_lang: de\n      target_lang_full: German\n\n\nDefault Configuration\nWhen no orchestrator config exists, the viewer uses defaults:\nconst defaultConfig = {\n    agents: {\n        'translation-english': {\n            display_name: 'English Translation',\n            model: 'gemini-3-flash-preview',\n            instruction: 'translation.j2'\n        },\n        'translation-german': {\n            display_name: 'German Translation',\n            model: 'gemini-3-flash-preview',\n            instruction: 'translation.j2'\n        }\n    }\n};",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Viewer Architecture"
+  ]
+ },
+ {
+  "objectID": "architecture.html#keyboard-handling",
+  "href": "architecture.html#keyboard-handling",
+  "title": "Viewer Architecture",
+  "section": "Keyboard Handling",
+  "text": "Keyboard Handling\ndocument.addEventListener('keydown', (e) =&gt; {\n    switch(e.key) {\n        case 'ArrowLeft':\n            this.prevPage();\n            break;\n        case 'ArrowRight':\n            this.nextPage();\n            break;\n        case 'ArrowUp':\n            this.zoomIn();\n            break;\n        case 'ArrowDown':\n            this.zoomOut();\n            break;\n        case 'd':\n        case 'D':\n            this.setMode('document');\n            break;\n        case 'a':\n        case 'A':\n            this.setMode('agent');\n            break;\n        case 'r':\n        case 'R':\n            this.refreshAgentResult();\n            break;\n        case 'f':\n        case 'F':\n            this.toggleFullscreen();\n            break;\n        case 'h':\n        case 'H':\n            this.toggleNavbar();\n            break;\n    }\n});",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Viewer Architecture"
+  ]
+ },
+ {
+  "objectID": "architecture.html#performance-considerations",
+  "href": "architecture.html#performance-considerations",
+  "title": "Viewer Architecture",
+  "section": "Performance Considerations",
+  "text": "Performance Considerations\n\nBrowser Caching\nStatic files are cached by the browser:\n\n\n\nContent Type\nCache Strategy\n\n\n\n\nPage images\nLong cache (immutable)\n\n\nHTML/XML content\nCache with revalidation\n\n\nViewer assets\nLong cache\n\n\n\n\n\nLazy Loading\nContent is loaded on demand:\nasync loadPage(pageIdx) {\n    // Load image\n    const img = new Image();\n    img.src = this.getPagePath(pageIdx, 'png');\n    \n    // Load text\n    const response = await fetch(this.getPagePath(pageIdx, 'html'));\n    const html = await response.text();\n    \n    // Render\n    this.displayImage(img);\n    this.displayText(html);\n}\n\n\nPage Count Detection\nBinary search for efficient page count detection:\nasync detectPageCount() {\n    let low = 0, high = 1000;\n    \n    while (low &lt; high) {\n        const mid = Math.floor((low + high + 1) / 2);\n        const path = this.getPagePath(mid, 'png');\n        \n        try {\n            const res = await fetch(path, { method: 'HEAD' });\n            if (res.ok) {\n                low = mid;\n            } else {\n                high = mid - 1;\n            }\n        } catch {\n            high = mid - 1;\n        }\n    }\n    \n    return low + 1; // Convert 0-indexed to count\n}",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Viewer Architecture"
+  ]
+ },
+ {
+  "objectID": "architecture.html#extension-points",
+  "href": "architecture.html#extension-points",
+  "title": "Viewer Architecture",
+  "section": "Extension Points",
+  "text": "Extension Points\n\nCustom Themes\nAdd CSS variables for theming:\n:root {\n    --bg-primary: #1a1a2e;\n    --bg-secondary: #16213e;\n    --text-primary: #eee;\n    --accent: #e94560;\n}\n\n\nCustom Agents\nAdd agents to the default configuration:\ndefaultConfig.agents['custom-analysis'] = {\n    display_name: 'Custom Analysis',\n    model: 'gemini-3-flash-preview',\n    instruction: 'custom-analysis.j2'\n};\n\n\nMathJax Configuration\nConfigure MathJax for specific needs:\nwindow.MathJax = {\n    tex: {\n        inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],\n        displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']]\n    },\n    options: {\n        skipHtmlTags: ['script', 'noscript', 'style', 'textarea']\n    }\n};",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Viewer Architecture"
+  ]
+ },
+ {
+  "objectID": "architecture.html#deployment",
+  "href": "architecture.html#deployment",
+  "title": "Viewer Architecture",
+  "section": "Deployment",
+  "text": "Deployment\n\nDevelopment\n# Simple Python server\ncd /path/to/2026project\npython -m http.server 4100\n\n\nProduction with nginx\nserver {\n    listen 80;\n    server_name docs.example.com;\n    \n    root /path/to/2026project;\n    \n    location / {\n        try_files $uri $uri/ =404;\n    }\n    \n    location /ai-viewer/ {\n        alias /path/to/2026project/ai-viewer/;\n    }\n    \n    location /pdai/ {\n        alias /path/to/2026project/pdai/;\n    }\n}\n\n\nDocker\nFROM python:3.12-slim\nWORKDIR /app\nCOPY . .\nEXPOSE 4100\nCMD [\"python\", \"-m\", \"http.server\", \"4100\"]",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Viewer Architecture"
+  ]
+ },
+ {
+  "objectID": "PAGE_INDEXING_FIX.html",
+  "href": "PAGE_INDEXING_FIX.html",
+  "title": "",
+  "section": "",
+  "text": "Code"
+ },
+ {
+  "objectID": "PAGE_INDEXING_FIX.html#problem",
+  "href": "PAGE_INDEXING_FIX.html#problem",
+  "title": "",
+  "section": "Problem",
+  "text": "Problem\nThe viewer was displaying content from the next page instead of the current page. When navigating to page 6, it showed content from page 7.\n\nRoot Cause\nMismatch between page numbering and file indexing:\n\nViewer UI: Uses 1-based page numbers (Page 1, Page 2, …, Page 217)\nFile system: Uses 0-based indices (page_000.png, page_001.png, …, page_216.png)\n\nBefore the fix:\n// Page 6 in UI\nconst paddedNum = String(6).padStart(3, '0');  // \"006\"\nconst imagePath = `page_006.png`;  // ❌ This is the 7th image (index 6)!\nResult: Page 6 loaded page_006.png (7th image) instead of page_005.png (6th image)."
+ },
+ {
+  "objectID": "PAGE_INDEXING_FIX.html#solution",
+  "href": "PAGE_INDEXING_FIX.html#solution",
+  "title": "",
+  "section": "Solution",
+  "text": "Solution\nConvert from 1-based page number to 0-based file index before loading files:\n// Convert 1-based page number to 0-based file index\nconst fileIndex = pageNum - 1;  // Page 6 → index 5\nconst paddedNum = String(fileIndex).padStart(3, '0');  // \"005\"\nconst imagePath = `page_${paddedNum}.png`;  // ✅ page_005.png (6th image)"
+ },
+ {
+  "objectID": "PAGE_INDEXING_FIX.html#changes-made",
+  "href": "PAGE_INDEXING_FIX.html#changes-made",
+  "title": "",
+  "section": "Changes Made",
+  "text": "Changes Made\n\n1. Fixed Image Loading\nFile: ai-viewer/application/main_viewer.html\nBefore:\nasync loadImage(pageNum) {\n    const paddedNum = String(pageNum).padStart(3, '0');\n    const imagePath = `page_${paddedNum}.png`;\n    // ❌ Page 6 loads page_006.png (7th image)\n}\nAfter:\nasync loadImage(pageNum) {\n    const fileIndex = pageNum - 1;\n    const paddedNum = String(fileIndex).padStart(3, '0');\n    const imagePath = `page_${paddedNum}.png`;\n    // ✅ Page 6 loads page_005.png (6th image)\n}\n\n\n2. Fixed HTML Loading\nBefore:\nasync loadText(pageNum) {\n    const paddedNum = String(pageNum).padStart(3, '0');\n    const htmlPath = `html/page_${paddedNum}.html`;\n    // ❌ Page 6 loads page_006.html (7th page content)\n}\nAfter:\nasync loadText(pageNum) {\n    const fileIndex = pageNum - 1;\n    const paddedNum = String(fileIndex).padStart(3, '0');\n    const htmlPath = `html/page_${paddedNum}.html`;\n    // ✅ Page 6 loads page_005.html (6th page content)\n}"
+ },
+ {
+  "objectID": "PAGE_INDEXING_FIX.html#mapping-table",
+  "href": "PAGE_INDEXING_FIX.html#mapping-table",
+  "title": "",
+  "section": "Mapping Table",
+  "text": "Mapping Table\nCorrect mapping between UI page numbers and file indices:\n\n\n\n\n\n\n\n\n\n\nUI Page\nFile Index\nImage File\nHTML File\nXML File\n\n\n\n\nPage 1\n0\npage_000.png\npage_000.html\npage_000.xml\n\n\nPage 2\n1\npage_001.png\npage_001.html\npage_001.xml\n\n\nPage 6\n5\npage_005.png\npage_005.html\npage_005.xml\n\n\nPage 10\n9\npage_009.png\npage_009.html\npage_009.xml\n\n\nPage 217\n216\npage_216.png\npage_216.html\npage_216.xml"
+ },
+ {
+  "objectID": "PAGE_INDEXING_FIX.html#testing",
+  "href": "PAGE_INDEXING_FIX.html#testing",
+  "title": "",
+  "section": "Testing",
+  "text": "Testing\n\nVerification Steps\n\nOpen Page 1: Should show first page content (title page or introduction)\nOpen Page 6: Should show 6th page content (not 7th)\nNavigate through pages: Each page number should match its content\nCheck last page: Page 217 should show page_216.png and page_216.html\n\n\n\nTest Commands\n# Test page 1\nopen \"http://localhost:4100/ai-viewer/application/main_viewer.html?doc=kotschka&page=1\"\n\n# Test page 6\nopen \"http://localhost:4100/ai-viewer/application/main_viewer.html?doc=kotschka&page=6\"\n\n# Test last page\nopen \"http://localhost:4100/ai-viewer/application/main_viewer.html?doc=kotschka&page=217\""
+ },
+ {
+  "objectID": "PAGE_INDEXING_FIX.html#impact-on-other-documents",
+  "href": "PAGE_INDEXING_FIX.html#impact-on-other-documents",
+  "title": "",
+  "section": "Impact on Other Documents",
+  "text": "Impact on Other Documents\nThis fix applies to all documents in the viewer. Any document using the standard PDAI page-centric structure will now load pages correctly."
+ },
+ {
+  "objectID": "PAGE_INDEXING_FIX.html#related-issues",
+  "href": "PAGE_INDEXING_FIX.html#related-issues",
+  "title": "",
+  "section": "Related Issues",
+  "text": "Related Issues\n\nIssue 1: PIDX Mismatch in XML\nIf XML files have incorrect pidx attributes (e.g., page_000.xml with pidx=\"1\"), use the fix_pidx tool:\npython src/ai_scholar/fix_pidx.py ../pdai/DocumentName/xml\n\n\nIssue 2: File Naming Convention\nAll files must follow the standard naming convention: - Images: page_000.png, page_001.png, …, page_216.png - XML: page_000.xml, page_001.xml, …, page_216.xml - HTML: page_000.html, page_001.html, …, page_216.html\nSee docs/NAMING_STANDARDS.md for complete specification."
+ },
+ {
+  "objectID": "PAGE_INDEXING_FIX.html#why-this-bug-occurred",
+  "href": "PAGE_INDEXING_FIX.html#why-this-bug-occurred",
+  "title": "",
+  "section": "Why This Bug Occurred",
+  "text": "Why This Bug Occurred\n\nNatural Assumption: UI page numbers are typically 1-based (human-friendly)\nFile System Convention: File indices are 0-based (computer-friendly)\nMissing Conversion: Code didn’t convert between the two systems\nOff-by-One Error: Classic programming mistake when mixing counting systems"
+ },
+ {
+  "objectID": "PAGE_INDEXING_FIX.html#prevention",
+  "href": "PAGE_INDEXING_FIX.html#prevention",
+  "title": "",
+  "section": "Prevention",
+  "text": "Prevention\nTo prevent similar issues in the future:\n\nAlways comment whether variables are 0-based or 1-based\nConvert explicitly at boundaries between systems\nTest edge cases: Page 1, middle page, last page\nUse descriptive names: pageNum (1-based) vs fileIndex (0-based)"
+ },
+ {
+  "objectID": "PAGE_INDEXING_FIX.html#technical-details",
+  "href": "PAGE_INDEXING_FIX.html#technical-details",
+  "title": "",
+  "section": "Technical Details",
+  "text": "Technical Details\n\nJavaScript String Padding\nString(0).padStart(3, '0')   // \"000\"\nString(5).padStart(3, '0')   // \"005\"\nString(99).padStart(3, '0')  // \"099\"\nString(216).padStart(3, '0') // \"216\"\n\n\nIndex Conversion\n// 1-based to 0-based\nconst fileIndex = pageNum - 1;\n\n// 0-based to 1-based\nconst pageNum = fileIndex + 1;"
+ },
+ {
+  "objectID": "PAGE_INDEXING_FIX.html#references",
+  "href": "PAGE_INDEXING_FIX.html#references",
+  "title": "",
+  "section": "References",
+  "text": "References\n\nViewer: ai-viewer/application/main_viewer.html\nNaming Standards: docs/NAMING_STANDARDS.md\nPIDX Fix Tool: src/ai_scholar/fix_pidx.py\nPDAI Structure: docs/PDAI_STRUCTURE.md\n\n\nFixed: 2025-10-18\nStatus: ✅ Resolved"
+ },
+ {
+  "objectID": "pdai-standard.html",
+  "href": "pdai-standard.html",
+  "title": "PDAI Document Standard",
+  "section": "",
+  "text": "The PDAI (PDF AI) standard defines a structured, portable format for AI-processed PDF documents. PDAI documents are generated by AI Scholar and viewed with AI Viewer.\nThis specification covers:\n\nPage-centric directory structure\nFile naming conventions\nManifest format (from segmentation)\nTwo-level processing (pages and segments)",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "PDAI Document Standard"
+  ]
+ },
+ {
+  "objectID": "pdai-standard.html#overview",
+  "href": "pdai-standard.html#overview",
+  "title": "PDAI Document Standard",
+  "section": "",
+  "text": "The PDAI (PDF AI) standard defines a structured, portable format for AI-processed PDF documents. PDAI documents are generated by AI Scholar and viewed with AI Viewer.\nThis specification covers:\n\nPage-centric directory structure\nFile naming conventions\nManifest format (from segmentation)\nTwo-level processing (pages and segments)",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "PDAI Document Standard"
+  ]
+ },
+ {
+  "objectID": "pdai-standard.html#pdai-document-structure",
+  "href": "pdai-standard.html#pdai-document-structure",
+  "title": "PDAI Document Standard",
+  "section": "PDAI Document Structure",
+  "text": "PDAI Document Structure\nAll PDAI documents follow a page-centric structure where all files for a page live together:\npdai/DocumentName/\n├── DocumentName.pdf              # Original PDF\n├── manifest.json                 # Document metadata + segment mappings\n├── ai-orchestrator.yml           # Agent configuration\n├── css/                          # Display styles\n│   └── default.css\n├── templates/                    # Document-specific Jinja2 templates\n│   └── translation.j2\n├── pages/                        # ALL page-level content\n│   ├── page_000/                 # Folder per page\n│   │   ├── page_000.png          # Page image\n│   │   ├── page_000.xml          # OCR XML\n│   │   ├── page_000.html         # HTML conversion\n│   │   ├── page_000_translation_english.xml   # Agent output\n│   │   ├── page_000_translation_german.xml    # Agent output\n│   │   └── page_000_fig_1.png    # Extracted figure (if any)\n│   ├── page_001/\n│   │   ├── page_001.png\n│   │   ├── page_001.xml\n│   │   └── page_001.html\n│   └── ...\n└── segments/                     # Document segments (optional)\n    └── letters/                  # Segment type folder\n        ├── letter_000/           # Folder per segment instance\n        │   ├── letter_000.xml\n        │   ├── letter_000.html\n        │   └── letter_000_translation_english.xml\n        └── letter_001/\n            └── ...\n\nDesign Principles\n\nPage-centric: All derivatives of a page (image, xml, html, translations, figures) share the same stem and live together in pages/page_NNN/\nConsistent naming: page_NNN[_agent].ext pattern with underscores only (no hyphens in filenames)\nThree-digit padding: page_000, page_001, …, page_999\nSegments mirror pages: Same subfolder pattern for logical document segments",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "PDAI Document Standard"
+  ]
+ },
+ {
+  "objectID": "pdai-standard.html#file-naming-conventions",
+  "href": "pdai-standard.html#file-naming-conventions",
+  "title": "PDAI Document Standard",
+  "section": "File Naming Conventions",
+  "text": "File Naming Conventions\n\nPage Files\npages/page_{num:03d}/page_{num:03d}.{ext}\npages/page_{num:03d}/page_{num:03d}_{agent}.xml\npages/page_{num:03d}/page_{num:03d}_fig_{n}.png\nExamples:\n\npages/page_000/page_000.png - First page image\npages/page_042/page_042.xml - Page 42 OCR result\npages/page_005/page_005_translation_english.xml - English translation of page 5\npages/page_012/page_012_fig_1.png - First figure on page 12\n\n\n\nSegment Files\nsegments/{type}/{type}_{num:03d}/{type}_{num:03d}.xml\nsegments/{type}/{type}_{num:03d}/{type}_{num:03d}_{agent}.xml\nExamples:\n\nsegments/letters/letter_000/letter_000.xml - First letter\nsegments/letters/letter_000/letter_000_translation_english.xml - Translation\nsegments/chapters/chapter_003/chapter_003.xml - Third chapter\n\n\n\nAgent Name Normalisation\nAgent names use underscores only in filenames:\n\n\n\nAgent ID\nFilename\n\n\n\n\ntranslation-english\npage_000_translation_english.xml\n\n\ntranslation-german\npage_000_translation_german.xml\n\n\nannotate-entities\npage_000_annotate_entities.xml",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "PDAI Document Standard"
+  ]
+ },
+ {
+  "objectID": "pdai-standard.html#manifest.json",
+  "href": "pdai-standard.html#manifest.json",
+  "title": "PDAI Document Standard",
+  "section": "manifest.json",
+  "text": "manifest.json\nThe manifest is generated by ai-scholar segment and contains:\n{\n  \"document\": {\n    \"name\": \"Goldbach\",\n    \"source\": \"Goldbach.pdf\",\n    \"page_count\": 245,\n    \"created\": \"2025-01-15T10:30:00Z\"\n  },\n  \"segments\": {\n    \"letters\": {\n      \"display_name\": \"Letters\",\n      \"numbering\": \"correspondence\",\n      \"start\": 1,\n      \"items\": [\n        {\n          \"number\": 1,\n          \"start_page\": 3,\n          \"end_page\": 5,\n          \"sender\": \"Goldbach\",\n          \"recipient\": \"Euler\",\n          \"date\": \"1729-12-01\"\n        }\n      ]\n    }\n  },\n  \"_assessment\": {\n    \"page_coverage\": 95.5,\n    \"sequence_assessments\": {\n      \"letters\": {\n        \"completeness\": 100,\n        \"gaps\": [],\n        \"duplicates\": [],\n        \"order_violations\": []\n      }\n    }\n  }\n}\n\nSegment Types\n\n\n\nType\nNumbering\nUse Case\n\n\n\n\nchapters\nhierarchical\nBooks, treatises\n\n\nparagraphs\nnumbered\nScholarly articles\n\n\nletters\ncorrespondence\nLetter editions\n\n\ndocuments\ndiplomatic\nHistorical acts\n\n\nsections\nnumbered\nJournal articles",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "PDAI Document Standard"
+  ]
+ },
+ {
+  "objectID": "pdai-standard.html#two-processing-levels",
+  "href": "pdai-standard.html#two-processing-levels",
+  "title": "PDAI Document Standard",
+  "section": "Two Processing Levels",
+  "text": "Two Processing Levels\nPDAI supports processing at two levels:\n\n1. Page-Level (Default)\nAgents operate on individual pages:\npages/page_000/page_000.xml → pages/page_000/page_000_translation_english.xml\n\n\n2. Segment-Level\nAfter segmentation, agents can operate on logical segments:\nsegments/letters/letter_000/letter_000.xml → segments/letters/letter_000/letter_000_summary.xml",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "PDAI Document Standard"
+  ]
+ },
+ {
+  "objectID": "pdai-standard.html#processing-workflow",
+  "href": "pdai-standard.html#processing-workflow",
+  "title": "PDAI Document Standard",
+  "section": "Processing Workflow",
+  "text": "Processing Workflow\nflowchart TD\n    subgraph Ingestion[\"1. Ingestion\"]\n        PDF[PDF Document]\n        PAGES[\"pages/page_*/page_*.png\"]\n    end\n    \n    subgraph OCR[\"2. OCR Processing\"]\n        XML[\"pages/page_*/page_*.xml\"]\n    end\n    \n    subgraph Segmentation[\"3. Segmentation\"]\n        MANIFEST[\"manifest.json\"]\n    end\n    \n    subgraph Materialise[\"4. Materialisation\"]\n        SEGMENTS[\"segments/{type}/{type}_*/\"]\n    end\n    \n    subgraph Agents[\"5. Agent Processing\"]\n        AI_PAGE[\"pages/page_*/page_*_{agent}.xml\"]\n        AI_SEG[\"segments/{type}/{type}_*/{type}_*_{agent}.xml\"]\n    end\n    \n    subgraph View[\"6. Viewing\"]\n        HTML[\"pages/page_*/page_*.html\"]\n        VIEWER[\"AI Viewer\"]\n    end\n    \n    PDF --&gt; PAGES\n    PAGES --&gt; XML\n    XML --&gt; MANIFEST\n    XML --&gt; HTML\n    MANIFEST --&gt; SEGMENTS\n    XML --&gt; AI_PAGE\n    SEGMENTS --&gt; AI_SEG\n    HTML --&gt; VIEWER\n    PAGES --&gt; VIEWER",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "PDAI Document Standard"
+  ]
+ },
+ {
+  "objectID": "pdai-standard.html#cli-integration",
+  "href": "pdai-standard.html#cli-integration",
+  "title": "PDAI Document Standard",
+  "section": "CLI Integration",
+  "text": "CLI Integration\n\nGenerate PDAI with AI Scholar\n# Process a PDF\nai-scholar process document.pdf\n\n# Run segmentation\nai-scholar segment ../pdai/DocumentName\n\n# Assess segment validity\nai-scholar assess ../pdai/DocumentName\n\n# Run an agent\nai-scholar agent ../pdai/DocumentName translation-english --pages 0-50\n\n\nView with AI Viewer\n# Start server from project root\ncd /path/to/2026project\npython -m http.server 4100\n\n# Open viewer\nopen http://localhost:4100/ai-viewer/viewer.html?doc=pdai/DocumentName",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "PDAI Document Standard"
+  ]
+ },
+ {
+  "objectID": "pdai-standard.html#validation-requirements",
+  "href": "pdai-standard.html#validation-requirements",
+  "title": "PDAI Document Standard",
+  "section": "Validation Requirements",
+  "text": "Validation Requirements\nA valid PDAI document must have:\n\nRequired: pages/ directory with at least one page_NNN/page_NNN.png\nRecommended: manifest.json for segment navigation\nOptional: segments/, templates/, css/\n\n\nStructural Validation\n# Validate with ai-scholar\nai-scholar assess ../pdai/DocumentName\n\n\nAssessment Output\nDocument: Goldbach\nPages: 245\nSegments: letters (142 items)\n\nSequence Assessment:\n  letters:\n    Completeness: 100%\n    Gaps: none\n    Duplicates: none\n    Order: valid\n\nPDAI standard specification - December 2025",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "PDAI Document Standard"
+  ]
+ },
+ {
+  "objectID": "api-reference.html",
+  "href": "api-reference.html",
+  "title": "API Reference",
+  "section": "",
+  "text": "AI-Viewer provides both a REST API for HTTP access and a Python API for programmatic control. This reference covers all available endpoints and classes.",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "API Reference"
+  ]
+ },
+ {
+  "objectID": "api-reference.html#overview",
+  "href": "api-reference.html#overview",
+  "title": "API Reference",
+  "section": "",
+  "text": "AI-Viewer provides both a REST API for HTTP access and a Python API for programmatic control. This reference covers all available endpoints and classes.",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "API Reference"
+  ]
+ },
+ {
+  "objectID": "api-reference.html#rest-api",
+  "href": "api-reference.html#rest-api",
+  "title": "API Reference",
+  "section": "REST API",
+  "text": "REST API\n\nDocument Routes\n\nGET /\nDocument selector page listing all registered documents.\nResponse: HTML page\n\n\nGET /doc/{alias}/viewer\nMain interactive viewer for a document.\nParameters:\n\n\n\nParameter\nType\nDescription\n\n\n\n\nalias\npath\nDocument identifier\n\n\npage\nquery\nStarting page (optional)\n\n\nstyle\nquery\nCSS style to apply (optional)\n\n\n\nExample:\nGET /doc/E57/viewer\nGET /doc/E57/viewer?page=25\nGET /doc/E57/viewer?page=25&style=scholarly\n\n\nGET /doc/{alias}/config\nDocument configuration as JSON.\nResponse:\n{\n  \"name\": \"E57\",\n  \"title\": \"Inquisitio Physica...\",\n  \"page_count\": 105,\n  \"has_manifest\": true,\n  \"has_segments\": true,\n  \"available_layers\": [\"html\", \"translation-english\"]\n}\n\n\nGET /doc/{alias}/manifest\nFull manifest.json content.\nResponse:\n{\n  \"document\": {\n    \"name\": \"E57\",\n    \"title\": \"Inquisitio Physica in Causam Fluxus ac Refluxus Maris\",\n    \"page_count\": 105\n  },\n  \"segments\": {\n    \"chapters\": { ... },\n    \"paragraphs\": { ... }\n  }\n}\n\n\n\nContent Routes\n\nGET /doc/{alias}/zip/html/{filename}\nServe page HTML content.\nParameters:\n\n\n\nParameter\nType\nDescription\n\n\n\n\nalias\npath\nDocument identifier\n\n\nfilename\npath\nHTML filename (e.g., page_000.html)\n\n\n\nResponse: HTML content\nExample:\nGET /doc/E57/zip/html/page_025.html\n\n\nGET /doc/{alias}/zip/images/{filename}\nServe page images.\nParameters:\n\n\n\nParameter\nType\nDescription\n\n\n\n\nalias\npath\nDocument identifier\n\n\nfilename\npath\nImage filename (e.g., page_000.png)\n\n\n\nResponse: PNG image\nExample:\nGET /doc/E57/zip/images/page_025.png\nGET /doc/E57/zip/images/fig_p012_n_1.png\n\n\nGET /doc/{alias}/segments/{type}\nList segments of a specific type.\nParameters:\n\n\n\nParameter\nType\nDescription\n\n\n\n\nalias\npath\nDocument identifier\n\n\ntype\npath\nSegment type (e.g., letters, chapters)\n\n\n\nResponse:\n{\n  \"type\": \"letters\",\n  \"items\": [\n    {\n      \"id\": \"1\",\n      \"number\": 1,\n      \"from\": \"Euler\",\n      \"to\": \"Goldbach\",\n      \"date\": \"1729-10-13\",\n      \"pages\": [3, 4, 5]\n    }\n  ]\n}\n\n\n\nAPI Routes\n\nGET /doc/{alias}/api/info\nDocument information.\nResponse:\n{\n  \"name\": \"E57\",\n  \"title\": \"Inquisitio Physica...\",\n  \"page_count\": 105,\n  \"format\": \"PDAI\",\n  \"has_images\": true,\n  \"has_html\": true,\n  \"has_manifest\": true\n}\n\n\nGET /doc/{alias}/api/page/{page_number}\nGet specific page data.\nParameters:\n\n\n\nParameter\nType\nDescription\n\n\n\n\nalias\npath\nDocument identifier\n\n\npage_number\npath\nPage number (0-indexed)\n\n\n\nResponse:\n{\n  \"page_number\": 25,\n  \"image_url\": \"/doc/E57/zip/images/page_025.png\",\n  \"html_url\": \"/doc/E57/zip/html/page_025.html\",\n  \"has_math\": true,\n  \"segment_info\": {\n    \"chapter\": \"CAPUT III\",\n    \"paragraphs\": [45, 46, 47]\n  }\n}\n\n\nGET /doc/{alias}/api/layers\nAvailable agent output layers.\nResponse:\n{\n  \"layers\": [\n    {\"id\": \"html\", \"name\": \"Original HTML\", \"source\": \"html/\"},\n    {\"id\": \"translation-english\", \"name\": \"English Translation\", \"source\": \"ai/\"},\n    {\"id\": \"translation-german\", \"name\": \"German Translation\", \"source\": \"ai/\"}\n  ]\n}\n\n\nGET /doc/{alias}/api/page/{n}/layer/{layer_id}\nGet page content from a specific layer.\nParameters:\n\n\n\nParameter\nType\nDescription\n\n\n\n\nalias\npath\nDocument identifier\n\n\nn\npath\nPage number (0-indexed)\n\n\nlayer_id\npath\nLayer identifier\n\n\n\nResponse: HTML/XML content from the specified layer\n\n\nPOST /doc/{alias}/api/brew\nTrigger an AI-Scholar agent (requires ai-scholar installation).\nRequest Body:\n{\n  \"agent\": \"translation-english\",\n  \"pages\": [0, 1, 2, 3, 4]\n}\nResponse:\n{\n  \"status\": \"started\",\n  \"job_id\": \"abc123\",\n  \"agent\": \"translation-english\",\n  \"pages\": [0, 1, 2, 3, 4]\n}",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "API Reference"
+  ]
+ },
+ {
+  "objectID": "api-reference.html#python-api",
+  "href": "api-reference.html#python-api",
+  "title": "API Reference",
+  "section": "Python API",
+  "text": "Python API\n\nPdaiPublicationServer\nMain server class for serving PDAI documents.\n\nConstructor\nfrom ai_viewer import PdaiPublicationServer\n\nserver = PdaiPublicationServer(\n    document_path=\"../pdai/E57\",\n    host=\"127.0.0.1\",\n    port=5100,\n    debug=False\n)\nParameters:\n\n\n\nParameter\nType\nDefault\nDescription\n\n\n\n\ndocument_path\nstr\nrequired\nPath to PDAI document directory\n\n\nhost\nstr\n“127.0.0.1”\nServer host address\n\n\nport\nint\n5100\nServer port number\n\n\ndebug\nbool\nFalse\nEnable debug mode\n\n\n\n\n\nMethods\n\nstart()\nStart the FastAPI server.\nserver = PdaiPublicationServer(\"../pdai/E57\")\nserver.start()  # Server runs on http://localhost:5100\n\n\nstop()\nStop the server gracefully.\nserver.stop()\n\n\nget_document_info()\nGet information about the loaded document.\ninfo = server.get_document_info()\nprint(f\"Document has {info['page_count']} pages\")\nReturns: dict with document metadata\n\n\n\n\nPdaiDocument\nClass for handling PDAI document format and structure.\n\nConstructor\nfrom ai_viewer import PdaiDocument\n\ndoc = PdaiDocument(\"../pdai/E57\")\n\n\nMethods\n\nload_page(page_number)\nLoad a specific page from the document.\npage_data = doc.load_page(25)\nprint(f\"Page 25 image: {page_data['image_path']}\")\nParameters:\n\n\n\nParameter\nType\nDescription\n\n\n\n\npage_number\nint\nPage number (0-indexed)\n\n\n\nReturns: dict with page data\n\n\nget_page_count()\nGet total number of pages.\ncount = doc.get_page_count()\nprint(f\"Document has {count} pages\")\nReturns: int\n\n\nvalidate_format()\nValidate PDAI format compliance.\nvalidation = doc.validate_format()\nif validation['has_images'] and validation['has_html']:\n    print(\"Valid PDAI document\")\nReturns: dict with validation results\n\n\nload_manifest()\nLoad and parse manifest.json.\nmanifest = doc.load_manifest()\nfor segment_type in manifest.get('segments', {}):\n    print(f\"Found segment type: {segment_type}\")\nReturns: dict with manifest content or None\n\n\n\n\nUtility Functions\n\nquick_serve()\nQuick function to serve a PDAI document.\nfrom ai_viewer import quick_serve\n\nquick_serve(\n    document_path=\"../pdai/E57\",\n    port=5100,\n    host=\"127.0.0.1\",\n    open_browser=True\n)\nParameters:\n\n\n\nParameter\nType\nDefault\nDescription\n\n\n\n\ndocument_path\nstr\nrequired\nPath to PDAI document\n\n\nport\nint\n5100\nServer port\n\n\nhost\nstr\n“127.0.0.1”\nServer host\n\n\nopen_browser\nbool\nTrue\nOpen browser automatically\n\n\n\n\n\ncreate_viewer_config()\nCreate viewer configuration for custom setups.\nfrom ai_viewer import create_viewer_config\n\nconfig = create_viewer_config(\n    document_path=\"../pdai/E57\",\n    theme=\"dark\",\n    features={\n        \"math_rendering\": True,\n        \"fullscreen\": True,\n        \"search\": False\n    }\n)\nReturns: dict with configuration",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "API Reference"
+  ]
+ },
+ {
+  "objectID": "api-reference.html#error-handling",
+  "href": "api-reference.html#error-handling",
+  "title": "API Reference",
+  "section": "Error Handling",
+  "text": "Error Handling\n\nHTTP Error Codes\n\n\n\nCode\nMeaning\n\n\n\n\n200\nSuccess\n\n\n400\nInvalid request parameters\n\n\n404\nDocument or page not found\n\n\n500\nServer error\n\n\n\n\n\nError Response Format\n{\n  \"error\": true,\n  \"code\": \"DOCUMENT_NOT_FOUND\",\n  \"message\": \"Document 'Unknown' is not registered\",\n  \"details\": {\n    \"registered_documents\": [\"E57\", \"Goldbach\"]\n  }\n}\n\n\nPython Exceptions\n\nDocumentNotFoundError\nfrom ai_viewer.exceptions import DocumentNotFoundError\n\ntry:\n    doc = PdaiDocument(\"nonexistent/path\")\nexcept DocumentNotFoundError as e:\n    print(f\"Document not found: {e}\")\n\n\nInvalidFormatError\nfrom ai_viewer.exceptions import InvalidFormatError\n\ntry:\n    doc = PdaiDocument(\"invalid/document\")\n    doc.validate_format()\nexcept InvalidFormatError as e:\n    print(f\"Invalid format: {e}\")\n\n\nServerError\nfrom ai_viewer.exceptions import ServerError\n\ntry:\n    server = PdaiPublicationServer(\"../pdai/E57\", port=80)\n    server.start()\nexcept ServerError as e:\n    print(f\"Server error: {e}\")",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "API Reference"
+  ]
+ },
+ {
+  "objectID": "api-reference.html#configuration",
+  "href": "api-reference.html#configuration",
+  "title": "API Reference",
+  "section": "Configuration",
+  "text": "Configuration\n\nEnvironment Variables\n\n\n\nVariable\nDefault\nDescription\n\n\n\n\nAI_VIEWER_HOST\n“127.0.0.1”\nDefault server host\n\n\nAI_VIEWER_PORT\n“5100”\nDefault server port\n\n\nAI_VIEWER_DEBUG\n“false”\nEnable debug mode\n\n\nAI_VIEWER_CACHE_SIZE\n“100MB”\nImage cache size\n\n\n\n\n\nConfiguration File\nCreate ~/.ai-viewer/config.yaml:\nserver:\n  host: \"127.0.0.1\"\n  port: 5100\n  debug: false\n\ndisplay:\n  theme: \"default\"\n  math_renderer: \"mathjax\"\n  image_quality: \"high\"\n\nperformance:\n  cache_size: \"100MB\"\n  preload_pages: 5\n\nfeatures:\n  fullscreen: true\n  keyboard_navigation: true\n  search: true",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "API Reference"
+  ]
+ },
+ {
+  "objectID": "api-reference.html#integration-examples",
+  "href": "api-reference.html#integration-examples",
+  "title": "API Reference",
+  "section": "Integration Examples",
+  "text": "Integration Examples\n\nJupyter Notebook\nfrom ai_viewer import quick_serve\nfrom IPython.display import IFrame\nimport threading\n\n# Start viewer in background\ndef start_viewer():\n    quick_serve(\"../pdai/E57\", port=5100, open_browser=False)\n\nthread = threading.Thread(target=start_viewer)\nthread.daemon = True\nthread.start()\n\n# Display in notebook\nIFrame('http://localhost:5100/doc/E57/viewer', width=1000, height=600)\n\n\nFlask Integration\nfrom flask import Flask, redirect\nfrom ai_viewer import PdaiPublicationServer\nimport threading\n\napp = Flask(__name__)\n\n# Start AI Viewer in background\ndef start_viewer():\n    server = PdaiPublicationServer(\"../pdai/E57\", port=5101)\n    server.start()\n\nviewer_thread = threading.Thread(target=start_viewer)\nviewer_thread.daemon = True\nviewer_thread.start()\n\n@app.route('/view/&lt;doc_name&gt;')\ndef view_document(doc_name):\n    return redirect(f'http://localhost:5101/doc/{doc_name}/viewer')\n\n\nProgrammatic Document Access\nfrom ai_viewer import PdaiDocument\n\n# Load document\ndoc = PdaiDocument(\"../pdai/E57\")\n\n# Get page count\nprint(f\"Pages: {doc.get_page_count()}\")\n\n# Load manifest for segment info\nmanifest = doc.load_manifest()\nif manifest:\n    segments = manifest.get('segments', {})\n    for seg_type, seg_data in segments.items():\n        items = seg_data.get('items', [])\n        print(f\"{seg_type}: {len(items)} items\")\n\n# Validate format\nvalidation = doc.validate_format()\nprint(f\"Valid: {validation['valid']}\")",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "API Reference"
+  ]
+ },
+ {
+  "objectID": "api-reference.html#see-also",
+  "href": "api-reference.html#see-also",
+  "title": "API Reference",
+  "section": "See Also",
+  "text": "See Also\n\nArchitecture — Server design details\nCLI Reference — Command-line usage\nIntegration — Three-package workflow",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "API Reference"
+  ]
+ },
+ {
+  "objectID": "features.html",
+  "href": "features.html",
+  "title": "Viewer Features",
+  "section": "",
+  "text": "AI-Viewer provides a rich set of features for exploring PDAI documents. This guide covers navigation, viewing modes, mathematical rendering, agent output layers, and customisation options.",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "Viewer Features"
+  ]
+ },
+ {
+  "objectID": "features.html#overview",
+  "href": "features.html#overview",
+  "title": "Viewer Features",
+  "section": "",
+  "text": "AI-Viewer provides a rich set of features for exploring PDAI documents. This guide covers navigation, viewing modes, mathematical rendering, agent output layers, and customisation options.",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "Viewer Features"
+  ]
+ },
+ {
+  "objectID": "features.html#core-features",
+  "href": "features.html#core-features",
+  "title": "Viewer Features",
+  "section": "Core Features",
+  "text": "Core Features\n\nUniversal PDAI Support\nAI-Viewer displays any PDAI-compliant document using page-centric structure:\npdai/DocumentName/\n└── pages/\n    └── page_NNN/\n        ├── page_NNN.png\n        ├── page_NNN.xml\n        ├── page_NNN.html\n        └── page_NNN_translation_english.xml\n\nPage-centric loading — All page files from one folder\nConsistent naming — page_NNN[_agent].ext pattern\nUnderscore convention — No hyphens in filenames\n\n\n\nHigh-Quality Display\n\nHigh-resolution images — Supports 600+ DPI page images\nCrisp text rendering — Proper font handling\nZoom capabilities — From 25% to 500%\nSmooth scaling — Anti-aliased image display",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "Viewer Features"
+  ]
+ },
+ {
+  "objectID": "features.html#viewing-modes",
+  "href": "features.html#viewing-modes",
+  "title": "Viewer Features",
+  "section": "Viewing Modes",
+  "text": "Viewing Modes\n\nDocument Mode (Press D)\nDual-pane layout for reading:\n\n\n\nPane\nContent\n\n\n\n\nLeft\nPage image (pages/page_NNN/page_NNN.png)\n\n\nRight\nOCR text or translation\n\n\n\nLanguage Selection:\n\n\n\nLanguage\nSource\n\n\n\n\nOriginal\npages/page_NNN/page_NNN.html\n\n\nDeutsch\npages/page_NNN/page_NNN_translation_german.xml\n\n\nEnglish\npages/page_NNN/page_NNN_translation_english.xml\n\n\n\n\n\nAgent Mode (Press A)\nThree-pane layout for agent work:\n\n\n\nPane\nContent\n\n\n\n\nLeft\nSource input (image or XML)\n\n\nMiddle\nAgent output (rendered or raw XML)\n\n\nRight\nAgent navigator and controls\n\n\n\nAgent Navigator Features:\n\nBrowse available agents by category\nView agent configuration (model, template)\nProcess new pages with “Brew Agent”\nCheck processing status",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "Viewer Features"
+  ]
+ },
+ {
+  "objectID": "features.html#segment-navigation",
+  "href": "features.html#segment-navigation",
+  "title": "Viewer Features",
+  "section": "Segment Navigation",
+  "text": "Segment Navigation\nWhen a document has segment definitions in manifest.json:\n\nHow It Works\n\nDropdown appears with segment types (letters, chapters, paragraphs)\nSelect a segment to jump directly to its start page\nView metadata for the selected segment (dates, authors, titles)\n\n\n\nSegment Types\n\n\n\nType\nUse Case\nMetadata Displayed\n\n\n\n\nchapters\nScholarly treatises\nTitle, number, page range\n\n\nparagraphs\nNumbered arguments\nNumber, start text\n\n\nletters\nCorrespondence editions\nSender, recipient, date, place\n\n\ndocuments\nDiplomatic acts\nParties, date, reference\n\n\n\n\n\nExample: Letter Navigation\nFor the Euler-Goldbach correspondence:\nSegment dropdown: \"Letters\"\n├── Letter 1 (Euler → Goldbach, 1729-10-13)\n├── Letter 2 (Goldbach → Euler, 1729-12-01)\n├── Letter 3 (Euler → Goldbach, 1730-01-15)\n└── ...",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "Viewer Features"
+  ]
+ },
+ {
+  "objectID": "features.html#agent-output-layers",
+  "href": "features.html#agent-output-layers",
+  "title": "Viewer Features",
+  "section": "Agent Output Layers",
+  "text": "Agent Output Layers\n\nAvailable Agents\nThe viewer displays agents from ai-orchestrator.yml or defaults:\n\n\n\n\n\n\n\n\nAgent\nOutput File\nDescription\n\n\n\n\nEnglish Translation\npage_NNN_translation_english.xml\nTranslated text\n\n\nGerman Translation\npage_NNN_translation_german.xml\nTranslated text\n\n\nOCR Enhanced\npage_NNN_ocr_enhanced.xml\nImproved OCR\n\n\n\n\n\nViewing Agent Output\nIn Document Mode:\n\nUse language dropdown to switch translations\n\nIn Agent Mode:\n\nSelect agent from navigator\nView rendered output or raw XML\nClick “Brew Agent” to generate new output\n\n\n\nOutput Display Options\n\n\n\nView\nDescription\n\n\n\n\nRendered\nFormatted HTML with styling\n\n\nXML\nRaw XML source",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "Viewer Features"
+  ]
+ },
+ {
+  "objectID": "features.html#mathematical-rendering",
+  "href": "features.html#mathematical-rendering",
+  "title": "Viewer Features",
+  "section": "Mathematical Rendering",
+  "text": "Mathematical Rendering\n\nMathJax Integration\nPerfect rendering of mathematical content from OCR output:\n&lt;!-- Inline mathematics --&gt;\nThe equation \\(E = mc^2\\) is fundamental.\n\n&lt;!-- Display mathematics --&gt;\n\\[\\int_0^1 f(x) \\, dx = \\frac{\\pi}{4}\\]\n\n\nSupported Elements\n\n\n\nElement\nLaTeX\nRendered\n\n\n\n\nFractions\n\\frac{a}{b}\n\\(\\frac{a}{b}\\)\n\n\nExponents\nx^{2n+1}\n\\(x^{2n+1}\\)\n\n\nSubscripts\na_{i,j}\n\\(a_{i,j}\\)\n\n\nIntegrals\n\\int_0^1 f(x) dx\n\\(\\int_0^1 f(x) dx\\)\n\n\nSummations\n\\sum_{i=1}^n\n\\(\\sum_{i=1}^n\\)\n\n\nGreek Letters\n\\alpha, \\beta, \\gamma\n\\(\\alpha, \\beta, \\gamma\\)",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "Viewer Features"
+  ]
+ },
+ {
+  "objectID": "features.html#keyboard-navigation",
+  "href": "features.html#keyboard-navigation",
+  "title": "Viewer Features",
+  "section": "Keyboard Navigation",
+  "text": "Keyboard Navigation\n\nFull Shortcut Reference\n\n\n\nKey\nAction\n\n\n\n\n←\nPrevious page\n\n\n→\nNext page\n\n\n↑\nZoom in\n\n\n↓\nZoom out\n\n\nD\nDocument mode\n\n\nA\nAgent mode\n\n\nR\nRefresh agent result\n\n\nF\nToggle fullscreen\n\n\nH\nHide/show navbar\n\n\nHome\nFirst page\n\n\nEnd\nLast page\n\n\n\n\n\nNavigation Controls\n\nPage input — Enter page number directly\nPrevious/Next buttons — Click navigation\nSegment dropdown — Jump to logical sections",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "Viewer Features"
+  ]
+ },
+ {
+  "objectID": "features.html#url-navigation",
+  "href": "features.html#url-navigation",
+  "title": "Viewer Features",
+  "section": "URL Navigation",
+  "text": "URL Navigation\n\nURL Parameters\n\n\n\nParameter\nDescription\nExample\n\n\n\n\ndoc\nDocument path\ndoc=pdai/E57\n\n\npage\nStarting page (0-indexed)\npage=5\n\n\nmode\nView mode\nmode=agent\n\n\nlang\nLanguage\nlang=english\n\n\n\n\n\nExample URLs\n# Home catalog\nhttp://localhost:4100/ai-viewer/viewer.html\n\n# Specific document\nhttp://localhost:4100/ai-viewer/viewer.html?doc=pdai/E57\n\n# Specific page\nhttp://localhost:4100/ai-viewer/viewer.html?doc=pdai/E57&page=25\n\n# Agent mode\nhttp://localhost:4100/ai-viewer/viewer.html?doc=pdai/E57&mode=agent",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "Viewer Features"
+  ]
+ },
+ {
+  "objectID": "features.html#figure-display",
+  "href": "features.html#figure-display",
+  "title": "Viewer Features",
+  "section": "Figure Display",
+  "text": "Figure Display\n\nExtracted Figures\nFigures extracted by AI-Scholar are stored with their page:\npages/page_012/\n├── page_012.png           # Full page image\n├── page_012.xml           # OCR XML\n├── page_012.html          # HTML\n├── page_012_fig_1.png     # First figure\n└── page_012_fig_2.png     # Second figure\n\n\nFigure References\nText references to figures (e.g., “Fig. 1”) link to extracted images.\n\n\nCaption Display\nFigure captions from OCR are displayed below the figure:\n&lt;figure&gt;\n  [Diagram of tidal forces]\n  &lt;caption&gt;FIGURE 1: Schematic representation of lunar effects&lt;/caption&gt;\n&lt;/figure&gt;",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "Viewer Features"
+  ]
+ },
+ {
+  "objectID": "features.html#footnote-validation",
+  "href": "features.html#footnote-validation",
+  "title": "Viewer Features",
+  "section": "Footnote Validation",
+  "text": "Footnote Validation\n\nValidation Features\n\nMarker detection — Finds &lt;fn&gt; tags in text\nEntry matching — Matches markers to footnote entries\nOrphan detection — Highlights unmatched footnotes in red\nSequence checking — Validates footnote numbering order\n\n\n\nVisual Indicators\n\n\n\nIndicator\nMeaning\n\n\n\n\nNormal footnote marker\nValid, matched to entry\n\n\nRed highlighted marker\nOrphaned, no matching entry\n\n\nWarning icon\nValidation issue detected",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "Viewer Features"
+  ]
+ },
+ {
+  "objectID": "features.html#display-themes",
+  "href": "features.html#display-themes",
+  "title": "Viewer Features",
+  "section": "Display Themes",
+  "text": "Display Themes\n\nBuilt-in Theme\nThe viewer uses a dark theme with:\n\nOxford blue background (#1a1a2e)\nWarm accents (#e94560)\nHigh contrast text\nSubtle gradients\n\n\n\nCSS Customisation\nDocuments can include custom CSS in css/:\npdai/E57/css/\n├── default.css      # Standard viewer styling\n└── scholarly.css    # Academic presentation",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "Viewer Features"
+  ]
+ },
+ {
+  "objectID": "features.html#performance",
+  "href": "features.html#performance",
+  "title": "Viewer Features",
+  "section": "Performance",
+  "text": "Performance\n\nProgressive Loading\n\nOn-demand — Pages load as needed\nLazy loading — Content loaded when visible\nBinary search — Efficient page count detection\n\n\n\nBrowser Caching\n\n\n\nContent Type\nCache Strategy\n\n\n\n\nPage images\nLong cache (immutable)\n\n\nHTML/XML content\nCache with revalidation\n\n\nStatic assets\nLong cache\n\n\n\n\n\nPerformance Metrics\n\n\n\nDocument Size\nInitial Load\nPage Switch\n\n\n\n\nSmall (1-50 pages)\n&lt; 2s\nInstant\n\n\nMedium (51-200 pages)\n&lt; 5s\n&lt; 0.5s\n\n\nLarge (201-500 pages)\n&lt; 10s\n&lt; 1s",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "Viewer Features"
+  ]
+ },
+ {
+  "objectID": "features.html#accessibility",
+  "href": "features.html#accessibility",
+  "title": "Viewer Features",
+  "section": "Accessibility",
+  "text": "Accessibility\n\nKeyboard Support\nFull keyboard navigation for all functions:\n\nTab — Navigate interactive elements\nEnter/Space — Activate buttons\nEscape — Close dialogs\n\n\n\nScreen Reader Support\n\nARIA labels — Proper labeling throughout\nSemantic HTML — Meaningful structure\nAlt text — Image descriptions\nFocus management — Logical focus order\n\n\n\nVisual Accessibility\n\nHigh contrast — Enhanced visibility\nFont scaling — Respects browser settings\nMotion reduction — Respects prefers-reduced-motion",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "Viewer Features"
+  ]
+ },
+ {
+  "objectID": "features.html#configuration",
+  "href": "features.html#configuration",
+  "title": "Viewer Features",
+  "section": "Configuration",
+  "text": "Configuration\n\nDocument Configuration (ai-orchestrator.yml)\nversion: \"1.0\"\ndocument: E57\nmodel: gemini-3-flash-preview\n\nagents:\n  translation-english:\n    display_name: English Translation\n    model: gemini-3-flash-preview\n    instruction: translation.j2\n    variables:\n      target_lang: en\n      target_lang_full: English\n\n\nDefault Agents\nWhen no orchestrator config exists, the viewer provides defaults:\n\nEnglish Translation\nGerman Translation\nOCR Enhanced",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "Viewer Features"
+  ]
+ },
+ {
+  "objectID": "features.html#see-also",
+  "href": "features.html#see-also",
+  "title": "Viewer Features",
+  "section": "See Also",
+  "text": "See Also\n\nQuick Start — Getting started\nPDAI Standard — Document format specification\nIntegration — Three-package workflow\nArchitecture — Viewer design",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "Viewer Features"
+  ]
+ },
+ {
+  "objectID": "contributing.html",
+  "href": "contributing.html",
+  "title": "Contributing",
+  "section": "",
+  "text": "Thank you for your interest in contributing to AI-Viewer! This guide covers development setup, code standards, and the contribution process.",
+  "crumbs": [
+   "Home",
+   "Development",
+   "Contributing"
+  ]
+ },
+ {
+  "objectID": "contributing.html#overview",
+  "href": "contributing.html#overview",
+  "title": "Contributing",
+  "section": "",
+  "text": "Thank you for your interest in contributing to AI-Viewer! This guide covers development setup, code standards, and the contribution process.",
+  "crumbs": [
+   "Home",
+   "Development",
+   "Contributing"
+  ]
+ },
+ {
+  "objectID": "contributing.html#development-setup",
+  "href": "contributing.html#development-setup",
+  "title": "Contributing",
+  "section": "Development Setup",
+  "text": "Development Setup\n\nPrerequisites\n\nPython 3.10 or higher\nGit\nA PDAI document for testing (e.g., from ai-scholar processing)\n\n\n\nClone and Install\n# Clone the repository\ngit clone https://github.com/grasshoff/ai-viewer.git\ncd ai-viewer\n\n# Create virtual environment (optional but recommended)\npython -m venv .venv\nsource .venv/bin/activate  # On Windows: .venv\\Scripts\\activate\n\n# Install in development mode\npip install -e .\n\n# Verify installation\nai-viewer --help\n\n\nUsing uv (Recommended)\n# Install uv if not present\ncurl -LsSf https://astral.sh/uv/install.sh | sh\n\n# Install dependencies\ncd ai-viewer\nuv pip install -e .",
+  "crumbs": [
+   "Home",
+   "Development",
+   "Contributing"
+  ]
+ },
+ {
+  "objectID": "contributing.html#project-structure",
+  "href": "contributing.html#project-structure",
+  "title": "Contributing",
+  "section": "Project Structure",
+  "text": "Project Structure\nai-viewer/\n├── src/ai_viewer/\n│   ├── __init__.py           # Package initialization\n│   ├── __main__.py           # Entry point\n│   ├── cli.py                # Command-line interface\n│   ├── pdai_server.py        # FastAPI server\n│   ├── pdai_converter.py     # Document format handling\n│   ├── footnote_validator.py # Footnote validation\n│   ├── viewer.py             # Core viewer logic\n│   └── static/\n│       └── main_viewer.html  # Viewer template\n├── docs/                     # Quarto documentation\n├── tests/                    # Test suite\n├── pyproject.toml           # Package configuration\n└── README.md",
+  "crumbs": [
+   "Home",
+   "Development",
+   "Contributing"
+  ]
+ },
+ {
+  "objectID": "contributing.html#running-the-development-server",
+  "href": "contributing.html#running-the-development-server",
+  "title": "Contributing",
+  "section": "Running the Development Server",
+  "text": "Running the Development Server\n# Quick serve a document\nai-viewer ../pdai/E57 --port 5100 --debug\n\n# With uvicorn directly (auto-reload)\nuvicorn ai_viewer.pdai_server:app --reload --port 5100",
+  "crumbs": [
+   "Home",
+   "Development",
+   "Contributing"
+  ]
+ },
+ {
+  "objectID": "contributing.html#code-standards",
+  "href": "contributing.html#code-standards",
+  "title": "Contributing",
+  "section": "Code Standards",
+  "text": "Code Standards\n\nPython Style\nWe follow PEP 8 with these preferences:\n\nLine length: 100 characters maximum\nImports: Standard library, third-party, then local (separated by blank lines)\nDocstrings: Google style for functions and classes\nNo type hints: Keep code clean and simple (per project preference)\n\n\n\nExample Code Style\n\"\"\"Module docstring explaining purpose.\"\"\"\n\nimport os\nfrom pathlib import Path\n\nfrom fastapi import FastAPI\n\nfrom ai_viewer.exceptions import DocumentNotFoundError\n\n\ndef load_document(path):\n    \"\"\"Load a PDAI document from the specified path.\n    \n    Args:\n        path: Path to the PDAI document directory.\n        \n    Returns:\n        Document object with loaded content.\n        \n    Raises:\n        DocumentNotFoundError: If the path doesn't exist.\n    \"\"\"\n    doc_path = Path(path)\n    if not doc_path.exists():\n        raise DocumentNotFoundError(f\"Document not found: {path}\")\n    \n    return Document(doc_path)\n\n\nJavaScript Style\nFor viewer JavaScript:\n\nNo frameworks: Plain JavaScript only\nReadable code: Clear variable names, comments for complex logic\nDOM manipulation: Direct DOM access preferred over jQuery-style\n\n\n\nHTML/CSS Style\n\nSemantic HTML: Use appropriate elements (&lt;nav&gt;, &lt;main&gt;, &lt;article&gt;)\nCSS variables: Use for theming and consistency\nResponsive design: Mobile-first approach",
+  "crumbs": [
+   "Home",
+   "Development",
+   "Contributing"
+  ]
+ },
+ {
+  "objectID": "contributing.html#testing",
+  "href": "contributing.html#testing",
+  "title": "Contributing",
+  "section": "Testing",
+  "text": "Testing\n\nRunning Tests\n# Run all tests\npytest\n\n# Run with coverage\npytest --cov=ai_viewer\n\n# Run specific test file\npytest tests/test_pdai_server.py\n\n\nWriting Tests\n# tests/test_document.py\nimport pytest\nfrom ai_viewer import PdaiDocument\n\ndef test_load_document():\n    \"\"\"Test loading a valid PDAI document.\"\"\"\n    doc = PdaiDocument(\"../pdai/E57\")\n    assert doc.get_page_count() &gt; 0\n\ndef test_load_nonexistent_document():\n    \"\"\"Test error handling for missing document.\"\"\"\n    with pytest.raises(DocumentNotFoundError):\n        PdaiDocument(\"nonexistent/path\")",
+  "crumbs": [
+   "Home",
+   "Development",
+   "Contributing"
+  ]
+ },
+ {
+  "objectID": "contributing.html#documentation",
+  "href": "contributing.html#documentation",
+  "title": "Contributing",
+  "section": "Documentation",
+  "text": "Documentation\n\nBuilding Documentation\ncd docs\n\n# Preview with auto-reload\nquarto preview\n\n# Build static site\nquarto render\n\n\nDocumentation Style\n\nQuarto markdown: Use .qmd files\nSandstone theme: Consistent with ai-scholar\nBritish English: Preferred spelling\nClear structure: Use headings, tables, code blocks\n\nSee the AI-Scholar documentation standards for detailed guidelines.",
+  "crumbs": [
+   "Home",
+   "Development",
+   "Contributing"
+  ]
+ },
+ {
+  "objectID": "contributing.html#making-changes",
+  "href": "contributing.html#making-changes",
+  "title": "Contributing",
+  "section": "Making Changes",
+  "text": "Making Changes\n\nBranch Naming\nfeature/segment-navigation\nfix/footnote-validation\ndocs/api-reference-update\n\n\nCommit Messages\nAdd segment navigation dropdown\n\n- Load segments from manifest.json\n- Populate dropdown with segment types\n- Jump to segment start page on selection\n\nCloses #42\n\n\nPull Request Process\n\nFork the repository\nCreate a feature branch\nMake your changes with clear commits\nTest your changes locally\nUpdate documentation if needed\nSubmit a pull request",
+  "crumbs": [
+   "Home",
+   "Development",
+   "Contributing"
+  ]
+ },
+ {
+  "objectID": "contributing.html#areas-for-contribution",
+  "href": "contributing.html#areas-for-contribution",
+  "title": "Contributing",
+  "section": "Areas for Contribution",
+  "text": "Areas for Contribution\n\nHigh Priority\n\nSegment navigation improvements — Better UI for complex segment structures\nAgent layer switching — Smooth transitions between output layers\nPerformance optimisation — Faster loading for large documents\nAccessibility — Screen reader improvements, keyboard navigation\n\n\n\nDocumentation\n\nExamples — More usage examples and tutorials\nAPI documentation — Expand endpoint descriptions\nIntegration guides — More cross-package workflow examples\n\n\n\nTesting\n\nUnit tests — Expand test coverage\nIntegration tests — Full workflow testing\nBrowser tests — Viewer functionality testing",
+  "crumbs": [
+   "Home",
+   "Development",
+   "Contributing"
+  ]
+ },
+ {
+  "objectID": "contributing.html#development-tips",
+  "href": "contributing.html#development-tips",
+  "title": "Contributing",
+  "section": "Development Tips",
+  "text": "Development Tips\n\nWorking with PDAI Documents\nKeep a test document available:\n# Process a test document with ai-scholar\nai-scholar process test.pdf\nai-scholar segment ../pdai/Test\n\n# Use for development\nai-viewer ../pdai/Test --debug\n\n\nDebugging the Server\n# Enable debug mode for detailed logging\nai-viewer ../pdai/E57 --debug\n\n# Check server logs\ntail -f viewer.log\n\n\nDebugging the Viewer\nOpen browser developer tools:\n\nConsole: Check for JavaScript errors\nNetwork: Verify API calls\nElements: Inspect DOM structure",
+  "crumbs": [
+   "Home",
+   "Development",
+   "Contributing"
+  ]
+ },
+ {
+  "objectID": "contributing.html#release-process",
+  "href": "contributing.html#release-process",
+  "title": "Contributing",
+  "section": "Release Process",
+  "text": "Release Process\n\nVersion Numbering\nWe follow semantic versioning (MAJOR.MINOR.PATCH):\n\nMAJOR: Breaking changes\nMINOR: New features, backwards compatible\nPATCH: Bug fixes\n\n\n\nRelease Checklist\n\nUpdate version in pyproject.toml\nUpdate CHANGELOG.md\nRun full test suite\nBuild and test documentation\nCreate release tag\nPush to PyPI",
+  "crumbs": [
+   "Home",
+   "Development",
+   "Contributing"
+  ]
+ },
+ {
+  "objectID": "contributing.html#getting-help",
+  "href": "contributing.html#getting-help",
+  "title": "Contributing",
+  "section": "Getting Help",
+  "text": "Getting Help\n\nQuestions\n\nOpen a GitHub issue with the “question” label\nCheck existing issues for similar questions\n\n\n\nBugs\n\nOpen a GitHub issue with the “bug” label\nInclude: Python version, OS, steps to reproduce, expected vs actual behaviour\n\n\n\nFeature Requests\n\nOpen a GitHub issue with the “enhancement” label\nDescribe the use case and proposed solution",
+  "crumbs": [
+   "Home",
+   "Development",
+   "Contributing"
+  ]
+ },
+ {
+  "objectID": "contributing.html#code-of-conduct",
+  "href": "contributing.html#code-of-conduct",
+  "title": "Contributing",
+  "section": "Code of Conduct",
+  "text": "Code of Conduct\n\nBe respectful and inclusive\nFocus on constructive feedback\nHelp newcomers get started\nAcknowledge contributions",
+  "crumbs": [
+   "Home",
+   "Development",
+   "Contributing"
+  ]
+ },
+ {
+  "objectID": "contributing.html#licence",
+  "href": "contributing.html#licence",
+  "title": "Contributing",
+  "section": "Licence",
+  "text": "Licence\nBy contributing, you agree that your contributions will be licenced under the MIT Licence.",
+  "crumbs": [
+   "Home",
+   "Development",
+   "Contributing"
+  ]
+ },
+ {
+  "objectID": "contributing.html#see-also",
+  "href": "contributing.html#see-also",
+  "title": "Contributing",
+  "section": "See Also",
+  "text": "See Also\n\nArchitecture — Server design for understanding the codebase\nAPI Reference — Endpoint documentation\nIntegration — Three-package workflow context",
+  "crumbs": [
+   "Home",
+   "Development",
+   "Contributing"
+  ]
+ },
+ {
+  "objectID": "cli-reference.html",
+  "href": "cli-reference.html",
+  "title": "CLI Reference",
+  "section": "",
+  "text": "AI Viewer is a static HTML application served via any HTTP server. The simplest approach uses Python’s built-in server.",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "CLI Reference"
+  ]
+ },
+ {
+  "objectID": "cli-reference.html#overview",
+  "href": "cli-reference.html#overview",
+  "title": "CLI Reference",
+  "section": "",
+  "text": "AI Viewer is a static HTML application served via any HTTP server. The simplest approach uses Python’s built-in server.",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "CLI Reference"
+  ]
+ },
+ {
+  "objectID": "cli-reference.html#quick-start",
+  "href": "cli-reference.html#quick-start",
+  "title": "CLI Reference",
+  "section": "Quick Start",
+  "text": "Quick Start\n# Start server from project root\ncd /path/to/2026project\npython -m http.server 4100\n\n# Open viewer\nopen http://localhost:4100/ai-viewer/viewer.html",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "CLI Reference"
+  ]
+ },
+ {
+  "objectID": "cli-reference.html#server-requirements",
+  "href": "cli-reference.html#server-requirements",
+  "title": "CLI Reference",
+  "section": "Server Requirements",
+  "text": "Server Requirements\nThe HTTP server must run from the project root (parent of both ai-viewer and pdai) to access all resources:\n2026project/          ← Start server here\n├── ai-viewer/\n│   └── viewer.html\n├── pdai/\n│   ├── E57/\n│   ├── Goldbach/\n│   └── ...\n└── pdai-documents.json",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "CLI Reference"
+  ]
+ },
+ {
+  "objectID": "cli-reference.html#url-patterns",
+  "href": "cli-reference.html#url-patterns",
+  "title": "CLI Reference",
+  "section": "URL Patterns",
+  "text": "URL Patterns\n\nViewer URLs\n\n\n\nURL\nDescription\n\n\n\n\n/ai-viewer/viewer.html\nHome catalog (all documents)\n\n\n/ai-viewer/viewer.html?doc=pdai/E57\nView E57 document\n\n\n/ai-viewer/viewer.html?doc=pdai/E57&page=10\nE57 page 10\n\n\n/ai-viewer/viewer.html?doc=pdai/E57&mode=agent\nAgent mode\n\n\n\n\n\nDocument Content URLs\n\n\n\n\n\n\n\nURL\nDescription\n\n\n\n\n/pdai/E57/pages/page_000/page_000.png\nPage image\n\n\n/pdai/E57/pages/page_000/page_000.html\nPage HTML\n\n\n/pdai/E57/pages/page_000/page_000.xml\nPage XML\n\n\n/pdai/E57/pages/page_000/page_000_translation_english.xml\nTranslation\n\n\n/pdai/E57/manifest.json\nDocument manifest",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "CLI Reference"
+  ]
+ },
+ {
+  "objectID": "cli-reference.html#url-parameters",
+  "href": "cli-reference.html#url-parameters",
+  "title": "CLI Reference",
+  "section": "URL Parameters",
+  "text": "URL Parameters\n\n\n\nParameter\nDescription\nExample\n\n\n\n\ndoc\nDocument path\ndoc=pdai/E57\n\n\npage\nStarting page (0-indexed)\npage=5\n\n\nmode\nView mode\nmode=agent or mode=document\n\n\nlang\nLanguage\nlang=english or lang=german\n\n\n\nFull example:\nhttp://localhost:4100/ai-viewer/viewer.html?doc=pdai/E57&page=10&mode=agent",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "CLI Reference"
+  ]
+ },
+ {
+  "objectID": "cli-reference.html#port-configuration",
+  "href": "cli-reference.html#port-configuration",
+  "title": "CLI Reference",
+  "section": "Port Configuration",
+  "text": "Port Configuration\n\nDefault Port (4100)\npython -m http.server 4100\n\n\nCustom Port\npython -m http.server 5100\n# Access at http://localhost:5100/ai-viewer/viewer.html\n\n\nPort Conflicts\n# Check what's using a port\nlsof -i :4100\n\n# Use different port\npython -m http.server 4101",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "CLI Reference"
+  ]
+ },
+ {
+  "objectID": "cli-reference.html#alternative-servers",
+  "href": "cli-reference.html#alternative-servers",
+  "title": "CLI Reference",
+  "section": "Alternative Servers",
+  "text": "Alternative Servers\n\nPython 3\npython -m http.server 4100\n\n\nNode.js (http-server)\nnpx http-server -p 4100\n\n\nnginx\nserver {\n    listen 4100;\n    root /path/to/2026project;\n    \n    location / {\n        try_files $uri $uri/ =404;\n    }\n}",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "CLI Reference"
+  ]
+ },
+ {
+  "objectID": "cli-reference.html#examples",
+  "href": "cli-reference.html#examples",
+  "title": "CLI Reference",
+  "section": "Examples",
+  "text": "Examples\n\nDevelopment Workflow\n# 1. Process document with ai-scholar\nai-scholar process ../pdai/E57/E57.pdf\nai-scholar segment ../pdai/E57\nai-scholar agent ../pdai/E57 translation-english --pages 0-50\n\n# 2. Start server from project root\ncd /path/to/2026project\npython -m http.server 4100\n\n# 3. View result\nopen \"http://localhost:4100/ai-viewer/viewer.html?doc=pdai/E57\"\n\n\nView Multiple Documents\n# Start server once\npython -m http.server 4100\n\n# View different documents by changing URL\nopen \"http://localhost:4100/ai-viewer/viewer.html?doc=pdai/E57\"\nopen \"http://localhost:4100/ai-viewer/viewer.html?doc=pdai/Goldbach\"\nopen \"http://localhost:4100/ai-viewer/viewer.html?doc=pdai/ActaTominicana1523\"\n\n\nBackground Server\n# Start in background\npython -m http.server 4100 &\n\n# Stop later\nkill %1",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "CLI Reference"
+  ]
+ },
+ {
+  "objectID": "cli-reference.html#troubleshooting",
+  "href": "cli-reference.html#troubleshooting",
+  "title": "CLI Reference",
+  "section": "Troubleshooting",
+  "text": "Troubleshooting\n\nDocument Not Found\n# Check document exists\nls -la ../pdai/DocumentName/\n\n# Verify page structure\nls ../pdai/DocumentName/pages/page_000/\n\n\n404 Errors\nEnsure server runs from project root:\n# Wrong - from ai-viewer\ncd ai-viewer\npython -m http.server 4100  # ❌ pdai not accessible\n\n# Correct - from project root\ncd /path/to/2026project\npython -m http.server 4100  # ✓ both accessible\n\n\nPort Already in Use\n# Find what's using the port\nlsof -i :4100\n\n# Kill process or use different port\npython -m http.server 4101\n\n\nPermission Denied\n# Ports below 1024 require root\npython -m http.server 80  # ❌ Permission denied\n\n# Use higher port\npython -m http.server 4100  # ✓ Works",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "CLI Reference"
+  ]
+ },
+ {
+  "objectID": "cli-reference.html#keyboard-shortcuts",
+  "href": "cli-reference.html#keyboard-shortcuts",
+  "title": "CLI Reference",
+  "section": "Keyboard Shortcuts",
+  "text": "Keyboard Shortcuts\nOnce viewing a document:\n\n\n\nKey\nAction\n\n\n\n\n← →\nNavigate pages\n\n\n↑ ↓\nZoom in/out\n\n\nD\nDocument mode\n\n\nA\nAgent mode\n\n\nR\nRefresh agent result\n\n\nF\nToggle fullscreen\n\n\nH\nHide navbar",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "CLI Reference"
+  ]
+ },
+ {
+  "objectID": "cli-reference.html#see-also",
+  "href": "cli-reference.html#see-also",
+  "title": "CLI Reference",
+  "section": "See Also",
+  "text": "See Also\n\nQuick Start — Getting started guide\nIntegration — Three-package workflow\nPDAI Standard — Document format specification",
+  "crumbs": [
+   "Home",
+   "User Guide",
+   "CLI Reference"
+  ]
+ },
+ {
+  "objectID": "index.html",
+  "href": "index.html",
+  "title": "AI-Viewer",
+  "section": "",
+  "text": "Interactive viewing for AI-processed documents. Browse, navigate, and explore PDAI documents with mathematical rendering, segment navigation, and agent output layers.",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "AI-Viewer"
+  ]
+ },
+ {
+  "objectID": "index.html#overview",
+  "href": "index.html#overview",
+  "title": "AI-Viewer",
+  "section": "Overview",
+  "text": "Overview\nAI-Viewer is the presentation layer of the three-package AI document processing ecosystem. It serves PDAI documents generated by AI-Scholar through an interactive web interface with rich navigation, mathematical rendering, and segment-based browsing.\n\n\nUniversal PDAI Support\nWorks with any PDAI-compliant document using page-centric structure. Automatic detection of page folders. Graceful handling of partial structures.\n\n\nSegment Navigation\nBrowse documents by logical structure—letters, chapters, paragraphs. Jump directly to any segment using manifest.json mappings.\n\n\nMathematical Rendering\nMathJax integration for LaTeX formulas. Inline and display mathematics render beautifully with proper symbol fonts.\n\n\nAgent Output Layers\nView different processing layers—original OCR, translations, annotations. Switch between agent outputs to compare results.",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "AI-Viewer"
+  ]
+ },
+ {
+  "objectID": "index.html#quick-start",
+  "href": "index.html#quick-start",
+  "title": "AI-Viewer",
+  "section": "Quick Start",
+  "text": "Quick Start\nThe simplest way to view PDAI documents is with Python’s built-in HTTP server:\n# Start server from project root (parent of ai-viewer and pdai)\ncd /path/to/2026project\npython -m http.server 4100\n\n# Open viewer\nopen http://localhost:4100/ai-viewer/viewer.html",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "AI-Viewer"
+  ]
+ },
+ {
+  "objectID": "index.html#the-three-package-architecture",
+  "href": "index.html#the-three-package-architecture",
+  "title": "AI-Viewer",
+  "section": "The Three-Package Architecture",
+  "text": "The Three-Package Architecture\nAI-Viewer is part of a cohesive document processing ecosystem:\n\n\n\n\n\nflowchart LR\n    subgraph Scholar[\"ai-scholar\"]\n        direction TB\n        OCR[OCR Processing]\n        SEG[Segmentation]\n        AGENT[Agent Pipelines]\n    end\n    \n    subgraph Data[\"pdai\"]\n        direction TB\n        PAGES[\"pages/page_NNN/\"]\n        SEGS[\"segments/\"]\n        MANIFEST[\"manifest.json\"]\n    end\n    \n    subgraph Viewer[\"ai-viewer\"]\n        direction TB\n        HTML[viewer.html]\n        UI[Interactive UI]\n    end\n    \n    Scholar --&gt;|generates| Data\n    Data --&gt;|serves| Viewer\n    Viewer -.-&gt;|triggers agents| Scholar\n\n\n Three-package architecture for AI document processing \n\n\n\n\n\n\n\n\n\n\n\nPackage\nRole\nDescription\n\n\n\n\nai-scholar\nProcessing\nOCR, segmentation, translation, annotation agents\n\n\npdai\nData\nStructured document storage in page-centric format\n\n\nai-viewer\nPresentation\nInteractive web-based document viewing\n\n\n\nSee Three-Package Integration for the complete workflow.",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "AI-Viewer"
+  ]
+ },
+ {
+  "objectID": "index.html#pdai-document-structure",
+  "href": "index.html#pdai-document-structure",
+  "title": "AI-Viewer",
+  "section": "PDAI Document Structure",
+  "text": "PDAI Document Structure\nAI-Viewer reads documents in the canonical PDAI page-centric structure:\npdai/DocumentName/\n├── DocumentName.pdf              # Original PDF (optional)\n├── manifest.json                 # Segment mappings + metadata\n├── ai-orchestrator.yml           # Agent configuration\n├── css/                          # Display styles\n├── templates/                    # Document-specific templates\n├── pages/                        # ALL page-level content\n│   ├── page_000/                 # Folder per page\n│   │   ├── page_000.png          # Page image\n│   │   ├── page_000.xml          # OCR XML\n│   │   ├── page_000.html         # HTML conversion\n│   │   ├── page_000_translation_english.xml   # Agent output\n│   │   └── page_000_fig_1.png    # Extracted figure\n│   ├── page_001/\n│   │   └── ...\n│   └── ...\n└── segments/                     # Document segments (optional)\n    └── letters/\n        ├── letter_000/\n        └── letter_001/\nSee PDAI Standard for complete format specification.",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "AI-Viewer"
+  ]
+ },
+ {
+  "objectID": "index.html#key-features",
+  "href": "index.html#key-features",
+  "title": "AI-Viewer",
+  "section": "Key Features",
+  "text": "Key Features\n\nInteractive Navigation\n\nPage browsing with keyboard shortcuts (← →)\nZoom controls (↑ ↓) for detailed inspection\nFullscreen mode (F) for focused reading\nNavigation bar toggle (H) for maximum content space\n\n\n\nDual Viewing Modes\nDocument Mode (press D):\n\nLeft pane: Page image\nRight pane: OCR text/translations\n\nAgent Mode (press A):\n\nLeft pane: Source input (image or XML)\nMiddle pane: Agent output (translations, analysis)\nRight pane: Agent navigator and controls\n\n\n\nSegment-Based Browsing\nWhen a document has manifest.json with segment definitions:\n\nSelect segment type from dropdown (letters, chapters, paragraphs)\nChoose a specific segment to jump to its start page\nView segment metadata (sender, recipient, date for letters)\n\n\n\nMathematical Excellence\n\nMathJax rendering for inline $...$ and display $$...$$ mathematics\nSymbol highlighting for Greek letters and mathematical operators\nEquation scaling that responds to zoom level\n\n\n\nAgent Output Layers\nView different processing results:\n\nOriginal OCR — Raw text extraction\nTranslations — English, German, or custom language translations\nAnnotations — Entity markup, theorem extraction, commentary",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "AI-Viewer"
+  ]
+ },
+ {
+  "objectID": "index.html#documentation-sections",
+  "href": "index.html#documentation-sections",
+  "title": "AI-Viewer",
+  "section": "Documentation Sections",
+  "text": "Documentation Sections\n\nGetting Started\n\n\n\nDocument\nDescription\n\n\n\n\nQuick Start\nInstallation and first document viewing\n\n\nInstallation\nDetailed setup instructions\n\n\nCLI Reference\nCommand-line options\n\n\n\n\n\nFeatures\n\n\n\nDocument\nDescription\n\n\n\n\nViewer Features\nNavigation, themes, accessibility\n\n\nPDAI Standard\nDocument format specification\n\n\n\n\n\nArchitecture\n\n\n\nDocument\nDescription\n\n\n\n\nThree-Package Integration\nComplete workflow across packages\n\n\nServer Architecture\nServer design and data flow\n\n\nAPI Reference\nREST endpoints and Python API\n\n\n\n\n\nDevelopment\n\n\n\nDocument\nDescription\n\n\n\n\nContributing\nDevelopment setup and guidelines",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "AI-Viewer"
+  ]
+ },
+ {
+  "objectID": "index.html#complete-workflow-example",
+  "href": "index.html#complete-workflow-example",
+  "title": "AI-Viewer",
+  "section": "Complete Workflow Example",
+  "text": "Complete Workflow Example\nProcess and view a scholarly document:\n# 1. Process PDF with AI-Scholar (generates pages/page_NNN/)\nai-scholar process ../pdai/E57/E57.pdf\n\n# 2. Run segmentation to identify structure\nai-scholar segment ../pdai/E57\n\n# 3. Run translation agent\nai-scholar agent ../pdai/E57 translation-english --pages 0-50\n\n# 4. Start server from project root\ncd /path/to/2026project\npython -m http.server 4100\n\n# 5. Open browser\nopen http://localhost:4100/ai-viewer/viewer.html?doc=pdai/E57",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "AI-Viewer"
+  ]
+ },
+ {
+  "objectID": "index.html#keyboard-shortcuts",
+  "href": "index.html#keyboard-shortcuts",
+  "title": "AI-Viewer",
+  "section": "Keyboard Shortcuts",
+  "text": "Keyboard Shortcuts\n\n\n\nKey\nAction\n\n\n\n\n← →\nNavigate pages\n\n\n↑ ↓\nZoom in/out\n\n\nD\nDocument mode\n\n\nA\nAgent mode\n\n\nR\nRefresh agent result\n\n\nF\nToggle fullscreen\n\n\nH\nHide navbar",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "AI-Viewer"
+  ]
+ },
+ {
+  "objectID": "index.html#related-projects",
+  "href": "index.html#related-projects",
+  "title": "AI-Viewer",
+  "section": "Related Projects",
+  "text": "Related Projects\n\nAI-Scholar\nAI-powered PDF and image OCR processing. Agents for translation, annotation, and scholarly analysis.\nDocumentation | GitHub\n\n\nPDAI\nStandardised document collections in page-centric format. The data layer connecting processing and presentation.\nFormat Specification",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "AI-Viewer"
+  ]
+ },
+ {
+  "objectID": "index.html#author",
+  "href": "index.html#author",
+  "title": "AI-Viewer",
+  "section": "Author",
+  "text": "Author\nGerd Graßhoff\n\nEmail: grasshoff@gmail.com\nGitHub: @grasshoff",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "AI-Viewer"
+  ]
+ },
+ {
+  "objectID": "index.html#licence",
+  "href": "index.html#licence",
+  "title": "AI-Viewer",
+  "section": "Licence",
+  "text": "Licence\nMIT Licence — see LICENCE for details.",
+  "crumbs": [
+   "Home",
+   "Getting Started",
+   "AI-Viewer"
+  ]
+ },
+ {
+  "objectID": "footnote_parsing_specification.html",
+  "href": "footnote_parsing_specification.html",
+  "title": "Footnote Parsing Specification and Assessment Register",
+  "section": "",
+  "text": "Problem: Multi-digit footnote numbers are being split during OCR - Example: 23 becomes 2 3 - Example: 10 becomes 1 0\nSolution Required: - Post-OCR processing to detect and merge split numbers - Pattern recognition for sequential digits that should be combined - Context analysis to determine when digits belong together\n\n\n\nRequirements: 1. Ordering: Footnotes in the footnote block must be sorted by their numerical sequence 2. Correspondence Check: Every footnote marker in the text body MUST have a corresponding entry in the footnote block 3. Orphan Detection: Footnotes in the block without references in the text should be flagged\n\n\n\nProblem: Pages with extensive footnotes (like page 4) show footnotes in the block with no corresponding markers in the text body\nRequired Checks: - Count footnote markers in text: &lt;fn&gt;1&lt;/fn&gt;, &lt;fn&gt;2&lt;/fn&gt;, etc. - Count footnotes in block: &lt;footnote data-fn=\"1\"&gt;, etc. - Report mismatches and missing references\n\n\n\n\n\n\nPurpose: Marks footnote references within the main text body\nSyntax: &lt;fn&gt;NUMBER&lt;/fn&gt;\nRequirements: 1. Number Format: Must contain only digits (1, 2, 3, … 99, etc.) 2. Sequential: Should generally appear in ascending order 3. Unique per Page: Each number should appear only once per page 4. Validation: Must have corresponding &lt;footnote&gt; in footnote block\nParsing Rules:\n# Detection pattern for split numbers\n# Before: &lt;fn&gt;2&lt;/fn&gt; &lt;fn&gt;3&lt;/fn&gt; (when meant to be 23)\n# After: &lt;fn&gt;23&lt;/fn&gt;\n\n# Algorithm:\n1. Extract all &lt;fn&gt; tags and their positions\n2. Check if consecutive &lt;fn&gt; tags are within X characters\n3. If single digits and close proximity, merge them\n4. Validate against footnote block for confirmation\n\n\n\nPurpose: Contains the footnote text in the footnote block\nSyntax: &lt;footnote data-fn=\"NUMBER\"&gt;TEXT&lt;/footnote&gt;\nRequirements: 1. data-fn Attribute: Must match a &lt;fn&gt; marker in the text 2. Sorting: Must be sorted numerically by data-fn value 3. Content: Should not include the footnote number in the text (number is in attribute) 4. Completeness: Every footnote must have non-empty content\nValidation Rules:\n# Sorting check\nfootnotes = extract_all_footnotes()\nsorted_footnotes = sorted(footnotes, key=lambda x: int(x.data_fn))\nassert footnotes == sorted_footnotes, \"Footnotes not in sequence\"\n\n# Correspondence check\ntext_markers = extract_all_fn_markers()\nfootnote_numbers = [f.data_fn for f in footnotes]\nassert set(text_markers) == set(footnote_numbers), \"Mismatch between markers and footnotes\"\n\n\n\nPurpose: Contains all footnotes for a page\nSyntax:\n&lt;footnotes&gt;\n  &lt;footnote data-fn=\"1\"&gt;First footnote text&lt;/footnote&gt;\n  &lt;footnote data-fn=\"2\"&gt;Second footnote text&lt;/footnote&gt;\n  ...\n&lt;/footnotes&gt;\nRequirements: 1. Position: Must appear at the bottom of the page content 2. Singularity: Only one &lt;footnotes&gt; block per page 3. Completeness: Must contain ALL footnotes referenced in the text 4. Order: Child &lt;footnote&gt; elements must be in numerical order\n\n\n\n\n\n\n\nPage 1: Basic footnotes (1-7) - test simple parsing\nPage 4: Complex footnotes with potential split numbers - test merge algorithm\nPage with 20+ footnotes: Test sorting and sequence validation\nPage with missing references: Test orphan detection\n\n\n\n\nFor each page, verify:\n\nNumber Integrity: No split multi-digit numbers\nSequence Order: Footnotes sorted 1, 2, 3, …, not 1, 10, 2, 20, 3\nCorrespondence: Every &lt;fn&gt;X&lt;/fn&gt; has matching &lt;footnote data-fn=\"X\"&gt;\nNo Orphans: No footnotes without text references\nNo Duplicates: Each footnote number appears exactly once\nContent Validity: All footnotes have non-empty content\nXML Validity: Well-formed XML structure\n\n\n\n\n{\n  \"page\": 4,\n  \"errors\": [\n    {\n      \"type\": \"split_number\",\n      \"location\": \"text\",\n      \"found\": [\"&lt;fn&gt;2&lt;/fn&gt;\", \"&lt;fn&gt;3&lt;/fn&gt;\"],\n      \"should_be\": \"&lt;fn&gt;23&lt;/fn&gt;\"\n    },\n    {\n      \"type\": \"missing_reference\",\n      \"footnote_number\": \"15\",\n      \"in_block\": true,\n      \"in_text\": false\n    },\n    {\n      \"type\": \"sequence_error\",\n      \"found_order\": [1, 10, 11, 2, 3],\n      \"correct_order\": [1, 2, 3, 10, 11]\n    }\n  ]\n}\n\n\n\n\n\nCRITICAL: Fix split number detection and merging\nCRITICAL: Implement correspondence validation\nHIGH: Add sequence sorting to footnote blocks\nHIGH: Create validation report for each page\nMEDIUM: Add visual indicators for validation errors\nMEDIUM: Implement auto-correction where possible\n\n\n\n\n\n\n\nProcess pages 1-10 of test document\nRun validation suite\nGenerate error report\nCompare accuracy rates\nDocument model-specific issues\n\n\n\n\n\nNumber Integrity: 100% of multi-digit numbers preserved\nCorrespondence: 100% match between markers and footnotes\nSequence: 100% of footnote blocks properly sorted\nOrphan Rate: &lt; 1% orphaned footnotes\n\n\n\n\n\n\n\n\nGreen: Validated footnote with match\nRed: Orphaned footnote (no text reference)\nYellow: Suspected split number\nBlue: Successfully merged number\n\n\n\n\n\nLog all validation errors\nReport success rate per page\nFlag pages needing manual review"
+ },
+ {
+  "objectID": "footnote_parsing_specification.html#critical-issues-to-address",
+  "href": "footnote_parsing_specification.html#critical-issues-to-address",
+  "title": "Footnote Parsing Specification and Assessment Register",
+  "section": "",
+  "text": "Problem: Multi-digit footnote numbers are being split during OCR - Example: 23 becomes 2 3 - Example: 10 becomes 1 0\nSolution Required: - Post-OCR processing to detect and merge split numbers - Pattern recognition for sequential digits that should be combined - Context analysis to determine when digits belong together\n\n\n\nRequirements: 1. Ordering: Footnotes in the footnote block must be sorted by their numerical sequence 2. Correspondence Check: Every footnote marker in the text body MUST have a corresponding entry in the footnote block 3. Orphan Detection: Footnotes in the block without references in the text should be flagged\n\n\n\nProblem: Pages with extensive footnotes (like page 4) show footnotes in the block with no corresponding markers in the text body\nRequired Checks: - Count footnote markers in text: &lt;fn&gt;1&lt;/fn&gt;, &lt;fn&gt;2&lt;/fn&gt;, etc. - Count footnotes in block: &lt;footnote data-fn=\"1\"&gt;, etc. - Report mismatches and missing references"
+ },
+ {
+  "objectID": "footnote_parsing_specification.html#tag-specifications",
+  "href": "footnote_parsing_specification.html#tag-specifications",
+  "title": "Footnote Parsing Specification and Assessment Register",
+  "section": "",
+  "text": "Purpose: Marks footnote references within the main text body\nSyntax: &lt;fn&gt;NUMBER&lt;/fn&gt;\nRequirements: 1. Number Format: Must contain only digits (1, 2, 3, … 99, etc.) 2. Sequential: Should generally appear in ascending order 3. Unique per Page: Each number should appear only once per page 4. Validation: Must have corresponding &lt;footnote&gt; in footnote block\nParsing Rules:\n# Detection pattern for split numbers\n# Before: &lt;fn&gt;2&lt;/fn&gt; &lt;fn&gt;3&lt;/fn&gt; (when meant to be 23)\n# After: &lt;fn&gt;23&lt;/fn&gt;\n\n# Algorithm:\n1. Extract all &lt;fn&gt; tags and their positions\n2. Check if consecutive &lt;fn&gt; tags are within X characters\n3. If single digits and close proximity, merge them\n4. Validate against footnote block for confirmation\n\n\n\nPurpose: Contains the footnote text in the footnote block\nSyntax: &lt;footnote data-fn=\"NUMBER\"&gt;TEXT&lt;/footnote&gt;\nRequirements: 1. data-fn Attribute: Must match a &lt;fn&gt; marker in the text 2. Sorting: Must be sorted numerically by data-fn value 3. Content: Should not include the footnote number in the text (number is in attribute) 4. Completeness: Every footnote must have non-empty content\nValidation Rules:\n# Sorting check\nfootnotes = extract_all_footnotes()\nsorted_footnotes = sorted(footnotes, key=lambda x: int(x.data_fn))\nassert footnotes == sorted_footnotes, \"Footnotes not in sequence\"\n\n# Correspondence check\ntext_markers = extract_all_fn_markers()\nfootnote_numbers = [f.data_fn for f in footnotes]\nassert set(text_markers) == set(footnote_numbers), \"Mismatch between markers and footnotes\"\n\n\n\nPurpose: Contains all footnotes for a page\nSyntax:\n&lt;footnotes&gt;\n  &lt;footnote data-fn=\"1\"&gt;First footnote text&lt;/footnote&gt;\n  &lt;footnote data-fn=\"2\"&gt;Second footnote text&lt;/footnote&gt;\n  ...\n&lt;/footnotes&gt;\nRequirements: 1. Position: Must appear at the bottom of the page content 2. Singularity: Only one &lt;footnotes&gt; block per page 3. Completeness: Must contain ALL footnotes referenced in the text 4. Order: Child &lt;footnote&gt; elements must be in numerical order"
+ },
+ {
+  "objectID": "footnote_parsing_specification.html#assessment-register",
+  "href": "footnote_parsing_specification.html#assessment-register",
+  "title": "Footnote Parsing Specification and Assessment Register",
+  "section": "",
+  "text": "Page 1: Basic footnotes (1-7) - test simple parsing\nPage 4: Complex footnotes with potential split numbers - test merge algorithm\nPage with 20+ footnotes: Test sorting and sequence validation\nPage with missing references: Test orphan detection\n\n\n\n\nFor each page, verify:\n\nNumber Integrity: No split multi-digit numbers\nSequence Order: Footnotes sorted 1, 2, 3, …, not 1, 10, 2, 20, 3\nCorrespondence: Every &lt;fn&gt;X&lt;/fn&gt; has matching &lt;footnote data-fn=\"X\"&gt;\nNo Orphans: No footnotes without text references\nNo Duplicates: Each footnote number appears exactly once\nContent Validity: All footnotes have non-empty content\nXML Validity: Well-formed XML structure\n\n\n\n\n{\n  \"page\": 4,\n  \"errors\": [\n    {\n      \"type\": \"split_number\",\n      \"location\": \"text\",\n      \"found\": [\"&lt;fn&gt;2&lt;/fn&gt;\", \"&lt;fn&gt;3&lt;/fn&gt;\"],\n      \"should_be\": \"&lt;fn&gt;23&lt;/fn&gt;\"\n    },\n    {\n      \"type\": \"missing_reference\",\n      \"footnote_number\": \"15\",\n      \"in_block\": true,\n      \"in_text\": false\n    },\n    {\n      \"type\": \"sequence_error\",\n      \"found_order\": [1, 10, 11, 2, 3],\n      \"correct_order\": [1, 2, 3, 10, 11]\n    }\n  ]\n}"
+ },
+ {
+  "objectID": "footnote_parsing_specification.html#implementation-priority",
+  "href": "footnote_parsing_specification.html#implementation-priority",
+  "title": "Footnote Parsing Specification and Assessment Register",
+  "section": "",
+  "text": "CRITICAL: Fix split number detection and merging\nCRITICAL: Implement correspondence validation\nHIGH: Add sequence sorting to footnote blocks\nHIGH: Create validation report for each page\nMEDIUM: Add visual indicators for validation errors\nMEDIUM: Implement auto-correction where possible"
+ },
+ {
+  "objectID": "footnote_parsing_specification.html#testing-protocol",
+  "href": "footnote_parsing_specification.html#testing-protocol",
+  "title": "Footnote Parsing Specification and Assessment Register",
+  "section": "",
+  "text": "Process pages 1-10 of test document\nRun validation suite\nGenerate error report\nCompare accuracy rates\nDocument model-specific issues\n\n\n\n\n\nNumber Integrity: 100% of multi-digit numbers preserved\nCorrespondence: 100% match between markers and footnotes\nSequence: 100% of footnote blocks properly sorted\nOrphan Rate: &lt; 1% orphaned footnotes"
+ },
+ {
+  "objectID": "footnote_parsing_specification.html#visual-indicators",
+  "href": "footnote_parsing_specification.html#visual-indicators",
+  "title": "Footnote Parsing Specification and Assessment Register",
+  "section": "",
+  "text": "Green: Validated footnote with match\nRed: Orphaned footnote (no text reference)\nYellow: Suspected split number\nBlue: Successfully merged number\n\n\n\n\n\nLog all validation errors\nReport success rate per page\nFlag pages needing manual review"
+ },
+ {
+  "objectID": "css-architecture.html",
+  "href": "css-architecture.html",
+  "title": "",
+  "section": "",
+  "text": "Code"
+ },
+ {
+  "objectID": "css-architecture.html#overview",
+  "href": "css-architecture.html#overview",
+  "title": "",
+  "section": "Overview",
+  "text": "Overview\nThe viewer now uses external CSS files for document content styling, separating concerns between: - Inline CSS: Viewer UI (navigation, panels, controls) - External CSS: Document content formatting (paragraphs, footnotes, typography)"
+ },
+ {
+  "objectID": "css-architecture.html#file-structure",
+  "href": "css-architecture.html#file-structure",
+  "title": "",
+  "section": "File Structure",
+  "text": "File Structure\nai-viewer/\n├── application/\n│   └── main_viewer.html        # Main viewer (inline UI CSS only)\n├── config/\n│   ├── README.md               # Configuration documentation\n│   └── styles/\n│       └── document-content.css # Document content styling\n└── docs/\n    └── css-architecture.md     # This file"
+ },
+ {
+  "objectID": "css-architecture.html#css-organization",
+  "href": "css-architecture.html#css-organization",
+  "title": "",
+  "section": "CSS Organization",
+  "text": "CSS Organization\n\n1. Inline CSS (main_viewer.html)\nPurpose: Viewer UI components and layout\nIncludes: - Navigation bar styling - Panel layout (dual-pane) - Control buttons - Loading/error states - Glass-morphism effects - Document selection page\nWhy inline? - Critical rendering path optimization - Viewer UI is tightly coupled to HTML structure - Reduces HTTP requests for initial load\n\n\n2. External CSS (config/styles/document-content.css)\nPurpose: Document content formatting\nIncludes: - Paragraph spacing and typography - Footnote styling (inline refs + bottom section) - Section headers - Paragraph numbers (&lt;parno&gt;) - Mathematical content - Heading hierarchy\nWhy external? - Customizable: Users can edit without touching HTML - Reusable: Same styles across different viewers - Version control: Style changes tracked separately - Extension-ready: Easy to package for VSCode/Cursor"
+ },
+ {
+  "objectID": "css-architecture.html#usage",
+  "href": "css-architecture.html#usage",
+  "title": "",
+  "section": "Usage",
+  "text": "Usage\n\nLoading External CSS\n&lt;!-- In main_viewer.html --&gt;\n&lt;link rel=\"stylesheet\" href=\"../config/styles/document-content.css\"&gt;\n\n\nCustomizing Styles\n\nEdit document content styles:\nvi config/styles/document-content.css\nRefresh browser (no rebuild needed)\nCommit changes:\ngit add config/styles/document-content.css\ngit commit -m \"Update paragraph spacing\"\n\n\n\nAdding New Styles\nFor new document-specific styles:\n\nAdd to config/styles/document-content.css\nTarget semantic XML tags (&lt;p&gt;, &lt;fn&gt;, &lt;section&gt;, etc.)\nUse namespaced classes (.text-content .your-class)"
+ },
+ {
+  "objectID": "css-architecture.html#css-selectors",
+  "href": "css-architecture.html#css-selectors",
+  "title": "",
+  "section": "CSS Selectors",
+  "text": "CSS Selectors\n\nDocument Structure\nThe OCR XML is rendered with this structure:\n&lt;div class=\"text-content\" id=\"textContainer\"&gt;\n    &lt;page pidx=\"21\"&gt;\n        &lt;meta .../&gt;\n        &lt;header&gt;...&lt;/header&gt;\n        &lt;main&gt;\n            &lt;p&gt;Paragraph content&lt;/p&gt;\n            &lt;section&gt;Section header&lt;/section&gt;\n            &lt;p&gt;&lt;parno&gt;31.&lt;/parno&gt; Paragraph with number&lt;/p&gt;\n            &lt;p&gt;Text with footnote&lt;fn&gt;7&lt;/fn&gt;&lt;/p&gt;\n        &lt;/main&gt;\n        &lt;footnote&gt;\n            &lt;fn&gt;[^7]: Footnote text&lt;/fn&gt;\n        &lt;/footnote&gt;\n    &lt;/page&gt;\n&lt;/div&gt;\n\n\nKey Selectors\n/* Paragraphs */\n.text-content p { }\n\n/* Inline footnote references */\n.text-content fn { }\n\n/* Footnote section */\n.text-content footnote { }\n\n/* Individual footnote entries */\n.text-content footnote fn { }\n\n/* Section headers */\n.text-content section { }\n\n/* Paragraph numbers */\n.text-content parno { }\n\n/* Headings */\n.text-content h1, h2, h3 { }"
+ },
+ {
+  "objectID": "css-architecture.html#javascript-enhancements",
+  "href": "css-architecture.html#javascript-enhancements",
+  "title": "",
+  "section": "JavaScript Enhancements",
+  "text": "JavaScript Enhancements\nSome styling is applied via JavaScript for dynamic content:\n// In loadText() function\nconst paragraphs = container.querySelectorAll('p');\nparagraphs.forEach(p =&gt; {\n    const text = p.textContent.trim();\n    // Add extra spacing for numbered paragraphs (e.g., \"20.\")\n    if (/^\\d+\\./.test(text)) {\n        p.style.marginTop = '2.5em';\n    }\n});"
+ },
+ {
+  "objectID": "css-architecture.html#migration-path",
+  "href": "css-architecture.html#migration-path",
+  "title": "",
+  "section": "Migration Path",
+  "text": "Migration Path\n\nCurrent State\n\n✅ Document content CSS externalized\n✅ Viewer UI CSS remains inline\n✅ JavaScript enhancements for numbered paragraphs\n\n\n\nFuture Plans\n\nTheme Support\nconfig/styles/themes/\n├── default.css\n├── dark.css\n└── academic.css\nDocument Type Styles\nconfig/styles/types/\n├── mathematical.css\n├── historical.css\n└── scientific.css\nUser Preferences\n// config/settings.json\n{\n  \"theme\": \"default\",\n  \"documentStyle\": \"mathematical\",\n  \"fontSize\": 16,\n  \"lineHeight\": 1.7\n}"
+ },
+ {
+  "objectID": "css-architecture.html#vscodecursor-extension",
+  "href": "css-architecture.html#vscodecursor-extension",
+  "title": "",
+  "section": "VSCode/Cursor Extension",
+  "text": "VSCode/Cursor Extension\nWhen packaged as an extension:\n\nExtension Structure\nextension/\n├── package.json\n├── src/\n│   └── viewer.ts\n├── webview/\n│   ├── main_viewer.html\n│   └── styles/\n│       └── document-content.css\n└── config/\n    └── default-settings.json\n\n\nConfiguration API\n// settings.json contribution\n\"ai-pdfscholar.viewer\": {\n  \"fontFamily\": \"Crimson Text, Georgia, serif\",\n  \"paragraphSpacing\": 1.5,\n  \"footnoteStyle\": \"bottom-border\",\n  \"theme\": \"default\"\n}\n\n\nUser Overrides\nUsers can override styles in workspace settings:\n// .vscode/settings.json\n{\n  \"ai-pdfscholar.viewer.customCSS\": \"${workspaceFolder}/.ai-viewer/custom.css\"\n}"
+ },
+ {
+  "objectID": "css-architecture.html#benefits-of-external-css",
+  "href": "css-architecture.html#benefits-of-external-css",
+  "title": "",
+  "section": "Benefits of External CSS",
+  "text": "Benefits of External CSS\n\nSeparation of Concerns\n\nUI styling separate from content styling\nEasier to maintain and update\n\nCustomization\n\nUsers can modify without touching HTML\nNo need to understand JavaScript\n\nVersion Control\n\nStyle changes tracked separately from logic\nEasy to revert or compare changes\n\nTesting\n\nCan test different styles without rebuilding\nA/B testing different typography\n\nExtension Support\n\nClean structure for extension packaging\nStandard VSCode configuration patterns\n\nPerformance\n\nBrowser caching of external CSS\nCan be minified separately"
+ },
+ {
+  "objectID": "css-architecture.html#best-practices",
+  "href": "css-architecture.html#best-practices",
+  "title": "",
+  "section": "Best Practices",
+  "text": "Best Practices\n\nKeep inline CSS for UI only\n\nNavigation, panels, controls\nCritical above-the-fold content\n\nUse external CSS for content\n\nTypography, spacing, colors\nDocument-specific formatting\n\nNamespace all selectors\n\nUse .text-content prefix\nAvoid global styles\n\nComment extensively\n\nExplain purpose of each section\nDocument any magic numbers\n\nTest across documents\n\nMathematical content\nHistorical texts\nDifferent languages"
+ },
+ {
+  "objectID": "css-architecture.html#maintenance",
+  "href": "css-architecture.html#maintenance",
+  "title": "",
+  "section": "Maintenance",
+  "text": "Maintenance\n\nAdding New Styles\n\nIdentify the XML structure\nAdd selectors to document-content.css\nTest with multiple documents\nDocument in comments\n\n\n\nUpdating Existing Styles\n\nCheck impact on all document types\nUpdate comments if behavior changes\nTest with numbered paragraphs, footnotes, etc.\n\n\n\nPerformance Considerations\n\nKeep selectors simple and efficient\nAvoid overly specific selectors\nUse CSS containment where appropriate\nMonitor rendering performance\n\n\nLast Updated: 2025-10-18\nArchitecture Version: 1.0\nStatus: Production Ready"
+ },
+ {
+  "objectID": "integration.html",
+  "href": "integration.html",
+  "title": "Three-Package Integration",
+  "section": "",
+  "text": "The AI document processing ecosystem consists of three interconnected packages, each with a distinct responsibility:\n\n\n\n\n\n\n\n\nPackage\nRole\nPrimary Function\n\n\n\n\nai-scholar\nProcessing\nOCR, segmentation, translation, annotation\n\n\npdai\nData\nStructured document storage (page-centric)\n\n\nai-viewer\nPresentation\nInteractive web-based viewing\n\n\n\nThis guide explains how they work together to transform PDFs into interactive, navigable documents.",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Three-Package Integration"
+  ]
+ },
+ {
+  "objectID": "integration.html#overview",
+  "href": "integration.html#overview",
+  "title": "Three-Package Integration",
+  "section": "",
+  "text": "The AI document processing ecosystem consists of three interconnected packages, each with a distinct responsibility:\n\n\n\n\n\n\n\n\nPackage\nRole\nPrimary Function\n\n\n\n\nai-scholar\nProcessing\nOCR, segmentation, translation, annotation\n\n\npdai\nData\nStructured document storage (page-centric)\n\n\nai-viewer\nPresentation\nInteractive web-based viewing\n\n\n\nThis guide explains how they work together to transform PDFs into interactive, navigable documents.",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Three-Package Integration"
+  ]
+ },
+ {
+  "objectID": "integration.html#architecture",
+  "href": "integration.html#architecture",
+  "title": "Three-Package Integration",
+  "section": "Architecture",
+  "text": "Architecture\n\n\n\n\n\nflowchart TD\n    subgraph Input[\"Source Documents\"]\n        PDF[PDF File]\n        SCANS[Scanned Images]\n    end\n    \n    subgraph Scholar[\"ai-scholar Package\"]\n        INGEST[Ingestion]\n        OCR[OCR Agent]\n        SEG[Segmenter Agent]\n        TRANS[Translation Agent]\n        ANNOT[Annotation Agent]\n    end\n    \n    subgraph PDAI[\"pdai Package\"]\n        PAGES[\"pages/page_NNN/\"]\n        MANIFEST[\"manifest.json\"]\n        SEGMENTS[\"segments/\"]\n    end\n    \n    subgraph Viewer[\"ai-viewer Package\"]\n        HTML[viewer.html]\n        UI[Interactive Viewer]\n    end\n    \n    PDF --&gt; INGEST\n    SCANS --&gt; INGEST\n    INGEST --&gt; PAGES\n    PAGES --&gt; OCR\n    OCR --&gt; PAGES\n    PAGES --&gt; SEG\n    SEG --&gt; MANIFEST\n    PAGES --&gt; TRANS\n    PAGES --&gt; ANNOT\n    TRANS --&gt; PAGES\n    ANNOT --&gt; PAGES\n    \n    PAGES --&gt; HTML\n    MANIFEST --&gt; HTML\n    HTML --&gt; UI\n\n\n Data flow through the three-package architecture",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Three-Package Integration"
+  ]
+ },
+ {
+  "objectID": "integration.html#package-responsibilities",
+  "href": "integration.html#package-responsibilities",
+  "title": "Three-Package Integration",
+  "section": "Package Responsibilities",
+  "text": "Package Responsibilities\n\nai-scholar: The Processing Engine\nAI-Scholar transforms raw documents into structured, annotated content:\n# Core processing commands\nai-scholar process document.pdf         # PDF → pages/page_NNN/\nai-scholar segment ../pdai/DocName      # → manifest.json\nai-scholar agent ../pdai/DocName translation-english  # → pages/page_NNN/page_NNN_translation_english.xml\nGenerates:\n\npages/page_NNN/page_NNN.png — High-resolution page images\npages/page_NNN/page_NNN.xml — Structured OCR output (DTD-validated)\npages/page_NNN/page_NNN.html — Viewer-compatible HTML\npages/page_NNN/page_NNN_fig_M.png — Extracted figures\npages/page_NNN/page_NNN_{agent}.xml — Agent processing outputs\nmanifest.json — Document structure and segment mappings\n\n\n\npdai: The Data Layer\nPDAI provides a standardised, page-centric directory structure:\npdai/DocumentName/\n├── DocumentName.pdf              # Original source\n├── manifest.json                 # Structure metadata\n├── ai-orchestrator.yml           # Agent configuration\n├── css/                          # Display styles\n├── templates/                    # Document-specific templates\n├── pages/                        # ALL page-level content\n│   ├── page_000/\n│   │   ├── page_000.png\n│   │   ├── page_000.xml\n│   │   ├── page_000.html\n│   │   ├── page_000_translation_english.xml\n│   │   └── page_000_fig_1.png\n│   └── page_001/\n│       └── ...\n└── segments/                     # Materialised segments\n    └── letters/\n        ├── letter_000/\n        └── letter_001/\nKey principle: All files for a page live together in pages/page_NNN/. No scattered directories.\n\n\nai-viewer: The Presentation Layer\nAI-Viewer serves PDAI documents through an interactive web interface:\n# Start server from project root\ncd /path/to/2026project\npython -m http.server 4100\n\n# Open viewer\nopen \"http://localhost:4100/ai-viewer/viewer.html?doc=pdai/DocumentName\"\nProvides:\n\nInteractive page navigation (Document mode)\nAgent output viewing (Agent mode)\nSegment-based browsing (letters, chapters, paragraphs)\nMathJax rendering for mathematics\nTranslation layer selection",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Three-Package Integration"
+  ]
+ },
+ {
+  "objectID": "integration.html#complete-workflow",
+  "href": "integration.html#complete-workflow",
+  "title": "Three-Package Integration",
+  "section": "Complete Workflow",
+  "text": "Complete Workflow\n\nStep 1: Ingestion\nStart with a PDF or folder of scanned images:\n# From PDF\nai-scholar process ../pdai/E57/E57.pdf\n\n# From scans folder\nai-scholar process ../scans/historical_doc/\nThis creates the basic PDAI structure with page images in pages/page_NNN/.\n\n\nStep 2: OCR Processing\nExtract text from page images:\nai-scholar process ../pdai/E57 --model gemini-3-flash-preview\nGenerates pages/page_NNN/page_NNN.xml with structured content:\n&lt;page pidx=\"001\"&gt;\n  &lt;meta model=\"gemini-3-flash-preview\" processed_date=\"2025-12-28\"/&gt;\n  &lt;main&gt;\n    &lt;p&gt;&lt;parno&gt;1.&lt;/parno&gt; Omnem mutationem quae...&lt;/p&gt;\n    &lt;p&gt;&lt;parno&gt;2.&lt;/parno&gt; Huius generis effectus...&lt;/p&gt;\n  &lt;/main&gt;\n  &lt;footnotes&gt;\n    &lt;footnote data-fn=\"1\"&gt;Reference note...&lt;/footnote&gt;\n  &lt;/footnotes&gt;\n&lt;/page&gt;\n\n\nStep 3: Segmentation\nIdentify logical document structure:\nai-scholar segment ../pdai/E57\nCreates manifest.json with segment mappings:\n{\n  \"document\": {\n    \"name\": \"E57\",\n    \"title\": \"Inquisitio Physica...\",\n    \"page_count\": 105,\n  },\n  \"segments\": {\n    \"chapters\": {\n      \"items\": [\n        {\"id\": \"1\", \"number\": 1, \"title\": \"CAPUT PRIMUM\", \"pages\": [1, 2, 3]}\n      ]\n    },\n    \"paragraphs\": {\n      \"items\": [\n        {\"id\": \"1\", \"number\": 1, \"pages\": [1], \"start_text\": \"Omnem mutationem...\"}\n      ]\n    }\n  }\n}\n\n\nStep 4: Agent Processing\nRun translation, annotation, or custom agents:\n# Translate to English\nai-scholar agent ../pdai/E57 translation-english --pages 0-50\n\n# Annotate entities\nai-scholar agent ../pdai/E57 annotate-entities --pages 0-50\nOutputs go to pages/page_NNN/page_NNN_{agent}.xml.\n\n\nStep 5: Viewing\nServe the document with a simple HTTP server:\n# Start from project root\ncd /path/to/2026project\npython -m http.server 4100\n\n# Open browser\nopen \"http://localhost:4100/ai-viewer/viewer.html?doc=pdai/E57\"\nNavigate to explore:\n\nBrowse pages with images and HTML side-by-side (Document mode)\nView agent outputs in three-pane layout (Agent mode)\nNavigate by segment (chapter, paragraph)\nSwitch between translation layers",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Three-Package Integration"
+  ]
+ },
+ {
+  "objectID": "integration.html#segment-navigation",
+  "href": "integration.html#segment-navigation",
+  "title": "Three-Package Integration",
+  "section": "Segment Navigation",
+  "text": "Segment Navigation\nThe viewer uses manifest.json to enable segment-based navigation.\n\nHow It Works\n\nViewer loads manifest — Reads segment definitions on document load\nPopulates dropdowns — Creates navigation controls for each segment type\nJump to segment — Selecting a segment navigates to its start page\nDisplay metadata — Shows segment-specific information (dates, authors)\n\n\n\nSegment Types\n\n\n\nType\nUse Case\nMetadata\n\n\n\n\nchapters\nScholarly treatises\nTitle, number, pages\n\n\nparagraphs\nNumbered arguments\nNumber, start text, pages\n\n\nletters\nCorrespondence editions\nSender, recipient, date, place\n\n\ndocuments\nDiplomatic acts\nParties, date, reference",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Three-Package Integration"
+  ]
+ },
+ {
+  "objectID": "integration.html#agent-output-layers",
+  "href": "integration.html#agent-output-layers",
+  "title": "Three-Package Integration",
+  "section": "Agent Output Layers",
+  "text": "Agent Output Layers\nThe viewer can display different processing results.\n\nAvailable Layers\nAfter running agents, page folders contain multiple outputs:\npages/page_000/\n├── page_000.png\n├── page_000.xml\n├── page_000.html\n├── page_000_translation_english.xml\n├── page_000_translation_german.xml\n└── page_000_annotate_entities.xml\n\n\nViewing Layers\nDocument Mode:\n\nUse language dropdown to switch between Original, Deutsch, English\n\nAgent Mode:\n\nSelect agent from navigator to view output\nCompare source input with agent output side-by-side\n\n\n\nComparing Outputs\n\nOriginal vs Translation — See how text was interpreted\nMultiple translations — Compare English and German versions\nAnnotation overlays — View entity markup on original text",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Three-Package Integration"
+  ]
+ },
+ {
+  "objectID": "integration.html#cross-package-commands",
+  "href": "integration.html#cross-package-commands",
+  "title": "Three-Package Integration",
+  "section": "Cross-Package Commands",
+  "text": "Cross-Package Commands\n\nFrom ai-scholar\n# Full processing pipeline\nai-scholar process document.pdf\nai-scholar segment ../pdai/DocName\nai-scholar agent ../pdai/DocName translation-english\n\n# Migrate legacy documents\nai-scholar migrate ../pdai/DocName\nai-scholar migrate-all ../pdai\n\n# Assessment\nai-scholar assess ../pdai/DocName\n\n\nFrom Project Root\n# Start server\ncd /path/to/2026project\npython -m http.server 4100\n\n# View documents\nopen \"http://localhost:4100/ai-viewer/viewer.html\"           # Home catalog\nopen \"http://localhost:4100/ai-viewer/viewer.html?doc=pdai/E57\"  # Specific document",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Three-Package Integration"
+  ]
+ },
+ {
+  "objectID": "integration.html#url-structure",
+  "href": "integration.html#url-structure",
+  "title": "Three-Package Integration",
+  "section": "URL Structure",
+  "text": "URL Structure\n\nViewer URLs\n\n\n\nURL\nDescription\n\n\n\n\n/ai-viewer/viewer.html\nHome catalog\n\n\n/ai-viewer/viewer.html?doc=pdai/E57\nDocument viewer\n\n\n/ai-viewer/viewer.html?doc=pdai/E57&page=10\nSpecific page\n\n\n/ai-viewer/viewer.html?doc=pdai/E57&mode=agent\nAgent mode\n\n\n\n\n\nContent URLs\n\n\n\n\n\n\n\nURL\nDescription\n\n\n\n\n/pdai/E57/pages/page_000/page_000.png\nPage image\n\n\n/pdai/E57/pages/page_000/page_000.html\nPage HTML\n\n\n/pdai/E57/pages/page_000/page_000_translation_english.xml\nTranslation\n\n\n/pdai/E57/manifest.json\nDocument manifest",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Three-Package Integration"
+  ]
+ },
+ {
+  "objectID": "integration.html#document-discovery",
+  "href": "integration.html#document-discovery",
+  "title": "Three-Package Integration",
+  "section": "Document Discovery",
+  "text": "Document Discovery\n\nPrimary Source: pdai/index.json\nThe canonical document list:\n{\n  \"documents\": [\n    {\"name\": \"E57\", \"title\": \"Euler Tidal Theory\", \"pages\": 105},\n    {\"name\": \"Goldbach\", \"title\": \"Euler-Goldbach Letters\", \"pages\": 483}\n  ]\n}\n\n\nFallback: pdai-documents.json\nCached copy at project root for convenience.\n\n\nAdding Documents\n\nProcess document with ai-scholar process\nAdd entry to pdai/index.json\nRefresh viewer — document appears in home catalog",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Three-Package Integration"
+  ]
+ },
+ {
+  "objectID": "integration.html#best-practices",
+  "href": "integration.html#best-practices",
+  "title": "Three-Package Integration",
+  "section": "Best Practices",
+  "text": "Best Practices\n\nDocument Preparation\n\nProcess documents — Use ai-scholar process for new documents\nMigrate old documents — Use ai-scholar migrate for legacy documents\nSegment early — Generate manifest.json for navigation\nValidate structure — Use ai-scholar assess to check integrity\n\n\n\nViewing Workflow\n\nStart simple — View original HTML first\nCheck segments — Verify navigation works correctly\nAdd layers — Run translation/annotation agents as needed\nCompare outputs — Switch layers to compare processing results",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Three-Package Integration"
+  ]
+ },
+ {
+  "objectID": "integration.html#troubleshooting",
+  "href": "integration.html#troubleshooting",
+  "title": "Three-Package Integration",
+  "section": "Troubleshooting",
+  "text": "Troubleshooting\n\nDocument Not Loading\n# Check structure\nls -la ../pdai/DocumentName/pages/page_000/\n\n# Verify required files\nls ../pdai/DocumentName/pages/page_000/page_000.png\nls ../pdai/DocumentName/pages/page_000/page_000.html\n\n\nMissing Segments\n# Run segmentation\nai-scholar segment ../pdai/DocumentName\n\n# Check manifest\ncat ../pdai/DocumentName/manifest.json | jq '.segments'\n\n\nAgent Outputs Not Showing\n# Check page folder\nls ../pdai/DocumentName/pages/page_000/\n\n# Run agent if missing\nai-scholar agent ../pdai/DocumentName translation-english\n\n\nServer 404 Errors\n# Ensure server runs from project root\ncd /path/to/2026project  # Parent of ai-viewer and pdai\npython -m http.server 4100",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Three-Package Integration"
+  ]
+ },
+ {
+  "objectID": "integration.html#summary",
+  "href": "integration.html#summary",
+  "title": "Three-Package Integration",
+  "section": "Summary",
+  "text": "Summary\nThe three-package architecture provides clean separation of concerns:\n\nai-scholar handles all AI processing\npdai stores data in page-centric format\nai-viewer presents content interactively via static HTTP\n\nData flows from processing through storage to presentation, with all page-related files organised together in pages/page_NNN/ folders.",
+  "crumbs": [
+   "Home",
+   "Architecture",
+   "Three-Package Integration"
+  ]
+ }
+]

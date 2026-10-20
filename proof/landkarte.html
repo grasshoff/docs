@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Landkarte der Workspaces – Famulus Proof</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d5b4e69c7e37b49c6591bcc5116dd748.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-0a7ffee50ecdcac772426c46f9339f28.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Keine Treffer",
+    "search-matching-documents-text": "Treffer",
+    "search-copy-link-title": "Link in die Suche kopieren",
+    "search-hide-matches-text": "Zusätzliche Treffer verbergen",
+    "search-more-match-text": "weitere Treffer in diesem Dokument",
+    "search-more-matches-text": "weitere Treffer in diesem Dokument",
+    "search-clear-button-title": "Zurücksetzen",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Abbrechen",
+    "search-submit-button-title": "Abschicken",
+    "search-label": "Suchen"
+  }
+}</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Famulus Proof</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Suchen"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navigation umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Übersicht</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-filterung" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Filterung</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-filterung">    
+        <li>
+    <a class="dropdown-item" href="./filterung.html">
+ <span class="dropdown-text">Filterung von Evidenzräumen</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./evidenzobjekte.html">
+ <span class="dropdown-text">Evidenzobjekte</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./attribute.html">
+ <span class="dropdown-text">Attribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./gebrauch.html">
+ <span class="dropdown-text">Lesart des Gebrauchs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ablauf.html">
+ <span class="dropdown-text">Ablauf</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./geschichte.html">
+ <span class="dropdown-text">Geschichte</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./satzrecord.html">
+ <span class="dropdown-text">Satzrecord</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hnlichkeitssuche" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Ähnlichkeitssuche</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hnlichkeitssuche">    
+        <li>
+    <a class="dropdown-item" href="./aehnlichkeitssuche.html">
+ <span class="dropdown-text">Ähnlichkeitssuche</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./pruefverfahren-aehnlichkeit.html">
+ <span class="dropdown-text">Prüfverfahren</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./validitaetsbaum.html"> 
+<span class="menu-text">Validitätsbaum</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./integration.html"> 
+<span class="menu-text">Sidecar-Integration</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./referenz.html"> 
+<span class="menu-text">Famulus-Referenz</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-landkarte" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Landkarte</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-landkarte">    
+        <li>
+    <a class="dropdown-item" href="./landkarte.html">
+ <span class="dropdown-text">Landkarte der Workspaces</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./kollektionen.html">
+ <span class="dropdown-text">Kollektionen</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#die-schichten" id="toc-die-schichten" class="nav-link active" data-scroll-target="#die-schichten">Die Schichten</a></li>
+  <li><a href="#kollektionen" id="toc-kollektionen" class="nav-link" data-scroll-target="#kollektionen">Kollektionen</a></li>
+  <li><a href="#workspaces" id="toc-workspaces" class="nav-link" data-scroll-target="#workspaces">Workspaces</a></li>
+  <li><a href="#doubletten-und-ihr-zielort" id="toc-doubletten-und-ihr-zielort" class="nav-link" data-scroll-target="#doubletten-und-ihr-zielort">Doubletten und ihr Zielort</a>
+  <ul class="collapse">
+  <li><a href="#identität-von-personen-orten-institutionen-zeiten" id="toc-identität-von-personen-orten-institutionen-zeiten" class="nav-link" data-scroll-target="#identität-von-personen-orten-institutionen-zeiten">Identität von Personen, Orten, Institutionen, Zeiten</a></li>
+  <li><a href="#weitere-doubletten" id="toc-weitere-doubletten" class="nav-link" data-scroll-target="#weitere-doubletten">Weitere Doubletten</a></li>
+  </ul></li>
+  <li><a href="#stand-nach-dem-umbau-3.-oktober-2026-abends" id="toc-stand-nach-dem-umbau-3.-oktober-2026-abends" class="nav-link" data-scroll-target="#stand-nach-dem-umbau-3.-oktober-2026-abends">Stand nach dem Umbau (3. Oktober 2026, abends)</a>
+  <ul class="collapse">
+  <li><a href="#ai-lemma-index-nach-belangen" id="toc-ai-lemma-index-nach-belangen" class="nav-link" data-scroll-target="#ai-lemma-index-nach-belangen">ai-lemma-index nach Belangen</a></li>
+  <li><a href="#famulus-proof-als-eine-begründungsbibliothek" id="toc-famulus-proof-als-eine-begründungsbibliothek" class="nav-link" data-scroll-target="#famulus-proof-als-eine-begründungsbibliothek">famulus-proof als eine Begründungsbibliothek</a></li>
+  <li><a href="#noch-nicht-zusammengeführt" id="toc-noch-nicht-zusammengeführt" class="nav-link" data-scroll-target="#noch-nicht-zusammengeführt">Noch nicht zusammengeführt</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Landkarte der Workspaces</h1>
+<p class="subtitle lead">Was Famulus Proof und Famulus Notebook brauchen, und wo jede Aufgabe genau einmal gelöst ist</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">4. Oktober 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled" title="Die Landkarte in einem Satz">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tipp</span>Die Landkarte in einem Satz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Indexierung und die Identität der Einzeldinge gehören nach <code>ai-lemma-index</code>, jede Begründung nach <code>famulus-proof</code>, und <code>famulus-notebook</code> ist nur die Oberfläche; was heute an zwei oder mehr Stellen gelöst ist, bekommt genau einen Zielort.</p>
+</div>
+</div>
+<section id="die-schichten" class="level2">
+<h2 class="anchored" data-anchor-id="die-schichten">Die Schichten</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    data["PDAI-1: Collections und _register"]
+    lemma["ai-lemma-index: Indexierung, Register der Einzeldinge"]
+    fr["Famulus-Referenz (DuckLake): fr:-Adressen, Zitat, Herkunft; MCP famulus-reference 5135 (mac-studio)"]
+    harvest["Ernte: /oai, /jsonld, /iiif, /peers"]
+    proof["famulus-proof: Beweis, Evidenz, FQL, Entfaltung, Evidenzraum"]
+    nb["famulus-notebook: Oberflaeche, Server 5118"]
+    lek["ai-lektorat: Lektor 5114"]
+    orch["ai-agent-orchestrator: Partituren, famulus-Ops"]
+    query["ai-query: Anfrageaufloesung 5113"]
+    lemma --&gt; data
+    fr --&gt; data
+    fr --&gt; lemma
+    harvest --&gt; fr
+    proof --&gt; fr
+    proof --&gt; lemma
+    nb --&gt; proof
+    lek --&gt; proof
+    orch --&gt; proof
+    query --&gt; lemma
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Jede Schicht importiert nur nach unten. Ein Paket, das eine Aufgabe einer unteren Schicht selbst noch einmal löst, ist eine Doublette.</p>
+<p>Die Famulus-Referenz liegt zwischen den Collections und famulus-proof. Sie überführt jede Collection und die Kopien ihrer Sidecars in ein Sammlungsschema eines DuckLake (<code>pdai-collections/_lake/famulus.ducklake</code>) und gibt jedem Item eine fr:-Adresse. Geschrieben wird der DuckLake nur auf mac-studio; famulus-proof liest ihn schreibgeschützt (Lake-Modus, <code>FAMULUS_LAKE=1</code>). Der MCP-Server <code>famulus-reference</code> (Port 5135, mac-studio) bietet die Werkzeuge <code>fr_*</code> und die Ernte-Endpunkte:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Endpunkt</th>
+<th>liefert</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>GET\|POST /oai</code></td>
+<td>OAI-PMH 2.0 (<code>oai_dc</code>, <code>oai_datacite</code>); ein Set je Collection</td>
+</tr>
+<tr class="even">
+<td><code>GET /jsonld/&lt;coll&gt;</code></td>
+<td>schema.org Dataset und DCAT</td>
+</tr>
+<tr class="odd">
+<td><code>GET /iiif/&lt;coll&gt;/&lt;doc&gt;/manifest.json</code></td>
+<td>IIIF Presentation 3, Canvases auf dem Bilddienst der Institution</td>
+</tr>
+<tr class="even">
+<td><code>GET /peers</code></td>
+<td>Register der föderierten Famulus-Referenzen</td>
+</tr>
+<tr class="odd">
+<td><code>GET /health</code></td>
+<td>Zustand des Servers</td>
+</tr>
+</tbody>
+</table>
+<p>Einzelheiten stehen unter <a href="./referenz.html">Famulus-Referenz</a>.</p>
+</section>
+<section id="kollektionen" class="level2">
+<h2 class="anchored" data-anchor-id="kollektionen">Kollektionen</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="Verbindlich (19. Oktober 2026)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Wichtig</span>Verbindlich (19. Oktober 2026)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Jede Schicht wird je Sammlung gebaut: Sidecar, Satzrecord, FNF-Index, Dossiers, Normdaten. Die Fakten einer Sammlung stehen im Block <code>profil</code> ihrer Schemakarte (<code>evidenzraum/karten/&lt;c&gt;.yaml</code>): Träger (<code>korrespondenz</code> oder <code>dokumente</code>), Sprachen, Epoche der Texte, Fach (Wikidata-Berufe) und Datenbanken; der Code liest sie über <code>schemakarte.profil(c)</code>. Der Kármán-Nachlass ist ein durchgerechnetes Beispiel, nicht die Voreinstellung: ein Skript nennt seine Sammlung mit <code>--collection</code>, und eine Sammlung, der eine Schicht fehlt, meldet die Lücke, statt auf Kármán auszuweichen. Den Stand zeigt die Seite <a href="./kollektionen.html">Kollektionen</a>.</p>
+</div>
+</div>
+</section>
+<section id="workspaces" class="level2">
+<h2 class="anchored" data-anchor-id="workspaces">Workspaces</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Workspace</th>
+<th>Paket</th>
+<th>Aufgabe</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>pdai/famulus-reference</code></td>
+<td><code>famulus_reference</code></td>
+<td>DuckLake der Collections, Schema <code>famulus-reference/1</code>, fr:-Adressen, Zitate, MCP-Server 5135, Ernte (OAI-PMH, JSON-LD, IIIF), Wartung</td>
+</tr>
+<tr class="even">
+<td><code>pdai/index/ai-lemma-index</code></td>
+<td><code>ai_lemma_index</code></td>
+<td>Stanza-Korpus, Lemmaindex, NER, Gazetteer, Vektoren, LWgrammar-Speicher, FQL-Sidecar, <strong>Register der Einzeldinge</strong></td>
+</tr>
+<tr class="odd">
+<td><code>development/famulus-proof</code></td>
+<td><code>famulus_proof</code></td>
+<td>Grundresolution, Evidenzbasis, FQL-Engine und Argument, Zielentfaltung, Evidenzraum</td>
+</tr>
+<tr class="even">
+<td><code>development/famulus-notebook</code></td>
+<td><code>famulus_notebook</code></td>
+<td>Notebook-Server, Viewer, Quarto-Site, Runner</td>
+</tr>
+<tr class="odd">
+<td><code>development/ai-agent-orchestrator</code></td>
+<td><code>orchestrator</code></td>
+<td>Partituren, Conductor, Laufzeit <code>famulus:</code></td>
+</tr>
+<tr class="even">
+<td><code>publication/ai-lektorat</code></td>
+<td><code>ai_lektorat</code></td>
+<td>Lektor, satzweise sachliche Validität</td>
+</tr>
+<tr class="odd">
+<td><code>pdai/agents/ai-query</code></td>
+<td><code>ai_query</code></td>
+<td>Anfrageauflösung, Grounding, Register-Ernte</td>
+</tr>
+<tr class="even">
+<td><code>LWgrammar</code></td>
+<td><code>lwgrammar_reference</code></td>
+<td>Terminologie und Regeln (MCP)</td>
+</tr>
+<tr class="odd">
+<td><code>scholarly/projects/ai-karman-manager</code></td>
+<td>Skripte</td>
+<td>Kármán-Briefdatenbank aus den Brief-XML</td>
+</tr>
+<tr class="even">
+<td><code>pdai/collections/&lt;name&gt;/scripts</code></td>
+<td>Skripte</td>
+<td>Collection-Builder (Pirckheimer, Kepleriana, …)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="doubletten-und-ihr-zielort" class="level2">
+<h2 class="anchored" data-anchor-id="doubletten-und-ihr-zielort">Doubletten und ihr Zielort</h2>
+<p>Stand vor dem Umbau (3. Oktober 2026), gemessen an den Quellen.</p>
+<section id="identität-von-personen-orten-institutionen-zeiten" class="level3">
+<h3 class="anchored" data-anchor-id="identität-von-personen-orten-institutionen-zeiten">Identität von Personen, Orten, Institutionen, Zeiten</h3>
+<p>Sieben Erzeuger entscheiden heute mit sieben Regeln, wer wer ist:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Erzeuger</th>
+<th>Regel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ai-karman-manager/scripts/build_content_db.py</code> · <code>EntityRegistry</code></td>
+<td>gleicher Name nach <code>casefold</code> = gleiche Person</td>
+</tr>
+<tr class="even">
+<td><code>ai-karman-manager/scripts/build_place_country.py</code></td>
+<td>Land pro Schreibweise</td>
+</tr>
+<tr class="odd">
+<td><code>pdai/collections/pirckheimer/scripts/build_entities.py</code>, <code>build_referents.py</code>, <code>build_register.py</code></td>
+<td>Lexikon, Jaro-Winkler ≥ 0,92</td>
+</tr>
+<tr class="even">
+<td><code>ai-query/scripts/build_pirckheimer_letters.py</code>, <code>build_euler_iva_letters.py</code></td>
+<td>Anzeigename als Schlüssel</td>
+</tr>
+<tr class="odd">
+<td><code>pdai/collections/kepleriana-munich-2024/scripts/build_db.py</code></td>
+<td>ASCII-Slug</td>
+</tr>
+<tr class="even">
+<td><code>ai_lemma_index/sidecar/fql_build.py</code> · <code>stage_persons</code></td>
+<td>LLM-Merge, nur eulerOO-IVA</td>
+</tr>
+<tr class="odd">
+<td><code>ai_lemma_index/sidecar/fql_build.py</code> · <code>stage_mentions</code></td>
+<td>exakter Abgleich der Oberfläche</td>
+</tr>
+</tbody>
+</table>
+<p>Die Folge im Kármán-Nachlass: Theodore von Kármán hat rund 40 Registereinträge, Prandtl 8, Pasadena 6, Göttingen 4; „L. Prandtl“ und „Albert Einstein“ in den Texten hängen an keinem.</p>
+<p><strong>Zielort:</strong> <code>ai_lemma_index.register</code>. Builder liefern Formen, das Register entscheidet und projiziert zurück; <code>entity_registry</code>, <code>person_registry</code>, <code>agent_context.json</code> und <code>letter_parties</code> lesen nur noch die Projektion.</p>
+</section>
+<section id="weitere-doubletten" class="level3">
+<h3 class="anchored" data-anchor-id="weitere-doubletten">Weitere Doubletten</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aufgabe</th>
+<th>heute</th>
+<th>Zielort</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Namensfaltung</td>
+<td><code>fql/bind.py:norm</code>, <code>validity/pdai.py:norm</code>, <code>entity_registry.norm_text</code>, <code>collection_memory._fold</code>, <code>grounding._fold</code>, <code>fql_build.norm</code></td>
+<td><code>ai_lemma_index.register.falten</code></td>
+</tr>
+<tr class="even">
+<td>Datumsnormalisierung EDTF</td>
+<td><code>ai_query/register/edtf.py</code>, <code>ai_lektorat/.../validity/terms.edtf</code></td>
+<td><code>ai_lemma_index.register.zeit</code></td>
+</tr>
+<tr class="odd">
+<td>Was eine Collection beantworten kann</td>
+<td><code>famulus_notebook/fql/capabilities.py</code>, <code>famulus_validity/evidence.py</code>, <code>ai-query/build_grounding_index</code></td>
+<td><code>famulus_proof.evidenz</code></td>
+</tr>
+<tr class="even">
+<td>DuckDB-Verbindung zum Sidecar</td>
+<td><code>fql/engine.py:connect</code>, <code>validity/evidence.py:connect</code></td>
+<td><code>famulus_proof.evidenz</code></td>
+</tr>
+<tr class="odd">
+<td>Zielentfaltung</td>
+<td><code>famulus-validity</code> (eigenes Paket)</td>
+<td><code>famulus_proof.entfaltung</code></td>
+</tr>
+<tr class="even">
+<td>Evidenzraum</td>
+<td><code>entfaltung/channels.py</code> (Varianten, längstes Wort, Teilstring) und <code>evidenzraum/baum.py</code> (am 15. Oktober entfernt); die Partitur <code>famulus_evidenzraum_agent</code> am 18. Oktober zurückgezogen</td>
+<td><code>famulus_proof.evidenzraum</code>: die Entfaltung ruft <code>constraint-raum</code> und liest die <code>fundlage</code> (<code>evidenzraum/fundlage.py</code>)</td>
+</tr>
+<tr class="odd">
+<td>FQL-Engine und Argument</td>
+<td><code>famulus_notebook/fql</code></td>
+<td><code>famulus_proof.fql</code></td>
+</tr>
+<tr class="even">
+<td>Argument-Shims ohne Aufrufer</td>
+<td><code>fql/argument/{critical,derive,gather,goal,validate}.py</code></td>
+<td>gelöscht</td>
+</tr>
+<tr class="odd">
+<td>LLM-Client der Indexierung</td>
+<td><code>fql_build.LLM</code></td>
+<td><code>ai_lemma_index.llm</code> (Register und Sidecar)</td>
+</tr>
+</tbody>
+</table>
+<p>Der Importzyklus <code>famulus-notebook → famulus-validity → famulus_notebook.fql</code> entfällt, weil beide Teile in <code>famulus-proof</code> liegen.</p>
+</section>
+</section>
+<section id="stand-nach-dem-umbau-3.-oktober-2026-abends" class="level2">
+<h2 class="anchored" data-anchor-id="stand-nach-dem-umbau-3.-oktober-2026-abends">Stand nach dem Umbau (3. Oktober 2026, abends)</h2>
+<section id="ai-lemma-index-nach-belangen" class="level3">
+<h3 class="anchored" data-anchor-id="ai-lemma-index-nach-belangen">ai-lemma-index nach Belangen</h3>
+<p>Das Sammelpaket <code>stanzadoc/</code> (26 Module) ist aufgelöst; jedes Modul liegt bei seinem Belang, alle Importe in allen Workspaces sind umgeschrieben (Skript <code>scripts/reorg_2026_10_03.py</code>, Syntaxbaum, kein Kompatibilitätsmodul):</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Unterpaket</th>
+<th>Module</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>stanza/</code></td>
+<td>segment, pagedoc, ingest, batch, pipeline, mathmask, config, contract</td>
+</tr>
+<tr class="even">
+<td><code>corpus/</code></td>
+<td>corpus_build, corpus_engine, corpus_audit, corpus_cli, federation, query_plan</td>
+</tr>
+<tr class="odd">
+<td><code>lemma/</code></td>
+<td>lemma_pilot</td>
+</tr>
+<tr class="even">
+<td><code>ner/</code></td>
+<td>gazetteer_store (Person, ohne Modell). GLiNER2.5 ist seit dem 8. Oktober 2026 aus der Pipeline</td>
+</tr>
+<tr class="odd">
+<td><code>vector/</code></td>
+<td>chroma_build, chroma_store</td>
+</tr>
+<tr class="even">
+<td><code>lwgrammar/</code></td>
+<td>lwgrammar_compile, lwgrammar_store</td>
+</tr>
+<tr class="odd">
+<td><code>sidecar/</code></td>
+<td>fql_build</td>
+</tr>
+<tr class="even">
+<td><code>collection/</code></td>
+<td>complete, audit, gate_harness, bib_build</td>
+</tr>
+<tr class="odd">
+<td><code>register/</code></td>
+<td>Einzeldinge: falten, bloecke, formen, entscheiden, aufbau, projektion, nennungen, binden, zeit, store, cli</td>
+</tr>
+<tr class="even">
+<td><code>llm.py</code></td>
+<td>der eine LLM-Client der Indexierung (Ollama, Gemini über REST), Cache in DuckDB</td>
+</tr>
+</tbody>
+</table>
+<p>Die Module des ursprünglichen Lemma-Indexers (<code>aggregate</code>, <code>perpage</code>, <code>search</code>, <code>fastsearch</code>, …) liegen weiter auf oberster Ebene. Die schweren Abhängigkeiten sind Extras (<code>[nlp]</code>, <code>[vector]</code>, <code>[cloud]</code>); famulus-proof und der Lektor installieren nur die Basis.</p>
+</section>
+<section id="famulus-proof-als-eine-begründungsbibliothek" class="level3">
+<h3 class="anchored" data-anchor-id="famulus-proof-als-eine-begründungsbibliothek">famulus-proof als eine Begründungsbibliothek</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Unterpaket</th>
+<th>vorher</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>resolution</code>, <code>derive</code></td>
+<td>famulus-proof (unverändert)</td>
+</tr>
+<tr class="even">
+<td><code>entfaltung/</code></td>
+<td>Paket famulus-validity (entfernt)</td>
+</tr>
+<tr class="odd">
+<td><code>fql/</code></td>
+<td>famulus_notebook.fql</td>
+</tr>
+<tr class="even">
+<td><code>lernen/</code></td>
+<td>famulus_notebook.learn.{artifacts, store, patch}</td>
+</tr>
+<tr class="odd">
+<td><code>ablage</code>, <code>heim</code></td>
+<td>Datei-Helfer des Notebook-Logs; <code>collections_root</code> (dreifach vorhanden)</td>
+</tr>
+<tr class="even">
+<td><code>evidenzraum/</code></td>
+<td>neu</td>
+</tr>
+</tbody>
+</table>
+<p>Der Importzyklus Notebook ↔︎ Validity ist aufgelöst. famulus-notebook behält Oberfläche, Server, Runner und die Lernkampagne (<code>learn/loop</code>, <code>gate</code>, <code>model</code>).</p>
+<p>Am 4. Oktober 2026 ist die zweite Evidenzraum-Implementierung entfernt. <code>entfaltung/channels.py</code> bindet nicht mehr über Varianten-Strings und Teilstring; die Phase <code>evidenzraum</code> der Zielentfaltung ist die Partitur <code>famulus/evidenz/raum</code>. Die Lesart prüft die Identität an den Nachnamenschlüsseln des Registers. Der Raum selbst trägt ein Zertifikat <code>famulus-raum/1</code>.</p>
+<p>Am 8. Oktober 2026 kam die <a href="./filterung.html">Filterung von Evidenzräumen</a> dazu (Partitur <code>famulus/evidenz/constraint</code>), neben dem Entscheidungsbaum. Sie liegt ganz in <code>famulus_proof.evidenzraum</code>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modul</th>
+<th>Aufgabe</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>objekte</code></td>
+<td>Evidenzobjekte, ihre Ids, Trägerart, Verbindung zur Evidenzdatenbank, das Gate <code>gate:fx</code>, der Körper</td>
+</tr>
+<tr class="even">
+<td><code>bau</code></td>
+<td>Bau von <code>fx_*</code> aus Sidecar, Stanza, Hauptdatenbank oder Seiten-XML</td>
+</tr>
+<tr class="odd">
+<td><code>schemakarte</code></td>
+<td>Schemabaum der Karte (auch aus einer Vorlage, <code>karten/_vorlagen/</code>), Prüfung gegen DTD und DuckDB</td>
+</tr>
+<tr class="even">
+<td><code>fastindex</code></td>
+<td>Klassifikation der Werte auf Schlüssel (Register, EDTF, Lemma, LWgrammar)</td>
+</tr>
+<tr class="odd">
+<td><code>attributbaum</code></td>
+<td>Suchbaum, Minimalität, Widerspruch, Merge, Fragebaum</td>
+</tr>
+<tr class="even">
+<td><code>kontext</code></td>
+<td>Kontextbaum aus Sitzung und Gedächtnis der Collection</td>
+</tr>
+<tr class="odd">
+<td><code>theorie</code></td>
+<td>Suchbaum zu einer DuckDB-Anweisung</td>
+</tr>
+<tr class="even">
+<td><code>verfeinerung</code></td>
+<td>Bewertung der Menge, Rückfrage</td>
+</tr>
+<tr class="odd">
+<td><code>sitzung</code></td>
+<td>Treffermenge einer Sitzung als Polars-<code>LazyFrame</code>: Verfeinerung und Facetten im Speicher</td>
+</tr>
+</tbody>
+</table>
+<p>Am 15. Oktober 2026 kam der <a href="./satzrecord.html">Satzrecord</a> dazu (<code>famulus_proof.satzrecord</code>): ein Sidecar <code>{coll}_satz.duckdb</code> mit den vollen Seiten-, Absatz- und Satzdatensätzen und den beim Bau berechneten Schlüsseln (<code>sr_attr</code>). Die Filterung liest diese Schlüssel; die Zeichenkettenvergleiche des Entscheidungsbaums (<code>evidenzraum/baum.py</code>) sind entfernt. Am 18. Oktober wurde die Zielentfaltung an den Filter gebunden: <code>rules/enfolding.yaml</code> ruft <code>constraint-raum</code>, dann <code>fundlage</code> (<code>evidenzraum/fundlage.py</code>: Bindung, Kanalplan, Kandidaten mit Gebrauchslesart), dann die Normalisierung mit Anfrageformen (<code>rules/formen.yaml</code>); der Planer rechnet mit Budget (<code>rules/unfold.yaml</code>), die Lesart liest regelgeleitet mit Cache (<code>entfaltung/lesartcache.py</code>), der Verfasser ist eine Leiter von Gründen (<code>rules/verfasser.yaml</code>), das Urteil ist graduiert (<code>validiert-mit-rest</code>, <code>rules/kritische_fragen.yaml</code>).</p>
+<p>Die Tabellen <code>fx_*</code> baut <code>evidenzraum/bau.py</code> (<code>scripts/build_fq_index.py</code>) im Sidecar einer Korrespondenz, für eine Collection ohne Sidecar (Wäfler) in einer eigenen Datenbank; sie lösen den flachen Briefindex <code>fq_index</code> ab. Neun Collections haben eine Karte mit Schemabaum: Kármán, Hevelius, Euler IVA, Pirckheimer, Wäfler primär und sekundär, Kepler primär und sekundär, Copernicus primär.</p>
+</section>
+<section id="noch-nicht-zusammengeführt" class="level3">
+<h3 class="anchored" data-anchor-id="noch-nicht-zusammengeführt">Noch nicht zusammengeführt</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aufgabe</th>
+<th>wo noch doppelt</th>
+<th>Grund</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Identität im Pirckheimer-Erweiterungslayer</td>
+<td><code>pdai/collections/pirckheimer/scripts/build_entities.py</code>, <code>build_referents.py</code>, <code>build_register.py</code> (Lexikon + Jaro-Winkler, Tabellen <code>ext_*</code>)</td>
+<td>eigene Abfrageschicht mit eigener Dokumentation; der Hauptstrang <code>pirckheimer.duckdb</code> liest schon das Register</td>
+</tr>
+<tr class="even">
+<td>Datumsintervalle im Lektor</td>
+<td><code>ai_lektorat/viewer/validity/bank.edtf_interval</code>, <code>terms.edtf</code></td>
+<td>Ziel <code>ai_lemma_index.register.zeit.intervall</code> / <code>normalisiere</code> existiert; Umstellung des Lektors steht aus</td>
+</tr>
+<tr class="odd">
+<td>Datumsparser Pirckheimer</td>
+<td><code>pirckheimer/scripts/build_dates.py</code></td>
+<td>collection-eigene Konfiguration; Ziel <code>register.zeit.parse_date_text</code></td>
+</tr>
+<tr class="even">
+<td>Namensfaltung in ai-query</td>
+<td><code>entity_registry.norm_text</code>, <code>collection_memory._fold</code>, <code>grounding._fold</code>, <code>fql/bind.norm</code></td>
+<td>Ziel <code>register.falten.falte</code></td>
+</tr>
+<tr class="odd">
+<td>Personenbindung ai-query</td>
+<td><code>sqldirect/grounding.py</code> liest <code>person_registry</code>, das jetzt aus der Projektion gebaut wird</td>
+<td>Bindung selbst noch nicht über <code>register.binden</code></td>
+</tr>
+<tr class="even">
+<td>FQL-Binder für nicht projizierte Sidecars</td>
+<td><code>fql/bind._person_candidates</code> (Varianten-Strings)</td>
+<td>nur noch Rückfall, solange eine Collection nicht aus dem Register projiziert ist</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled" title="Was bleibt, wo es ist">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Hinweis</span>Was bleibt, wo es ist
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>ai-query</code> behält Anfrageauflösung und Grounding, liest Personen aber aus dem Register. Der Lektor behält die satzspezifische Klauselbank; Datums- und Namensfunktionen nimmt er aus den Zielorten. Die fünf LLM-Clients der Anwendungen (Lektor, ai-query, Notebook-Assistent) dienen verschiedenen Modellrouten und werden nicht zusammengelegt.</p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Kopiert");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Kopiert");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

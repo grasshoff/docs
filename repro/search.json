@@ -1,0 +1,914 @@
+[
+ {
+  "objectID": "geometrie.html",
+  "href": "geometrie.html",
+  "title": "Geometrische Rektifizierung",
+  "section": "",
+  "text": "TippGeometrie in einem Satz\n\n\n\nDie geometrische Verarbeitung überführt das perspektivisch verzerrte Kamerabild — ein Trapez aus schrägem Aufnahmewinkel — in orthogonale, beschnittene Einzelseiten mit korrekter Leseausrichtung.\nJeder Scanlauf erzeugt ein HEIC-Master in voller Sensorauflösung. Dieses Master ist in aller Regel perspektivisch verzerrt (das Gerät hängt leicht schräg über dem Buch), enthält für Doppelseiten zwei Buchseiten mit einem Bundsteg in der Mitte und kann durch Geräteneigungs- und Papierverformungsartefakte leicht gedreht sein. Die geometrische Stufe (PageGeometry) löst alle diese Probleme in fünf aufeinanderfolgenden Schritten.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "Geometrische Rektifizierung"
+  ]
+ },
+ {
+  "objectID": "geometrie.html#schritt-1-trapez-erkennung-auf-dem-vollauflösungs-master",
+  "href": "geometrie.html#schritt-1-trapez-erkennung-auf-dem-vollauflösungs-master",
+  "title": "Geometrische Rektifizierung",
+  "section": "1 Schritt 1: Trapez-Erkennung auf dem Vollauflösungs-Master",
+  "text": "1 Schritt 1: Trapez-Erkennung auf dem Vollauflösungs-Master\nDie Erkennung des Dokumentrahmens läuft auf dem vollen 48-MP-Master — nicht auf dem komprimierten 1080p-Vorschaustream, den das iPhone während der Aufnahme an den Mac überträgt. Das ist entscheidend: Der Vorschaustream liefert bereits einen vorläufigen Quad für das Live-Overlay, aber dieser wurde auf niedrig aufgelösten Daten gemessen und auf rechteckige Winkel gezwungen. Die endgültige Trapez-Erkennung braucht das echte Trapez, um eine korrekte Perspektivkorrektur rechnen zu können.\nAuf macOS 26 und neuer wird DetectDocumentSegmentationRequest aus dem Vision-Framework verwendet. Die Erkennung arbeitet intern mit einem auf ca. 2048 px runtergesampelten Proxy (Lanczos-Filterung für Schärfeerhalt), liefert aber normierte Koordinaten, die auf den Vollauflösungs-Master zurückgerechnet werden. Das Ergebnis ist ein Trapez mit vier Eckpunkten (TL, TR, BR, BL), normiert in 0–1 mit Bottom-Left-Ursprung.\nFalls die Erkennung fehlschlägt, fällt die Pipeline auf den Vorschau-Quad des iPhones zurück (iphone-live) und vermerkt dies im GeometryReport.\n\n\n\n\n\n\nHinweisKonfidenz im GeometryReport\n\n\n\nDer GeometryReport enthält das Feld quadSource (\"mac-segmentation\", \"iphone-live\" oder \"none\") und quadConfidence (Wert 0–1). Diese Felder gehören ausschließlich in die Diagnoseschicht (famulus-pipeline CLI oder das ausgeklappte “Erweitert”-Panel) — sie erscheinen nicht in der Primäroberfläche.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "Geometrische Rektifizierung"
+  ]
+ },
+ {
+  "objectID": "geometrie.html#schritt-2-perspektivkorrektur",
+  "href": "geometrie.html#schritt-2-perspektivkorrektur",
+  "title": "Geometrische Rektifizierung",
+  "section": "2 Schritt 2: Perspektivkorrektur",
+  "text": "2 Schritt 2: Perspektivkorrektur\nDer Trapez-Quad wird als Eingabe für CIPerspectiveCorrection verwendet. Der Filter rechnet die vier Eckpunkte auf ein achsenparalleles Rechteck um. Das Ergebnis ist ein Bild, das so aussieht, als wäre die Kamera senkrecht über dem Dokument gewesen.\nDie Korrektheit der Perspektivkorrektur hängt direkt von der Qualität des Trapezes ab. Ein ungenauer Quad — zum Beispiel weil das Dokument auf einem gemusterten Untergrund liegt und nur schwer segmentierbar ist — erzeugt Kissenverzerrungen. Der schwarze Untergrund minimiert dieses Risiko, weil er das Segmentierungsnetz zuverlässig auf das Dokument fokussiert.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "Geometrische Rektifizierung"
+  ]
+ },
+ {
+  "objectID": "geometrie.html#schritt-3-ausrichtung-rotation",
+  "href": "geometrie.html#schritt-3-ausrichtung-rotation",
+  "title": "Geometrische Rektifizierung",
+  "section": "3 Schritt 3: Ausrichtung (Rotation)",
+  "text": "3 Schritt 3: Ausrichtung (Rotation)\nDie App kennt drei Aufnahmeorientierungen, die der Nutzer vor der Aufnahme einstellt:\n\n\n\nOrientierung\nPhysische Lage\nRotation\n\n\n\n\ntopOnRight\nOberkante rechts (90° CW)\n90° CCW\n\n\ntopOnLeft\nOberkante links (270°)\n90° CW\n\n\ntopOnTop\nOberkante oben (0°)\nkeine\n\n\n\nIm Bucherfassungsmodus liegt das iPhone typischerweise quer über dem aufgeschlagenen Buch, damit die Kamera den gesamten Buchblock erfasst. topOnRight (Standard) entspricht der natürlichen Haltung des iPhones in Querformat mit Oberkante rechts.\nDie Rotation wird über die CIOrientation-Eigenschaft des Core-Image-Koordinatensystems angewendet.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "Geometrische Rektifizierung"
+  ]
+ },
+ {
+  "objectID": "geometrie.html#schritt-4-falzerkennung-und-seitentrennung-buchmode",
+  "href": "geometrie.html#schritt-4-falzerkennung-und-seitentrennung-buchmode",
+  "title": "Geometrische Rektifizierung",
+  "section": "4 Schritt 4: Falzerkennung und Seitentrennung (Buchmode)",
+  "text": "4 Schritt 4: Falzerkennung und Seitentrennung (Buchmode)\nBei Doppelseiten enthält das rektifizierte Bild nach den Schritten 1–3 beide Seiten nebeneinander, getrennt durch den Bundsteg (Falz). GutterFinder (FamulusRepro/Shared/Services/GutterFinder.swift) fusioniert drei unabhängige Signale, um die Falzlinie zu lokalisieren:\n\n\n\n\n\n\n\n\nSignal\nQuelle\nBeitrag\n\n\n\n\nTiefe (depth)\nLiDAR AVDepthData\nFalz = tiefste Stelle (vom Kameraobjektiv am weitesten)\n\n\nSchatten (shadow)\nLuminanzfaltung\nHelligkeitsminimum mit beidseitigem Anstieg\n\n\nTextlücke (textgap)\nTinten-Dichteprofil\nBreiteste leere Textspalte = Bundsteg-Bereich\n\n\n\nDas Textlücken-Signal liefert das Suchfenster; Tiefe und Schatten verfeinern darin. gutterMethod im GeometryReport nennt die tatsächlich beitragenden Signale (z. B. \"shadow+textgap\" wenn kein LiDAR-Frame vorhanden). Die Suche ist auf die mittleren 40–60 % der Spreitebreite beschränkt (bandMin=0.40, bandMax=0.60), damit Randschatten nicht als Falz erkannt werden.\nDie Falz-Fraktion wird auf [0.05, 0.95] eingeklemmt, damit kein Seitenzuschnitt mit null Breite entsteht. Ein Konfidenzschwellenwert &gt;= 0.18 muss erreicht sein, bevor die Separator-Linie im Sucher gezeichnet wird; darunter bleibt sie gestrichelt bei exakt 0,5.\n\n\n\n\n\n\nWichtigFalz kommt nach der Seite, nie davor\n\n\n\nDer Falz wird auf dem bereits rotierten Master gesucht, nachdem beide Seiten-Quads erkannt wurden — nie auf dem rohen Kamerabild. GutterFinder teilt nie das Rohfoto; das würde den unkorrigierten Spread als ganzes JPEG schreiben (einschließlich Stuhl, Hände und Matte). Die korrekte Reihenfolge: 1. Master rotieren, 2. zwei Seiten-Quads erkennen, 3. je Seite perspektivisch aus dem vollen rotierten Frame extrahieren.\n\n\nDer Bundsteg wird als Bruchteil der Spreitebreite (gutterFraction) im GeometryReport festgehalten. Jede Seite erhält ein eigenes page_NNN/-Verzeichnis in der PDAI-Ablage.\n\n4.1 Reprocessing ohne liveQuad (Buchmode)\nBeim Neu-Verarbeiten eines bestehenden Masters (ohne Live-iPhone-Quad) läuft der Zwei-Quad-Pfad:\n\nMaster um die Aufnahmeorientierung rotieren\nDetectDocumentSegmentationRequest auf dem rotierten Frame → Quad für Seite A\nSeite A maskieren; detectSecondQuad auf dem Restframe → Quad für Seite B\nBeide Seiten nach Zentroid-X sortieren (links/rechts)\nperspectiveCorrect jede Seite aus dem vollen rotierten Frame (extractPage)\n\nFallback wenn weniger als zwei Quads: Paper-Mask-basierter Teilbereich oder geometrische Hälfte nach grobem Union-Perspektiv.\n\n\n4.2 Einzelblatt-Hülle (Einzelblattmode)\nIm Einzelblattmode sucht PageGeometry das weiße Rechteck auf dem schwarzen Untergrund und berechnet die geometrische Hülle (konvexes Hull des Papier-Bereichs). Die App zoomt auf diese Hülle heran — sie erwartet explizit ein kleines Rechteck unbekannter Nicht-A4-Größe auf der schwarzen Matte. Die Belichtungsmessung (ArchivalToneEngine) wird auf die Pixel innerhalb dieser Hülle beschränkt, nie auf den Rahmenmittelwert (der würde bei einem kleinen Beleg auf dunklem Untergrund überbelichten).",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "Geometrische Rektifizierung"
+  ]
+ },
+ {
+  "objectID": "geometrie.html#schritt-5-entzerrung-deskew-und-textblock-beschnitt",
+  "href": "geometrie.html#schritt-5-entzerrung-deskew-und-textblock-beschnitt",
+  "title": "Geometrische Rektifizierung",
+  "section": "5 Schritt 5: Entzerrung (Deskew) und Textblock-Beschnitt",
+  "text": "5 Schritt 5: Entzerrung (Deskew) und Textblock-Beschnitt\nNach der Trennung sind die Einzelseiten im Ideal achsenparallel — in der Praxis enthält jede Seite oft eine kleine Restdrehung durch Papierwölbung, leichte Neigungsreste oder Druckausrichtungsfehler.\nDeskew: Das Verfahren dreht die Seite in 0,25°-Schritten und berechnet für jeden Drehwinkel die Varianz des horizontalen Projektionsprofils. Gut ausgerichtete Textzeilen erzeugen ein Projektionsprofil mit ausgeprägten Spitzen (die Textzeilen) und tiefen Tälern (die Zeilenabstände) — hohe Varianz. Das Optimum (Maximum der Varianz) ist der Ausrichtungswinkel. Die gemessene Drehung in Grad (deskewDegrees) wird im GeometryReport protokolliert.\nTight Crop: Zum Abschluss wird der Satzspiegel freigestellt — der Bereich, der tatsächlich Text enthält, ohne die weißen Ränder. Die engste Bounding Box der Textpixel wird als textBlockCrop (normiert, Bottom-Left-Ursprung) im GeometryReport abgelegt.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "Geometrische Rektifizierung"
+  ]
+ },
+ {
+  "objectID": "geometrie.html#quality-gates",
+  "href": "geometrie.html#quality-gates",
+  "title": "Geometrische Rektifizierung",
+  "section": "6 Quality-Gates",
+  "text": "6 Quality-Gates\nNach Deskew und Tight-Crop berechnet measureResidualSkew (Projektionsprofil-Scorer) einen Quality-Report:\n\n\n\n\n\n\n\n\nGate\nBedingung\nChip\n\n\n\n\npass\nResidualneigung ≤ 0,15°\nkein Chip\n\n\nresidual\nDeskew hat die Neigung nicht korrigiert (&gt; 0,15° verbleibend)\nNachbessern\n\n\nscale-mismatch\nGeschwister-Höhenunterschied &gt; 6 % oder Seitenverhältnis &gt; 8:1\nNachbessern\n\n\nnot-a-page\nPapierabdeckung &lt; 35 %\nNeu aufnehmen\n\n\nunmeasurable\nKein Text für Messung gefunden\n(kein Chip, aber \"unmeasurable\" im JSON)\n\n\n\nEin Deskew, das abgelehnt wurde (Winkel &gt; 8° ohne Korroboration), schreibt nicht mehr stillschweigend 0°, sondern setzt das Gate auf residual — der Nutzer sieht den Nachbessern-Chip statt einer scheinbar sauberen, aber schiefen Seite.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "Geometrische Rektifizierung"
+  ]
+ },
+ {
+  "objectID": "geometrie.html#das-geometryreport-artefakt",
+  "href": "geometrie.html#das-geometryreport-artefakt",
+  "title": "Geometrische Rektifizierung",
+  "section": "7 Das GeometryReport-Artefakt",
+  "text": "7 Das GeometryReport-Artefakt\nAlle Entscheidungen der geometrischen Pipeline sind im GeometryReport-Struct festgehalten und werden im page_NNN.json der PDAI-Ablage persistiert:\n\nGeometryReport — Geometrie-Protokoll einer Buchseite\n{\n  \"sourceWidth\": 8064,\n  \"sourceHeight\": 6048,\n  \"quad\": [[0.10, 0.08], [0.92, 0.06], [0.94, 0.94], [0.08, 0.95]],\n  \"quadSource\": \"mac-segmentation\",\n  \"quadConfidence\": 0.97,\n  \"perspectiveApplied\": true,\n  \"rotationDegrees\": 90,\n  \"gutterFraction\": 0.502,\n  \"gutterMethod\": \"projection-minimum\",\n  \"deskewDegrees\": 0.25,\n  \"textBlockCrop\": {\"x\": 0.04, \"y\": 0.03, \"width\": 0.92, \"height\": 0.94},\n  \"textBlockMethod\": \"luminance-threshold\",\n  \"outputWidth\": 2680,\n  \"outputHeight\": 3520\n}\n\nDie Ausgabegröße (outputWidth, outputHeight) richtet sich nach dem Satzspiegel nach dem Tight-Crop und ist proportional zum erkannten Textblock.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "Geometrische Rektifizierung"
+  ]
+ },
+ {
+  "objectID": "geometrie.html#zusammenfassung-der-transformationskette",
+  "href": "geometrie.html#zusammenfassung-der-transformationskette",
+  "title": "Geometrische Rektifizierung",
+  "section": "8 Zusammenfassung der Transformationskette",
+  "text": "8 Zusammenfassung der Transformationskette\n\n\n\n\n\nflowchart LR\n    A[\"HEIC Master\\n(volle Aufl.)\"] --&gt; B[\"Trapez-Erkennung\\nDetectDocumentSegmentation\"]\n    B --&gt; C[\"Perspektivkorrektur\\nCIPerspectiveCorrection\"]\n    C --&gt; D[\"Rotation\\nlaut Orientierung\"]\n    D --&gt;|\"Buchmode\"| E[\"GutterFinder\\nTiefe + Schatten + Textluecke\"]\n    E --&gt; F[\"Seite links\\npage NNN\"]\n    E --&gt; G[\"Seite rechts\\npage NNN plus 1\"]\n    D --&gt;|\"Belegmode\"| H[\"Papier-Huelle\\nEinzelblatt-Hull\"]\n    F --&gt; I[\"Deskew\\nProjectionVarianzOptimum\"]\n    G --&gt; I\n    H --&gt; I\n    I --&gt; J[\"Tight Crop + Quality-Gate\\npass / residual / not-a-page\"]",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "Geometrische Rektifizierung"
+  ]
+ },
+ {
+  "objectID": "backstage-ui.html",
+  "href": "backstage-ui.html",
+  "title": "Mac Backstage — Bedienung und Bedienphilosophie",
+  "section": "",
+  "text": "TippBackstage in einem Satz\n\n\n\nDas Backstage-Fenster folgt der Bauhaus-Regel: jedes sichtbare Element ermöglicht eine unmittelbar ausführbare Aktion; Diagnose-Telemetrie gehört hinter einen aufklappbaren Bereich oder in das CLI.\nFamulus Repro Backstage ist die macOS-Anwendung, die das Bild des iPhones empfängt, die Verarbeitungskette ausführt und die PDAI-Ablage verwaltet. Das Fenster ist in vier funktionale Bereiche gegliedert, von denen jeder genau einer Aufgabe dient.",
+  "crumbs": [
+   "Architektur",
+   "Bedienung & Diagnose",
+   "Mac Backstage — Bedienung und Bedienphilosophie"
+  ]
+ },
+ {
+  "objectID": "backstage-ui.html#das-bauhaus-prinzip",
+  "href": "backstage-ui.html#das-bauhaus-prinzip",
+  "title": "Mac Backstage — Bedienung und Bedienphilosophie",
+  "section": "1 Das Bauhaus-Prinzip",
+  "text": "1 Das Bauhaus-Prinzip\nDie Gestaltungsrichtlinie für Famulus Repro lautet: Form folgt Funktion — zeige nur, was der Nutzer gerade verstehen und handeln kann.\nDas schließt eine Reihe von Dingen aus dem Primärfluss aus:\n\nKeine Rohpixelmaße (2680 × 3520 px) in sichtbaren Panels\nKeine Algorithmusnamen (mac-segmentation, vision-documents, CIDocumentEnhancer)\nKeine Fließkomma-Konfidenzwerte oder Perzentilzahlen\nKeine gelben/bernsteinfarbenen Hervorhebungen für routinemäßige Ausgaben (Warnfarbe ist reserviert für Zustände, die eine sofortige Nutzeraktion erfordern)\n\nWenn ein Diagnose-Bedürfnis besteht — etwa beim Testen einer neuen Vorlage oder beim Debuggen einer schlechten Aufnahme — stehen das famulus-pipeline-CLI und der ausgeklappte “Erweitert”-Bereich im Inspektor zur Verfügung.",
+  "crumbs": [
+   "Architektur",
+   "Bedienung & Diagnose",
+   "Mac Backstage — Bedienung und Bedienphilosophie"
+  ]
+ },
+ {
+  "objectID": "backstage-ui.html#gliederung-des-fensters",
+  "href": "backstage-ui.html#gliederung-des-fensters",
+  "title": "Mac Backstage — Bedienung und Bedienphilosophie",
+  "section": "2 Gliederung des Fensters",
+  "text": "2 Gliederung des Fensters\n\n\n\n\n\nflowchart LR\n    Sidebar[\"Linke Seitenleiste\\nKontaktbogen\"] --&gt; Main[\"Zentraler Bereich\\nSucher oder Transkript\"]\n    Main --&gt; Inspector[\"Rechter Inspektor\\nAufnahme + Partitur + Ablage\"]\n    StatusBar[\"Statusleiste\\n(unten)\"] --&gt; Sidebar\n    StatusBar --&gt; Main\n    StatusBar --&gt; Inspector\n\n\n\n\n\n\n\n2.1 Linke Seitenleiste: Kontaktbogen\nDie linke Seitenleiste zeigt alle erfassten Seiten als skalierbare Vorschaubilder. Die Thumbs wachsen mit der Breite der Seitenleiste — bei einem breiten Sidebar erscheinen Thumbnails in Buchformat, bei einem schmalen in Listenformat. Der Split-Teiler ist durch Ziehen einstellbar und bleibt persistent.\nSeitennum-Beschriftung: Jeder Thumb zeigt die &lt;pagenum&gt;-Bezeichnung aus dem Extension-XML (page_NNN.ext.xml). Werte in eckigen Klammern ([23]) im XML-Header gelten als erkannte Seitenzahlen. Wenn keine Seitennum erkannt wurde, steht ein einfaches x. Diese Beschriftung stammt ausschließlich aus dem OCR-Ergebnis oder aus einem manuellen Override — nie als Inferenz aus der Reihenfolge.\nPagenum-Override: Rechtsklick auf einen Thumb → „Seitennum ändern” → Freieingabe. Der Override wird in metadata/page_selection.json gespeichert, nie direkt im OCR-XML.\nKonsekutiv-Schutz: Wenn erkannte, aufeinanderfolgende Seitenzahlen existieren, dürfen Seiten mit unerkannter Zahl (x) nicht zwischen diese eingefügt werden. Die Reihenfolge der erkannten Seitennummern ist eine harte Reihungsgrenze.\nDubletten-Icon: Wenn zwei Thumbs denselben Stem (Firma + Datum + Betrag, oder dieselbe Seitennum) haben, zeigt jede Karte ein 🔁-Icon. Klick → DuplicateSelectionView: beide Versionen nebeneinander, „Behalten” / „Archivieren”. Archivierte Aufnahmen landen in &lt;dok&gt;/archive/.\nJede Doppelseite bietet über Rechtsklick: Neu verarbeiten (Pipeline neu aus Master), Neu aufnehmen (Reshoot-Armierung), Pagenum ändern, Aufnahme löschen.\n\n\n2.2 Zentraler Bereich: Sucher oder Transkript\nDer zentrale Bereich ist kontextsensitiv und zeigt genau eine Sache:\nWährend der Aufnahme: Den Live-Sucher des iPhones. Der Mac empfängt den komprimierten 1080p-Videostream und zeigt ihn mit dem erkannten Dokumentrahmen und der Wasserwaagen-Überlagerung an. Auslösen ist per Leertaste möglich.\nWährend der Durchsicht (Seite ausgewählt): PageDetailView mit vier Tabs:\n\n\n\n\n\n\n\nTab\nInhalt\n\n\n\n\nTranskript\nVision-OCR-Rohtranskript als formatierten HTML-Text (Absätze, Überschriften, Listen)\n\n\nDaten\nKey-Value-Ansicht von page_NNN.json (GeometryReport, ToneReport, OCR-Metriken); bei Belegen: receipt.json Flat-Contract\n\n\nXML\nExtended-OCR ext.xml als stilisiertes Buchblatt oder Thermobon-Beleg (warm, Oxford-Chrome)\n\n\nXML-Quelle\nSyntax-hervorgehobener XML-Quelltext mit Zeilennummern und Kopierschaltfläche\n\n\n\nNiemals zeigt der zentrale Bereich Sucher und Transkript gleichzeitig.\n\n\n2.3 Rechter Inspektor: Drei Sektionen\nDer Inspektor enthält maximal drei sichtbare Sektionen:\nAufnahme\nZeigt Vorlage-Auswahl (Buch / Einzelblatt) und Ausrichtung (nur im Buch-Modus: topOnRight, topOnLeft, topOnTop) sowie den Kopierständer-Schalter. Das sind die einzigen Parameter, die der Nutzer vor dem Auslösen festlegt.\nPartitur\nZeigt die ausgewählte Partitur-Score mit ihrer deutschen Bezeichnung und einem Aktions-Button (“Partitur ausführen”). Im Ergebnisfall zeigt diese Sektion die Partitur-Zusammenfassung — ein bis zwei Sätze, die beschreiben, was erkannt wurde.\nAblage\nZeigt den aktuellen Scan-Ordner und zwei Aktionen: “Im Finder zeigen” und “Ordner wählen…”. Kein Rohdateipfad, kein Metadaten-Dump.\nDisclosureGroup “Erweitert”\nAlle Feineinstellungen — Flat-Field-Schalter, Deskew-Schalter, Tight-Crop-Schalter, Tonwert-Schieberegler, CIDocumentEnhancer-Schalter, Orchestrator-URL — sind hinter einem zugeklappten DisclosureGroup(\"Erweitert\")-Element versteckt. Sie sind zugänglich, sobald der Nutzer sie braucht, stören aber den normalen Aufnahmefluss nicht.\n\n\n2.4 Statusleiste\nDie Statusleiste am unteren Rand zeigt maximal zwei Elemente:\n\nLinks: Ein kurzer Satz zum letzten Ereignis (2 Seiten erfasst, Partitur abgeschlossen, Verbindung getrennt). Wenn nichts besonderes passiert ist, bleibt die linke Seite leer.\nRechts: Der Name des aktuellen Scan-Ordners, anklickbar, öffnet den Ordner im Finder.\n\nKein Pipeline-Log, keine Statusfarben für Routineereignisse.",
+  "crumbs": [
+   "Architektur",
+   "Bedienung & Diagnose",
+   "Mac Backstage — Bedienung und Bedienphilosophie"
+  ]
+ },
+ {
+  "objectID": "backstage-ui.html#tastatursteuerung",
+  "href": "backstage-ui.html#tastatursteuerung",
+  "title": "Mac Backstage — Bedienung und Bedienphilosophie",
+  "section": "3 Tastatursteuerung",
+  "text": "3 Tastatursteuerung\n\n\n\nTaste\nAktion\n\n\n\n\nLeertaste\nAuslösen (Shutter)\n\n\nR\nErkannten Rahmen zurücksetzen / entfrieren\n\n\nZ\nAuto-Zoom auf Dokumentabdeckung\n\n\nCmd+N\nNeues Dokument starten\n\n\nCmd+Shift+K\niPhone-Verbindung neu aufbauen (funktionierende Konfiguration)\n\n\nCmd+O (implizit über Menü)\nAblage-Ordner wählen\n\n\n\nDie Tastatursteuerung ist für den Kopierständer-Betrieb optimiert: Beide Hände können das Buch halten, während die Leertaste mit einem Finger ausgelöst wird.",
+  "crumbs": [
+   "Architektur",
+   "Bedienung & Diagnose",
+   "Mac Backstage — Bedienung und Bedienphilosophie"
+  ]
+ },
+ {
+  "objectID": "backstage-ui.html#farbpalette-und-typographie",
+  "href": "backstage-ui.html#farbpalette-und-typographie",
+  "title": "Mac Backstage — Bedienung und Bedienphilosophie",
+  "section": "4 Farbpalette und Typographie",
+  "text": "4 Farbpalette und Typographie\nDas Backstage folgt der lettreai-Markenpalette:\n\n\n\n\n\n\n\n\nFarbrolle\nWert\nVerwendung\n\n\n\n\nOxford-Blau\n#14213d (app: Color.oxford)\nPrimärfarbe, Navigationsleisten, Akzente\n\n\nGold\n#c8a22a (app: Color.gold)\nAkzente, Markierungen, aktive Elemente\n\n\nPapier\nColor.paper\nHintergrundflächen, Karten\n\n\nTinte\nColor.ink\nPrimärtext\n\n\nTinte gedämpft\nColor.inkMuted\nSekundäre Beschriftungen\n\n\n\nWarnrot (Color.signalRed) ist reserviert für Zustände, die eine unmittelbare Nutzeraktion erfordern — zum Beispiel eine blockierte Aufnahme wegen zu großer Entfernung. Es erscheint nicht für routinemäßige Pipeline-Ausgaben.",
+  "crumbs": [
+   "Architektur",
+   "Bedienung & Diagnose",
+   "Mac Backstage — Bedienung und Bedienphilosophie"
+  ]
+ },
+ {
+  "objectID": "tonwert.html",
+  "href": "tonwert.html",
+  "title": "Archivischer Tonwert und Schärfung",
+  "section": "",
+  "text": "TippTonwert in einem Satz\n\n\n\nEin Scan ist kein Foto — er ist ein Schriftträger aus Papier und Tinte; die gesamte Tonwert-Verarbeitung folgt daraus: gemessen wird im Satzspiegel, Papier soll weiß bleiben, Tinte soll tief werden, die Kamera-Optik wird nicht geglättet.\nFotografische Verarbeitungskonventionen sind für Bücher und Archivalien ungeeignet. Ein Belichtungsautomat, der den Mittelwert auf 18-%-Grau legt, würde ein Buchblatt mit mittlerem Weißton auf Grau ziehen. Eine Schärfung, die chromatische Kanten betont, würde Farbränder an schwarzen Buchstaben einführen. Die ArchivalToneEngine verfolgt stattdessen einen dokumentenspezifischen Ansatz: alle Parameter werden aus dem Dokument selbst gemessen und auf Papier-Tinte-Verhältnisse ausgerichtet.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "Archivischer Tonwert und Schärfung"
+  ]
+ },
+ {
+  "objectID": "tonwert.html#farbraum-und-gpu-kontext",
+  "href": "tonwert.html#farbraum-und-gpu-kontext",
+  "title": "Archivischer Tonwert und Schärfung",
+  "section": "1 Farbraum und GPU-Kontext",
+  "text": "1 Farbraum und GPU-Kontext\nDie gesamte Tonwertkette läuft über einen gemeinsamen CIContext (sharedContext), der mit dem linearen sRGB-Farbraum als Arbeitsraum konfiguriert ist. Das ist nicht optional — es ist die Voraussetzung dafür, dass alle nachfolgenden Filter korrekt rechnen.\n\n\n\n\n\n\nWarnungDie Gamma-Falle\n\n\n\nWird der CIContext mit .workingColorSpace = sRGB (gamma-kodiertes sRGB) konfiguriert, passiert folgendes: CIToneCurve und CIDocumentEnhancer gehen intern davon aus, lineares Licht zu verarbeiten, und gamma-kodieren ihre Ausgaben entsprechend. Auf einem bereits gamma-kodierten Eingabebild kodieren sie doppelt — ein Tintenanker, der auf 0,04 (fast Schwarz) gesetzt wird, landet tatsächlich bei 0,243. Gemessen: Sollwert 0,04, tatsächlicher Wert 0,243 = Gamma-Fehler Faktor ~6.\nZusätzlich läuft die Flat-Field-Division (CIDivideBlendMode) auf gamma-kodierten Werten statt auf linearem Licht, was die Ausleuchtungskorrektur verfälscht.\nDer lineare Arbeitsraum ist die einzige korrekte Einstellung.\n\n\nDer Kontext gibt sRGB als Ausgabe-Farbraum an (outputColorSpace: CGColorSpace(name: CGColorSpace.sRGB)). Damit gilt: Eingabe und Histogrammauswertung laufen im linearen Raum, die Ausgabe ist gamma-kodiertes sRGB für die Anzeige und Speicherung.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "Archivischer Tonwert und Schärfung"
+  ]
+ },
+ {
+  "objectID": "tonwert.html#das-zentrale-messquadrat",
+  "href": "tonwert.html#das-zentrale-messquadrat",
+  "title": "Archivischer Tonwert und Schärfung",
+  "section": "2 Das zentrale Messquadrat",
+  "text": "2 Das zentrale Messquadrat\nAlle statistischen Messungen — Tintenanker, Papieranker, Medianhelligkiet — werden ausschließlich auf dem zentralen Messquadrat des Bildes durchgeführt. Die Kantenlänge dieses Quadrats beträgt standardmäßig 60 % der kürzeren Bildkante (measureSquare = 0.6).\nDiese Einschränkung hat einen wichtigen Grund: Am Rand des Buchbildes können schwarzer Untergrund, Hände des Nutzers, der Kopierständer oder die dunkle Papierverformung am Falz sichtbar sein. Würden diese Pixel in die Helligkeitsmessung eingehen, wäre der gemessene Tintenanker viel zu dunkel (der schwarze Untergrund dominiert das Histogramm), und die Tonwertkurve würde das Papierweiß aufhellen, weil sie einen falschen Dunkelwert kompensiert. Das zentrale Messquadrat schließt den Satzspiegel ein und den Rand aus.\nDas berechnete measureRect (normiert, 0–1, Bottom-Left-Ursprung) wird im ToneReport gespeichert.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "Archivischer Tonwert und Schärfung"
+  ]
+ },
+ {
+  "objectID": "tonwert.html#die-fünf-stufen-der-verarbeitung",
+  "href": "tonwert.html#die-fünf-stufen-der-verarbeitung",
+  "title": "Archivischer Tonwert und Schärfung",
+  "section": "3 Die fünf Stufen der Verarbeitung",
+  "text": "3 Die fünf Stufen der Verarbeitung\n\n\n\n\n\nflowchart TD\n    Input[\"Rektifiziertes Seitenbild\\n(lineare sRGB GPU-Textur)\"] --&gt; FF[\"1. Flat-Field-Korrektur\\nCIDivideBlendMode\"]\n    FF --&gt; Levels[\"2. Gemessene Spreizung\\nCIToneCurve (Ink + Paper Anker)\"]\n    Levels --&gt; SCurve[\"3. Archivische S-Kurve\\nCIToneCurve Vertiefung\"]\n    SCurve --&gt; Enhance[\"4. CIDocumentEnhancer\\nFeinstruktur-Finisher\"]\n    Enhance --&gt; Sharpen[\"5. Typographische Schaerfung\\nLuminanz-Unsharp + CIColorClamp\"]\n    Sharpen --&gt; Output[\"page NNN.jpg\\n(sRGB JPEG)\"]\n\n\n\n\n\n\n\n3.1 Stufe 1: Flat-Field-Korrektur\nDie Flat-Field-Korrektur gleicht inhomogene Ausleuchtung aus — den Helligkeitsgradienten, den Kopierständer-Lampen oder Fensterreflexionen auf der Buchseite erzeugen.\nDas Verfahren: Das rektifizierte Bild wird mit einem starken Gauß-Weichzeichner geglättet (Radius ca. 15 % der kürzeren Kante). Dieses geglättete Bild repräsentiert die niederfrequente Ausleuchtungsverteilung — das „Lichtfeld” ohne Textinhalt. Anschließend dividiert CIDivideBlendMode das Originalbild durch dieses Lichtfeld (mit dem Original als backgroundImage und dem Lichtfeld als inputImage, wie es der Filter erwartet). Das Ergebnis ist ein Bild mit weitgehend gleichmäßiger Grundhelligkeit.\n\n\n\n\n\n\nHinweisReihenfolge der Operanden in CIDivideBlendMode\n\n\n\nCIDivideBlendMode rechnet background ÷ input, nicht umgekehrt. Die Buchseite muss als backgroundImage, das Ausleuchtungsfeld als inputImage eingegeben werden. Vertauscht man die Rollen, erhält man die Kehrwert-Operation — das Bild invertiert sich.\n\n\nDie Flat-Field-Korrektur ist optional (flatField: Bool). Bei gleichmäßiger Ausleuchtung bringt sie wenig; bei ausgeprägten Gradienten (z. B. einseitig beleuchtete Buchseiten) verhindert sie eine inhomogene Tonwertkurve.\n\n\n3.2 Stufe 2: Gemessene Spreizung\nDas Histogramm des zentralen Messquadrats liefert zwei Ankerpunkte:\n\nTintenanker: 0,5. Perzentil der Helligkeitsverteilung (die dunkelsten 0,5 % der Pixel) → wird auf Zielwert 0,04 (fast Schwarz) gesetzt.\nPapieranker: 85. Perzentil (die hellsten 15 % der Pixel bilden die Papierregion) → wird auf Zielwert 0,96 (fast Weiß) gesetzt.\n\nDiese Ankerwerte werden als Kontrollpunkte einer CIToneCurve eingesetzt. Die Kurve zieht das gemessene Tinten-Minimum auf 0,04 und das Papiermaximum auf 0,96, während sie dazwischen linear interpoliert. Das Ergebnis ist eine vollständig ausgesteuertes Dokument, das den gesamten Tonwertraum nutzt, ohne Papier auf Grau zu ziehen oder Tinte zu zerrissen.\nEin Schutz gegen blurrige Quellen (blurrySourceGuard): Wenn der gemessene Tinte-Papier-Kontrast sehr klein ist (&lt; 0,15), greift eine abgemilderte Spreizung statt der vollen Streckung. Das verhindert, dass ein wirklich unscharf aufgenommenes Bild durch Überstreckung noch schlechter aussieht. Der ToneReport vermerkt dies als \"gentle-stretch\" im note-Feld.\n\n\n3.3 Stufe 3: Archivische S-Kurve\nNach der linearen Spreizung vertieft eine weitere CIToneCurve die Tintentöne im unteren Viertel des Helligkeitsbereichs, ohne das Papierweiß anzutasten. Die Stärke dieser S-Kurve wird durch den contrast-Parameter gesteuert (Standard: 1,35). Ein Wert von 1,0 bedeutet keine Zusatzkurve, höhere Werte vertiefen die Schrift weiter.\n\n\n3.4 Stufe 4: CIDocumentEnhancer\nDer System-Filter CIDocumentEnhancer ist ein lokaler Kontrastverstärker, der für Dokumentscans optimiert ist. Er wird nach der Tonwertnormierung als Feinstruktur-Finisher eingesetzt — nicht als erste Stufe, wie es viele andere Scan-Apps tun. Der Unterschied ist entscheidend: Als Finisher nach der Normierung verbessert er feine Texturdetails (Schriftränder, Tintenstruktur). Als erste Stufe würde er die unkorrekte Ausleuchtung und die unkalibrierte Tonwertspreizung verstärken.\n\n\n3.5 Stufe 5: Typographische Schärfung und Ringschutz\nDie letzte Stufe schärft ausschließlich im Luminanzkanal — nie an Farbrändern. Das verhindert Chroma-Artefakte (bunte Säume an schwarzen Buchstaben). Ein Unsharp-Masking mit kleinem Radius (skaliert auf die Seitenauflösung) verstärkt die feinen Schriftränder. Abschließend klemmt CIColorClamp alle Pixelwerte auf den Bereich [0, 1], um Ringing-Artefakte durch Überschwingen des Sharpening-Filters zu unterdrücken.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "Archivischer Tonwert und Schärfung"
+  ]
+ },
+ {
+  "objectID": "tonwert.html#das-tonereport-artefakt",
+  "href": "tonwert.html#das-tonereport-artefakt",
+  "title": "Archivischer Tonwert und Schärfung",
+  "section": "4 Das ToneReport-Artefakt",
+  "text": "4 Das ToneReport-Artefakt\nAlle Entscheidungen der Tonwertstufe sind im ToneReport festgehalten:\n\nToneReport — Tonwert-Protokoll einer Buchseite\n{\n  \"measureRect\": {\"x\": 0.20, \"y\": 0.20, \"width\": 0.60, \"height\": 0.60},\n  \"inkPoint\": 0.042,\n  \"paperPoint\": 0.931,\n  \"medianLuminance\": 0.871,\n  \"inkTarget\": 0.04,\n  \"paperTarget\": 0.96,\n  \"measured\": true,\n  \"flatFieldApplied\": true,\n  \"enhancerApplied\": true,\n  \"sharpened\": true,\n  \"monochrome\": false,\n  \"note\": null,\n  \"usedPaperMask\": true\n}\nEin medianLuminance-Wert um 0,87 ist typisch für eine gut beleuchtete Buchseite: Der Großteil der Fläche ist Papier (hohe Helligkeit), Tinte ist ein vergleichsweise kleiner Flächenanteil.\n\nEin inkPoint-Wert nahe 0,04 (Zielwert) und paperPoint nahe 0,93–0,97 sind Anzeichen für eine gut kalibrierte Aufnahme. Werte außerhalb dieses Bereichs deuten auf schlechte Ausleuchtung, falsches Messquadrat oder eine ungeeignete Vorlage hin.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "Archivischer Tonwert und Schärfung"
+  ]
+ },
+ {
+  "objectID": "reproplatz.html",
+  "href": "reproplatz.html",
+  "title": "Der Reproplatz — Aufbau und Auslöselogik",
+  "section": "",
+  "text": "TippReproplatz in einem Satz\n\n\n\nQualitativ hochwertige Reproduktionen setzen stabile physische Anfangsbedingungen voraus, die die App durch Messung absichert — nicht durch Ratschläge an den Nutzer.\nDer Reproplatz bildet die physische Grundlage jeder Aufnahme. Famulus Repro übernimmt die mechanische Qualitätssicherung automatisch: Es misst Schärfe und Rahmenruhe, bevor es auslöst. Der Nutzer legt das Dokument auf, positioniert das Gerät, und die App hält ihn zurück, bis die Bedingungen erfüllt sind.",
+  "crumbs": [
+   "Architektur",
+   "System & Aufnahme",
+   "Der Reproplatz — Aufbau und Auslöselogik"
+  ]
+ },
+ {
+  "objectID": "reproplatz.html#physischer-aufbau",
+  "href": "reproplatz.html#physischer-aufbau",
+  "title": "Der Reproplatz — Aufbau und Auslöselogik",
+  "section": "1 Physischer Aufbau",
+  "text": "1 Physischer Aufbau\nEin guter Reproplatz besteht aus drei Elementen:\n\nKopierständer oder Stativ: Fixiert das Gerät in unveränderlicher Höhe und Ausrichtung über dem Dokument.\nGleichmäßige Beleuchtung: Blendfreies Licht von zwei Seiten vermindert Ausleuchtungsgradienten, die die Flat-Field-Korrektur im Nachgang auffangen muss.\nSchwarzer Untergrund: Eine matte schwarze Unterlage unter dem Dokument ist entscheidend. Die Tonwertmessung der App bezieht ihre Werte aus dem zentralen Satzspiegel, nicht aus dem gesamten Kamerabild. Helle oder strukturierte Untergründe bleiben daher ohne Einfluss auf die Tonwertkette — der schwarze Untergrund erleichtert aber die Dokumenterkennung (Trapez-Erkennung) erheblich, da er einen maximalen Kontrast zum Papier bildet.\n\nIm Kopierständer-Modus friert die App den erkannten Dokumentrahmen nach der ersten Aufnahme ein. Für serielle Erfassungen ganzer Bücher muss der Rahmen dann nicht bei jeder Doppelseite neu detektiert werden — der Schnitt bleibt konstant, solange das Buch und die Kameraposition unverändert bleiben.",
+  "crumbs": [
+   "Architektur",
+   "System & Aufnahme",
+   "Der Reproplatz — Aufbau und Auslöselogik"
+  ]
+ },
+ {
+  "objectID": "reproplatz.html#sucher-und-auslöselogik",
+  "href": "reproplatz.html#sucher-und-auslöselogik",
+  "title": "Der Reproplatz — Aufbau und Auslöselogik",
+  "section": "2 Sucher und Auslöselogik",
+  "text": "2 Sucher und Auslöselogik\nDer Live-Sucher des iPhones zeigt zwei Kontrollhilfen:\n\nWasserwaage (Neigungsanzeige): Zeigt die Neigung des Geräts in Echtzeit. Eine Aufnahme aus der Schräge erzeugt Trapezverzerrungen, die die Geometrie-Stufe korrigieren muss; eine möglichst senkrechte Aufnahme minimiert den Fehler, den die Korrektur zu kompensieren hat.\nDokumentenrahmen (Quad-Overlay): Zeigt den erkannten Trapezrahmen des Dokuments als Überlagerung. Der Nutzer sieht, was die App als Dokumentgrenzen erkennt.\n\nAuslösesperre: Die App löst erst aus, wenn der erkannte Rahmen über mehrere Frames stabil liegt. Ein kurzes Zittern der Hand blockiert die Aufnahme so lange, bis Ruhigkeit festgestellt wird. Das verhindert unscharfe Aufnahmen durch Bewegungsunschärfe zum Zeitpunkt des Auslösens.",
+  "crumbs": [
+   "Architektur",
+   "System & Aufnahme",
+   "Der Reproplatz — Aufbau und Auslöselogik"
+  ]
+ },
+ {
+  "objectID": "reproplatz.html#sec-sharpness",
+  "href": "reproplatz.html#sec-sharpness",
+  "title": "Der Reproplatz — Aufbau und Auslöselogik",
+  "section": "3 Schärfe-Akzeptanzprüfung",
+  "text": "3 Schärfe-Akzeptanzprüfung\nJede aufgezeichnete Aufnahme durchläuft eine numerische Schärfeprüfung, bevor sie gespeichert oder übertragen wird.\n\n3.1 Methode: Laplace-Varianz\nDas Verfahren misst die Varianz des diskreten Laplace-Operators auf einem 512-Pixel-Graustufenproxy. Der Laplace-Operator ist ein zweiter Ableitungsoperator: An Schärfekanten entstehen große Antworten, bei unscharfen (tiefpassgefilterten) Bildern liegen die Antworten nahe null.\nDer Proxy wird aus dem zentralen 60-%-Quadrat der kürzeren Bildkante gebildet — dieselbe Region, die die Tonwertmessung verwendet. Damit bleibt der schwarze Untergrund, eventuelle Hände am Buchrand und der Kopierständer außerhalb des Messbereichs.\n\n\n3.2 Normierung durch Papier-Tinte-Kontrast\nDer rohe Varianzwert hängt nicht nur von der Schärfe ab, sondern auch vom Kontrast des Inhalts: Ein blasses Bleistiftmanuskript mit scharfer Optik würde ohne Normierung schlechter abschneiden als ein hochkontrastiger Druck mit leichter Unschärfe. Die Normierung dividiert den Laplace-Varianzwert durch das Quadrat des Kontrasts (Papier-Perzentil minus Tinte-Perzentil), sodass ein klares, gut fokussiertes Bild unabhängig von seiner Tonwertlage korrekt bewertet wird.\n\n\n\n\n\nflowchart LR\n    FullMaster[\"HEIC Master\\n(volle Aufloesung)\"] --&gt; CentralCrop[\"Zentrales 60-Prozent-Quadrat\"]\n    CentralCrop --&gt; GrayProxy[\"Graustufen-Proxy\\n512 px\"]\n    GrayProxy --&gt; Laplacian[\"Laplace-Varianz\\nVoL\"]\n    GrayProxy --&gt; Contrast[\"Papier-Tinte-Kontrast\\n(Histogramm-Perzentile)\"]\n    Laplacian --&gt; Norm[\"Normierter Score\\nVoL / Kontrast-Quadrat\"]\n    Contrast --&gt; Norm\n    Norm --&gt; Gate[\"Akzeptanzpruefung\\nScore groessergleich 0.08\"]\n\n\n\n\n\n\n\n\n3.3 Schwellenwert\nGemessen auf dem iPhone 16 Pro Max:\n\n\n\nSituation\nScore-Bereich\n\n\n\n\nUltraweitwinkel (13 mm), unscharf\n0,01–0,05\n\n\nHauptobjektiv (24 mm), Autofokus eingeschwungen\n0,10–0,80\n\n\nHarte Sperrgrenze (hardGateThreshold)\n0,08\n\n\n\nEine Aufnahme mit Score &lt; 0,08 wird nicht gespeichert. Der Schwellenwert liegt zwischen den beiden empirisch gemessenen Regimen und lässt sich mit dem Diagnosewerkzeug famulus-pipeline --score &lt;master.heic&gt; für beliebige gespeicherte Master nachträglich messen.\n\n\n\n\n\n\nHinweisDiagnosetipp\n\n\n\nUm den Schärfescore eines gespeicherten Masters zu messen, ohne die volle Pipeline auszuführen:\nfamulus-pipeline master_001.heic --score\n# Ausgabe: score  0.3412  (PASS, gate=0.080)  master_001.heic",
+  "crumbs": [
+   "Architektur",
+   "System & Aufnahme",
+   "Der Reproplatz — Aufbau und Auslöselogik"
+  ]
+ },
+ {
+  "objectID": "reproplatz.html#kamera-einstellungen",
+  "href": "reproplatz.html#kamera-einstellungen",
+  "title": "Der Reproplatz — Aufbau und Auslöselogik",
+  "section": "4 Kamera-Einstellungen",
+  "text": "4 Kamera-Einstellungen\nFamulus Repro nutzt die volle Sensorauflösung des iPhones (48 MP Hauptobjektiv). Es stehen zwei Formate zur Wahl:\n\nHEIC (Standard): Verlustbehaftete Kompression bei hoher Qualität, kompakte Dateigröße.\nProRAW: Unkomprimierte Rohdaten für maximale Nachbearbeitungsreserven; deutlich größere Dateien (~50 MB pro Aufnahme).\n\nDie Fernauslösung (Leertaste am Mac) und der Zoom werden über den Backstage-Controller gesteuert.",
+  "crumbs": [
+   "Architektur",
+   "System & Aufnahme",
+   "Der Reproplatz — Aufbau und Auslöselogik"
+  ]
+ },
+ {
+  "objectID": "partitur.html",
+  "href": "partitur.html",
+  "title": "Partitur-Nachbearbeitung",
+  "section": "",
+  "text": "TippPartitur in einem Satz\n\n\n\nDie Partitur ist ein formalisierter Aktionsplan, dessen Ausführung das vollständig transkribierte Dokument mit semantischer Struktur anreichert: Bibliographiedaten, Belegposten, Regest — je nach Dokumenttyp.\nNach OCR und PDAI-Ablage steht der Rohtranskript fest. Die Partitur-Nachbearbeitung wertet diesen Transkript aus und ergänzt die Ablage um semantisch strukturierte Metadaten. Sie läuft nicht auf dem Erfassungsgerät, sondern im lokalen Netz über den ai-agent-orchestrator.\nDer Begriff „Partitur” (aus dem Musikbereich: der vollständige mehrstimmige Notenplan) beschreibt hier einen deklarierten Ablaufplan für einen KI-Agenten: eine YAML-Datei, die Eingaben, Verarbeitungsschritte, Modellauswahl und Ausgabeformat definiert. Die Ausführung der Partitur ist Regelfolgen im Sinne Wittgensteins (PU 185–202): eine Praxis, die den Plan instanziiert — keine bloße Textinterpretation des YAML.",
+  "crumbs": [
+   "Architektur",
+   "Orchestrierung & Daten",
+   "Partitur-Nachbearbeitung"
+  ]
+ },
+ {
+  "objectID": "partitur.html#verbindung-zum-orchestrator",
+  "href": "partitur.html#verbindung-zum-orchestrator",
+  "title": "Partitur-Nachbearbeitung",
+  "section": "1 Verbindung zum Orchestrator",
+  "text": "1 Verbindung zum Orchestrator\nPartiturClient stellt eine HTTP-Verbindung zum ai-agent-orchestrator auf Port 5401 her. Der Standardendpunkt ist http://127.0.0.1:5401.\nDie relevanten Endpunkte:\n\n\n\n\n\n\n\n\nEndpunkt\nMethode\nFunktion\n\n\n\n\n/api/run/partitur\nGET\nListe der verfügbaren Partitur-Pfade\n\n\n/api/run\nPOST (synchron)\nPartitur-Lauf mit Eingaben starten (kurze Scores)\n\n\n/api/run/async\nPOST\nAsynchroner Partitur-Start; gibt job_id zurück\n\n\n/api/run/async/{job_id}\nGET\nPolling: Status und Ergebnis des laufenden Jobs\n\n\n\nPartiturClient nutzt für Extended OCR den asynchronen Pfad: POST → polling-Schleife alle 5 s → Ergebnis nach Abschluss. Die App-interne Timeout-Grenze ist 3600 s (Job-TTL im Orchestrator).\nEin Lauf gibt zurück: run_id, partitur_id, succeeded (Boolean), grade (Bewertungsstring), summary (Zusammenfassung) und die strukturierten output-Daten.\nDie URL ist über den Standard-Einstellungsschlüssel FamulusReproOrchestratorURL in UserDefaults änderbar.",
+  "crumbs": [
+   "Architektur",
+   "Orchestrierung & Daten",
+   "Partitur-Nachbearbeitung"
+  ]
+ },
+ {
+  "objectID": "partitur.html#die-partitur-scores-von-famulus-repro",
+  "href": "partitur.html#die-partitur-scores-von-famulus-repro",
+  "title": "Partitur-Nachbearbeitung",
+  "section": "2 Die Partitur-Scores von Famulus Repro",
+  "text": "2 Die Partitur-Scores von Famulus Repro\nFamulus Repro verwendet sechs Partitur-Scores, aufgeteilt nach Dokumentmodus. Im Inspektor-Panel werden sie nach Modus gefiltert.\n\nBuch-Extended-OCRBeleg-Extended-OCRSchnelle Beleg-KlassifizierungBuch-BibliographieBuchtyp-KlassifizierungArchivales Regest\n\n\nPartitur: repro_extended_ocr_agent\nKern-OCR für Buchseiten: Bild + Transkript → DTD-konformes Buch-XML.\n\nModell: gemini-3.8-flash (Batch-Standard), glm-5.3-flash:cloud (Sync-Fallback)\nEingabe: Verarbeitetes Seitenbild + Vision-Rohtranskript\nAusgabe: page_NNN.ext.xml nach repro_page.dtd (Fließtext, Überschriften, Figuren, Tabellen, Fußnoten)\nValidierung: DTD-Validierung + Reparatur-Sweep in validate.py\n\n\n\nPartitur: repro_receipt_ocr_agent\nExtended OCR für Belege: Bild + Transkript → DTD-konformes Beleg-XML + JSON.\n\nModell: gemini-3.8-flash Batch\nEingabe: Verarbeitetes Belegbild + Vision-Rohtranskript\nAusgabe: &lt;stem&gt;.ext.xml nach repro_receipt.dtd + &lt;stem&gt;.receipt.json\nDTD-Schema: Händler, Adresse, Positionen, Steuern, Zahlung, TSE, Reise, Treibstoff, Parken, Apotheke\n\n\n\nPartitur: repro_receipt_agent\nSchnelle Belegfeld-Extraktion für sofortige Ordnerumbenennung (kein Bild, nur Transkript).\n\nModell: fasttext (Apple Foundation Model, on-device)\nEingabe: Vision-OCR-Transkript\nAusgabe: [klasse]-Firma-Datum-Betrag-Währung-Stem für Ordnerumbenennung\n\n\n\nPartitur: repro_book_agent\nBibliographiedaten und Seitenstruktur aus mehrseitigem Buchscan.\n\nModell: glm-5.3-flash:cloud (via Ollama)\nEingabe: Alle Seiten-Transkripte + Kolumnentitel-Sequenz\nAusgabe: Autor, Titel, Jahr, Verlag, Seitenzuordnung, Kolumnentitel-Korrekturen\n\n\n\nPartitur: repro_booktype_agent\nErkennt das Buchformat und erstellt ein OCR-Overlay für strukturierte Extraktion.\n\nModell: fasttext → gemini-3.8-flash (Pilot-OCR)\nEingabe: Seitenbilder + Transkripte\nAusgabe: BookType-JSON-Overlay mit DTD-Grammatik, Seiten-Konventionen, Pilot-Verdict\n\n\n\nPartitur: repro_archival_agent\nRegest für historische Dokumente (Briefe, Urkunden, Akten).\n\nModell: fasttext (Apple Foundation Model)\nEingabe: OCR-Transkript\nAusgabe: EDTF-Datum, Absender, Empfänger, Personen, Ortsnamen, Kurzregest (1–3 Sätze)",
+  "crumbs": [
+   "Architektur",
+   "Orchestrierung & Daten",
+   "Partitur-Nachbearbeitung"
+  ]
+ },
+ {
+  "objectID": "partitur.html#auswahl-der-partitur-im-inspektor",
+  "href": "partitur.html#auswahl-der-partitur-im-inspektor",
+  "title": "Partitur-Nachbearbeitung",
+  "section": "3 Auswahl der Partitur im Inspektor",
+  "text": "3 Auswahl der Partitur im Inspektor\nDer Standardscore hängt vom Dokumentmodus ab:\n\nBuchmode: repro_extended_ocr_agent für OCR, repro_book_agent für Bibliographie\nEinzelblattmode: repro_receipt_ocr_agent (Extended), repro_receipt_agent (Schnell)\n\nÜber den Schalter “Alle Partituren” sind alle weiteren Scores aus dem agent-store/ abrufbar.",
+  "crumbs": [
+   "Architektur",
+   "Orchestrierung & Daten",
+   "Partitur-Nachbearbeitung"
+  ]
+ },
+ {
+  "objectID": "partitur.html#das-partitur.json-artefakt",
+  "href": "partitur.html#das-partitur.json-artefakt",
+  "title": "Partitur-Nachbearbeitung",
+  "section": "4 Das partitur.json-Artefakt",
+  "text": "4 Das partitur.json-Artefakt\nDer Lauferfolg und alle Ausgaben des Partitur-Agenten werden in partitur.json im PDAI-Dokumentordner gespeichert und in das document.json-Register eingetragen. Zusätzlich ergänzt PartiturClient jedes page_NNN.json mit einem partitur-Feld, das die Partitur-Ergebnisse für die jeweilige Seite enthält.\n\npartitur.json — Ergebnis des repro_book_agent-Laufs\n{\n  \"run_id\": \"run-2026-09-03-08-42-17\",\n  \"partitur_id\": \"repro_book_agent\",\n  \"succeeded\": true,\n  \"grade\": \"EXCELLENT\",\n  \"summary\": \"Bibliographiedaten vollständig extrahiert. Seitenzuordnung rekonstruiert.\",\n  \"output\": {\n    \"author\": \"Graßhoff, Gerd\",\n    \"title\": \"The History of Ptolemy's Star Catalogue\",\n    \"year\": 1990,\n    \"publisher\": \"Springer\",\n    \"folder_name\": \"Grasshoff_1990_History_Ptolemy_Star_Catalogue\",\n    \"pages\": [\n      {\"scan_index\": 1, \"printed_page\": \"iv\", \"running_head\": \"Preface\"},\n      {\"scan_index\": 2, \"printed_page\": \"v\",  \"running_head\": \"Preface\"}\n    ]\n  }\n}",
+  "crumbs": [
+   "Architektur",
+   "Orchestrierung & Daten",
+   "Partitur-Nachbearbeitung"
+  ]
+ },
+ {
+  "objectID": "partitur.html#fehlerbedingungen",
+  "href": "partitur.html#fehlerbedingungen",
+  "title": "Partitur-Nachbearbeitung",
+  "section": "5 Fehlerbedingungen",
+  "text": "5 Fehlerbedingungen\nPartiturClient unterscheidet drei Fehlerfälle:\n\nunreachable: Orchestrator antwortet nicht auf Port 5401 — der Dienst ist nicht gestartet.\nbadStatus: HTTP-Fehlercode vom Orchestrator mit Antworttext.\nemptyTranscript: Kein OCR-Text vorhanden. Die Partitur kann nicht starten, weil sie keinen Eingabetext hat; der Nutzer muss zuerst Seiten aufnehmen.\n\nIn allen drei Fällen erscheint im Backstage eine präzise Fehlermeldung in natürlicher Sprache — keine technischen Statuscodes.",
+  "crumbs": [
+   "Architektur",
+   "Orchestrierung & Daten",
+   "Partitur-Nachbearbeitung"
+  ]
+ },
+ {
+  "objectID": "betrieb.html",
+  "href": "betrieb.html",
+  "title": "Betrieb",
+  "section": "",
+  "text": "TippBetrieb in einem Satz\n\n\n\nEin Scan-Durchgang läuft von Kamera-Auslösen bis zur fertig benannten Datei vollautomatisch — der Nutzer wählt nur Vorlage und Partitur; alles andere entscheidet die Pipeline.\nDieses Kapitel beschreibt den Tagesbetrieb: Buchscan und Einzelblatt-Scan von Anfang bis Ende, mit allen Zwischenzuständen, Rückmeldungen und Nachbearbeitungsschritten, die der Nutzer sieht oder auslösen kann.",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Betrieb"
+  ]
+ },
+ {
+  "objectID": "betrieb.html#gesamtablauf-im-überblick",
+  "href": "betrieb.html#gesamtablauf-im-überblick",
+  "title": "Betrieb",
+  "section": "1 Gesamtablauf im Überblick",
+  "text": "1 Gesamtablauf im Überblick\n\n\n\n\n\nflowchart TD\n    phone[\"iPhone CameraService\\n(48 MP + LiDAR)\"] --&gt; lock[\"DocumentDetector lock\\nstage1→stage2\"]\n    lock --&gt; shutter[\"pageCaptured\\n+ Tiefensnapshot\"]\n    shutter --&gt; link[\"ReproLink TCP 8765\\nFrame-Transfer\"]\n    link --&gt; backstage[\"BackstageController\\nEmpfang + Dispatch\"]\n    backstage --&gt; pipeline[\"PDAIBackendPipeline\\nRektifizierung + Ton + OCR\"]\n    pipeline --&gt; geo[\"PageGeometry\\nGutterFinder + Quality-Gates\"]\n    geo --&gt; tone[\"ArchivalToneEngine\\nFlat-Field + S-Kurve\"]\n    tone --&gt; vision[\"OCRService Vision\\nTranskript lokal\"]\n    vision --&gt; store[\"Documents/Scans\\nmaster NNN.heic + page NNN/\"]\n    store --&gt; batch[\"PartiturClient\\nasync Batch 5401\"]\n    batch --&gt; xml[\"ext.xml + receipt.json\\nbzw. page.json\"]\n    xml --&gt; rename[\"renamePageArtefacts\\nnur Einzelblatt\"]\n\n\n\n\n\n\nDer Gesamtfluss endet im Buchmode mit einem benannten Ordner und XML je Seite; im Einzelblatt-Modus zusätzlich mit Ordner- und Dateiumbenennung nach [klasse]-Firma-Datum-Betrag-Währung.",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Betrieb"
+  ]
+ },
+ {
+  "objectID": "betrieb.html#buchscan-schritt-für-schritt",
+  "href": "betrieb.html#buchscan-schritt-für-schritt",
+  "title": "Betrieb",
+  "section": "2 Buchscan — Schritt für Schritt",
+  "text": "2 Buchscan — Schritt für Schritt\n\n2.1 1. Vorbereitung (einmalig je Sitzung)\nIm rechten Inspektor:\n\nVorlage: Buch\nAusrichtung: topOnRight (Standard, iPhone quer mit Oberkante rechts)\nBuchtyp-Overlay wählen, falls für dieses Buch bereits einer existiert (z. B. „Hevelius”)\nBatch-OCR-Toggle: Ein (Standard) für Gemini-Batch mit 50-%-Kostenrabatt; Aus für sofortigen Sync-Pfad (Ollama/local)\n\nCapture-Settings werden nach jeder Aufnahme automatisch persistiert und bei der nächsten Sitzung wiederhergestellt (CaptureSettingsStore).\n\n\n2.2 2. Aufnehmen\niPhone über dem Buch, App öffnen → Kamera wird gestartet. Sobald der Rahmen stabil erkannt und die Lock-Bedingungen erfüllt sind (stage2Locked), leuchtet der Sucher-Rand grün auf.\nAuslösen: Leertaste am Mac (Fernauslöser), Volume-Taste am iPhone, oder Tap auf den Shutter-Button. Die App löst nur aus, wenn der Rahmen gesperrt ist.\nNach dem Auslösen: - Der Master (HEIC, 48 MP) wird per ReproLink an den Mac übertragen. - Backstage zeigt sofort einen Platzhalter-Thumb in der Seitenleiste (Busy-Zustand, keine Wartezeit für den Nutzer). - Die Pipeline startet im Hintergrund: Geometrie → Tonwert → Vision-OCR. - Sobald Vision-OCR abgeschlossen ist, erscheint das verarbeitete Seitenbild im Thumb.\n\n\n2.3 3. Qualitäts-Chip „Nachbessern”\nJede Spreite bekommt nach dem Verarbeiten ein Qualitäts-Gate-Ergebnis:\n\n\n\n\n\n\n\nChip\nBedeutung\n\n\n\n\n(kein Chip)\nAlle Quality-Gates bestanden\n\n\nNachbessern (gelb)\nResidualneigung &gt; 0,15° oder Scale-Mismatch &gt; 6 %\n\n\nNeu aufnehmen (rot)\nPaper-Coverage &lt; 35 % oder Score-Gate fehlgeschlagen\n\n\n\nEin Klick auf den Chip öffnet die Spreite mit Diagnose im Detailbereich. Dort ist auch ein direktes Reshoot möglich.\n\n\n2.4 4. Ergebnis und Ablage\nFür jede Doppelseite entstehen in ~/Documents/Scans/&lt;Dokumentname&gt;/:\nmasters/\n  master_NNN.heic         — 48-MP-Kamerabild\npage_NNN/                 — Linke Seite\n  page_NNN.jpg            — Verarbeitetes Seitenbild\n  page_NNN.json           — GeometryReport + ToneReport + OCRResult\n  page_NNN.txt            — Flachtext-Transkript (Vision-OCR)\n  page_NNN.ext.xml        — Extended-OCR-Ergebnis (DTD-konformes Buch-XML)\n  page_NNN.ext.txt        — Flachtext aus ext.xml\npage_NNN+1/               — Rechte Seite (analog)\nmetadata/\n  page_selection.json     — Pagenum-Overrides, Reihenfolge-Korrekturen (nie direkt in XML)\ndocument.json             — Dokumentregister, Partitur-Status\n\n\n2.5 5. Extended OCR und Partitur\nExtended OCR läuft asynchron über den Orchestrator:\n\nPartiturClient sendet alle Seitenbilder als Batch an den repro_extended_ocr_agent.\nGemini-Batch (gemini-3.8-flash) verarbeitet mit 50-%-Kostenrabatt; typische Queue-Zeit: 3–10 Min.\nNach Rückgabe schreibt der Client page_NNN.ext.xml und page_NNN.ext.txt.\nDer XML-Tab in PageDetailView zeigt das formatierte Buchblatt-XML (Warm-Papier-Stil).\n\n„Partitur anwenden” löst einen separaten Lauf für Buch-Bibliographie (repro_book_agent) oder Buchtyp-Klassifizierung (repro_booktype_agent) aus.\n⌘⇧T startet OCR für alle Seiten neu, ohne die verarbeiteten Seitenbilder zu verändern.",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Betrieb"
+  ]
+ },
+ {
+  "objectID": "betrieb.html#einzelblatt-scan-schritt-für-schritt",
+  "href": "betrieb.html#einzelblatt-scan-schritt-für-schritt",
+  "title": "Betrieb",
+  "section": "3 Einzelblatt-Scan — Schritt für Schritt",
+  "text": "3 Einzelblatt-Scan — Schritt für Schritt\n\n3.1 1. Vorlage wählen\nIm Inspektor: Vorlage → Einzelblatt. Der Rahmen-Erkennungsmodus wechselt auf Belegsuche: Die App erkennt das weiße Rechteck auf dem schwarzen Untergrund und zoomt darauf, statt eine A4-Buchspreite zu erwarten.\n\n\n3.2 2. Aufnehmen\nBeleg auf schwarzem Untergrund, ausreichend Abstand wählen (kleine Belege wie Bustickets können bis 8 cm herangehen). Sucher-Rand leuchtet grün bei stabiler Erkennung.\nNach dem Auslösen erscheint der Beleg sofort im Kontaktbogen. Die Vision-OCR läuft on-device in ≤ 3 s.\n\n\n3.3 3. Sofortige Benennung aus Transkript\nReceiptClassifier extrahiert aus dem Vision-OCR-Transkript: - Händlername (bereinigt, max. 20 Zeichen) - Datum (TT-MM-JJJJ) - Gesamtbetrag (2 Dezimalstellen) - Währung (EUR, CHF, …) - Klasse (Taxi, parking, pharma, usw. — oder leer für offene Klasse)\nDer Ordner wird sofort umbenannt: [klasse]-Firma-Datum-Betrag-Währung (z. B. [parking]-Schadowstrasse-15-08-2026-3.50-EUR).\nErfolgs-Feedback: Wenn Extraktion und Umbenennung erfolgreich sind, ertönt ein kurzer heller Ton.\nFehler-Feedback: Scheitert die Strukturextraktion (kein erkennbarer Betrag, kein Datum), ertönt ein dunkles Brummen — Signal zum Wiederholen der Aufnahme.\n\n\n3.4 4. Dubletten erkennen und aufräumen\nWenn zwei Aufnahmen denselben Datei-Stem (Firma + Datum + Betrag) ergeben, erscheint ein 🔁-Icon auf beiden Thumbs in der Seitenleiste. Klick darauf öffnet DuplicateSelectionView: beide Seiten nebeneinander, „Behalten” / „Archivieren” je Seite. Archivierte Seiten landen in &lt;Dokumentordner&gt;/archive/.\n\n\n3.5 5. Extended OCR (Beleg-XML und JSON)\nrepro_receipt_ocr_agent verarbeitet sowohl Bild als auch Transkript: - Schreibt &lt;stem&gt;.ext.xml (DTD repro_receipt.dtd) mit vollem Beleg-Schema: Händler, Adresse, Positionen, Steuern, Zahlung, TSE, Reise-/Treibstoff-/Parkdaten. - Schreibt &lt;stem&gt;.receipt.json — Flat-Contract aller DTD-Attribute für Mac-App-Konsum. - DTD-Validierungsstatus und eventuelle Fehler stehen in den dtd_valid/dtd_errors-Attributen der Wurzel.\nDer XML-Tab zeigt das Beleg-XML als stilisierten Thermobon (warm, kompakt, Klasse-Badge), der Daten-Tab zeigt receipt.json als lesbares Key-Value-Layout.",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Betrieb"
+  ]
+ },
+ {
+  "objectID": "betrieb.html#reprocessing-und-ocr-neulauf",
+  "href": "betrieb.html#reprocessing-und-ocr-neulauf",
+  "title": "Betrieb",
+  "section": "4 Reprocessing und OCR-Neulauf",
+  "text": "4 Reprocessing und OCR-Neulauf\n\n4.1 „Neu verarbeiten (aus Master)”\nRechtsklick auf eine Spreite im Kontaktbogen → „Neu verarbeiten”. Startet die vollständige Pipeline neu, beginnend mit dem gespeicherten Master, ohne den Master zu verändern.\nMit dem Schraubenschlüssel-Symbol oben in der Backstage startet der Neuverarbeitungs-Sweep für alle Spreiten des Dokuments. Nach dem Sweep läuft automatisch Extended-OCR für alle geänderten Seiten.\n\n\n4.2 ⌘⇧T — OCR für alle Seiten erneuern\nStartet Extended-OCR für alle Seiten neu, ohne Seitenbilder neu zu erzeugen. Nützlich nach Orchestrator-Update oder Partitur-Änderung.",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Betrieb"
+  ]
+ },
+ {
+  "objectID": "betrieb.html#capture-settings-persistenz",
+  "href": "betrieb.html#capture-settings-persistenz",
+  "title": "Betrieb",
+  "section": "5 Capture-Settings-Persistenz",
+  "text": "5 Capture-Settings-Persistenz\nDie folgenden Einstellungen werden automatisch nach jeder Änderung persistiert und beim nächsten Start wiederhergestellt:\n\n\n\n\n\n\n\n\nEinstellung\nSchlüssel\nWertebereich\n\n\n\n\nVorlage\ncaptureMode\nbook / receipt\n\n\nBuchausrichtung\norientation\ntopOnRight / topOnLeft / topOnTop\n\n\nKopierständer-Modus\ncopyStandMode\nBool\n\n\nRahmen-Padding\nframePadding\n0 %–20 %, Standard 8 %\n\n\nFlat-Field\nflatFieldEnabled\nBool\n\n\nBatch-OCR\nbatchOCREnabled\nBool\n\n\nOrchestrator-URL\nFamulusReproOrchestratorURL\nURL-String",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Betrieb"
+  ]
+ },
+ {
+  "objectID": "betrieb.html#batch-ocr-monitoring",
+  "href": "betrieb.html#batch-ocr-monitoring",
+  "title": "Betrieb",
+  "section": "6 Batch-OCR Monitoring",
+  "text": "6 Batch-OCR Monitoring\nDer linke Seitenleisten-Fußbereich zeigt: - „Batch läuft…“ mit geschätzter ETA (aus historischen Queue-Zeiten) - Fertig-Badge, sobald alle offenen Seiten das Batch-Ergebnis haben",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Betrieb"
+  ]
+ },
+ {
+  "objectID": "betrieb.html#laufende-quittungen-sammlung",
+  "href": "betrieb.html#laufende-quittungen-sammlung",
+  "title": "Betrieb",
+  "section": "7 Laufende QUITTUNGEN-Sammlung",
+  "text": "7 Laufende QUITTUNGEN-Sammlung\nAls Beispiel für den Alltag: der Scan-Ordner ~/Documents/Scans/QUITTUNGEN/ enthält alle Einzelbelege der laufenden Buchführung. Jeder neue Scan landet dort, wird sofort benannt und der Extended-OCR-Batch-Queue zugestellt. Die OCR-Ergebnisse stehen nach wenigen Minuten als DTD-konformes Beleg-XML und Flat-JSON zur Verfügung.",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Betrieb"
+  ]
+ },
+ {
+  "objectID": "cli.html",
+  "href": "cli.html",
+  "title": "Entwickler-CLI: famulus-pipeline",
+  "section": "",
+  "text": "Tippfamulus-pipeline in einem Satz\n\n\n\nfamulus-pipeline führt die vollständige Mac-Backstage-Pipeline auf einem gespeicherten Master aus, legt nach jeder Stufe ein Zwischenbild ab und druckt den Geometrie-, Tonwert- und OCR-Bericht — damit jede Entscheidung der Pipeline nachvollziehbar und prüfbar ist.\nDie grafische Backstage-Oberfläche verbirgt alle Verarbeitungsdetails hinter einer schlichten Benutzeroberfläche. famulus-pipeline kehrt das um: Es ist das Diagnosewerkzeug, das jeden Zwischenzustand sichtbar macht. Es verwendet denselben PDAIBackendPipeline-Code wie die Backstage-App — das Ergebnis ist identisch, nur der Ausgabeweg ist ein Verzeichnis auf dem Dateisystem statt ein Live-Dokumentordner.",
+  "crumbs": [
+   "Architektur",
+   "Bedienung & Diagnose",
+   "Entwickler-CLI: famulus-pipeline"
+  ]
+ },
+ {
+  "objectID": "cli.html#vorbereitung",
+  "href": "cli.html#vorbereitung",
+  "title": "Entwickler-CLI: famulus-pipeline",
+  "section": "1 Vorbereitung",
+  "text": "1 Vorbereitung\nfamulus-pipeline ist das famulus-pipeline-Target im Xcode-Projekt. Es wird als macOS Command-Line-Tool gebaut:\nxcodebuild -scheme famulus-pipeline -configuration Debug\nDas erzeugte Binary liegt unter build/Debug/famulus-pipeline. Es kann beliebige .heic-Master verarbeiten — auch solche, die mit einer älteren App-Version aufgenommen wurden.",
+  "crumbs": [
+   "Architektur",
+   "Bedienung & Diagnose",
+   "Entwickler-CLI: famulus-pipeline"
+  ]
+ },
+ {
+  "objectID": "cli.html#grundlegende-verwendung",
+  "href": "cli.html#grundlegende-verwendung",
+  "title": "Entwickler-CLI: famulus-pipeline",
+  "section": "2 Grundlegende Verwendung",
+  "text": "2 Grundlegende Verwendung\nfamulus-pipeline &lt;master.heic&gt; [Optionen]\nEin typischer Diagnoselauf für eine Buchaufnahme:\nfamulus-pipeline \\\n  ~/Documents/Scans/Dokument_2026-09-03/masters/master_001.heic \\\n  --mode book \\\n  --orientation topOnRight \\\n  --out /tmp/famulus-debug\nNach dem Lauf enthält /tmp/famulus-debug/ die Stufenbilder und den vollständigen PDAI-Seitenordner.",
+  "crumbs": [
+   "Architektur",
+   "Bedienung & Diagnose",
+   "Entwickler-CLI: famulus-pipeline"
+  ]
+ },
+ {
+  "objectID": "cli.html#parameter-referenz",
+  "href": "cli.html#parameter-referenz",
+  "title": "Entwickler-CLI: famulus-pipeline",
+  "section": "3 Parameter-Referenz",
+  "text": "3 Parameter-Referenz\n\nGrundparameterStufen-SchalterTonwert-ParameterSondermodis\n\n\n\n\n\n\n\n\n\n\n\nParameter\nWertebereich\nStandard\nFunktion\n\n\n\n\n--mode\nbook, receipt\nbook\nDokumentmodus: Doppelseite oder Einzelblatt\n\n\n--orientation\ntopOnRight, topOnLeft, upright\ntopOnRight\nAusrichtung der Buchoberkante im Master\n\n\n--out &lt;dir&gt;\nVerzeichnispfad\n/tmp/famulus-pipeline\nAusgabeverzeichnis\n\n\n\n\n\n\n\n\nParameter\nFunktion\n\n\n\n\n--no-flatfield\nFlat-Field-Korrektur überspringen\n\n\n--no-enhancer\nCIDocumentEnhancer überspringen\n\n\n--no-deskew\nEntzerrung überspringen\n\n\n--no-tightcrop\nTextblock-Beschnitt überspringen\n\n\n--no-ocr\nOCR-Schritt überspringen (nur Bild)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nParameter\nTyp\nStandard\nFunktion\n\n\n\n\n--contrast &lt;x&gt;\nFloat\n1,15\nStärke der archivischen S-Kurve\n\n\n--brightness &lt;x&gt;\nFloat\n0,0\nVerschiebung des Papierziels (+0,1 = heller)\n\n\n\n\n\n\n\n\n\n\n\n\nParameter\nFunktion\n\n\n\n\n--score\nNur Schärfescore messen und ausgeben, Pipeline nicht ausführen\n\n\n--measure-tilt\nNeigungsresiduum messen (Projektionsprofil), Pipeline nicht ausführen\n\n\n--probe-receipt\nBelegrahmen-Erkennungsdiagnose: Quad-IoU, Winkelabweichung, Hull-Bereich\n\n\n\n\n\n\n\n3.1 Belegdiagnose\n# Belegrahmen und Hülle diagnostizieren\nfamulus-pipeline \\\n  ~/Documents/Scans/QUITTUNGEN/masters/master_005.heic \\\n  --mode receipt \\\n  --probe-receipt \\\n  --out /tmp/repro-receipt-debug\n\n# Neigungsresiduum messen\nfamulus-pipeline master_001.heic --measure-tilt",
+  "crumbs": [
+   "Architektur",
+   "Bedienung & Diagnose",
+   "Entwickler-CLI: famulus-pipeline"
+  ]
+ },
+ {
+  "objectID": "cli.html#ausgabe-stufenbilder",
+  "href": "cli.html#ausgabe-stufenbilder",
+  "title": "Entwickler-CLI: famulus-pipeline",
+  "section": "4 Ausgabe: Stufenbilder",
+  "text": "4 Ausgabe: Stufenbilder\nDas Ausgabeverzeichnis enthält nach dem Lauf für jede erkannte Seite:\n\n\n\n\n\n\n\nDatei\nInhalt\n\n\n\n\npage_001.0-rectified.jpg\nPerspektivkorrigiertes, ausgerichtetes Bild (nach Schritt 1–3)\n\n\npage_001.1-flatfield.jpg\nNach Flat-Field-Division\n\n\npage_001.2-levels.jpg\nNach Tonwert-Normierung und S-Kurve\n\n\npage_001.3-enhancer.jpg\nNach CIDocumentEnhancer\n\n\npage_001.4-sharpen.jpg\nFinales Bild nach Schärfung\n\n\npage_001/page_001.jpg\nIdentisch mit 4-sharpen — die PDAI-Ablage-Kopie\n\n\npage_001/page_001.json\nVollständiges Seitenprotokoll (GeometryReport + ToneReport + OCRResult + Quality-Gate)\n\n\n\nDie Stufenbilder beginnen mit dem verarbeiteten Seitenbild, nie mit dem Roh-Master. 0-rectified.jpg ist die Ausgabe nach Geometrie (Perspektivkorrektur, Rotation, GutterFinder-Seitentrennung).\nDurch Vergleich von 0-rectified und 1-flatfield lässt sich prüfen, ob und wie stark die Ausleuchtung korrigiert wurde. 1-flatfield gegen 2-levels zeigt die Wirkung der Tonwert-Normierung. Wenn 2-levels bereits gut aussieht und 3-enhancer schlechter wird, kann --no-enhancer eingesetzt werden.",
+  "crumbs": [
+   "Architektur",
+   "Bedienung & Diagnose",
+   "Entwickler-CLI: famulus-pipeline"
+  ]
+ },
+ {
+  "objectID": "cli.html#ausgabe-konsolen-bericht",
+  "href": "cli.html#ausgabe-konsolen-bericht",
+  "title": "Entwickler-CLI: famulus-pipeline",
+  "section": "5 Ausgabe: Konsolen-Bericht",
+  "text": "5 Ausgabe: Konsolen-Bericht\nDer Lauf druckt einen strukturierten Bericht auf die Standardausgabe:\nmaster  /path/to/master_001.heic\nout     /tmp/famulus-debug\nmode    Buch (2-Seiten Doppelseite)  flatfield=true enhancer=true deskew=true tightcrop=true ocr=true\n\npage 1 (left):\n  quad  [0.10,0.08] [0.92,0.06] [0.94,0.94] [0.08,0.95]  confidence=0.97  source=mac-segmentation\n  gutter  50.2 %  (projection-minimum)\n  deskew  0.25°\n  crop  [4%, 3%, 92%, 94%]\n  output  2680 × 3520 px\n  ink=0.042  paper=0.931  median=0.871  flatfield=yes  enhancer=yes\n  ocr  vision-documents  de-DE  confidence=0.947  blocks=24\n\npage 2 (right):\n  ...\n\nelapsed  4.2 s",
+  "crumbs": [
+   "Architektur",
+   "Bedienung & Diagnose",
+   "Entwickler-CLI: famulus-pipeline"
+  ]
+ },
+ {
+  "objectID": "cli.html#schärfescore-isoliert-messen",
+  "href": "cli.html#schärfescore-isoliert-messen",
+  "title": "Entwickler-CLI: famulus-pipeline",
+  "section": "6 Schärfescore isoliert messen",
+  "text": "6 Schärfescore isoliert messen\nDer --score-Modus führt keine Bildverarbeitung durch, sondern nur die Laplace-Varianz-Messung:\nfamulus-pipeline master_001.heic --score\n# score  0.3412  (PASS, gate=0.080)  master_001.heic\nEin FAIL-Ergebnis bedeutet, dass die Aufnahme zu unscharf für eine Verwendung ist und neu gemacht werden sollte. Der Schwellenwert gate=0.080 entspricht dem hardGateThreshold in Sharpness.swift.",
+  "crumbs": [
+   "Architektur",
+   "Bedienung & Diagnose",
+   "Entwickler-CLI: famulus-pipeline"
+  ]
+ },
+ {
+  "objectID": "cli.html#diagnose-leitfaden",
+  "href": "cli.html#diagnose-leitfaden",
+  "title": "Entwickler-CLI: famulus-pipeline",
+  "section": "7 Diagnose-Leitfaden",
+  "text": "7 Diagnose-Leitfaden\nÜberbelichtetes, zu helles Bild\nUrsache: Tinte-Anker liegt nicht bei 0,5. Perzentil, sondern höher; die Pipeline hat keine dunklen Pixel gemessen.\nPrüfung: Wert inkPoint im Bericht. Wenn inkPoint &gt; 0.15, ist der Satzspiegel zu hell oder das Messquadrat liegt im falschen Bereich. Mögliche Gründe: Das Dokument ist sehr blass (Bleistift, blasse Tinte), der Untergrund ist nicht schwarz und ragt in das Messquadrat.\nAbhilfe: Schwarzen Untergrund sicherstellen; bei extrem blassem Dokument --contrast 1.5 probieren; mit --no-flatfield testen, ob die Flat-Field-Division den Kontrast fälschlicherweise reduziert.\nZu dunkles, zugeschnürtes Bild\nUrsache: Das Messquadrat liegt im Falzbereich oder im schwarzen Untergrund. Wenn der Falz in das zentrale Messquadrat ragt, nimmt der Tintenanker einen zu dunklen Wert auf.\nPrüfung: measureRect im Bericht. Wenn das Bild zu hoch oder zu niedrig ausgefüllt ist, kann der Falz ins Messquadrat reichen.\nAbhilfe: Geometrie prüfen — möglicherweise ist der gutterFraction-Wert falsch und der Split liegt nicht am Bundsteg.\nSchiefe Seite\nUrsache: deskewDegrees-Wert ist ungleich null, aber der Algorithmus hat den falschen Maximalwinkel gefunden.\nPrüfung: deskewDegrees im Bericht. Wenn der Wert &gt; 3°, ist das für ein normales Buch ungewöhnlich.\nAbhilfe: --no-deskew testen; wenn das Bild dann gerade ist, liegt ein Fehler im Deskew vor. Das Dokument möglicherweise erneut aufnehmen und dabei auf horizontale Ausrichtung achten.\nOCR-Ergebnis leer oder unvollständig\nUrsache 1: Kaltstart — das Vision-Modell war beim ersten Lauf noch nicht geladen. Lösung: Lauf wiederholen.\nUrsache 2: --no-ocr ist gesetzt.\nUrsache 3: Das Bild ist nach der Verarbeitungskette zu dunkel oder zu verrauscht für die Vision-Engine. Stufenbild 3-enhancer.jpg prüfen.",
+  "crumbs": [
+   "Architektur",
+   "Bedienung & Diagnose",
+   "Entwickler-CLI: famulus-pipeline"
+  ]
+ },
+ {
+  "objectID": "index.html",
+  "href": "index.html",
+  "title": "Famulus Repro — Architektur & Gesamtsystem",
+  "section": "",
+  "text": "TippFamulus Repro in einem Satz\n\n\n\nFamulus Repro teilt die Reproduktionsaufgabe strikt zwischen Erfassungssensor (iPhone/iPad) und Verarbeitungs- und Ablageinstanz (Mac Backstage) auf: das eine Gerät beherrscht die Optik, das andere die Rechenarbeit.\nFamulus Repro verbindet iPhone oder iPad mit dem Mac zu einem integrierten Reproplatz. Das iPhone übernimmt ausschließlich die optische Erfassung: es liefert einen Live-Sucher mit Wasserwaage und Dokumenterkennung, löst mit voller Sensorauflösung aus und überträgt das Master-HEIC an den Mac. Dort läuft die gesamte rechnerische Verarbeitungskette: Trapez-Erkennung, Perspektivkorrektur, Falzerkennung, Tonwertoptimierung, Texterkennung und Ablage als PDAI-Dokumentbündel. Auf Wunsch steuert ein nachgelagerter Orchestrator eine semantische Partitur-Nachbearbeitung (Bibliographie, Belegextraktion, Regestierung) im lokalen Netz.",
+  "crumbs": [
+   "Architektur",
+   "System & Aufnahme",
+   "Famulus Repro — Architektur & Gesamtsystem"
+  ]
+ },
+ {
+  "objectID": "index.html#systemarchitektur",
+  "href": "index.html#systemarchitektur",
+  "title": "Famulus Repro — Architektur & Gesamtsystem",
+  "section": "1 Systemarchitektur",
+  "text": "1 Systemarchitektur\n\n\n\n\n\nflowchart TD\n    PhoneCamera[\"iPhone Sensor\\n48 MP ProRAW/HEIC\"] --&gt;|\"TCP 8765 Tailscale plus Bonjour\"| NetStream[\"ReproLink\"]\n    NetStream --&gt; BackstageCtrl[\"Mac BackstageController\"]\n    BackstageCtrl --&gt; PipelineEntry[\"PDAIBackendPipeline\"]\n    PipelineEntry --&gt; Geometry[\"PageGeometry\\nTrapez-Erkennung + Rektifizierung\"]\n    Geometry --&gt; Tone[\"ArchivalToneEngine\\nPapier-Tinte-S-Kurve\"]\n    Tone --&gt; OCR[\"OCRService\\nRecognizeDocumentsRequest\"]\n    OCR --&gt; Storage[\"PDAI-Dokumentordner\\nmaster NNN plus page NNN\"]\n    Storage --&gt; PartiturClient[\"PartiturClient\\nai-agent-orchestrator 5401\"]\n\n\n\n\n\n\nDie Trennlinie zwischen Sensor und Backstage ist eine bewusste Entwurfsentscheidung: Sie hält das iOS-Gerät schlank und erlaubt es, die rechenintensive GPU-Pipeline vollständig unter macOS auszuführen, wo die Metal-GPU und CoreImage-Hardwarebeschleunigung zur Verfügung stehen.",
+  "crumbs": [
+   "Architektur",
+   "System & Aufnahme",
+   "Famulus Repro — Architektur & Gesamtsystem"
+  ]
+ },
+ {
+  "objectID": "index.html#zuständigkeiten-der-komponenten",
+  "href": "index.html#zuständigkeiten-der-komponenten",
+  "title": "Famulus Repro — Architektur & Gesamtsystem",
+  "section": "2 Zuständigkeiten der Komponenten",
+  "text": "2 Zuständigkeiten der Komponenten\n\n\n\n\n\n\n\n\nKomponente\nZuständigkeit\nPlattform\n\n\n\n\nFamulusRepro-iOS\nLive-Sucher, Auslöselogik, Kameradienst, Netzwerktransfer\niOS/iPadOS\n\n\nReproLink\nGerahmtes TCP auf Port 8765; Tailscale zuerst, Bonjour _famulusrepro._tcp als LAN-Fallback\nShared\n\n\nBackstageController\nHauptzustand der Mac-Anwendung, Koordination Sucher/Pipeline/UI\nmacOS\n\n\nPDAIBackendPipeline\nVollständige Rektifizierungs- und Tonwertkette\nmacOS (Core Image GPU)\n\n\nPageGeometry\nTrapez-Erkennung, Perspektivkorrektur, Falzfindung, Deskew, Tight-Crop\nShared\n\n\nArchivalToneEngine\nArchivischer Tonwert, S-Kurve, Flat-Field, Schärfung\nShared\n\n\nOCRService\nStrukturierte Texterkennung, Blocklayout\nShared\n\n\nPartiturClient\nHTTP-Client gegen den ai-agent-orchestrator\nmacOS",
+  "crumbs": [
+   "Architektur",
+   "System & Aufnahme",
+   "Famulus Repro — Architektur & Gesamtsystem"
+  ]
+ },
+ {
+  "objectID": "index.html#netzwerkprotokoll",
+  "href": "index.html#netzwerkprotokoll",
+  "title": "Famulus Repro — Architektur & Gesamtsystem",
+  "section": "3 Netzwerkprotokoll",
+  "text": "3 Netzwerkprotokoll\nDie Kamera und die Backstage wählen sich gegenseitig auf TCP-Port 8765 an: zuerst über Tailscale (mac-studio ‹mac-im-tailnet›, iPhonegg ‹iphone-im-tailnet›), ersatzweise über Bonjour _famulusrepro._tcp. Beide Geräte müssen Famulus Repro sein; eine daneben liegende MacRepro-App belegt denselben Port und zerstört die Zuordnung. Die gemessene, funktionierende Konfiguration — inklusive Listener ohne Peer-to-Peer, Neuaufbau nach Shared-Änderungen und Prüfbefehlen — steht in Mac und iPhone verbinden. Bilddaten verlassen das lokale Netz nicht.",
+  "crumbs": [
+   "Architektur",
+   "System & Aufnahme",
+   "Famulus Repro — Architektur & Gesamtsystem"
+  ]
+ },
+ {
+  "objectID": "index.html#produktverortung",
+  "href": "index.html#produktverortung",
+  "title": "Famulus Repro — Architektur & Gesamtsystem",
+  "section": "4 Produktverortung",
+  "text": "4 Produktverortung\nFamulus Repro ist Teil der Famulus-Produktfamilie von lettreai. In dieser Familie stehen:\n\nFamulus Repro — Bucherfassung, Belegdigitalisierung, Archivalreproduktion (dieses Produkt)\nFamulus Erasmus — KI-gestützte Lektüre und Annotation\nFamulus Scholar — Wissenschaftliche Dokumentenverarbeitung\n\nBeide Apps — iOS und macOS — teilen denselben Bundle-Identifier (com.opensciencetechnology.famulus.repro) und sind als Universal-Purchase im App Store geplant.",
+  "crumbs": [
+   "Architektur",
+   "System & Aufnahme",
+   "Famulus Repro — Architektur & Gesamtsystem"
+  ]
+ },
+ {
+  "objectID": "index.html#navigationshinweise",
+  "href": "index.html#navigationshinweise",
+  "title": "Famulus Repro — Architektur & Gesamtsystem",
+  "section": "5 Navigationshinweise",
+  "text": "5 Navigationshinweise\nDiese Dokumentation umfasst drei neue Kapitel, die das System vollständig beschreiben:\n\nKonstruktion und Dateikatalog: Jede Produktionsdatei mit Einzeiler-Zweck — kein Pfad ist versteckt.\nBetrieb: Tagesablauf Buch- und Einzelblatt-Scan von Auslösen bis benanntem Beleg.\nEntwicklung: Build-Loop, iOS-Install, Mac-Deploy, Wiederherstellung aus Snapshot.",
+  "crumbs": [
+   "Architektur",
+   "System & Aufnahme",
+   "Famulus Repro — Architektur & Gesamtsystem"
+  ]
+ },
+ {
+  "objectID": "index.html#latenzen-und-systemgrenzen",
+  "href": "index.html#latenzen-und-systemgrenzen",
+  "title": "Famulus Repro — Architektur & Gesamtsystem",
+  "section": "6 Latenzen und Systemgrenzen",
+  "text": "6 Latenzen und Systemgrenzen\nGemessen auf Apple M1 Ultra und iPhone 16 Pro Max (Testgerät “iPhonegg”, UDID 00008140-...):\n\n\n\nSchritt\nKaltstart\nWarmstart\n\n\n\n\nRecognizeDocumentsRequest Modelllade\nca. 94 s\n&lt; 0,6 s\n\n\nFlat-Field + Tonwertkette (4k-HEIC)\nca. 1,5 s\nca. 1,5 s\n\n\nPerspektivkorrektur + Deskew\nca. 0,3 s\nca. 0,3 s\n\n\nPartitur-Anfrage an Orchestrator\n2–8 s\n2–8 s\n\n\n\nDas Warmup des OCR-Modells wird beim Programmstart ausgelöst, sodass der erste Auslösevorgang nicht in den 94-Sekunden-Kaltstart läuft.",
+  "crumbs": [
+   "Architektur",
+   "System & Aufnahme",
+   "Famulus Repro — Architektur & Gesamtsystem"
+  ]
+ },
+ {
+  "objectID": "konstruktion.html",
+  "href": "konstruktion.html",
+  "title": "Konstruktion und Dateikatalog",
+  "section": "",
+  "text": "TippKonstruktion in einem Satz\n\n\n\nFamulus Repro besteht aus 55 Swift-Quelldateien in drei Xcode-Targets, einer Python-OCR-Pipeline im Orchestrator und einer Quarto-Dokumentationssite — nichts ist versteckt, jede Produktionsdatei steht in der folgenden Tabelle.\nDieses Kapitel ist die einzige Stelle, an der alle Produktionsdateien namentlich aufgeführt sind. Wer eine Komponente ändern, einen Fehler lokalisieren oder die Pipeline von Grund auf wiederherstellen will, findet hier den vollständigen Ausgangspunkt.",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Konstruktion und Dateikatalog"
+  ]
+ },
+ {
+  "objectID": "konstruktion.html#xcode-projekt-und-build-konfiguration",
+  "href": "konstruktion.html#xcode-projekt-und-build-konfiguration",
+  "title": "Konstruktion und Dateikatalog",
+  "section": "1 Xcode-Projekt und Build-Konfiguration",
+  "text": "1 Xcode-Projekt und Build-Konfiguration\nDas Projekt wird mit XcodeGen aus project.yml generiert. Das erzeugte .xcodeproj wird nicht in Git eingecheckt; es entsteht durch xcodegen generate aus einer einzigen Konfigurationsdatei.\n\n\n\n\n\n\n\nDatei\nZweck\n\n\n\n\nproject.yml\nXcodeGen-Spezifikation: 3 Targets, Bundle-ID com.opensciencetechnology.famulus.repro, Team YGJ8TE6EAT\n\n\nExportOptions.plist\nApp-Store-Export-Konfiguration für scripts/archive.sh\n\n\nfastlane/metadata/\nApp-Store-Metadaten (de-DE, en-US)\n\n\n.cursor/rules/repro-link.mdc\nCursor-Arbeitsregel: funktionierende Mac↔︎iPhone-Konfiguration\n\n\n.cursor/rules/bauhaus-design.mdc\nCursor-Arbeitsregel: UI-Designprinzipien (keine Dev-Telemetrie, keine gelben Warnungen für Routine)\n\n\n\n\n1.1 Drei Targets / Schemes\n\n\n\n\n\n\n\n\n\nTarget\nPlattform\nQuelldateien\nProdukt\n\n\n\n\nFamulusRepro-iOS\niOS 27+\nShared/ + iOS/\nKamera-App für iPhone/iPadOS\n\n\nFamulusRepro-macOS\nmacOS 26+\nShared/ + macOS/\nBackstage-App\n\n\nfamulus-pipeline\nmacOS 26+\nTeilmenge Shared + PipelineTool\nDiagnose-CLI",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Konstruktion und Dateikatalog"
+  ]
+ },
+ {
+  "objectID": "konstruktion.html#shared-geräteübergreifende-quellcode-schicht",
+  "href": "konstruktion.html#shared-geräteübergreifende-quellcode-schicht",
+  "title": "Konstruktion und Dateikatalog",
+  "section": "2 Shared — Geräteübergreifende Quellcode-Schicht",
+  "text": "2 Shared — Geräteübergreifende Quellcode-Schicht\nAlle Dateien unter FamulusRepro/Shared/ werden von beiden App-Targets kompiliert. Eine Änderung hier erfordert immer den Neubau beider Schemes.\n\n2.1 Modelle\n\n\n\n\n\n\n\nDatei\nZweck\n\n\n\n\nShared/Models/ReproNetworkMessage.swift\nCodable-Enum aller Protokoll-Nachrichten: liveFrame, detection, pageCaptured, settings, linkHello, resolutionUpdate\n\n\nShared/Models/ReproDocumentMode.swift\nbookDoublePage vs. receipt (Einzelblatt); von Mac→iPhone synchronisiert\n\n\nShared/Models/BookType.swift\nBenannter Buchtyp mit OCR-Overlay, Seitenformat, Lifecycle-Status\n\n\nShared/Models/PagePartitur.swift\nPro-Seite-Partitur-Ergebnis-Schema: pagenum, Kolumnentitel, Seitentyp\n\n\nShared/Models/ReceiptMetadata.swift\nBelegklasse (Taxi/offen), fileStem für [klasse]-Firma-Datum-Betrag-Währung-Benennung\n\n\n\n\n\n2.2 Services\n\n\n\n\n\n\n\nDatei\nZweck\n\n\n\n\nShared/Services/ReproLink.swift\nGerahmtes TCP auf Port 8765; beide Seiten hören und wählen; Tailscale zuerst, Bonjour-Fallback; tcpParameters(peerToPeer: false)\n\n\nShared/Services/PageGeometry.swift\nZentrales Geometrie-Modul: Quad-Erkennung, Perspektivkorrektur, Buchspreite-Aufteilung, Einzelblatt-Hülle, Deskew, Tight-Crop, Quality-Gates, GeometryReport\n\n\nShared/Services/GutterFinder.swift\nFalz-Lokalisierung: LiDAR-Tiefe + Schatten + Textlücke; gutterMethod nennt beitragende Signale\n\n\nShared/Services/ArchivalToneEngine.swift\nFünfstufige Tonwertkette auf linearem CIContext: Flat-Field, Spreizung, S-Kurve, Enhancer, Luminanz-Schärfung\n\n\nShared/Services/OCRService.swift\nRecognizeDocumentsRequest primär, VNRecognizeTextRequest Fallback; Modell-Warmup beim Programmstart\n\n\nShared/Services/IPhonePhotoEngine.swift\nCIRAWFilter ProRAW-Entwicklungsstack für On-Device-RAW-Verarbeitung\n\n\nShared/Services/Sharpness.swift\nLaplace-Varianz-Fokus-Gate auf zentralem 60-%-Crop, kontrast-normiert\n\n\n\n\n\n2.3 Theme\n\n\n\n\n\n\n\nDatei\nZweck\n\n\n\n\nShared/Theme/LettreTheme.swift\nOxford/Gold/Papier-Palette, FamulusBanner, StatusChip, Button-Stile",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Konstruktion und Dateikatalog"
+  ]
+ },
+ {
+  "objectID": "konstruktion.html#ios-kamera-app",
+  "href": "konstruktion.html#ios-kamera-app",
+  "title": "Konstruktion und Dateikatalog",
+  "section": "3 iOS — Kamera-App",
+  "text": "3 iOS — Kamera-App\nFamulusRepro/iOS/ enthält den gesamten Erfassungspfad: Kamera, Rahmen-Erkennung, ReproLink-Server, UI.\n\n3.1 Services\n\n\n\n\n\n\n\nDatei\nZweck\n\n\n\n\niOS/Services/CameraService.swift\nAVCapture-Session: LiDAR/Wide-Kamera, 48-MP-HEIC-Erfassung, Tiefensnapshot beim Auslösen\n\n\niOS/Services/DocumentDetector.swift\nZweistufige Rahmen-Sperre: stage1Acquiring → stage1Settled → stage2Refining → stage2Locked; Hysterese und deadbandPos/Size/Angle\n\n\niOS/Services/HardwareTriggerManager.swift\nBluetooth-/Lautstärketasten-Fernauslöser\n\n\niOS/Services/ReproLevelManager.swift\nCoreMotion-Pitch/Roll-Wasserwaage für Kopierständer-Ausrichtung\n\n\niOS/Services/ReproStreamServer.swift\niPhone-ObservableObject: empfängt Mac-Kommandos, streamt Vorschau, leitet Auslösen weiter\n\n\niOS/Services/ImageProcessor.swift\nOn-iPhone-Archiv-Verbesserungsprofile (lokaler Pfad, Legacy)\n\n\niOS/Services/PDAPackageExporter.swift\nStandalone-PDA-Export-Bundle aus SwiftData für Weitergabe\n\n\niOS/Services/PDFExporter.swift\nDurchsuchbares PDF aus lokalen Scan-Seitenbildern\n\n\n\n\n\n3.2 Views\n\n\n\n\n\n\n\nDatei\nZweck\n\n\n\n\niOS/Views/CameraView.swift\nHaupt-Sucher-UI: Auslöser, Zoom, Erfassungsgate, Versand via ReproLink\n\n\niOS/Views/CameraPreviewView.swift\nUIView mit AVCaptureVideoPreviewLayer + Quad/Falz-Overlay-Zeichnung\n\n\niOS/Views/ReproOverlayView.swift\nAusrichtungshilfen: Wasserwaage, A4/Buchspreite-Führungslinien, Kopierständer-Rand\n\n\niOS/Views/HomeView.swift\nStartseite: Link-Status, Dokumentliste, Sucher-Einstieg, iPad-Split-View\n\n\niOS/Views/DocumentDetailView.swift\nLokale SwiftData-Dokumentansicht, On-Device-OCR, PDF/PDA-Export\n\n\n\n\n\n3.3 Modelle\n\n\n\n\n\n\n\nDatei\nZweck\n\n\n\n\niOS/Models/ScannedDocument.swift\nSwiftData @Model für lokalen iPhone-Dokumentspeicher (parallel zu Mac PDAI)\n\n\niOS/FamulusReproApp.swift\niOS @main; startet ReproStreamServer; SwiftData-Container",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Konstruktion und Dateikatalog"
+  ]
+ },
+ {
+  "objectID": "konstruktion.html#macos-backstage-app",
+  "href": "konstruktion.html#macos-backstage-app",
+  "title": "Konstruktion und Dateikatalog",
+  "section": "4 macOS — Backstage-App",
+  "text": "4 macOS — Backstage-App\nFamulusRepro/macOS/ enthält die gesamte Verarbeitungs- und UI-Schicht.\n\n4.1 Services\n\n\n\n\n\n\n\nDatei\nZweck\n\n\n\n\nmacOS/Services/BackstageController.swift\nZentraler Zustand: Link, Sucher-Spiegel, Capture→Pipeline, Partitur, Dokument-Sessions, ActiveDocumentStore\n\n\nmacOS/Services/PDAIBackendPipeline.swift\nMac-Orchestrierung: Master → Geometrie → Tonwert → OCR → page_NNN/-PDAI-Ordner; Reprocessing und Umbenennung\n\n\nmacOS/Services/PartiturClient.swift\nHTTP-Client gegen ai-agent-orchestrator Port 5401; synchrone und asynchrone Extended-OCR-Scores\n\n\nmacOS/Services/ReceiptClassifier.swift\nSchnelle On-Device-Belegfeld-Extraktion aus OCRResult (vor Partitur, für sofortige Umbenennung)\n\n\nmacOS/Services/BookTypeRegistry.swift\nLade/Speichere BookType-Profile aus Application-Support\n\n\nmacOS/Services/CaptureSettingsStore.swift\nUserDefaults-Persistenz von Aufnahme-/Tonwert-Einstellungen; Push an iPhone bei Verbindung\n\n\nmacOS/Services/PageOrderAnalyzer.swift\nLesereihenfolge-Sortierung, Spreiten-Geschwister-Seitennum-Inferenz, Dubletten-Erkennung\n\n\nmacOS/Services/ThumbnailCache.swift\nImageIO-downgesampelte Sidebar-Vorschaubilder + Master-Platzhalter während Pipeline\n\n\nmacOS/Services/ScanFolderBookmark.swift\nSecurity-Scope-Bookmark für Scan-Wurzel; Standard ~/Documents/Scans\n\n\nmacOS/FamulusReproBackstageApp.swift\nmacOS @main; OCR-Warmup; BackstageController-Lifecycle\n\n\n\n\n\n4.2 Views\n\n\n\n\n\n\n\nDatei\nZweck\n\n\n\n\nmacOS/Views/BackstageView.swift\nRoot-Fenster: Sidebar · Stage · Inspektor · Statusleiste\n\n\nmacOS/Views/SidebarView.swift\nZweistufiger Dokument-Browser + seitenbreites Vorschaubild-Raster; Seitennum-Edit; Dubletten-Icon\n\n\nmacOS/Views/ContactSheetView.swift\nSpreiten-Karten, Qualitäts-Chip „Nachbessern”, Reshoot/Reprocess-Kontextmenü\n\n\nmacOS/Views/SpreadDetailView.swift\nDoppelseite: zwei Seiten + Transkript-/Geometrie-/Partitur-Tabs in SplitPane\n\n\nmacOS/Views/PageDetailView.swift\nEinzelseite-Detail mit Tabs: Transkript / Daten / XML / XML-Quelle\n\n\nmacOS/Views/ViewfinderView.swift\nMac-Live-Spiegel: Quad-Overlay, Falzlinie, Metering-Overlay\n\n\nmacOS/Views/MeteringOverlay.swift\nSchwach-goldenes Papier-Messquadrat, am erkannten Quad ausgerichtet\n\n\nmacOS/Views/InspectorView.swift\nBauhaus-Inspektor: Aufnahme · Partitur · Ablage; DisclosureGroup(\"Erweitert\")\n\n\nmacOS/Views/DuplicateSelectionView.swift\nVergleich gleicher Seitennum-Duplikate; Behalten vs. Archivieren\n\n\nmacOS/Views/SplitPane.swift\nZiehbarer Split-Teiler mit UserDefaults-Persistenz\n\n\nmacOS/Views/TranscriptWebView.swift\nWebKit-HTML/XML-Renderer; TranscriptHTML-Builder; renderReceiptXML für Beleganzeige\n\n\nmacOS/Models/BackstageModels.swift\nLocalScanPage, LocalSpread, LocalDocumentSession, PageSelectionRecord, PartiturRunRecord\n\n\nmacOS/Resources/transcript.css\nBuchblatt-CSS für formatierte Transkript-/XML-Tabs",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Konstruktion und Dateikatalog"
+  ]
+ },
+ {
+  "objectID": "konstruktion.html#diagnose-cli-famulus-pipeline",
+  "href": "konstruktion.html#diagnose-cli-famulus-pipeline",
+  "title": "Konstruktion und Dateikatalog",
+  "section": "5 Diagnose-CLI: famulus-pipeline",
+  "text": "5 Diagnose-CLI: famulus-pipeline\n\n\n\n\n\n\n\nDatei\nZweck\n\n\n\n\nTools/PipelineTool/main.swift\nCLI-Einstieg: Stage-Dumps, --mode book\\|receipt, --measure-tilt, --probe-receipt, --score\n\n\nTools/PipelineTool/ProbeMath.swift\nQuad-IoU/Winkel-Hilfsfunktionen für Belegrahmen-Diagnosen",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Konstruktion und Dateikatalog"
+  ]
+ },
+ {
+  "objectID": "konstruktion.html#skripte",
+  "href": "konstruktion.html#skripte",
+  "title": "Konstruktion und Dateikatalog",
+  "section": "6 Skripte",
+  "text": "6 Skripte\n\n\n\n\n\n\n\nDatei\nZweck\n\n\n\n\nscripts/make-snapshot.sh\nWorkspace-Snapshot erzeugen (App + OCR-Pipeline, ohne Scans/Secrets/build)\n\n\nscripts/archive.sh\nApp-Store-Archiv/Export für iOS + macOS Release (scripts/archive.sh [ios\\|mac\\|all])\n\n\nscripts/geometry_audit.sh\nBatch-Pipeline auf Scan-Bibliothek; Neigungsresiduum- und Bogen-Gates\n\n\nscripts/page_tilt.py\nUnabhängiger Neigungsresiduum-Scorer (Kreuzkorrelation, nicht Vision)\n\n\nscripts/page_bow.py\nSeitenweise Bogenmessung pro Band; Kontrolle gegen Pipeline-Curl-Selbstbericht\n\n\nscripts/reprocess_and_batch_ocr.py\nWartet auf Reprocessing-Abschluss, stellt Gemini-Batch-OCR über Orchestrator ein\n\n\nscripts/store_screenshots.sh\nSimulator + Mac-Screenshots für fastlane App-Store-Metadaten\n\n\nscripts/make_app_icon.py\nRendert AppIcon.appiconset (Oxford/Gold-Buchmotiv)",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Konstruktion und Dateikatalog"
+  ]
+ },
+ {
+  "objectID": "konstruktion.html#dokumentationssite",
+  "href": "konstruktion.html#dokumentationssite",
+  "title": "Konstruktion und Dateikatalog",
+  "section": "7 Dokumentationssite",
+  "text": "7 Dokumentationssite\nAlle .qmd-Kapitel unter docs/ — Quarto-Site mit Oxford/Sandstone-Theme.\n\n\n\n\n\n\n\nDatei\nInhalt\n\n\n\n\ndocs/index.qmd\nArchitektur und Systemüberblick\n\n\ndocs/reproplatz.qmd\nPhysischer Aufbau, Auslöselogik, Schärfe-Gate\n\n\ndocs/verbindung.qmd\nMac↔︎iPhone ReproLink-Konfiguration und Protokoll\n\n\ndocs/geometrie.qmd\nGeometrische Rektifizierung: Falz, Deskew, Quality-Gates\n\n\ndocs/tonwert.qmd\nArchivischer Tonwert: Flat-Field, Spreizung, S-Kurve\n\n\ndocs/ocr.qmd\nVision-OCR: Struktur-Modus, Warmup, erweiterte OCR/Batch\n\n\ndocs/partitur.qmd\nPartitur-Scores, Orchestrator-Endpunkte, JSON-Artefakte\n\n\ndocs/pdai-ablage.qmd\nPDAI-Dateiformat, Ordnerstruktur, alle Sidecar-Dateien\n\n\ndocs/backstage-ui.qmd\nBackstage-Bedienung, Bauhaus-Prinzip, Tastatursteuerung\n\n\ndocs/cli.qmd\nfamulus-pipeline-Diagnose-CLI\n\n\ndocs/konstruktion.qmd\nDieses Kapitel: vollständiger Dateikatalog\n\n\ndocs/betrieb.qmd\nBetriebsabläufe Buch und Einzelblatt\n\n\ndocs/entwicklung.qmd\nEntwickler- und Wiederherstellungsschleife",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Konstruktion und Dateikatalog"
+  ]
+ },
+ {
+  "objectID": "konstruktion.html#ocr-pipeline-ai-agent-orchestrator",
+  "href": "konstruktion.html#ocr-pipeline-ai-agent-orchestrator",
+  "title": "Konstruktion und Dateikatalog",
+  "section": "8 OCR-Pipeline (ai-agent-orchestrator)",
+  "text": "8 OCR-Pipeline (ai-agent-orchestrator)\nDie Orchestrator-Repro-Module liegen außerhalb des App-Repos, sind aber für den vollständigen Betrieb unerlässlich. Alle Pfade relativ zu ~/ai-mac-studio/development/ai-agent-orchestrator/.\n\n8.1 Partitur-Scores\n\n\n\n\n\n\n\nPfad\nZweck\n\n\n\n\nagent-store/repro_extended_ocr_agent/partitur.yaml\nBuch-Extended-OCR; pdai:repro_ocr_document; Standard-Modell gemini-3.8-flash, Batch-Standard\n\n\nagent-store/repro_receipt_ocr_agent/partitur.yaml\nBeleg-Extended-OCR; gleiche Op mit profile=receipt\n\n\nagent-store/repro_book_agent/partitur.yaml\nBuch-Bibliographie + Seitenstruktur-JSON (fastapple / glm-5.3:cloud)\n\n\nagent-store/repro_booktype_agent/partitur.yaml\nBuchtyp-Klassifizierung → Overlay → Pilot-OCR → Audit → Promotion\n\n\nagent-store/repro_receipt_agent/partitur.yaml\nSchnelles Beleg-JSON aus Transkript (fastapple)\n\n\nagent-store/repro_archival_agent/partitur.yaml\nArchivalisches Regest-JSON (Briefe, Urkunden)\n\n\n\n\n\n8.2 DTD und CSS\n\n\n\n\n\n\n\nPfad\nZweck\n\n\n\n\nagent-store/repro_extended_ocr_agent/schema/repro_page.dtd\nBuchseiten-XML-Schema (&lt;page&gt;, &lt;figure&gt;, &lt;table&gt;, …)\n\n\nagent-store/repro_extended_ocr_agent/schema/repro_page.css\nBuchblatt-Anzeigestil (Oxford/Gold/Papier)\n\n\nagent-store/repro_receipt_ocr_agent/schema/repro_receipt.dtd\nBeleg-XML-Schema (Händler, Positionen, TSE, Reise, …)\n\n\nagent-store/repro_receipt_ocr_agent/schema/repro_receipt.css\nThermobondartige Beleganzeige\n\n\n\n\n\n8.3 Python-Module\n\n\n\n\n\n\n\nPfad\nZweck\n\n\n\n\nsrc/orchestrator/agents/pdai/repro/schema.py\nKanonische DTD/CSS-Pfade; install_schema(profile=book\\|receipt)\n\n\nsrc/orchestrator/agents/pdai/repro/prompt.py\nPrompt-Builder für Buch und Beleg; clean_raw_xml()\n\n\nsrc/orchestrator/agents/pdai/repro/validate.py\nDTD-Validierung/-Reparatur; Klartextextraktion aus XML\n\n\nsrc/orchestrator/agents/pdai/repro/figures.py\nFigurenzuschnitt aus Inline-Bbox + Erkennungs-Fallback; Reparatur-Sweep\n\n\nsrc/orchestrator/agents/pdai/repro/status.py\nocr_extended.status.json-Schreiber; umbenannte Ordner-Seitenentdeckung\n\n\nsrc/orchestrator/agents/pdai/repro/receipt_json.py\nBeleg-XML → &lt;stem&gt;.receipt.json Flat-Contract (alle DTD-Attribute)\n\n\nsrc/orchestrator/agents/pdai/repro/driver.py\nop_repro_ocr_document: Reparatur-Sweep, Sync-Ollama-Pfad, Batch-Einreihung\n\n\nsrc/orchestrator/agents/pdai/repro/batch/machine.py\nDuckDB-Queue, Gemini-Batch-Submit/Poll/Route, Billing-Hook\n\n\nsrc/orchestrator/agents/pdai/repro/batch/launcher.py\nlaunchd-Einstiegspunkt: maybe_flush() alle 5 Minuten\n\n\nsrc/orchestrator/agents/pdai/repro/batch/schema.sql\nDDL für ocr_queue, batch_jobs, routing_log\n\n\nsrc/orchestrator/agents/pdai/repro/batch/config.json\nModell, Flush-Schwellenwerte (10 Seiten / 30 Min.)\n\n\nsrc/orchestrator/agents/pdai/ocr.py\nDünner Wrapper → repro.driver\n\n\nsrc/orchestrator/agents/pdai/llm.py\nOllama-Multimodal-Aufrufe für Sync-OCR-Pfad (glm-5.3-flash:cloud)\n\n\nsrc/orchestrator/agents/fastapple.py\nOn-Device-fasttext-Runtime für Book/Receipt/Booktype-Scores\n\n\nwebapp/app.py\nFastAPI-App auf Port 5401 (Conductor)\n\n\n\n\n\n8.4 Billing\n\n\n\n\n\n\n\nPfad\nZweck\n\n\n\n\n~/ai-mac-studio/agents/document-processing/ocr-billing/ocr_billing/recorder.py\nrecord_submission() — zentraler Billing-Einstiegspunkt; schreibt nach ocr_billing.duckdb\n\n\n~/ai-mac-studio/agents/document-processing/ocr-billing/ocr_billing/pricing.py\nGemini-Modellpreise (inkl. 50-%-Batch-Rabatt)\n\n\n~/ai-mac-studio/agents/document-processing/ocr-billing/ocr_billing/report.py\nTabellarische/CSV/Markdown-Berichte\n\n\n\n\n\n8.5 LaunchAgents\n\n\n\n\n\n\n\n\nPlist\nLabel\nIntervall\n\n\n\n\n~/Library/LaunchAgents/com.ai-platform.conductor.plist\ncom.ai-platform.conductor\nKeepAlive → Port 5401\n\n\n~/Library/LaunchAgents/com.ai-platform.batch-ocr.plist\ncom.ai-platform.batch-ocr\n300 s → launcher.py",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Konstruktion und Dateikatalog"
+  ]
+ },
+ {
+  "objectID": "konstruktion.html#externe-abhängigkeiten-betrieb",
+  "href": "konstruktion.html#externe-abhängigkeiten-betrieb",
+  "title": "Konstruktion und Dateikatalog",
+  "section": "9 Externe Abhängigkeiten (Betrieb)",
+  "text": "9 Externe Abhängigkeiten (Betrieb)\n\n\n\n\n\n\n\n\nDienst\nZweck\nWo\n\n\n\n\nTailscale\nPrimärverbindungsweg Mac↔︎iPhone\nMac + iPhone\n\n\nOllama glm-5.3-flash:cloud\nBuch-OCR-Sync-Pfad und Partitur\nLokal auf Mac\n\n\nGemini Batch API (gemini-3.8-flash)\nExtended-OCR via Batch-Queue\nCloud (API-Key erforderlich)\n\n\nfasttext (~/bin/fasttext)\nApple-Foundation-Models-Runtime für Partitur-Scores\nLokal, macOS 27+\n\n\nxcodegen\nXcode-Projekt aus project.yml\nHomebrew: brew install xcodegen\n\n\nquarto\nDokumentations-Site rendern\nHomebrew / quarto.org",
+  "crumbs": [
+   "Architektur",
+   "Konstruktion & Betrieb",
+   "Konstruktion und Dateikatalog"
+  ]
+ },
+ {
+  "objectID": "pdai-ablage.html",
+  "href": "pdai-ablage.html",
+  "title": "PDAI-Dateiformat und Ablagestruktur",
+  "section": "",
+  "text": "TippPDAI-Ablage in einem Satz\n\n\n\nJeder Scanlauf erzeugt ein in sich geschlossenes, archivfestes Dokumentbündel: ein Verzeichnis mit dem unveränderlichen Sensor-Master, den verarbeiteten Seiten und vollständigen Metadaten in einem offenen JSON-Format.\nDie PDAI-Ablage (Portable Document AI) ist das Speicherformat, das Famulus Repro für alle erfassten Dokumente verwendet. Ein PDAI-Dokumentbündel enthält alles, was nötig ist, um das Dokument vollständig zu rekonstruieren, anzuzeigen und mit PDAI-Werkzeugen weiterzuverarbeiten: den Rohdaten-Master, die verarbeiteten Seiten, alle Metadaten der Verarbeitungskette und die Partitur-Ergebnisse.",
+  "crumbs": [
+   "Architektur",
+   "Orchestrierung & Daten",
+   "PDAI-Dateiformat und Ablagestruktur"
+  ]
+ },
+ {
+  "objectID": "pdai-ablage.html#speicherort",
+  "href": "pdai-ablage.html#speicherort",
+  "title": "PDAI-Dateiformat und Ablagestruktur",
+  "section": "1 Speicherort",
+  "text": "1 Speicherort\nDie Scan-Bibliothek liegt unter:\n~/Documents/Scans/\nFamulus Repro läuft nicht in einer App-Sandbox — es greift direkt auf ~/Documents/Scans/ zu (Security-Scope-Bookmark in ScanFolderBookmark). Ein alternativer Ordner kann im Inspektor unter “Ablage → Ordner wählen…” gesetzt werden; der Bookmark wird persistent gespeichert.",
+  "crumbs": [
+   "Architektur",
+   "Orchestrierung & Daten",
+   "PDAI-Dateiformat und Ablagestruktur"
+  ]
+ },
+ {
+  "objectID": "pdai-ablage.html#verzeichnisstruktur-buchmodell",
+  "href": "pdai-ablage.html#verzeichnisstruktur-buchmodell",
+  "title": "PDAI-Dateiformat und Ablagestruktur",
+  "section": "2 Verzeichnisstruktur — Buchmodell",
+  "text": "2 Verzeichnisstruktur — Buchmodell\n~/Documents/Scans/\n  Dokument_2026-09-03_08-42/        ← frei gewählter Dokumentname\n    masters/\n      master_001.heic               ← unveränderter 48-MP-Sensor-Master\n      master_002.heic\n    page_001/                       ← linke Seite aus Master 001\n      page_001.jpg                  ← rektifiziertes + tonwertoptimiertes Seiten-JPEG\n      page_001.txt                  ← Vision-OCR Rohtranskript (Flachtext)\n      page_001.json                 ← GeometryReport + ToneReport + OCRResult + Quality-Gates\n      page_001.ext.xml              ← Extended-OCR: DTD-konformes Buch-XML\n      page_001.ext.txt              ← Flachtext aus ext.xml\n    page_002/                       ← rechte Seite (analog)\n      page_002.jpg\n      page_002.txt\n      page_002.json\n      page_002.ext.xml\n    metadata/\n      page_selection.json           ← Pagenum-Overrides und Reihenfolge (nie direkt im XML)\n    archive/                        ← archivierte Duplikate (nie gelöscht, nur verschoben)\n    document.json                   ← Dokumentregister, Partitur-Status, Modell-Historie\n    ocr_extended.status.json        ← Extended-OCR-Gesamtstatus (pending/running/done)\nJeder Master erzeugt im Buchmode zwei Seiten (page_N und page_N+1), im Einzelblattmode eine.",
+  "crumbs": [
+   "Architektur",
+   "Orchestrierung & Daten",
+   "PDAI-Dateiformat und Ablagestruktur"
+  ]
+ },
+ {
+  "objectID": "pdai-ablage.html#verzeichnisstruktur-einzelblatt-belege",
+  "href": "pdai-ablage.html#verzeichnisstruktur-einzelblatt-belege",
+  "title": "PDAI-Dateiformat und Ablagestruktur",
+  "section": "3 Verzeichnisstruktur — Einzelblatt (Belege)",
+  "text": "3 Verzeichnisstruktur — Einzelblatt (Belege)\nEinzelblatt-Ordner werden nach der OCR-Klassifizierung umbenannt. Das Dokumentverzeichnis erhält einen kanonischen Stem:\n~/Documents/Scans/QUITTUNGEN/        ← übergeordneter Sammelordner (Name bleibt)\n  [parking]-Schadowstrasse-15-08-2026-3.50-EUR/\n    masters/\n      master_001.heic\n    [parking]-Schadowstrasse-15-08-2026-3.50-EUR/\n      [parking]-Schadowstrasse-15-08-2026-3.50-EUR.jpg    ← Seitenbild\n      [parking]-Schadowstrasse-15-08-2026-3.50-EUR.txt    ← Vision-OCR\n      [parking]-Schadowstrasse-15-08-2026-3.50-EUR.json   ← Seitenprotokoll\n      [parking]-Schadowstrasse-15-08-2026-3.50-EUR.ext.xml   ← DTD-konformes Beleg-XML\n      [parking]-Schadowstrasse-15-08-2026-3.50-EUR.ext.txt\n      [parking]-Schadowstrasse-15-08-2026-3.50-EUR.receipt.json  ← Flat-JSON (alle DTD-Attribute)\n    document.json\n    ocr_extended.status.json\nDas [klasse]-Firma-Datum-Betrag-Währung-Namensschema wird von ReceiptClassifier + PDAIBackendPipeline.renamePageArtefacts() erzeugt. Die Klasse kann sein: parking, Taxi, pharma, Bahn, hotel, fuel, restaurant oder leer (offene Klasse).\nDer übergeordnete Sammelordner (z. B. QUITTUNGEN) erhält keinen automatischen neuen Namen.",
+  "crumbs": [
+   "Architektur",
+   "Orchestrierung & Daten",
+   "PDAI-Dateiformat und Ablagestruktur"
+  ]
+ },
+ {
+  "objectID": "pdai-ablage.html#dateibeschreibungen",
+  "href": "pdai-ablage.html#dateibeschreibungen",
+  "title": "PDAI-Dateiformat und Ablagestruktur",
+  "section": "4 Dateibeschreibungen",
+  "text": "4 Dateibeschreibungen\n\n4.1 masters/master_NNN.heic\nDer unveränderte Sensorabzug in voller Auflösung (48 MP). Diese Datei wird von Famulus Repro nie modifiziert oder überschrieben. Sie bildet die archivfeste Grundlage, aus der jederzeit alle verarbeiteten Seiten mit anderen Parametern neu erzeugt werden können.\n\n\n4.2 page_NNN/page_NNN.jpg\nDas Ergebnis der vollständigen Verarbeitungskette:\n\nPerspektivkorrektur und Ausrichtung (aus dem masters/-Bild)\nSeitentrennung (Buchmode)\nDeskew und Tight-Crop\nFlat-Field, Tonwert-Normierung, S-Kurve, Schärfung\n\nDas JPEG wird mit Qualitätsstufe 90 kodiert. Die Abmessungen ergeben sich aus dem Satzspiegel nach dem Tight-Crop und variieren je nach Dokument.\n\n\n4.3 page_NNN/page_NNN.txt\nDer Flachtext-Transkript der Seite, erzeugt von OCRService. Zeilenumbrüche entsprechen den Absatzgrenzen des RecognizeDocumentsRequest-Ergebnisses.\n\n\n4.4 page_NNN/page_NNN.ext.xml\nDTD-konformes Extended-OCR-XML, erzeugt vom ai-agent-orchestrator (Gemini Batch oder Sync-Ollama). Buchseiten folgen repro_page.dtd, Belege folgen repro_receipt.dtd. Die Datei ist die autoritative Quelle für das formatierte XML im Backstage-Tab.\n\n\n4.5 page_NNN/page_NNN.receipt.json\nFlat-JSON-Contract aller DTD-Attribute aus repro_receipt.dtd (nur Einzelblatt). Enthält dtd_valid, dtd_errors, pidx sowie alle Belegfelder (Händler, Positionen, Steuern, Zahlung, TSE-Daten). Wird von der Mac-App für den Daten-Tab und für ReceiptClassifier verbraucht.\n\n\n4.6 metadata/page_selection.json\nPagenum-Overrides und Reihenfolge-Korrekturen, die über Rechtsklick → „Seitennum ändern” in der Seitenleiste gesetzt werden. Schreibt nie in die OCR-XML-Dateien. Format:\n{\n  \"page_001\": {\"pagenum\": \"23\", \"override_source\": \"manual\"},\n  \"page_002\": {\"pagenum\": \"24\", \"override_source\": \"manual\"}\n}\n\n\n4.7 archive/\nArchivierte Duplikate nach „Behalten / Archivieren” aus DuplicateSelectionView. Dateien werden hierher verschoben, nie gelöscht.\n\n\n4.8 ocr_extended.status.json\nGesamtstatus der Extended-OCR für das Dokument:\n{\n  \"status\": \"done\",\n  \"model\": \"gemini-3.8-flash\",\n  \"batch_mode\": true,\n  \"pages_total\": 34,\n  \"pages_ok\": 34,\n  \"pages_pending\": 0,\n  \"last_updated\": \"2026-09-06T14:22:11Z\"\n}\n\n\n4.9 page_NNN (Strukturiertes Vision-XML — Legacy)\nStrukturiertes XML mit allen erkannten Textblöcken aus Vision-OCR (paragraph, title, list, table, line) mit normierten Bounding-Box-Koordinaten. Diese Datei heißt seit Sep 2026 page_NNN.json-eingebettet; die Separate .xml wurde durch .ext.xml abgelöst.\n\n\n4.10 page_NNN/page_NNN.json\nDas vollständige Seitenprotokoll ist die reichhaltigste Datei des Bündels. Sie enthält alle Messdaten der Verarbeitungskette und ermöglicht es, jede Entscheidung der Pipeline nachzuvollziehen.\n\npage_001.json — vollständiges Seitenprotokoll (Auszug)\n{\n  \"pidx\": 1,\n  \"docTitle\": \"Dokument_2026-09-03_08-42\",\n  \"timestamp\": \"2026-09-03T08:42:17Z\",\n  \"masterFile\": \"masters/master_001.heic\",\n  \"pageImageFile\": \"page_001/page_001.jpg\",\n  \"width\": 2680,\n  \"height\": 3520,\n  \"side\": \"left\",\n  \"geometry\": {\n    \"sourceWidth\": 8064,\n    \"sourceHeight\": 6048,\n    \"quad\": [[0.10, 0.08], [0.92, 0.06], [0.94, 0.94], [0.08, 0.95]],\n    \"quadSource\": \"mac-segmentation\",\n    \"quadConfidence\": 0.97,\n    \"perspectiveApplied\": true,\n    \"rotationDegrees\": 90,\n    \"gutterFraction\": 0.502,\n    \"gutterMethod\": \"projection-minimum\",\n    \"deskewDegrees\": 0.25,\n    \"textBlockCrop\": {\"x\": 0.04, \"y\": 0.03, \"width\": 0.92, \"height\": 0.94},\n    \"outputWidth\": 2680,\n    \"outputHeight\": 3520\n  },\n  \"tone\": {\n    \"measureRect\": {\"x\": 0.20, \"y\": 0.20, \"width\": 0.60, \"height\": 0.60},\n    \"inkPoint\": 0.042,\n    \"paperPoint\": 0.931,\n    \"medianLuminance\": 0.871,\n    \"inkTarget\": 0.04,\n    \"paperTarget\": 0.96,\n    \"measured\": true,\n    \"flatFieldApplied\": true,\n    \"enhancerApplied\": true,\n    \"sharpened\": true,\n    \"monochrome\": false\n  },\n  \"ocr\": {\n    \"transcript\": \"Kapitel III\\nDie Kausaltheorie\\n\\nAls Ursache gilt...\",\n    \"engine\": \"vision-documents\",\n    \"languages\": [\"de-DE\"],\n    \"meanConfidence\": 0.947\n  },\n  \"blocks\": [\n    {\"order\": 0, \"kind\": \"title\", \"text\": \"Kapitel III\",\n     \"boundingBox\": {\"x\": 0.08, \"y\": 0.87, \"width\": 0.30, \"height\": 0.04}},\n    {\"order\": 2, \"kind\": \"paragraph\", \"text\": \"Als Ursache gilt...\",\n     \"boundingBox\": {\"x\": 0.08, \"y\": 0.72, \"width\": 0.84, \"height\": 0.09}}\n  ],\n  \"partitur\": {\n    \"scanIndex\": 1,\n    \"printedPage\": \"42\",\n    \"runningHead\": \"Die Kausaltheorie\",\n    \"headings\": [\"Die Kausaltheorie\"],\n    \"hasFootnotes\": true,\n    \"hasFigureOrTable\": false,\n    \"firstWords\": \"Als Ursache gilt\",\n    \"language\": \"de-DE\",\n    \"pageType\": \"body\"\n  }\n}\n\nDas Feld side gibt an, ob es sich um die linke oder rechte Seite einer Doppelseite handelt (\"left\", \"right\" oder null für Einzelblätter). Der pidx-Wert ist der fortlaufende 1-basierte Seitenindex über das gesamte Dokument.\n\n\n4.11 document.json\nDas Dokumentregister enthält die Seitenliste mit pidx, Dateinamen und Zeitstempel. Es wird bei jedem Auslösevorgang aktualisiert.\n\n\n4.12 partitur.json\nDie Partitur-Ergebnisse auf Dokumentebene (Bibliographiedaten, Regest, etc.) — beschrieben in Partitur-Nachbearbeitung.",
+  "crumbs": [
+   "Architektur",
+   "Orchestrierung & Daten",
+   "PDAI-Dateiformat und Ablagestruktur"
+  ]
+ },
+ {
+  "objectID": "pdai-ablage.html#weiterverarbeitung-mit-pdai-werkzeugen",
+  "href": "pdai-ablage.html#weiterverarbeitung-mit-pdai-werkzeugen",
+  "title": "PDAI-Dateiformat und Ablagestruktur",
+  "section": "5 Weiterverarbeitung mit PDAI-Werkzeugen",
+  "text": "5 Weiterverarbeitung mit PDAI-Werkzeugen\nDas Dokumentbündel ist direkt mit den PDAI-Werkzeugen der lettreai-Plattform kompatibel:\n\nai-scholar: Indexierung und semantische Suche über den Dokumentinhalt\nai-viewer: Anzeige des Transkripts mit Faksimile-Synchronisation\nai-lemma-index: Aufbau von Lemma-Indizes und Stanza-Korpora\n\nDas Format setzt keine Netzwerkverbindung oder proprietäre Software voraus — alle Dateien sind Standard-JPEG, -JSON, -XML und -TXT.",
+  "crumbs": [
+   "Architektur",
+   "Orchestrierung & Daten",
+   "PDAI-Dateiformat und Ablagestruktur"
+  ]
+ },
+ {
+  "objectID": "ocr.html",
+  "href": "ocr.html",
+  "title": "On-Device Struktur-OCR",
+  "section": "",
+  "text": "TippOCR in einem Satz\n\n\n\nDie Texterkennung läuft vollständig auf dem Gerät — ohne Netzwerkverbindung, ohne Anbieterdaten — und liefert typographisch strukturierte Blöcke (Absätze, Titel, Listen, Tabellen) statt eines rohen Zeichenstroms.\nFamulus Repro verwendet Apples Vision-Framework für die Texterkennung. Das Ergebnis ist kein einfacher Textstring, sondern eine gegliederte Liste von OCRBlock-Strukturen, die jedem Textelement seine Rolle im Dokument zuweist: Absatz, Überschrift, Liste, Tabellenzeile oder Einzelzeile. Diese Struktur ist die Grundlage, auf der die Partitur-Nachbearbeitung und der Transkript-Viewer im Backstage aufbauen.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "On-Device Struktur-OCR"
+  ]
+ },
+ {
+  "objectID": "ocr.html#die-zwei-erkennungsmodi",
+  "href": "ocr.html#die-zwei-erkennungsmodi",
+  "title": "On-Device Struktur-OCR",
+  "section": "1 Die zwei Erkennungsmodi",
+  "text": "1 Die zwei Erkennungsmodi\nDie OCRService-Klasse probiert bei jedem Aufruf zunächst den strukturierten Modus und fällt nur bei Misserfolg auf den rohen Textmodus zurück.\n\nRecognizeDocumentsRequest (Primär)VNRecognizeTextRequest (Fallback)\n\n\nRecognizeDocumentsRequest (verfügbar ab macOS 26 / iOS 26) ist Apples Dokumentstruktur-Engine. Sie liefert:\n\nAbsätze, Überschriften, Listen und Tabellen als eigenständige Blöcke\nNormierte Bounding Boxes für jeden Block (0–1, Bottom-Left-Ursprung)\nLesereihenfolgekonforme Sortierung der Blöcke\nMittlere Erkennungsgenauigkeit (meanConfidence) über alle Blöcke\n\nWann dieser Modus bevorzugt wird: immer, sofern die Erkennung einen nichtleeren Transkript erzeugt. Die Engine ist optimiert für typographisch strukturierte Druckseiten.\n\n\nBei Misserfolg oder leerem Ergebnis des Dokumentmodus übernimmt VNRecognizeTextRequest. Dieser Modus erkennt einzelne Textzeilen, ohne übergeordnete Struktur (Absätze, Tabellen) zu modellieren. Er hat aber einen wichtigen Vorzug: Wörterbuchkorrektur ist deaktiviert (usesLanguageCorrection = false).\nWarum das für Archivalien entscheidend ist: Die automatische Sprachkorrektur würde historische Schreibweisen (mich → mich), Frakturligaturen (tz, ck), lateinische Abkürzungen und veraltete Grammatikformen auf moderne Wörterbuchformen normieren. Die Transkription wäre dann korrekt als Text, aber falsch als historische Reproduktion.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "On-Device Struktur-OCR"
+  ]
+ },
+ {
+  "objectID": "ocr.html#spracherkennung",
+  "href": "ocr.html#spracherkennung",
+  "title": "On-Device Struktur-OCR",
+  "section": "2 Spracherkennung",
+  "text": "2 Spracherkennung\nDie Erkennungssprachen sind in Prioritätsreihenfolge festgelegt:\n[\"de-DE\", \"en-US\", \"fr-FR\", \"it-IT\", \"la\"]\nLateinisch (la) ist eingeschlossen, weil Famulus Repro auch für historische Drucke, Handschriften und Archivalien eingesetzt wird, in denen Latein dominiert oder Latein und Volkssprache gemischt auftreten. Wo das Betriebssystem Latein nicht als eigenständiges Sprachmodell listet, fallen die Zeichen auf die Modelle der nahe verwandten romanischen Sprachen zurück.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "On-Device Struktur-OCR"
+  ]
+ },
+ {
+  "objectID": "ocr.html#modell-warmup",
+  "href": "ocr.html#modell-warmup",
+  "title": "On-Device Struktur-OCR",
+  "section": "3 Modell-Warmup",
+  "text": "3 Modell-Warmup\n\n\n\n\n\n\nWarnungKaltstart-Latenz: 94 Sekunden\n\n\n\nDer erste Aufruf von RecognizeDocumentsRequest in einem Prozess lädt das Vision-Dokumentmodell. Gemessen auf dem Mac Studio M1 Ultra: ca. 94 Sekunden Kaltstart-Latenz. Alle Folgeaufrufe benötigen weniger als 0,6 Sekunden.\nOhne Warmup-Maßnahme würde die erste Erfassung nach dem Programmstart in einen langen Hänger laufen und den Timeout des synchronen recognizeSync-Aufrufs (120 s) fast erreichen.\n\n\nFamulus Repro löst den Warmup beim Programmstart aus (auf einem Hinterground-Thread), bevor der Nutzer die erste Aufnahme machen kann. Das OCR-Modell ist dann beim ersten tatsächlichen Auslösen bereits geladen. Der Warmup ist einmalig pro Prozesslebensdauer — ein Neustart des Backstage stellt die Latenz wieder her.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "On-Device Struktur-OCR"
+  ]
+ },
+ {
+  "objectID": "ocr.html#ergebnis-struktur",
+  "href": "ocr.html#ergebnis-struktur",
+  "title": "On-Device Struktur-OCR",
+  "section": "4 Ergebnis-Struktur",
+  "text": "4 Ergebnis-Struktur\nDas OCR-Ergebnis ist eine OCRResult-Struktur mit einem vollständigen Flachtext-Transkript und der gegliederten Blockliste:\n\nOCRResult — strukturiertes Ergebnis einer Buchseite\n{\n  \"transcript\": \"Kapitel III\\nDie Kausaltheorie\\n\\nAls Ursache gilt...\",\n  \"engine\": \"vision-documents\",\n  \"languages\": [\"de-DE\"],\n  \"meanConfidence\": 0.947,\n  \"blocks\": [\n    {\n      \"order\": 0,\n      \"kind\": \"title\",\n      \"text\": \"Kapitel III\",\n      \"boundingBox\": {\"x\": 0.08, \"y\": 0.87, \"width\": 0.30, \"height\": 0.04}\n    },\n    {\n      \"order\": 1,\n      \"kind\": \"title\",\n      \"text\": \"Die Kausaltheorie\",\n      \"boundingBox\": {\"x\": 0.08, \"y\": 0.82, \"width\": 0.42, \"height\": 0.04}\n    },\n    {\n      \"order\": 2,\n      \"kind\": \"paragraph\",\n      \"text\": \"Als Ursache gilt...\",\n      \"boundingBox\": {\"x\": 0.08, \"y\": 0.72, \"width\": 0.84, \"height\": 0.09}\n    }\n  ]\n}\nDer kind-Wert eines Blocks kann \"paragraph\", \"title\", \"list\", \"table\" oder \"line\" sein.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "On-Device Struktur-OCR"
+  ]
+ },
+ {
+  "objectID": "ocr.html#abgrenzung-zu-foundation-models",
+  "href": "ocr.html#abgrenzung-zu-foundation-models",
+  "title": "On-Device Struktur-OCR",
+  "section": "5 Abgrenzung zu Foundation Models",
+  "text": "5 Abgrenzung zu Foundation Models\nApple Foundation Models (on-device LLMs) stehen auf macOS 27 zur Verfügung. Famulus Repro verwendet sie nicht für die Transkription, und das aus einem sachlichen Grund: Ein on-device LLM mit 4000-Token-Kontextfenster ist ein Zusammenfassungs- und Formulierungswerkzeug, kein Transkriptionsautomat. Beim Einsatz als OCR-Ersatz lässt ein LLM Zeilen aus, paraphrasiert anstatt wörtlich zu übertragen und beschränkt sich auf den Teil des Textes, der in sein Kontextfenster passt.\nDie Rolle der Foundation Models in Famulus Repro ist eine andere: Sie übernehmen die semantische Nachbearbeitung im Partitur-Schritt. Dort arbeiten sie auf dem bereits vollständig transkribuierten Text und extrahieren Struktur (Bibliographiedaten, Belegposten, Regest) — eine Aufgabe, für die ein LLM tatsächlich geeignet ist.\n\n\n\n\n\n\n\nAufgabe\nGeeignetes Werkzeug\n\n\n\n\nVollständige Transkription\nVision RecognizeDocumentsRequest\n\n\nZeilentreue historischer Schreibweisen\nVision VNRecognizeTextRequest (ohne Wörterbuchkorrektur)\n\n\nBibliographische Extraktion\nExtended OCR (Gemini Batch, Partitur)\n\n\nRegest und EDTF-Datum\nExtended OCR (Partitur)",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "On-Device Struktur-OCR"
+  ]
+ },
+ {
+  "objectID": "ocr.html#extended-ocr-gemini-batch",
+  "href": "ocr.html#extended-ocr-gemini-batch",
+  "title": "On-Device Struktur-OCR",
+  "section": "6 Extended OCR (Gemini Batch)",
+  "text": "6 Extended OCR (Gemini Batch)\nDie Vision-OCR erzeugt einen Rohtranskript. Die Extended OCR verwandelt das verarbeitete Seitenbild (+ Transkript) in ein DTD-konformes XML mit vollständiger Seitenstruktur, Figuren, Tabellen und Belegdaten. Sie läuft über den ai-agent-orchestrator auf Port 5401 — nicht auf dem Gerät.\n\n6.1 Modellauswahl\n\n\n\n\n\n\n\n\n\nModell\nWeg\nStärke\nWann\n\n\n\n\ngemini-3.8-flash (Standard)\nGemini Batch API, 50 % Rabatt\nBeste Qualität, Struktur + Tabellen\nStandard für Buch- und Belegscans\n\n\ngemini-3.5-flash-lite\nBatch oder Sync\nSchneller, günstiger\nNur falls Kosten entscheidend, Qualität -16 pp\n\n\nglm-5.3-flash:cloud (Ollama)\nSync, lokal\nKostenlos, kein API-Key\nSchnellprüfungen, kein Internet\n\n\nkimi-k2.7-code:cloud (Ollama)\nSync, lokal\nStark bei tabellenreichen Seiten\nTabellen-OCR, Buchführung\n\n\nqwen3.8:27b-mlx\nLokal, Apple MLX\nKeine Cloud-Latenz\nPilotläufe ohne API\n\n\n\nDer Batch-Toggle im Inspektor wählt zwischen Gemini-Batch (Standard, Warteschlange ≤ 10 Min.) und sofortigem Sync-Pfad.\n\n\n6.2 DPI und Aufnahmequalität\nVor der Extended OCR wird die erreichbare DPI-Auflösung aus der Seitenbildgröße abgeschätzt. Liegt sie unter 200 DPI, erscheint in der Transkript-Anzeige ein Hinweis:\n\nAufnahme mit 152 dpi (unter 200 dpi) — Transkript unter Vorbehalt\n\nDie OCR läuft trotzdem — ab Sep 2026 gibt es keine harte 200-DPI-Sperre mehr. Ein niedriger DPI-Wert ist oft eine physische Grenze (zu weiter Aufnahmeabstand, 12-MP-Pfad) und kein Pipeline-Fehler. Die einzige Abhilfe ist eine neue Aufnahme aus kürzerer Distanz oder auf dem 48-MP-Pfad.\nRichtwert: 300 DPI ist das Ziel für gute Lesebarkeit; 200–299 DPI ist akzeptabel mit Hinweis; darunter ist das Ergebnis ein Transkript unter Vorbehalt.\n\n\n6.3 DTD-Schemata\n\n\n\n\n\n\n\n\nProfil\nDTD\nAusgabedatei\n\n\n\n\nBuch\nrepro_page.dtd\npage_NNN.ext.xml\n\n\nEinzelblatt\nrepro_receipt.dtd\n&lt;stem&gt;.ext.xml + &lt;stem&gt;.receipt.json\n\n\n\nDie DTD-Dateien liegen im Orchestrator-Repo unter agent-store/repro_*_agent/schema/.\n\n\n6.4 Vollständiger XML-Tab\nDer XML-Tab in PageDetailView zeigt das ext.xml als formatiertes Buchblatt (warm, Oxford-Blau-Chrome, laufende Köpfe, Figuren, Marginalien). Der XML-Quelltext-Tab zeigt syntax-hervorgehobenen Quellcode mit Zeilennummern.",
+  "crumbs": [
+   "Architektur",
+   "Verarbeitungspipeline",
+   "On-Device Struktur-OCR"
+  ]
+ }
+]

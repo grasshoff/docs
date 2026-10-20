@@ -1,0 +1,42 @@
+/* CRITICAL: Make ONLY "Lettre.AI" gold in the navbar title */
+
+/* Target the navbar-title span - split styling */
+.navbar .navbar-brand .navbar-title {
+  background: linear-gradient(to right, #D4AF37 0%, #D4AF37 45%, #ffffff 45%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700 !important;
+  font-size: 1.2rem !important;
+}
+
+/* Fallback: make navbar-brand gold, then override rest */
+.navbar .navbar-brand {
+  color: #D4AF37 !important;
+  font-weight: 700 !important;
+}
+
+/* All navbar nav items white */
+.navbar .navbar-nav .nav-item .nav-link {
+  color: #ffffff !important;
+  font-weight: 500 !important;
+}
+
+/* Right side navbar items white */
+.navbar .navbar-nav.ms-auto .nav-item .nav-link {
+  color: #ffffff !important;
+}
+
+/* Dropdown items */
+.navbar .dropdown-menu .dropdown-item {
+  color: #002147 !important;
+}
+
+/* Hamburger menu - white */
+.navbar .navbar-toggler {
+  border-color: #ffffff !important;
+}
+
+.navbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}

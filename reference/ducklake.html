@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-10-14">
+
+<title>DuckLake – AI Platform</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d5b4e69c7e37b49c6591bcc5116dd748.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-2afdf05d6a1987abdfa5afcd0e3ab0c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://lettre.ngrok.dev/hub/static/tokens.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#why-ducklake" id="toc-why-ducklake" class="nav-link active" data-scroll-target="#why-ducklake">Why DuckLake</a></li>
+  <li><a href="#catalog-backend" id="toc-catalog-backend" class="nav-link" data-scroll-target="#catalog-backend">Catalog backend</a>
+  <ul class="collapse">
+  <li><a href="#read-replica" id="toc-read-replica" class="nav-link" data-scroll-target="#read-replica">Read replica</a></li>
+  </ul></li>
+  <li><a href="#placement-on-pdai-1" id="toc-placement-on-pdai-1" class="nav-link" data-scroll-target="#placement-on-pdai-1">Placement on PDAI-1</a></li>
+  <li><a href="#schemas" id="toc-schemas" class="nav-link" data-scroll-target="#schemas">Schemas</a></li>
+  <li><a href="#export" id="toc-export" class="nav-link" data-scroll-target="#export">Export</a></li>
+  <li><a href="#migration-of-existing-duckdbs" id="toc-migration-of-existing-duckdbs" class="nav-link" data-scroll-target="#migration-of-existing-duckdbs">Migration of existing DuckDBs</a></li>
+  <li><a href="#maintenance" id="toc-maintenance" class="nav-link" data-scroll-target="#maintenance">Maintenance</a></li>
+  <li><a href="#reader-recipes" id="toc-reader-recipes" class="nav-link" data-scroll-target="#reader-recipes">Reader recipes</a></li>
+  <li><a href="#agent-access-sql-guard-and-limits" id="toc-agent-access-sql-guard-and-limits" class="nav-link" data-scroll-target="#agent-access-sql-guard-and-limits">Agent access: SQL guard and limits</a></li>
+  <li><a href="#risks" id="toc-risks" class="nav-link" data-scroll-target="#risks">Risks</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="https://lettre.ngrok.dev/platform/landings2026/famulus/">Famulus</a></li><li class="breadcrumb-item"><a href="./famulus-universe.html">Famulus Reference</a></li><li class="breadcrumb-item"><a href="./ducklake.html">DuckLake</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">DuckLake</h1>
+<p class="subtitle lead">The storage layer of the famulus reference: catalog, placement, export, migration, maintenance</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 14, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>All famulus reference collections are stored in one DuckLake. This page describes the catalog, the placement of the data on PDAI-1, the schemas, the export and migration procedures, the maintenance runbook and how to read the lake. Concept and API: <a href="./famulus-reference.html">Famulus reference</a>. Overview: <a href="./famulus-universe.html">The Famulus universe</a>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Catalog</td>
+<td><code>/Volumes/PDAI-1/pdai-collections/_lake/famulus.ducklake</code> (data-mounts key <code>famulus_lake_catalog</code>)</td>
+</tr>
+<tr class="even">
+<td>Read replica</td>
+<td><code>/Volumes/PDAI-1/pdai-collections/_lake/famulus.read.ducklake</code></td>
+</tr>
+<tr class="odd">
+<td>Query trace</td>
+<td><code>/Volumes/PDAI-1/pdai-collections/_lake/famulus_reference_traces.duckdb</code> (key <code>famulus_lake_traces</code>; outside the lake)</td>
+</tr>
+<tr class="even">
+<td>DATA_PATH</td>
+<td><code>/Volumes/PDAI-1/pdai-collections/</code> (the collection root)</td>
+</tr>
+<tr class="odd">
+<td>Writer</td>
+<td>mac-studio only</td>
+</tr>
+<tr class="even">
+<td>Code</td>
+<td><code>pdai/famulus-reference/src/famulus_reference/</code> (<code>lake.py</code>, <code>build/export_lake.py</code>, <code>migrate/attach_legacy.py</code>, <code>maintain.py</code>)</td>
+</tr>
+</tbody>
+</table>
+<section id="why-ducklake" class="level2">
+<h2 class="anchored" data-anchor-id="why-ducklake">Why DuckLake</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Property</th>
+<th>Use in the famulus reference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Catalog database + Parquet data files</td>
+<td>the catalog holds tables, schemas, file lists and snapshots; the data is immutable Parquet (zstd) inside each collection folder</td>
+</tr>
+<tr class="even">
+<td>Snapshots</td>
+<td>every committed write creates a snapshot id; one export = one snapshot</td>
+</tr>
+<tr class="odd">
+<td>Time travel</td>
+<td>a citation records its snapshot id; the cited state can be read again as long as the snapshot is retained</td>
+</tr>
+<tr class="even">
+<td>SQL access from DuckDB</td>
+<td>existing DuckDB code (famulus-proof, ai-query, landings) reads the lake with <code>ATTACH 'ducklake:…'</code> and unchanged SQL</td>
+</tr>
+<tr class="odd">
+<td>Schemas</td>
+<td>one schema per collection; lake-wide union views in <code>main</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="catalog-backend" class="level2">
+<h2 class="anchored" data-anchor-id="catalog-backend">Catalog backend</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DuckDB file</td>
+<td><strong>chosen.</strong> No database server; the catalog is one file next to the data</td>
+</tr>
+<tr class="even">
+<td>PostgreSQL / SQLite catalog</td>
+<td>not used; multiple writers are not needed</td>
+</tr>
+<tr class="odd">
+<td>Writer</td>
+<td>single writer, mac-studio (<code>config.WRITE_HOSTS</code>). On any other host a write to the production catalog raises <code>WriteRefused</code>. Clients queue lake jobs via <code>~/syncthink/queue/</code> (allow-list <code>platform/config/syncthink_jobs.yaml</code>: <code>famulus-lake-export</code>, <code>famulus-lake-migrate</code>, <code>famulus-lake-maintain-dry</code>)</td>
+</tr>
+</tbody>
+</table>
+<section id="read-replica" class="level3">
+<h3 class="anchored" data-anchor-id="read-replica">Read replica</h3>
+<p>A DuckDB-file catalog is locked by the process that writes it; readers in other processes cannot attach it during an export, migration or maintenance run (verified). Therefore:</p>
+<ol type="1">
+<li>Every write session ends, after the writer has closed the catalog, by publishing <code>famulus.read.ducklake</code> (copy to a temporary file in <code>_lake/</code>, then atomic rename).</li>
+<li>All readers (MCP server, famulus-proof lake mode, clients over SMB) attach the replica. They are never blocked and see the new state after the writer has closed.</li>
+<li>This is safe because Parquet files are immutable and <code>ducklake_cleanup_old_files</code> removes old files only after 24 h, so a replica never refers to deleted files.</li>
+<li><code>FAMULUS_LAKE_PRIMARY=1</code> makes readers attach the primary catalog instead.</li>
+</ol>
+</section>
+</section>
+<section id="placement-on-pdai-1" class="level2">
+<h2 class="anchored" data-anchor-id="placement-on-pdai-1">Placement on PDAI-1</h2>
+<pre><code>/Volumes/PDAI-1/pdai-collections/            ← DATA_PATH
+├── _lake/
+│   ├── famulus.ducklake                     catalog (DuckDB file, writer only)
+│   ├── famulus.read.ducklake                read replica (all readers)
+│   ├── famulus_reference_traces.duckdb      query trace of the MCP server
+│   ├── core/                                schema main (fr_lake_collection, fr_release, …)
+│   ├── landing/  platform_catalog/  assess/ lake-wide legacy DBs
+├── _register/_lake/                         schema register
+└── &lt;coll&gt;/
+    ├── &lt;coll&gt;_famulus.duckdb                per-collection famulus DB (rebuildable)
+    └── _lake/
+        ├── *.parquet                        schema &lt;coll&gt;
+        └── legacy/*.parquet                 schema legacy_&lt;coll&gt;</code></pre>
+<p>DuckLake 1.0 has no per-schema <code>data_path</code> option. <code>lake.ensure_collection_schema</code> therefore sets the <code>path</code> column of the catalog’s <code>ducklake_schema</code> row (DuckLake specification, relative to DATA_PATH) to <code>&lt;coll&gt;/_lake/</code> directly after <code>CREATE SCHEMA</code> and before the first table is created. Once a schema contains tables, its path is not changed. Schema <code>main</code> is set to <code>_lake/core/</code> at <code>init-lake</code>.</p>
+</section>
+<section id="schemas" class="level2">
+<h2 class="anchored" data-anchor-id="schemas">Schemas</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Schema</th>
+<th>Content</th>
+<th>Parquet path</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>&lt;coll&gt;</code> (collection schema)</td>
+<td>the 14 core tables of <code>famulus-reference/1</code> (<code>fr_collection</code> … <code>fr_harvest</code>)</td>
+<td><code>&lt;coll&gt;/_lake/</code></td>
+</tr>
+<tr class="even">
+<td><code>legacy_&lt;coll&gt;</code> (legacy schema)</td>
+<td>raw copies of the collection’s legacy DBs, tables named <code>&lt;kind&gt;__&lt;table&gt;</code> (e.g.&nbsp;<code>fql__fq_documents</code>, <code>stanza__stz_tokens</code>)</td>
+<td><code>&lt;coll&gt;/_lake/legacy/</code></td>
+</tr>
+<tr class="odd">
+<td><code>main</code></td>
+<td><code>fr_lake_collection</code>, <code>fr_release</code>, <code>fr_migration_log</code>, <code>fr_maintenance_log</code>; views <code>main.fr_*</code> = <code>UNION ALL BY NAME</code> over all collection schemas</td>
+<td><code>_lake/core/</code></td>
+</tr>
+<tr class="even">
+<td><code>register</code></td>
+<td><code>_register</code> DB (persons, places)</td>
+<td><code>_register/_lake/</code></td>
+</tr>
+<tr class="odd">
+<td><code>landing</code></td>
+<td>landing DBs (e.g.&nbsp;eulerOO-IVA <code>letters_reference</code>)</td>
+<td><code>_lake/landing/</code></td>
+</tr>
+<tr class="even">
+<td><code>platform_catalog</code></td>
+<td><code>catalog.duckdb</code></td>
+<td><code>_lake/platform_catalog/</code></td>
+</tr>
+<tr class="odd">
+<td><code>assess</code></td>
+<td><code>grounding_index.duckdb</code></td>
+<td><code>_lake/assess/</code></td>
+</tr>
+</tbody>
+</table>
+<p>Table definitions: <span>XML Schemas → famulus-reference/1</span>.</p>
+</section>
+<section id="export" class="level2">
+<h2 class="anchored" data-anchor-id="export">Export</h2>
+<p><code>famulus-reference export --collection &lt;coll&gt; [--famulus-db PATH]</code> <strong>[STUDIO]</strong> writes <code>&lt;coll&gt;/&lt;coll&gt;_famulus.duckdb</code> into the lake.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>attach</td>
+<td>famulus DB attached <code>READ_ONLY</code>; collection schema created with its path if missing</td>
+</tr>
+<tr class="even">
+<td>one transaction</td>
+<td>every core table of the collection schema is replaced by the content of the famulus DB; result: exactly one snapshot per export</td>
+</tr>
+<tr class="odd">
+<td>deletions</td>
+<td>addresses present before and absent now are inserted into <code>fr_harvest</code> with <code>deleted = true</code> (OAI-PMH incremental harvesting)</td>
+</tr>
+<tr class="even">
+<td>registration</td>
+<td>row in <code>main.fr_lake_collection</code> (sha256 of the famulus DB, export time, host, row count); <code>main.fr_*</code> views refreshed</td>
+</tr>
+<tr class="odd">
+<td>commit message</td>
+<td><code>export &lt;coll&gt; sha256=&lt;12 hex&gt;</code></td>
+</tr>
+<tr class="even">
+<td>flush</td>
+<td><code>ducklake_flush_inlined_data</code> for the collection schema and <code>main</code>: small inserts are inlined into the catalog by default; an export is a batch, so its rows are written to Parquet at once</td>
+</tr>
+<tr class="odd">
+<td>replica</td>
+<td>read replica published after the writer has closed</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="migration-of-existing-duckdbs" class="level2">
+<h2 class="anchored" data-anchor-id="migration-of-existing-duckdbs">Migration of existing DuckDBs</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Step</th>
+<th>Command / location</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Inventory (read-only, any host): every <code>*.duckdb</code> under the collection root and the code trees (platform, pdai, apps, landings2026) with size, tables, row counts, schema hash, kind, collection, consumers</td>
+<td><code>famulus-reference migrate-inventory --out report.json</code>; report <a href="https://lettre.ngrok.dev/platform/reports/duckdb-inventory.md">platform/reports/duckdb-inventory.md</a></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Raw legacy copies: each legacy DB attached <code>READ_ONLY</code>, base tables copied into <code>legacy_&lt;coll&gt;</code></td>
+<td><code>famulus-reference migrate --collection &lt;coll&gt;</code> <strong>[STUDIO]</strong>; lake-wide DBs: <code>migrate --lakewide</code></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Parity log: row count and order-independent row-hash sum of source and target per table</td>
+<td><code>main.fr_migration_log</code></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Adapter: consumers read the lake with <code>FAMULUS_LAKE=1</code> (famulus-proof <code>lake.connect_sidecar</code> exposes <code>legacy_&lt;coll&gt;</code> tables under their sidecar names); falls back to the sidecar file when the lake has no copy</td>
+<td><code>development/famulus-proof/src/famulus_proof/lake.py</code></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Switch-over: defaults flipped when parity is 100 %; snapshot tagged <code>v1-migration</code></td>
+<td>release in <code>fr_release</code></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Subsumed files: after a two-week shadow period the legacy files become candidates in the PDAI-1 space audit; nothing is deleted without the owner’s approval</td>
+<td><code>platform/scripts/pdai1_space_audit.py</code></td>
+</tr>
+</tbody>
+</table>
+<p>Exclusions and special cases:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Treatment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>search_chats.duckdb</code></td>
+<td>excluded: operational query log, not reference data</td>
+</tr>
+<tr class="even">
+<td><code>*.work.duckdb</code></td>
+<td>excluded: build scratch files</td>
+</tr>
+<tr class="odd">
+<td>per-document <code>index.duckdb</code> (2,474 files)</td>
+<td>not copied raw; their <code>pages</code> tables are read by <code>famulus-reference build</code> into <code>fr_page</code> / <code>fr_text</code> (layer <code>ocr</code>) with file path and sha256 as provenance</td>
+</tr>
+<tr class="even">
+<td>full-text indexes (<code>fts_main_*</code>)</td>
+<td>not in the lake; forms that call <code>match_bm25</code> use the sidecar file</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Precondition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PDAI-1 had 24 GiB free on 2026-10-14. Steps 2–6 wait for the report-only space audit (target ≥ 80 GiB free; the lake needs about 30–40 GB of Parquet plus headroom).</p>
+</div>
+</div>
+</section>
+<section id="maintenance" class="level2">
+<h2 class="anchored" data-anchor-id="maintenance">Maintenance</h2>
+<p><code>famulus-reference maintain [--dry-run] [--orphans] [--backup-dir D]</code> <strong>[STUDIO]</strong>, launchd <code>com.ai-platform.famulus-lake-maintain</code> daily at 03:30. Each step is called individually (not via <code>CHECKPOINT</code>) and logged in <code>main.fr_maintenance_log</code>. Adapted from the runbook in <a href="https://thefulldatastack.substack.com/p/ducklake-in-production-maintenance">DuckLake in production: maintenance</a>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Step</th>
+<th>Setting</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><code>ducklake_flush_inlined_data</code></td>
+<td>all schemas</td>
+<td>inserts below 10 rows are stored in the catalog</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><code>ducklake_merge_adjacent_files</code></td>
+<td>all schemas</td>
+<td>few large Parquet files instead of many small ones</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><code>ducklake_expire_snapshots</code></td>
+<td>older than 7 days, <strong>except</strong> snapshots in <code>fr_release</code> and snapshots handed out by <code>fr_cite</code> / <code>fr_bibtex</code>; the newest snapshot is always kept</td>
+<td>citations stay reproducible</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><code>ducklake_cleanup_old_files</code></td>
+<td><code>older_than</code> 24 h (article: 1 h)</td>
+<td>SMB readers and the read replica can refer to files for long scans</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><code>ducklake_delete_orphaned_files</code></td>
+<td>weekly (<code>--orphans</code>), dry run first</td>
+<td>result feeds the space audit</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>catalog backup</td>
+<td>dated copy of <code>famulus.ducklake</code>, 14 kept</td>
+<td>catalog loss = lake loss</td>
+</tr>
+</tbody>
+</table>
+<p>Dry run from a client: queue job <code>famulus-lake-maintain-dry</code>.</p>
+</section>
+<section id="reader-recipes" class="level2">
+<h2 class="anchored" data-anchor-id="reader-recipes">Reader recipes</h2>
+<p>All readers attach <code>READ_ONLY</code>. Use the read replica; the primary catalog is locked while mac-studio writes.</p>
+<p><strong>duckdb CLI</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>LOAD ducklake;</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ATTACH <span class="st">'ducklake:/Volumes/PDAI-1/pdai-collections/_lake/famulus.read.ducklake'</span> <span class="kw">AS</span> lk (READ_ONLY);</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> fr_id, image_path <span class="kw">FROM</span> lk.main.fr_page <span class="kw">WHERE</span> fr_id <span class="kw">LIKE</span> <span class="st">'fr:hartmann/%'</span> <span class="kw">LIMIT</span> <span class="dv">10</span>;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> lk.snapshots() <span class="kw">ORDER</span> <span class="kw">BY</span> snapshot_id <span class="kw">DESC</span> <span class="kw">LIMIT</span> <span class="dv">5</span>;</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">count</span>(<span class="op">*</span>) <span class="kw">FROM</span> lk.hartmann.fr_segment <span class="kw">AT</span> (VERSION <span class="op">=&gt;</span> <span class="dv">42</span>);   <span class="co">-- time travel to snapshot 42</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>With <code>famulus.ducklake</code> instead of <code>famulus.read.ducklake</code> the same statements read the primary catalog (fails while a write session is open).</p>
+<p><strong>Python</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> famulus_reference <span class="im">import</span> lake, api</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> lake.<span class="ex">connect</span>() <span class="im">as</span> con:                     <span class="co"># READ_ONLY, attaches the replica as lk</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(api.cite(con, <span class="st">"fr:hartmann/bsb00028171/0137/print1"</span>))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> famulus_proof <span class="im">import</span> lake <span class="im">as</span> fl            <span class="co"># FAMULUS_LAKE=1</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fl.resolve_fr(<span class="st">"fr:hartmann/bsb00028171/0137"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Via MCP</strong> (preferred from clients: no SMB scan, results traced)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>call_tool(<span class="st">"famulus-reference"</span>, <span class="st">"fr_sql"</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>          {<span class="st">"sql"</span>: <span class="st">"SELECT seg_type, count(*) FROM main.fr_segment GROUP BY 1"</span>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="agent-access-sql-guard-and-limits" class="level2">
+<h2 class="anchored" data-anchor-id="agent-access-sql-guard-and-limits">Agent access: SQL guard and limits</h2>
+<p>The read-only SQL tool <code>fr_sql</code> takes three patterns from <a href="https://github.com/early-signal-tech/duckdb-agent-loop-poc">duckdb-agent-loop-poc</a>: schema-first prompting (<code>fr_get_structure</code>, <code>fr_get_sidecars</code>, lake schema description), an iteration cap, and a per-run trace (<code>fr_run</code>, <code>fr_run_step</code>). The iteration cap belongs to the calling agent loop (Partitur, orchestrator); the server does not count calls. The PoC has no read-only enforcement, no row cap and no timeout. All three gaps are closed by our SQL guard and limits:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Gap in the PoC</th>
+<th>Closed by</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>no read-only enforcement</td>
+<td><code>sqlguard.validate</code>: exactly one SELECT/WITH/SHOW/DESCRIBE statement; no DDL/DML/ATTACH/COPY/PRAGMA/SET anywhere in the AST; DuckDB file readers (<code>read_csv</code>, <code>read_parquet</code>, <code>glob</code>, …) and <code>ducklake_*</code> maintenance functions refused; file paths as tables refused; lake attached <code>READ_ONLY</code></td>
+</tr>
+<tr class="even">
+<td>no row cap</td>
+<td>max. 500 rows, <code>truncated</code> flag</td>
+</tr>
+<tr class="odd">
+<td>no timeout</td>
+<td>statement interrupted after 20 s (<code>api.SQL_TIMEOUT_S</code>, <code>connection.interrupt()</code> from a timer — DuckDB has no statement-timeout setting); short-lived connection per request</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="risks" class="level2">
+<h2 class="anchored" data-anchor-id="risks">Risks</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Risk</th>
+<th>Handling</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DuckDB version alignment</td>
+<td>every venv that reads the lake pins <code>duckdb &gt;= 1.5.5</code> (ai-lemma-index upgraded from 1.5.3); extensions <code>ducklake</code>, <code>fts</code> installed on mac-studio</td>
+</tr>
+<tr class="even">
+<td>SMB latency on clients</td>
+<td>reads through the MCP server; direct SMB reads only for small queries</td>
+</tr>
+<tr class="odd">
+<td>single writer</td>
+<td>all lake writes run on mac-studio, serialised through the syncthink queue; readers use the replica</td>
+</tr>
+<tr class="even">
+<td>PDAI-1 space</td>
+<td>migration blocked until the space audit has freed ≥ 80 GiB</td>
+</tr>
+<tr class="odd">
+<td>schema drift between legacy DBs</td>
+<td>raw copy first (<code>legacy_&lt;coll&gt;</code>), mapping into <code>fr_*</code> afterwards</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

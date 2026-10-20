@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; One grammar per document – PDAI Structured-XML OCR System</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./production-pipeline.html" rel="next">
+<link href="./layer-ocr.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d790f1a89f3916965f720a191022e3fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-89a676d4ad20e24d423491e1503c3133.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./document-grammar.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">One grammar per document</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <span>PDAI Structured-XML OCR System</span> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Overview: Collection Layout and Metadata</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./page-language.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The page language</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./layer-ocr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Layered OCR, and the Kirch reprocess</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./document-grammar.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">One grammar per document</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./production-pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">The Production Pipeline</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./schema-architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Schema Architecture</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dtd-derivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">DTD Derivation Playbook</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./page-xml-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Structured Page XML Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./engine-options.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Engine and Option Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./audit-taxonomy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Audit Reference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./relax-ng.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">RELAX NG Layer</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Improving collections</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">The cure method</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/diagnose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Diagnosis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/attribute.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Attribution</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/remedy-gate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Remedy and gate</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/apply.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Application</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/certify-downstream.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Certification and downstream</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/learn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/case-copernicus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">The Copernicus case</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cure/letter-dtd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Universal letter DTD</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-the-profile-establishes" id="toc-what-the-profile-establishes" class="nav-link active" data-scroll-target="#what-the-profile-establishes"><span class="header-section-number">4.1</span> What the profile establishes</a></li>
+  <li><a href="#the-grammar-of-one-document" id="toc-the-grammar-of-one-document" class="nav-link" data-scroll-target="#the-grammar-of-one-document"><span class="header-section-number">4.2</span> The grammar of one document</a></li>
+  <li><a href="#the-layer-for-one-document-and-one-engine" id="toc-the-layer-for-one-document-and-one-engine" class="nav-link" data-scroll-target="#the-layer-for-one-document-and-one-engine"><span class="header-section-number">4.3</span> The layer for one document and one engine</a></li>
+  <li><a href="#the-fit-check" id="toc-the-fit-check" class="nav-link" data-scroll-target="#the-fit-check"><span class="header-section-number">4.4</span> The fit check</a></li>
+  <li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection"><span class="header-section-number">4.5</span> Model selection</a></li>
+  <li><a href="#registered-contract" id="toc-registered-contract" class="nav-link" data-scroll-target="#registered-contract"><span class="header-section-number">4.6</span> Registered contract</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-document-grammar" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">One grammar per document</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><em>A collection is a set of documents, and its documents differ in format. The grammar, the prompt layer and the model are therefore fixed per document, in a fixed order, and each step is measured before the next begins.</em></p>
+<p>Until version 1.1 of the Partitur <code>pilot-gated-ocr-pipeline</code>, a document took the grammar of its collection. That holds where the volumes of a collection share one format (the volumes of one critical edition). It fails where they do not: within the collection Kirch, the <em>Forschungsberichte</em> are modern prose, the <em>Handbuch</em> is a sequence of articles with fixed rubrics, and the <em>Kalenderreihen</em> are calendars whose pages are tables in two colours. Version 1.2 makes the document the unit.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="The order">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>The order
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Profile the document, derive its grammar, train the layer for one engine, check the fit against the facsimile, select the model, run, certify. A later step never begins on the output of an earlier step that has not passed.</p>
+</div>
+</div>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-document-process" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-document-process-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 240.47 643.80" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 639.8)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-639.8 236.47,-639.8 236.47,4 -4,4"></polygon>
+<!-- scale -->
+<g id="node1" class="node">
+<title>scale</title>
+<polygon fill="none" stroke="black" points="193.03,-635.8 39.44,-635.8 39.44,-599.8 193.03,-599.8 193.03,-635.8"></polygon>
+<text text-anchor="middle" x="116.24" y="-621.1" font-family="Helvetica,sans-Serif" font-size="11.00">assess-document-scale</text>
+<text text-anchor="middle" x="116.24" y="-607.9" font-family="Helvetica,sans-Serif" font-size="11.00">&gt; 50 pages: gate mandatory</text>
+</g>
+<!-- profile -->
+<g id="node2" class="node">
+<title>profile</title>
+<polygon fill="none" stroke="black" points="232.71,-562.8 -0.24,-562.8 -0.24,-526.8 232.71,-526.8 232.71,-562.8"></polygon>
+<text text-anchor="middle" x="116.24" y="-548.1" font-family="Helvetica,sans-Serif" font-size="11.00">profile-document</text>
+<text text-anchor="middle" x="116.24" y="-534.9" font-family="Helvetica,sans-Serif" font-size="11.00">range of page.dtd, page classes, entry types</text>
+</g>
+<!-- scale&#45;&gt;profile -->
+<g id="edge1" class="edge">
+<title>scale-&gt;profile</title>
+<path fill="none" stroke="#555555" d="M116.24,-599.61C116.24,-591.59 116.24,-581.85 116.24,-572.87"></path>
+<polygon fill="#555555" stroke="#555555" points="119.74,-572.83 116.24,-562.83 112.74,-572.83 119.74,-572.83"></polygon>
+</g>
+<!-- grammar -->
+<g id="node3" class="node">
+<title>grammar</title>
+<polygon fill="none" stroke="black" points="231.99,-489.8 0.48,-489.8 0.48,-453.8 231.99,-453.8 231.99,-489.8"></polygon>
+<text text-anchor="middle" x="116.24" y="-475.1" font-family="Helvetica,sans-Serif" font-size="11.00">derive-document-grammar</text>
+<text text-anchor="middle" x="116.24" y="-461.9" font-family="Helvetica,sans-Serif" font-size="11.00">config/volumes/&lt;doc&gt;/page.dtd, &lt;class&gt;.dtd</text>
+</g>
+<!-- profile&#45;&gt;grammar -->
+<g id="edge2" class="edge">
+<title>profile-&gt;grammar</title>
+<path fill="none" stroke="#555555" d="M116.24,-526.61C116.24,-518.59 116.24,-508.85 116.24,-499.87"></path>
+<polygon fill="#555555" stroke="#555555" points="119.74,-499.83 116.24,-489.83 112.74,-499.83 119.74,-499.83"></polygon>
+</g>
+<!-- pilot -->
+<g id="node4" class="node">
+<title>pilot</title>
+<polygon fill="none" stroke="black" points="213.02,-416.8 19.45,-416.8 19.45,-380.8 213.02,-380.8 213.02,-416.8"></polygon>
+<text text-anchor="middle" x="116.24" y="-402.1" font-family="Helvetica,sans-Serif" font-size="11.00">draw-pilot-sample, execute-pilot-ocr,</text>
+<text text-anchor="middle" x="116.24" y="-388.9" font-family="Helvetica,sans-Serif" font-size="11.00">audit-structural-gate</text>
+</g>
+<!-- grammar&#45;&gt;pilot -->
+<g id="edge3" class="edge">
+<title>grammar-&gt;pilot</title>
+<path fill="none" stroke="#555555" d="M116.24,-453.61C116.24,-445.59 116.24,-435.85 116.24,-426.87"></path>
+<polygon fill="#555555" stroke="#555555" points="119.74,-426.83 116.24,-416.83 112.74,-426.83 119.74,-426.83"></polygon>
+</g>
+<!-- train -->
+<g id="node5" class="node">
+<title>train</title>
+<polygon fill="none" stroke="black" points="205.09,-343.8 27.38,-343.8 27.38,-307.8 205.09,-307.8 205.09,-343.8"></polygon>
+<text text-anchor="middle" x="116.24" y="-329.1" font-family="Helvetica,sans-Serif" font-size="11.00">train-layer</text>
+<text text-anchor="middle" x="116.24" y="-315.9" font-family="Helvetica,sans-Serif" font-size="11.00">&lt;prefix&gt;.&lt;doc|class&gt;.&lt;engine&gt;.j2</text>
+</g>
+<!-- pilot&#45;&gt;train -->
+<g id="edge4" class="edge">
+<title>pilot-&gt;train</title>
+<path fill="none" stroke="#555555" d="M116.24,-380.61C116.24,-372.59 116.24,-362.85 116.24,-353.87"></path>
+<polygon fill="#555555" stroke="#555555" points="119.74,-353.83 116.24,-343.83 112.74,-353.83 119.74,-353.83"></polygon>
+</g>
+<!-- fit -->
+<g id="node6" class="node">
+<title>fit</title>
+<polygon fill="none" stroke="black" points="184.8,-255 47.67,-255 47.67,-219 184.8,-219 184.8,-255"></polygon>
+<text text-anchor="middle" x="116.24" y="-240.3" font-family="Helvetica,sans-Serif" font-size="11.00">fit-check</text>
+<text text-anchor="middle" x="116.24" y="-227.1" font-family="Helvetica,sans-Serif" font-size="11.00">reading against facsimile</text>
+</g>
+<!-- train&#45;&gt;fit -->
+<g id="edge5" class="edge">
+<title>train-&gt;fit</title>
+<path fill="none" stroke="#555555" d="M115.06,-307.72C114.73,-302.02 114.4,-295.64 114.24,-289.8 114.02,-282.34 114.02,-280.46 114.24,-273 114.31,-270.44 114.41,-267.79 114.53,-265.13"></path>
+<polygon fill="#555555" stroke="#555555" points="118.03,-265.25 115.06,-255.08 111.04,-264.88 118.03,-265.25"></polygon>
+</g>
+<!-- fit&#45;&gt;train -->
+<g id="edge9" class="edge">
+<title>fit-&gt;train</title>
+<path fill="none" stroke="#555555" stroke-dasharray="5,2" d="M116.24,-255.11C116.24,-267.23 116.24,-283.74 116.24,-297.64"></path>
+<polygon fill="#555555" stroke="#555555" points="112.74,-297.65 116.24,-307.65 119.74,-297.65 112.74,-297.65"></polygon>
+<text text-anchor="middle" x="127.31" y="-277.2" font-family="Times,serif" font-size="14.00"> fail</text>
+</g>
+<!-- select -->
+<g id="node7" class="node">
+<title>select</title>
+<polygon fill="none" stroke="black" points="227.3,-182 5.17,-182 5.17,-146 227.3,-146 227.3,-182"></polygon>
+<text text-anchor="middle" x="116.24" y="-167.3" font-family="Helvetica,sans-Serif" font-size="11.00">select-model</text>
+<text text-anchor="middle" x="116.24" y="-154.1" font-family="Helvetica,sans-Serif" font-size="11.00">best measured engine with a passed layer</text>
+</g>
+<!-- fit&#45;&gt;select -->
+<g id="edge6" class="edge">
+<title>fit-&gt;select</title>
+<path fill="none" stroke="#555555" d="M116.24,-218.81C116.24,-210.79 116.24,-201.05 116.24,-192.07"></path>
+<polygon fill="#555555" stroke="#555555" points="119.74,-192.03 116.24,-182.03 112.74,-192.03 119.74,-192.03"></polygon>
+</g>
+<!-- run -->
+<g id="node8" class="node">
+<title>run</title>
+<polygon fill="none" stroke="black" points="197.52,-109 34.95,-109 34.95,-73 197.52,-73 197.52,-109"></polygon>
+<text text-anchor="middle" x="116.24" y="-94.3" font-family="Helvetica,sans-Serif" font-size="11.00">unlock-and-execute-full</text>
+<text text-anchor="middle" x="116.24" y="-81.1" font-family="Helvetica,sans-Serif" font-size="11.00">budgeted batches, one runner</text>
+</g>
+<!-- select&#45;&gt;run -->
+<g id="edge7" class="edge">
+<title>select-&gt;run</title>
+<path fill="none" stroke="#555555" d="M116.24,-145.81C116.24,-137.79 116.24,-128.05 116.24,-119.07"></path>
+<polygon fill="#555555" stroke="#555555" points="119.74,-119.03 116.24,-109.03 112.74,-119.03 119.74,-119.03"></polygon>
+</g>
+<!-- certify -->
+<g id="node9" class="node">
+<title>certify</title>
+<polygon fill="none" stroke="black" points="205.14,-36 27.33,-36 27.33,0 205.14,0 205.14,-36"></polygon>
+<text text-anchor="middle" x="116.24" y="-21.3" font-family="Helvetica,sans-Serif" font-size="11.00">certify-and-learn</text>
+<text text-anchor="middle" x="116.24" y="-8.1" font-family="Helvetica,sans-Serif" font-size="11.00">pdai-audit --all --emit-annotations</text>
+</g>
+<!-- run&#45;&gt;certify -->
+<g id="edge8" class="edge">
+<title>run-&gt;certify</title>
+<path fill="none" stroke="#555555" d="M116.24,-72.81C116.24,-64.79 116.24,-55.05 116.24,-46.07"></path>
+<polygon fill="#555555" stroke="#555555" points="119.74,-46.03 116.24,-36.03 112.74,-46.03 119.74,-46.03"></polygon>
+</g>
+</g>
+</svg>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-document-process-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.1: The process of Partitur pilot-gated-ocr-pipeline v1.2. Solid edges are the order of execution; the dashed edge returns to layer training when the fit check reports a failure.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="what-the-profile-establishes" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="what-the-profile-establishes"><span class="header-section-number">4.1</span> What the profile establishes</h2>
+<p>The profile of a document (<code>config/volumes/&lt;doc&gt;/document_profile.yaml</code>, skill <code>document-profile</code>) records three things, each with an evidence grade.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Answer</th>
+<th>Where it is used</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Which part of the universal DTD does the document use, and what does it need beyond it?</td>
+<td>element families in use; extension margin types (<code>marginal-type.extra</code>) and renditions (<code>hi-rend.extra</code>)</td>
+<td>grammar derivation</td>
+</tr>
+<tr class="even">
+<td>Which page classes does the document contain?</td>
+<td>class name, page count, specimen pages</td>
+<td>page-class grammar, class layers, fit specimens</td>
+</tr>
+<tr class="odd">
+<td>Which entry types make up its structure?</td>
+<td>name, XML element, printed opener, independent count where stated</td>
+<td>segmentation pass</td>
+</tr>
+</tbody>
+</table>
+<p>The grades are those of the schema-first method: <code>front-matter</code> (stated in the edition), <code>facsimile-only</code> (observed, provisional), <code>unattested</code> (neither). A vocabulary item graded <code>unattested</code> is not declared in the grammar.</p>
+<p>Page OCR remains page-scoped. Entry types are the input of a separate segmentation pass that assembles records across pages; they do not change what one page reading contains.</p>
+</section>
+<section id="the-grammar-of-one-document" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="the-grammar-of-one-document"><span class="header-section-number">4.2</span> The grammar of one document</h2>
+<p>A document grammar is a wrapper of <code>page.dtd</code> v4.0 (<a href="page-language.html" class="quarto-xref"><span>Chapter 2</span></a>): it overrides content-model parameter entities, then includes the universal DTD. The first declaration of a parameter entity wins, so the override comes first. Extension vocabulary enters only through the two extension entities.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Extension</th>
+<th>Entity</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>margin type beyond the closed list</td>
+<td><code>marginal-type.extra</code></td>
+<td><code>doc-id</code> in KGW 19</td>
+</tr>
+<tr class="even">
+<td><code>hi</code> rendition beyond the core list</td>
+<td><code>hi-rend.extra</code></td>
+<td><code>\| red</code> for the red type of a calendar</td>
+</tr>
+</tbody>
+</table>
+<p><code>ocr_runner.page_language.page_dtd(collection, doc, page_class)</code> resolves the grammar in this order and returns the first that exists:</p>
+<ol type="1">
+<li><code>config/volumes/&lt;doc&gt;/&lt;page_class&gt;.dtd</code>, when a page class is given;</li>
+<li>the DTD named by <code>config/audit_rules_&lt;doc&gt;.yaml</code>;</li>
+<li>the DTD named by the collection’s <code>config/audit_rules.yaml</code>;</li>
+<li>the universal <code>page.dtd</code>.</li>
+</ol>
+<p>The page class is stamped on the page (<code>&lt;meta page_class&gt;</code>), so the class grammar and the class layer can be recovered from a saved page.</p>
+</section>
+<section id="the-layer-for-one-document-and-one-engine" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="the-layer-for-one-document-and-one-engine"><span class="header-section-number">4.3</span> The layer for one document and one engine</h2>
+<p><code>ocr_runner.cure_config.compose</code> builds the prompt from layers and stops at the last layer that exists. With a page class, four layers are added after the volume-and-engine layer.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Order</th>
+<th>Layer file</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>page-language fragment (filled from the document’s grammar)</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><code>&lt;prefix&gt;.base.j2</code></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><code>&lt;prefix&gt;.&lt;volume&gt;.j2</code></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><code>&lt;prefix&gt;.&lt;engine&gt;.j2</code></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><code>&lt;prefix&gt;.&lt;volume&gt;.&lt;engine&gt;.j2</code></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td><code>&lt;prefix&gt;.&lt;class&gt;.j2</code>, <code>&lt;prefix&gt;.&lt;class&gt;.&lt;engine&gt;.j2</code></td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td><code>&lt;prefix&gt;.&lt;volume&gt;.&lt;class&gt;.j2</code>, <code>&lt;prefix&gt;.&lt;volume&gt;.&lt;class&gt;.&lt;engine&gt;.j2</code></td>
+</tr>
+</tbody>
+</table>
+<p>The stamp <code>&lt;meta partitur="&lt;prefix&gt;@&lt;sha12&gt;" layers="…" overlay="…" page_class="…"&gt;</code> names every layer that was applied. A layer trained for one engine does not qualify another: each candidate engine is trained separately, with the A/B baseline measured on the unpatched layer first (skill <code>ocr-instruction-learning</code>).</p>
+</section>
+<section id="the-fit-check" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="the-fit-check"><span class="header-section-number">4.4</span> The fit check</h2>
+<p><code>python -m ocr_runner.fit_check</code> compares a reading with its facsimile. Every finding has a severity; a page fits when it has no <code>fail</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Code</th>
+<th>Compares</th>
+<th><code>fail</code> when</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>FIT-DTD</code></td>
+<td>reading against the document’s grammar</td>
+<td>the reading is invalid</td>
+</tr>
+<tr class="even">
+<td><code>FIT-AUDIT</code></td>
+<td>collection audit rules</td>
+<td>the audit reports a blocker</td>
+</tr>
+<tr class="odd">
+<td><code>FIT-TABLE-FLAT</code></td>
+<td>rows of cells in the image against <code>table</code> in the reading</td>
+<td>the image has at least four rows of cells and the reading has no table</td>
+</tr>
+<tr class="even">
+<td><code>FIT-TABLE-ROWS</code></td>
+<td>row count, image against reading</td>
+<td>the counts differ by more than 45 % (<code>warn</code> above 25 %)</td>
+</tr>
+<tr class="odd">
+<td><code>FIT-TABLE-COLS</code></td>
+<td>modal column count</td>
+<td>the modal columns differ by three or more (<code>warn</code> from one)</td>
+</tr>
+<tr class="even">
+<td><code>FIT-MARGIN</code></td>
+<td>margin items of the image against <code>marginal</code></td>
+<td>an item of the image is missing</td>
+</tr>
+<tr class="odd">
+<td><code>FIT-TEXT</code></td>
+<td>word agreement with the text witness</td>
+<td>agreement is below 70 % (<code>warn</code> below 85 %)</td>
+</tr>
+<tr class="even">
+<td><code>FIT-FIGURE</code></td>
+<td>figure zones against <code>figure</code></td>
+<td>never; <code>warn</code> only</td>
+</tr>
+</tbody>
+</table>
+<p>The image side is the geometry of Apple Vision (<code>fastimage --mode ocr</code>): the lines of a page with their position. It is a witness for structure everywhere, and for text only where it reads the script. The profile therefore records the text witness: <code>vision</code> for antiqua, a second reading for Fraktur and special scripts (<code>dual_read.divergences</code>).</p>
+<p>The check also writes a review sheet per page: the facsimile beside the reading, rendered with <code>pdai-page.css</code>. The sheet is the input of the visual audit (skill <code>visual-layout-audit</code>), which attributes a remaining flaw to one layer — prompt layer, normalizer, CSS or DTD — before anything is changed. The sheet uses a structural rendering, not the viewer; the acceptance view remains the viewer on the document’s port.</p>
+</section>
+<section id="model-selection" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="model-selection"><span class="header-section-number">4.5</span> Model selection</h2>
+<p>The engine of the full run is the best measured engine among those with a passed layer: quality first, then latency, then cost. The measurements come from the Model Assessment Hub (<code>ma_best_model</code>), and each pilot run is recorded with <code>ma_record_run</code>. The default is <code>kimi-k2.7-code:cloud</code>; <code>gemini-3.8-flash</code> with thinking off runs only for a page on which Kimi failed. A different default is reported to the owner and is not adopted without confirmation.</p>
+</section>
+<section id="registered-contract" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="registered-contract"><span class="header-section-number">4.6</span> Registered contract</h2>
+<p>The stages <code>profile-document</code>, <code>derive-document-grammar</code>, <code>fit-check</code> and <code>select-model</code> are registered in <code>partitur_register.duckdb</code> under the goal path <code>pipeline/ocr/pilot-gated</code>, with the result specification and verification of each stage (<a href="./production-pipeline.html">production pipeline</a>). The former stage <code>improvement-loop</code> is now <code>train-layer</code>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./layer-ocr.html" class="pagination-link" aria-label="Layered OCR, and the Kirch reprocess">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Layered OCR, and the Kirch reprocess</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./production-pipeline.html" class="pagination-link" aria-label="The Production Pipeline">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">The Production Pipeline</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

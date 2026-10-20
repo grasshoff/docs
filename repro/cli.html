@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.1">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Entwickler-CLI: famulus-pipeline – Famulus Repro</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e9ffef92cdba039cd9f354581f2d08e4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-3c5d738871792cd3597d1e3af193bffb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Keine Treffer",
+    "search-matching-documents-text": "Treffer",
+    "search-copy-link-title": "Link in die Suche kopieren",
+    "search-hide-matches-text": "Zusätzliche Treffer verbergen",
+    "search-more-match-text": "weitere Treffer in diesem Dokument",
+    "search-more-matches-text": "weitere Treffer in diesem Dokument",
+    "search-clear-button-title": "Zurücksetzen",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Abbrechen",
+    "search-submit-button-title": "Abschicken",
+    "search-label": "Suchen"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Famulus Repro</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Suchen"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navigation umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Architektur</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./reproplatz.html"> 
+<span class="menu-text">Reproplatz</span></a>
+  </li>  
+  <li class="nav-item">
+    <span class="nav-link"> 
+<span class="menu-text">Verbindung</span></span>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-pipeline" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Pipeline</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-pipeline">    
+        <li>
+    <a class="dropdown-item" href="./geometrie.html">
+ <span class="dropdown-text">Geometrie</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./tonwert.html">
+ <span class="dropdown-text">Tonwert</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ocr.html">
+ <span class="dropdown-text">OCR</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./partitur.html"> 
+<span class="menu-text">Partitur</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./pdai-ablage.html"> 
+<span class="menu-text">Dateiformat</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./backstage-ui.html"> 
+<span class="menu-text">Backstage</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./cli.html"> 
+<span class="menu-text">CLI</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./betrieb.html"> 
+<span class="menu-text">Betrieb</span></a>
+  </li>  
+  <li class="nav-item">
+    <span class="nav-link"> 
+<span class="menu-text">Entwicklung</span></span>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./backstage-ui.html">Bedienung &amp; Diagnose</a></li><li class="breadcrumb-item"><a href="./cli.html">Entwickler-CLI: famulus-pipeline</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Seitenleiste umschalten" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">System &amp; Aufnahme</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Abschnitt umschalten">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Famulus Repro — Architektur &amp; Gesamtsystem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reproplatz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Der Reproplatz — Aufbau und Auslöselogik</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <span class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mac und iPhone verbinden</span></span>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Verarbeitungspipeline</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Abschnitt umschalten">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./geometrie.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Geometrische Rektifizierung</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tonwert.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Archivischer Tonwert und Schärfung</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ocr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">On-Device Struktur-OCR</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Orchestrierung &amp; Daten</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Abschnitt umschalten">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./partitur.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Partitur-Nachbearbeitung</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pdai-ablage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">PDAI-Dateiformat und Ablagestruktur</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Bedienung &amp; Diagnose</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Abschnitt umschalten">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./backstage-ui.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mac Backstage — Bedienung und Bedienphilosophie</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cli.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Entwickler-CLI: famulus-pipeline</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Konstruktion &amp; Betrieb</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Abschnitt umschalten">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./konstruktion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Konstruktion und Dateikatalog</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./betrieb.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Betrieb</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <span class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Entwickler- und Wiederherstellungsschleife</span></span>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#vorbereitung" id="toc-vorbereitung" class="nav-link active" data-scroll-target="#vorbereitung"><span class="header-section-number">1</span> Vorbereitung</a></li>
+  <li><a href="#grundlegende-verwendung" id="toc-grundlegende-verwendung" class="nav-link" data-scroll-target="#grundlegende-verwendung"><span class="header-section-number">2</span> Grundlegende Verwendung</a></li>
+  <li><a href="#parameter-referenz" id="toc-parameter-referenz" class="nav-link" data-scroll-target="#parameter-referenz"><span class="header-section-number">3</span> Parameter-Referenz</a>
+  <ul class="collapse">
+  <li><a href="#belegdiagnose" id="toc-belegdiagnose" class="nav-link" data-scroll-target="#belegdiagnose"><span class="header-section-number">3.1</span> Belegdiagnose</a></li>
+  </ul></li>
+  <li><a href="#ausgabe-stufenbilder" id="toc-ausgabe-stufenbilder" class="nav-link" data-scroll-target="#ausgabe-stufenbilder"><span class="header-section-number">4</span> Ausgabe: Stufenbilder</a></li>
+  <li><a href="#ausgabe-konsolen-bericht" id="toc-ausgabe-konsolen-bericht" class="nav-link" data-scroll-target="#ausgabe-konsolen-bericht"><span class="header-section-number">5</span> Ausgabe: Konsolen-Bericht</a></li>
+  <li><a href="#schärfescore-isoliert-messen" id="toc-schärfescore-isoliert-messen" class="nav-link" data-scroll-target="#schärfescore-isoliert-messen"><span class="header-section-number">6</span> Schärfescore isoliert messen</a></li>
+  <li><a href="#diagnose-leitfaden" id="toc-diagnose-leitfaden" class="nav-link" data-scroll-target="#diagnose-leitfaden"><span class="header-section-number">7</span> Diagnose-Leitfaden</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./backstage-ui.html">Bedienung &amp; Diagnose</a></li><li class="breadcrumb-item"><a href="./cli.html">Entwickler-CLI: famulus-pipeline</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Entwickler-CLI: famulus-pipeline</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled" title="famulus-pipeline in einem Satz">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tipp</span>famulus-pipeline in einem Satz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>famulus-pipeline</code> führt die vollständige Mac-Backstage-Pipeline auf einem gespeicherten Master aus, legt nach jeder Stufe ein Zwischenbild ab und druckt den Geometrie-, Tonwert- und OCR-Bericht — damit jede Entscheidung der Pipeline nachvollziehbar und prüfbar ist.</p>
+</div>
+</div>
+<p>Die grafische Backstage-Oberfläche verbirgt alle Verarbeitungsdetails hinter einer schlichten Benutzeroberfläche. <code>famulus-pipeline</code> kehrt das um: Es ist das Diagnosewerkzeug, das jeden Zwischenzustand sichtbar macht. Es verwendet denselben <code>PDAIBackendPipeline</code>-Code wie die Backstage-App — das Ergebnis ist identisch, nur der Ausgabeweg ist ein Verzeichnis auf dem Dateisystem statt ein Live-Dokumentordner.</p>
+<section id="vorbereitung" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="vorbereitung"><span class="header-section-number">1</span> Vorbereitung</h2>
+<p><code>famulus-pipeline</code> ist das <code>famulus-pipeline</code>-Target im Xcode-Projekt. Es wird als macOS Command-Line-Tool gebaut:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xcodebuild</span> <span class="at">-scheme</span> famulus-pipeline <span class="at">-configuration</span> Debug</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Das erzeugte Binary liegt unter <code>build/Debug/famulus-pipeline</code>. Es kann beliebige <code>.heic</code>-Master verarbeiten — auch solche, die mit einer älteren App-Version aufgenommen wurden.</p>
+</section>
+<section id="grundlegende-verwendung" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="grundlegende-verwendung"><span class="header-section-number">2</span> Grundlegende Verwendung</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">famulus-pipeline</span> <span class="op">&lt;</span>master.heic<span class="op">&gt;</span> <span class="pp">[</span><span class="ss">Optionen</span><span class="pp">]</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ein typischer Diagnoselauf für eine Buchaufnahme:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">famulus-pipeline</span> <span class="dt">\</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  ~/Documents/Scans/Dokument_2026-09-03/masters/master_001.heic <span class="dt">\</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--mode</span> book <span class="dt">\</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--orientation</span> topOnRight <span class="dt">\</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> /tmp/famulus-debug</span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Nach dem Lauf enthält <code>/tmp/famulus-debug/</code> die Stufenbilder und den vollständigen PDAI-Seitenordner.</p>
+</section>
+<section id="parameter-referenz" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="parameter-referenz"><span class="header-section-number">3</span> Parameter-Referenz</h2>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Grundparameter</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Stufen-Schalter</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Tonwert-Parameter</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Sondermodis</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Wertebereich</th>
+<th>Standard</th>
+<th>Funktion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>--mode</code></td>
+<td><code>book</code>, <code>receipt</code></td>
+<td><code>book</code></td>
+<td>Dokumentmodus: Doppelseite oder Einzelblatt</td>
+</tr>
+<tr class="even">
+<td><code>--orientation</code></td>
+<td><code>topOnRight</code>, <code>topOnLeft</code>, <code>upright</code></td>
+<td><code>topOnRight</code></td>
+<td>Ausrichtung der Buchoberkante im Master</td>
+</tr>
+<tr class="odd">
+<td><code>--out &lt;dir&gt;</code></td>
+<td>Verzeichnispfad</td>
+<td><code>/tmp/famulus-pipeline</code></td>
+<td>Ausgabeverzeichnis</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Funktion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>--no-flatfield</code></td>
+<td>Flat-Field-Korrektur überspringen</td>
+</tr>
+<tr class="even">
+<td><code>--no-enhancer</code></td>
+<td>CIDocumentEnhancer überspringen</td>
+</tr>
+<tr class="odd">
+<td><code>--no-deskew</code></td>
+<td>Entzerrung überspringen</td>
+</tr>
+<tr class="even">
+<td><code>--no-tightcrop</code></td>
+<td>Textblock-Beschnitt überspringen</td>
+</tr>
+<tr class="odd">
+<td><code>--no-ocr</code></td>
+<td>OCR-Schritt überspringen (nur Bild)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Typ</th>
+<th>Standard</th>
+<th>Funktion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>--contrast &lt;x&gt;</code></td>
+<td>Float</td>
+<td>1,15</td>
+<td>Stärke der archivischen S-Kurve</td>
+</tr>
+<tr class="even">
+<td><code>--brightness &lt;x&gt;</code></td>
+<td>Float</td>
+<td>0,0</td>
+<td>Verschiebung des Papierziels (+0,1 = heller)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Funktion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>--score</code></td>
+<td>Nur Schärfescore messen und ausgeben, Pipeline nicht ausführen</td>
+</tr>
+<tr class="even">
+<td><code>--measure-tilt</code></td>
+<td>Neigungsresiduum messen (Projektionsprofil), Pipeline nicht ausführen</td>
+</tr>
+<tr class="odd">
+<td><code>--probe-receipt</code></td>
+<td>Belegrahmen-Erkennungsdiagnose: Quad-IoU, Winkelabweichung, Hull-Bereich</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<section id="belegdiagnose" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="belegdiagnose"><span class="header-section-number">3.1</span> Belegdiagnose</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Belegrahmen und Hülle diagnostizieren</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">famulus-pipeline</span> <span class="dt">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  ~/Documents/Scans/QUITTUNGEN/masters/master_005.heic <span class="dt">\</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--mode</span> receipt <span class="dt">\</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--probe-receipt</span> <span class="dt">\</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> /tmp/repro-receipt-debug</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Neigungsresiduum messen</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="ex">famulus-pipeline</span> master_001.heic <span class="at">--measure-tilt</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="ausgabe-stufenbilder" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="ausgabe-stufenbilder"><span class="header-section-number">4</span> Ausgabe: Stufenbilder</h2>
+<p>Das Ausgabeverzeichnis enthält nach dem Lauf für jede erkannte Seite:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Datei</th>
+<th>Inhalt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>page_001.0-rectified.jpg</code></td>
+<td>Perspektivkorrigiertes, ausgerichtetes Bild (nach Schritt 1–3)</td>
+</tr>
+<tr class="even">
+<td><code>page_001.1-flatfield.jpg</code></td>
+<td>Nach Flat-Field-Division</td>
+</tr>
+<tr class="odd">
+<td><code>page_001.2-levels.jpg</code></td>
+<td>Nach Tonwert-Normierung und S-Kurve</td>
+</tr>
+<tr class="even">
+<td><code>page_001.3-enhancer.jpg</code></td>
+<td>Nach CIDocumentEnhancer</td>
+</tr>
+<tr class="odd">
+<td><code>page_001.4-sharpen.jpg</code></td>
+<td>Finales Bild nach Schärfung</td>
+</tr>
+<tr class="even">
+<td><code>page_001/page_001.jpg</code></td>
+<td>Identisch mit <code>4-sharpen</code> — die PDAI-Ablage-Kopie</td>
+</tr>
+<tr class="odd">
+<td><code>page_001/page_001.json</code></td>
+<td>Vollständiges Seitenprotokoll (GeometryReport + ToneReport + OCRResult + Quality-Gate)</td>
+</tr>
+</tbody>
+</table>
+<p>Die Stufenbilder beginnen mit dem <strong>verarbeiteten</strong> Seitenbild, nie mit dem Roh-Master. <code>0-rectified.jpg</code> ist die Ausgabe nach Geometrie (Perspektivkorrektur, Rotation, GutterFinder-Seitentrennung).</p>
+<p>Durch Vergleich von <code>0-rectified</code> und <code>1-flatfield</code> lässt sich prüfen, ob und wie stark die Ausleuchtung korrigiert wurde. <code>1-flatfield</code> gegen <code>2-levels</code> zeigt die Wirkung der Tonwert-Normierung. Wenn <code>2-levels</code> bereits gut aussieht und <code>3-enhancer</code> schlechter wird, kann <code>--no-enhancer</code> eingesetzt werden.</p>
+</section>
+<section id="ausgabe-konsolen-bericht" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="ausgabe-konsolen-bericht"><span class="header-section-number">5</span> Ausgabe: Konsolen-Bericht</h2>
+<p>Der Lauf druckt einen strukturierten Bericht auf die Standardausgabe:</p>
+<pre><code>master  /path/to/master_001.heic
+out     /tmp/famulus-debug
+mode    Buch (2-Seiten Doppelseite)  flatfield=true enhancer=true deskew=true tightcrop=true ocr=true
+
+page 1 (left):
+  quad  [0.10,0.08] [0.92,0.06] [0.94,0.94] [0.08,0.95]  confidence=0.97  source=mac-segmentation
+  gutter  50.2 %  (projection-minimum)
+  deskew  0.25°
+  crop  [4%, 3%, 92%, 94%]
+  output  2680 × 3520 px
+  ink=0.042  paper=0.931  median=0.871  flatfield=yes  enhancer=yes
+  ocr  vision-documents  de-DE  confidence=0.947  blocks=24
+
+page 2 (right):
+  ...
+
+elapsed  4.2 s</code></pre>
+</section>
+<section id="schärfescore-isoliert-messen" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="schärfescore-isoliert-messen"><span class="header-section-number">6</span> Schärfescore isoliert messen</h2>
+<p>Der <code>--score</code>-Modus führt keine Bildverarbeitung durch, sondern nur die Laplace-Varianz-Messung:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">famulus-pipeline</span> master_001.heic <span class="at">--score</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># score  0.3412  (PASS, gate=0.080)  master_001.heic</span></span></code></pre></div><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ein <code>FAIL</code>-Ergebnis bedeutet, dass die Aufnahme zu unscharf für eine Verwendung ist und neu gemacht werden sollte. Der Schwellenwert <code>gate=0.080</code> entspricht dem <code>hardGateThreshold</code> in <code>Sharpness.swift</code>.</p>
+</section>
+<section id="diagnose-leitfaden" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="diagnose-leitfaden"><span class="header-section-number">7</span> Diagnose-Leitfaden</h2>
+<p><strong>Überbelichtetes, zu helles Bild</strong></p>
+<p>Ursache: Tinte-Anker liegt nicht bei 0,5. Perzentil, sondern höher; die Pipeline hat keine dunklen Pixel gemessen.</p>
+<p>Prüfung: Wert <code>inkPoint</code> im Bericht. Wenn <code>inkPoint &gt; 0.15</code>, ist der Satzspiegel zu hell oder das Messquadrat liegt im falschen Bereich. Mögliche Gründe: Das Dokument ist sehr blass (Bleistift, blasse Tinte), der Untergrund ist nicht schwarz und ragt in das Messquadrat.</p>
+<p>Abhilfe: Schwarzen Untergrund sicherstellen; bei extrem blassem Dokument <code>--contrast 1.5</code> probieren; mit <code>--no-flatfield</code> testen, ob die Flat-Field-Division den Kontrast fälschlicherweise reduziert.</p>
+<p><strong>Zu dunkles, zugeschnürtes Bild</strong></p>
+<p>Ursache: Das Messquadrat liegt im Falzbereich oder im schwarzen Untergrund. Wenn der Falz in das zentrale Messquadrat ragt, nimmt der Tintenanker einen zu dunklen Wert auf.</p>
+<p>Prüfung: <code>measureRect</code> im Bericht. Wenn das Bild zu hoch oder zu niedrig ausgefüllt ist, kann der Falz ins Messquadrat reichen.</p>
+<p>Abhilfe: Geometrie prüfen — möglicherweise ist der <code>gutterFraction</code>-Wert falsch und der Split liegt nicht am Bundsteg.</p>
+<p><strong>Schiefe Seite</strong></p>
+<p>Ursache: <code>deskewDegrees</code>-Wert ist ungleich null, aber der Algorithmus hat den falschen Maximalwinkel gefunden.</p>
+<p>Prüfung: <code>deskewDegrees</code> im Bericht. Wenn der Wert &gt; 3°, ist das für ein normales Buch ungewöhnlich.</p>
+<p>Abhilfe: <code>--no-deskew</code> testen; wenn das Bild dann gerade ist, liegt ein Fehler im Deskew vor. Das Dokument möglicherweise erneut aufnehmen und dabei auf horizontale Ausrichtung achten.</p>
+<p><strong>OCR-Ergebnis leer oder unvollständig</strong></p>
+<p>Ursache 1: Kaltstart — das Vision-Modell war beim ersten Lauf noch nicht geladen. Lösung: Lauf wiederholen.</p>
+<p>Ursache 2: <code>--no-ocr</code> ist gesetzt.</p>
+<p>Ursache 3: Das Bild ist nach der Verarbeitungskette zu dunkel oder zu verrauscht für die Vision-Engine. Stufenbild <code>3-enhancer.jpg</code> prüfen.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Kopiert");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Kopiert");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Famulus Repro · lettreai</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Gerd Graßhoff · 2026</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
