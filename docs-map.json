@@ -1,6 +1,8 @@
 {
  "/famulus-news/library/ai-viewer/": "https://famulus.lettre.ai/docs/viewer/",
+ "/famulus-news/library/ai-viewer/CSS_CONVENTIONS.html": "https://famulus.lettre.ai/docs/viewer/CSS_CONVENTIONS.html",
  "/famulus-news/library/ai-viewer/PAGE_INDEXING_FIX.html": "https://famulus.lettre.ai/docs/viewer/PAGE_INDEXING_FIX.html",
+ "/famulus-news/library/ai-viewer/VERSION_FEATURES.html": "https://famulus.lettre.ai/docs/viewer/VERSION_FEATURES.html",
  "/famulus-news/library/ai-viewer/api-reference.html": "https://famulus.lettre.ai/docs/viewer/api-reference.html",
  "/famulus-news/library/ai-viewer/architecture.html": "https://famulus.lettre.ai/docs/viewer/architecture.html",
  "/famulus-news/library/ai-viewer/cli-reference.html": "https://famulus.lettre.ai/docs/viewer/cli-reference.html",
