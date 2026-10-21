@@ -1,0 +1,14 @@
+:root {
+  --oxford-blue: #002147;
+  --gold:        #C9A227;
+  --sandstone:   #fdfbf7;
+  --sandstone-dark: #f0ebe0;
+  --code-bg:     #f6f1e6;
+  --text-primary: #1a1a1a;
+  --text-muted:   #6c757d;
+  --border-color: #dee2e6;
+  --success:      #198754;
+  --warning:      #ffc107;
+  --danger:       #dc3545;
+  --info:         #0dcaf0;
+}
