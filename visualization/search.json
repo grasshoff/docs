@@ -1,0 +1,100 @@
+[
+ {
+  "objectID": "typst.html",
+  "href": "typst.html",
+  "title": "Abbildungen in Typst",
+  "section": "",
+  "text": "Abbildungen in Famulus-Papieren werden in Typst selbst gezeichnet, aus den Datendateien des Papiers. Ein Import genügt:\nDas Paket bringt die Farben und Strichstärken aller Famulus-Dokumente mit, ein Thema für lilaq-Diagramme und Vorlagen für die häufigsten Aussagen. Die zugrunde liegenden Pakete sind in festen Versionen dabei: lilaq 0.6.0, cetz 0.5.3, cetz-plot 0.1.4 und fletcher 0.5.8. Sie liegen lokal vor, sodass ein Papier ohne Netz gesetzt wird."
+ },
+ {
+  "objectID": "typst.html#von-der-aussage-zur-form",
+  "href": "typst.html#von-der-aussage-zur-form",
+  "title": "Abbildungen in Typst",
+  "section": "Von der Aussage zur Form",
+  "text": "Von der Aussage zur Form\nZuerst steht der Satz, den die Abbildung sichtbar machen soll. Aus ihm folgt die Form:\n\n\n\n\n\n\n\ndie Aussage handelt von …\nVorlage\n\n\n\n\nMengen im Vergleich\nfv.bar-chart(labels, values, highlight: i), waagrecht mit horizontal: true\n\n\nVeränderung entlang einer Größe\nfv.line-chart(x, series, highlight: i)\n\n\neinem Schätzwert und seiner Unsicherheit\nfv.ci-chart(x, y, lo, hi)\n\n\ndem Zusammenhang zweier Messgrößen\nfv.scatter-chart(x, y, emphasis: mask)\n\n\nVeränderung zwischen zwei Zeitpunkten\nfv.slope-chart(labels, before, after, highlight: i)\n\n\nMessungen gegen einen Sollwert\nfv.residual-chart(ids, residuals, threshold: t)\n\n\nUrsache und Wirkung\nfv.causal-graph(nodes, edges)\n\n\nder Abfolge von Schritten\nfv.flow(steps, active: i)\n\n\nSonnenuhrgeometrie\nfv.horizontal-sundial(lat, highlight: h)\n\n\nEreignissen in der Zeit\nfv.timeline(events, highlight: i)"
+ },
+ {
+  "objectID": "typst.html#regeln",
+  "href": "typst.html#regeln",
+  "title": "Abbildungen in Typst",
+  "section": "Regeln",
+  "text": "Regeln\n\nDie Daten kommen aus der Datei (json(...), csv(...)); keine Zahl, die in einer Datei steht, wird in eine Abbildung getippt.\nGold markiert die Elemente, von denen die Aussage handelt; alles andere ist Kontext.\nBalken beginnen bei null. Unsicherheit wird gezeichnet, wo die Daten sie tragen, und nur dort.\nKeine semantischen Rot-Grün-Farben, keine Verläufe oder Schatten in flachen Diagrammen.\nEine Abbildung gilt erst als fertig, wenn ihre gerenderte Seite angesehen wurde."
+ },
+ {
+  "objectID": "typst.html#probeseiten",
+  "href": "typst.html#probeseiten",
+  "title": "Abbildungen in Typst",
+  "section": "Probeseiten",
+  "text": "Probeseiten\nDie Probeseiten zeichnen zwei Abbildungen des ObjID18-Papiers aus seiner Parameterdatei neu und zeigen jede Vorlage an echten Daten.\n\n\n\nDie Tagkreisradien gegen die axiale Lage, mit der angepassten Mantellinie des Kegels und der extrapolierten Spitze.\n\n\n\n\n\nDer strenge Wert jeder Konfiguration des Needle-Benchmarks in waagrechten Balken, die beste golden gezeichnet.\n\n\n\n\n\nDie Vorlagen auf der zweiten Probeseite: Balken, Abweichungen vom Sollwert, Ablauf und Sonnenuhrgeometrie.\n\n\nDie Probeseiten als PDF: specimen.pdf."
+ },
+ {
+  "objectID": "referenz.html",
+  "href": "referenz.html",
+  "title": "Gelöste Aufgaben",
+  "section": "",
+  "text": "Viele Gestaltungsfragen kehren wieder: eine Legende, die auf den Balken liegt, Beschriftungen, die einander überdecken, Ziffern in der falschen Schrift, Linien, die im dunklen Modus verschwinden. Famulus Visualization sammelt solche Aufgaben mit ihrer Lösung, damit eine Lösung nur einmal gefunden werden muss.\nJede Lösung wird beim Eintragen gerendert. Sie gilt erst, wenn die Darstellung gelungen ist; eine Lösung ohne gelungene Darstellung bleibt ein Kandidat mit dem Fehler, an dem sie scheiterte. Zurückgezogene Lösungen bleiben verzeichnet und kehren nicht zurück. Lösungen des Eigentümers haben Vorrang vor maschinell beigetragenen."
+ },
+ {
+  "objectID": "referenz.html#die-ersten-einträge",
+  "href": "referenz.html#die-ersten-einträge",
+  "title": "Gelöste Aufgaben",
+  "section": "Die ersten Einträge",
+  "text": "Die ersten Einträge\n\n\n\n\n\n\n\n\nAufgabe\nMedium\nLösung\n\n\n\n\nLegend covers the bars of a lilaq chart (V-CH-001)\ntypst\nGive the y-range headroom above the tallest bar (ylim) and keep the legend inside at top + right.\n\n\nTick numbers set in the math font (V-CH-002)\ntypst\nInside the theme, give tick labels a show rule that sets math.equation to the label font (fv.theme does this).\n\n\nAngle labels collide near the noon line of a dial (V-CH-003)\ntypst\nWrite each label along its own hour line (content angle = line direction, anchor south), so neighbours never share space; fv.horizontal-sundial(show-angles: true).\n\n\nAn uncertainty band the data do not provide (V-CH-004)\ntypst\nMake the CI optional; mark the claim (points beyond a stated threshold) in gold and say in the caption that no uncertainty is drawn because the data give none.\n\n\ncontext as a dictionary key (V-CH-005)\ntypst\nName the role differently (fv uses background) or quote it: (“context”: …).\n\n\nMark the claim in a D3 bar chart (V-CH-006)\nhtml\nbarChart(…, highlight: [indices]) draws the claimed bars in gold-deep and the rest in the context colour; bars start at zero.\n\n\nAnimated charts photographed half-drawn (V-CH-007)\nhtml\nGate every transition on motionAllowed(): off under prefers-reduced-motion and for ?static captures; the final state is drawn directly.\n\n\nThick lines in WebGL (V-CH-008)\n3d\nUse Line2 / LineGeometry / LineMaterial with a pixel linewidth and keep the material resolution in step with the canvas (scene.js thickLine, from sundial.html createThickLine).\n\n\nReveal measured lines slowly enough to follow (V-CH-009)\nanimation\nA scene’s reveal grows each Line2 by instanceCount over most of the scene duration with cubic-in-out easing; one layer family per scene.\n\n\nTinted line colours vanish in dark mode (V-CH-010)\n3d\nGive every tint used for marks a dark-mode value in tokens/famulus.json (dark), and resolve colours through color(key) at draw time.\n\n\nForm choice: When examining a trend across continuous variables with very few sparse observations, use  (V-CH-011)\ntypst\nWhen examining a trend across continuous variables with very few sparse observations, use scatter rather than line to display discrete measurements without implying piecewise interpolation or artificial kinks."
+ },
+ {
+  "objectID": "index.html",
+  "href": "index.html",
+  "title": "Famulus Visualization",
+  "section": "",
+  "text": "Famulus Visualization macht aus einem Datennarrativ eine Abbildung: in einem Typst-Papier, auf einer HTML-Seite, als 3D-Szene oder als Animation. Jede Abbildung liest ihre Daten aus der Datei, in der sie stehen, und hebt genau die Elemente hervor, von denen die Aussage handelt.\nEine Lernschleife prüft, welche Form ein Narrativ am besten trägt. Sie lässt die gerenderte Abbildung beurteilen, formuliert aus einem misslungenen Fall eine allgemeine Regel und übernimmt die Regel erst, wenn sie den Fall verbessert und kein anderes Narrativ verschlechtert."
+ },
+ {
+  "objectID": "index.html#ein-beispiel",
+  "href": "index.html#ein-beispiel",
+  "title": "Famulus Visualization",
+  "section": "Ein Beispiel",
+  "text": "Ein Beispiel\nDie Stundenlinien der konischen Sonnenuhr ObjID18 teilen die Äquinoktiallinie nicht ganz in gleiche Stunden: Drei aufeinanderfolgende Schritte bleiben deutlich unter 15°. Die Abbildung liest die Schritte aus der Parameterdatei der Untersuchung und setzt die drei Schritte in Gold ab.\n\n\n\n\n\n\nAbbildung 1: Winkelschritte zwischen benachbarten Stundenmarken auf der Äquinoktiallinie; die Schritte unter 14° sind golden gezeichnet, die gestrichelte Linie markiert 15°."
+ },
+ {
+  "objectID": "lernen.html",
+  "href": "lernen.html",
+  "title": "Lernschleife",
+  "section": "",
+  "text": "Welche Form eine Aussage am besten trägt, steht in einem Leitfaden, den die Plattform fortschreibt. Ein Durchgang nimmt ein Narrativ — einen Satz und die echten Daten, von denen er handelt — und durchläuft diese Stufen:"
+ },
+ {
+  "objectID": "lernen.html#die-narrative",
+  "href": "lernen.html#die-narrative",
+  "title": "Lernschleife",
+  "section": "Die Narrative",
+  "text": "Die Narrative\n\nneedle-best: Among the nine retrieval configurations of the needle benchmark, cloudweak with claude-haiku-5-5 reaches the highest strict score.\nneedle-nli-gap: The two NLI configurations lose the most between coarse and strict grading among the non-generative methods, while fnf with claude-haiku-5-5 loses almost nothing.\nneedle-strict-coarse: Every configuration of the needle benchmark scores lower under strict grading than under coarse grading.\nobjid18-cone: The radius of the three day-circles falls steadily with their axial position, as circles cut from one cone must.\nobjid18-hour-steps: Three adjacent hour steps on the equinoctial day-line (intervals 5 to 7) are clearly shorter than the 15° of equal hours; the others lie close to 15°.\nobjid18-step-deviation: The hour steps deviate from the nominal 15° by up to 2°, and only intervals 5 to 7 deviate by more than 1°."
+ },
+ {
+  "objectID": "lernen.html#stand-der-lernschleife",
+  "href": "lernen.html#stand-der-lernschleife",
+  "title": "Lernschleife",
+  "section": "Stand der Lernschleife",
+  "text": "Stand der Lernschleife\n7 Durchgänge, davon 5 ohne Befund; 1 Schrankenlauf, 1 bestanden.\n\n\n\n\n\n\n\nRegel\nStand\n\n\n\n\nWhen examining a trend across continuous variables with very few sparse observations, use scatter rather than line to display discrete measurements without implying piecewise interpolation or artificial kinks.\nübernommen"
+ },
+ {
+  "objectID": "szenen.html",
+  "href": "szenen.html",
+  "title": "HTML, Animation, 3D",
+  "section": "",
+  "text": "Für Seiten im Netz zeichnet dieselbe Gestaltung mit D3, für Bewegung und Raum mit einer Szenenlaufzeit auf Three.js. Farben, Strichstärken und Bewegungstempo kommen aus derselben Quelle wie die Typst-Abbildungen."
+ },
+ {
+  "objectID": "szenen.html#d3-diagramme",
+  "href": "szenen.html#d3-diagramme",
+  "title": "HTML, Animation, 3D",
+  "section": "D3-Diagramme",
+  "text": "D3-Diagramme\nDie Diagramme lesen ihre Daten zur Laufzeit und setzen die Elemente der Aussage in Gold ab. Bewegung ist langsam genug, um ihr zu folgen; wer reduzierte Bewegung eingestellt hat, sieht das fertige Bild sofort."
+ },
+ {
+  "objectID": "szenen.html#szenen",
+  "href": "szenen.html#szenen",
+  "title": "HTML, Animation, 3D",
+  "section": "Szenen",
+  "text": "Szenen\nEine Szene ist eine Folge von Einstellungen: welche Ebenen sichtbar sind, wohin die Kamera blickt, was hervorgehoben und was gerade gezeichnet wird, und welcher Satz dazu steht. Die Szenenlaufzeit ist aus der 3D-Untersuchung antiker Sonnenuhren hervorgegangen, deren Szenenbeschreibungen sie verallgemeinert.\nDie folgende Szene zeigt die auf dem 3D-Scan der Sonnenuhr ObjID18 erkannten Stunden- und Tageslinien und die von Hand markierten Punkte, aus den Messdaten der Untersuchung.\n\nJede Szene lässt sich an einem Zeitpunkt anhalten: ?t=3 öffnet sie in der dritten Sekunde. So entstehen Standbilder für Papiere und wiederholbare Prüfaufnahmen."
+ }
+]

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ObjID18 in Space</title>
+<link rel="stylesheet" href="../viz-runtime/famulus-tokens.css">
+<link rel="stylesheet" href="../viz-runtime/viz.css">
+<style>
+  html, body { height: 100%; }
+  #stage { position: absolute; inset: 0; }
+  .provenance { position: absolute; right: 1rem; top: 0.9rem; font-size: 0.75rem; color: var(--fv-muted); max-width: 40ch; text-align: right; }
+</style>
+<script type="importmap">{"imports": {
+  "three": "../vendor/three-0.170.0/build/three.module.js",
+  "three/addons/": "../vendor/three-0.170.0/examples/jsm/"}}</script>
+<script>
+  window.addEventListener('error', e => { document.documentElement.dataset.renderError = String(e.message || e); });
+  window.addEventListener('unhandledrejection', e => { document.documentElement.dataset.renderError = String(e.reason); });
+</script>
+</head>
+<body class="fv-page">
+<div id="stage"></div>
+<div class="provenance" id="prov"></div>
+<script type="module">
+import { createStage } from '../viz-runtime/scene/scene.js';
+
+const d = await (await fetch('data/objid18-lines.json')).json();
+document.getElementById('prov').textContent =
+  `${d.object} · detected lines and marked points (${d.unit}) · extracted ${d.extracted}`;
+
+const stage = createStage(document.getElementById('stage'), { up: [0, 0, 1] });
+const byName = Object.fromEntries(d.day_lines.map(l => [l.name, l]));
+
+stage.declare({ id: 'hour_lines', kind: 'line', paths: d.hour_lines.map(h => h.path), color: 'oxford', width: 2 });
+stage.declare({ id: 'day_suso', kind: 'line', paths: [byName.DayCurveSuSo.path], color: 'oxford_300', width: 3 });
+stage.declare({ id: 'day_equi', kind: 'line', paths: [byName.DayCurveEqui.path], color: 'oxford_300', width: 3 });
+stage.declare({ id: 'day_wiso', kind: 'line', paths: [byName.DayCurveWiSo.path], color: 'oxford_300', width: 3 });
+stage.declare({ id: 'axis', kind: 'axis', origin: d.axis.apex, direction: d.axis.direction, length: 420, color: 'muted', width: 1.5 });
+stage.declare({ id: 'markers', kind: 'points', points: d.markers.map(m => m.xyz), color: 'gold_deep', size: 7 });
+
+const fmt = (x, n = 1) => x.toFixed(n);
+const equi = byName.DayCurveEqui, suso = byName.DayCurveSuSo, wiso = byName.DayCurveWiSo;
+const all = { hour_lines: true, day_suso: true, day_equi: true, day_wiso: true, axis: false, markers: true };
+const lines = ['hour_lines', 'day_suso', 'day_equi', 'day_wiso'];
+
+stage.play([
+  { id: 'object', title: 'The measured dial', duration: 9, visibility: all, frame: lines,
+    camera_animation: { from_theta: 0, to_theta: 50, duration: 9 },
+    description: `ObjID18: ${d.hour_lines.length} hour lines and ${d.day_lines.length} day-lines detected on the 3-D scan, with the ${d.markers.length} points marked by hand (gold).` },
+  { id: 'hours', title: 'Hour lines', duration: 9, frame: lines,
+    visibility: { ...all, day_suso: false, day_equi: false, day_wiso: false, markers: false },
+    reveal: ['hour_lines'], highlight: ['hour_lines'],
+    description: `The hour lines are drawn in. Fitted as circular arcs they leave a residual of ${fmt(Math.min(...d.hour_lines.map(h => h.rms_arc_mm)), 2)}–${fmt(Math.max(...d.hour_lines.map(h => h.rms_arc_mm)), 2)} mm.` },
+  { id: 'days', title: 'Day-lines', duration: 10, frame: lines,
+    visibility: { ...all, markers: false }, reveal: ['day_suso', 'day_equi', 'day_wiso'], highlight: ['day_equi'],
+    description: `Three day-lines: summer solstice (r = ${fmt(suso.radius_mm)} mm), equinox (r = ${fmt(equi.radius_mm)} mm, gold) and winter solstice (r = ${fmt(wiso.radius_mm)} mm).` },
+  { id: 'cone', title: 'One cone', duration: 10, frame: lines,
+    visibility: { ...all, axis: true, markers: false }, highlight: ['axis'],
+    camera_animation: { from_theta: 0, to_theta: -60, duration: 10 },
+    description: `The day-lines are circles of one cone around the gnomon axis; the fitted half-angle is ${fmt(d.axis.half_angle_deg)}°.` },
+]);
+</script>
+</body>
+</html>

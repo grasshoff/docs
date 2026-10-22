@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.11.1">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Gerd Graßhoff">
-<meta name="dcterms.date" content="2026-09-29">
+<meta name="dcterms.date" content="2026-10-21">
 
 <title>PDAI Structured-XML OCR System</title>
 <style>
@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-d790f1a89f3916965f720a191022e3fb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2a3f73af3887105a2a623d7cd9651c61.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-89a676d4ad20e24d423491e1503c3133.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -338,7 +338,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 29, 2026</p>
+      <p class="date">October 21, 2026</p>
     </div>
   </div>
   
@@ -461,7 +461,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><code>bibliography.yaml</code> in the collection (and, for the code tree, in <code>pdai/collections/&lt;name&gt;/config/</code>) is the working record of those verified fields, with a <code>_provenance</code> note naming the printed page. It is the file a setup script reads when it writes <code>biblio.xml</code>. It is not a second bibliography and it is not cited.</p>
 <p>The collection file <code>&lt;name&gt;.bib</code> is generated:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ai_lemma_index.stanzadoc.bib_build <span class="at">--collection</span> medieval-sec</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ai_lemma_index.collection.bib_build <span class="at">--collection</span> medieval-sec</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>bib_build</code> walks every document folder, reads <code>biblio.xml</code>, and writes one BibLaTeX entry whose key is the folder name. Documents without <code>biblio.xml</code> get no entry — a gap, not a guessed record. Hand-editing the <code>.bib</code> is overwritten the next time the command runs.</p>
 <p><code>pdai-config.json</code> is a different kind of metadata. It records how the document was harvested and processed: source PDF path, page count, OCR model, collection name, and — once the schema exists — a <code>schema_ref</code> pointing at the DTDs on the collection. It is not the bibliography. Correcting a title means editing <code>biblio.xml</code> and rebuilding the bib, then updating the <code>document</code> block in <code>pdai-config.json</code> so the two do not drift.</p>
 </section>
@@ -514,7 +514,7 @@ tablet.dtd        →  &lt;tablets&gt; of &lt;tablet&gt; records</code></pre>
 </div>
 </div>
 <p>Both DTDs sit <strong>on the collection</strong> as well as in the code tree, so a page XML file can name them without reaching back into <code>~/ai-mac-studio</code>. <code>pdai-config.json</code> records the paths under <code>schema_ref</code>.</p>
-<p>The schema YAML (<code>entry_schema.yaml</code> / <code>tablet_schema.yaml</code>) is the prose behind the DTD: every element cites the printed page it came from. How that schema is derived, and why it is written <em>before</em> production OCR, is the <span>schema-first</span> method.</p>
+<p>The schema YAML (<code>entry_schema.yaml</code> / <code>tablet_schema.yaml</code>) is the prose behind the DTD: every element cites the printed page it came from. How that schema is derived, and why it is written <em>before</em> production OCR, is the schema-first method (skill <code>pdai/skills/pipeline/schema-first-ocr/SKILL.md</code>).</p>
 </section>
 <section id="the-stylesheet-pair" class="level2" data-number="0.6">
 <h2 data-number="0.6" class="anchored" data-anchor-id="the-stylesheet-pair"><span class="header-section-number">0.6</span> The stylesheet pair</h2>
@@ -657,7 +657,7 @@ pirckheimer-sec/     # Pirckheimer-Jahrbuch, edited volumes, secondary scholarsh
 </ol>
 </div>
 </div>
-<p>The production commands that fill <code>pages/</code> are in the <span>pipeline skill</span>. This chapter stops at the folder that those commands write into.</p>
+<p>The production commands that fill <code>pages/</code> are in the pipeline skill (<code>pdai/skills/pipeline/SKILL.md</code>). This chapter stops at the folder that those commands write into.</p>
 
 
 </section>

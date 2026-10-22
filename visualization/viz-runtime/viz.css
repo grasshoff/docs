@@ -1,0 +1,45 @@
+/* famulus-visualization runtime — base styles for charts and scenes.
+   Colours come from famulus-tokens.css (generated); load that first. */
+
+.fv-page {
+  margin: 0;
+  background: var(--fv-paper);
+  color: var(--fv-ink);
+  font-family: var(--fv-sans);
+}
+
+.fv-chart { display: block; max-width: 100%; height: auto; overflow: visible; }
+.fv-chart text { font-family: var(--fv-sans); fill: var(--fv-ink); }
+.fv-chart .fv-title { font-size: var(--fv-size-title); font-weight: 600; fill: var(--fv-oxford); }
+.fv-chart .fv-axis-label { font-size: var(--fv-size-label); }
+.fv-chart .fv-axis text { font-size: var(--fv-size-tick); fill: var(--fv-muted); }
+.fv-chart .fv-axis path, .fv-chart .fv-axis line { stroke: var(--fv-ink); stroke-width: var(--fv-stroke-hairline); }
+.fv-chart .fv-grid line { stroke: var(--fv-line); stroke-opacity: 0.55; stroke-width: var(--fv-stroke-grid); }
+.fv-chart .fv-grid path { display: none; }
+.fv-chart .fv-legend text { font-size: var(--fv-size-small); }
+.fv-chart .fv-annotation { font-size: var(--fv-size-small); fill: var(--fv-gold-deep); }
+.fv-chart .fv-claim { font-size: var(--fv-size-label); font-weight: 600; fill: var(--fv-gold-deep); }
+
+.fv-figure { margin: 0 0 1.5rem; }
+.fv-figure figcaption { font-size: 0.85rem; color: var(--fv-muted); margin-top: 0.4rem; max-width: 60ch; }
+
+/* scene runtime */
+.fv-scene { position: relative; width: 100%; height: 100%; min-height: 360px; background: var(--fv-paper); overflow: hidden; }
+.fv-scene canvas { display: block; width: 100%; height: 100%; }
+.fv-scene-annotation {
+  position: absolute; left: 1rem; bottom: 3.6rem; max-width: min(52ch, 80%);
+  padding: 0.6rem 0.8rem; background: color-mix(in srgb, var(--fv-paper) 88%, transparent);
+  border-left: 3px solid var(--fv-gold); font-size: 0.95rem; line-height: 1.4;
+  opacity: 0; transition: opacity 0.8s ease;
+}
+.fv-scene-annotation.visible { opacity: 1; }
+.fv-scene-title { position: absolute; left: 1rem; top: 0.8rem; font-weight: 600; color: var(--fv-oxford); font-size: 1.05rem; }
+.fv-scene-transport {
+  position: absolute; left: 1rem; bottom: 0.8rem; display: flex; gap: 0.4rem; align-items: center;
+}
+.fv-scene-transport button {
+  font: inherit; font-size: 0.85rem; padding: 0.35rem 0.75rem; min-height: 2.2rem;
+  border: 1px solid var(--fv-oxford); background: var(--fv-paper); color: var(--fv-oxford); cursor: pointer;
+}
+.fv-scene-transport button.active, .fv-scene-transport button:hover { background: var(--fv-oxford); color: var(--fv-paper); }
+.fv-scene-transport .fv-scene-step { font-size: 0.8rem; color: var(--fv-muted); margin-left: 0.4rem; }

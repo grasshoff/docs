@@ -545,7 +545,7 @@
   "href": "index.html#related-projects",
   "title": "AI-Viewer",
   "section": "Related Projects",
-  "text": "Related Projects\n\nAI-Scholar\nAI-powered PDF and image OCR processing. Agents for translation, annotation, and scholarly analysis.\nDocumentation | GitHub\n\n\nPDAI\nStandardised document collections in page-centric format. The data layer connecting processing and presentation.\nFormat Specification",
+  "text": "Related Projects\n\nAI-Scholar\nAI-powered PDF and image OCR processing. Agents for translation, annotation, and scholarly analysis.\nDocumentation\n\n\nPDAI\nStandardised document collections in page-centric format. The data layer connecting processing and presentation.\nFormat Specification",
   "crumbs": [
    "Home",
    "Getting Started",
@@ -569,7 +569,7 @@
   "href": "index.html#licence",
   "title": "AI-Viewer",
   "section": "Licence",
-  "text": "Licence\nMIT Licence — see LICENCE for details.",
+  "text": "Licence\nMIT Licence (the code is not published yet).",
   "crumbs": [
    "Home",
    "Getting Started",
