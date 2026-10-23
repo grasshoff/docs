@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Gemessene Gates – Sonnenuhr-Geometrie</title>
+<title>Measured gates – Astronomy expert</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -75,8 +75,36 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="famulus-specialists.css">
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
@@ -87,7 +115,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Sonnenuhr-Geometrie</span>
+    <span class="navbar-title">Astronomy expert</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -98,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Spezialist</span></a>
+<span class="menu-text">Readings</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./status.html" aria-current="page"> 
@@ -120,10 +148,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#g1-kegelmodell-gegen-das-rechenbeispiel-rhodos" id="toc-g1-kegelmodell-gegen-das-rechenbeispiel-rhodos" class="nav-link active" data-scroll-target="#g1-kegelmodell-gegen-das-rechenbeispiel-rhodos"><span class="header-section-number">1</span> G1 – Kegelmodell gegen das Rechenbeispiel Rhodos</a></li>
-  <li><a href="#g2-tageslinien-gegen-die-gescannten-steine" id="toc-g2-tageslinien-gegen-die-gescannten-steine" class="nav-link" data-scroll-target="#g2-tageslinien-gegen-die-gescannten-steine"><span class="header-section-number">2</span> G2 – Tageslinien gegen die gescannten Steine</a></li>
-  <li><a href="#zitate" id="toc-zitate" class="nav-link" data-scroll-target="#zitate"><span class="header-section-number">3</span> Zitate</a></li>
-  <li><a href="#offen" id="toc-offen" class="nav-link" data-scroll-target="#offen"><span class="header-section-number">4</span> Offen</a></li>
+  <li><a href="#almagest-against-van-gents-calculator" id="toc-almagest-against-van-gents-calculator" class="nav-link active" data-scroll-target="#almagest-against-van-gents-calculator"><span class="header-section-number">1</span> Almagest against van Gent’s calculator</a></li>
+  <li><a href="#de441-against-horizons" id="toc-de441-against-horizons" class="nav-link" data-scroll-target="#de441-against-horizons"><span class="header-section-number">2</span> DE441 against Horizons</a></li>
+  <li><a href="#table-reading-against-the-sky" id="toc-table-reading-against-the-sky" class="nav-link" data-scroll-target="#table-reading-against-the-sky"><span class="header-section-number">3</span> Table reading against the sky</a></li>
+  <li><a href="#catalogues" id="toc-catalogues" class="nav-link" data-scroll-target="#catalogues"><span class="header-section-number">4</span> Catalogues</a></li>
+  <li><a href="#animations" id="toc-animations" class="nav-link" data-scroll-target="#animations"><span class="header-section-number">5</span> Animations</a></li>
   </ul>
 </nav>
     </div>
@@ -132,7 +161,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Gemessene Gates</h1>
+<h1 class="title">Measured gates</h1>
 </div>
 
 
@@ -149,70 +178,65 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Ein Gate ist ein Vergleich, der gerechnet und in eine Datei geschrieben wurde. Eine Zeile im Register ist kein Gate. Diese Seite wird von <code>sundial-geometry-build</code> aus den Gate-Dateien erzeugt.</p>
-<section id="g1-kegelmodell-gegen-das-rechenbeispiel-rhodos" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="g1-kegelmodell-gegen-das-rechenbeispiel-rhodos"><span class="header-section-number">1</span> G1 – Kegelmodell gegen das Rechenbeispiel Rhodos</h2>
-<p>Datei <code>gates/G1-worked-example.json</code>, gerechnet 2026-10-23. Verglichen wird mit dem Rechenbeispiel des Begleitaufsatzes <code>conic-sundial-geometry.qmd</code> (φ = 36°, α = 45°, ε = 23,44°). Der Aufsatz rundet auf drei Stellen. Die größte Abweichung beträgt 0.000872 Einheiten von d.&nbsp;Die Grenze lag bei 0.0015. Das Gate ist bestanden.</p>
+<p>A gate is a comparison that was run and written to a file. A registry row is not a gate.</p>
+<section id="almagest-against-van-gents-calculator" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="almagest-against-van-gents-calculator"><span class="header-section-number">1</span> Almagest against van Gent’s calculator</h2>
+<p>File <code>gates/almagest.json</code>. Two hundred Egyptian dates, seven bodies, fourteen hundred longitudes. The equation of time in his calculator was left off, and the same choice is made here. The worst difference was <span class="math inline">\(6.8 \times 10^{-12}\)</span> arcminutes. The limit was one arcminute. The gate passed.</p>
+</section>
+<section id="de441-against-horizons" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="de441-against-horizons"><span class="header-section-number">2</span> DE441 against Horizons</h2>
+<p>File <code>gates/horizons.json</code>. Fifty Julian Dates, the Sun, apparent ecliptic longitude of date, UT1 on both sides. The kernel is DE441 part 1, 1,651,119,104 bytes. The worst difference was 0.035 arcminutes. The gate passed.</p>
+<p>An earlier comparison by calendar date was about nine degrees off before 1582, because Horizons reads those dates as Julian and a proleptic Gregorian date is a different instant. The gate uses one Julian Date for both sides.</p>
+</section>
+<section id="table-reading-against-the-sky" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="table-reading-against-the-sky"><span class="header-section-number">3</span> Table reading against the sky</h2>
+<p>File <code>gates/table_vs_sky.json</code>. The same two hundred Egyptian dates. The Julian Date is the expression transcribed from van Gent’s calculator. The largest difference, in degrees:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Marke</th>
-<th>ℓ/d Aufsatz</th>
-<th>ℓ/d Modell</th>
-<th>L/d Aufsatz</th>
-<th>L/d Modell</th>
+<th>Body</th>
+<th>Worst difference</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Summer</td>
-<td>1.765</td>
-<td>1.76544</td>
-<td>2.497</td>
-<td>2.4967</td>
+<td>Sun</td>
+<td>8.02</td>
 </tr>
 <tr class="even">
-<td>Equinox</td>
-<td>1.0</td>
-<td>1.0</td>
-<td>1.414</td>
-<td>1.41421</td>
+<td>Moon</td>
+<td>8.76</td>
 </tr>
 <tr class="odd">
-<td>Winter</td>
-<td>0.698</td>
-<td>0.69756</td>
-<td>0.987</td>
-<td>0.9865</td>
+<td>Mercury</td>
+<td>12.03</td>
 </tr>
 <tr class="even">
-<td>L_S/L_W</td>
-<td>2.53</td>
-<td>2.53087</td>
-<td></td>
-<td></td>
+<td>Venus</td>
+<td>10.73</td>
+</tr>
+<tr class="odd">
+<td>Mars</td>
+<td>8.87</td>
+</tr>
+<tr class="even">
+<td>Jupiter</td>
+<td>4.92</td>
+</tr>
+<tr class="odd">
+<td>Saturn</td>
+<td>7.30</td>
 </tr>
 </tbody>
 </table>
-<p>Im selben Abschnitt nennt der Aufsatz in der Tabelle der synthetischen Rückrechnung L_S/L_W = 2,514. Das Rechenbeispiel und das Modell ergeben 2,53. Die Abweichung liegt im Aufsatz.</p>
 </section>
-<section id="g2-tageslinien-gegen-die-gescannten-steine" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="g2-tageslinien-gegen-die-gescannten-steine"><span class="header-section-number">2</span> G2 – Tageslinien gegen die gescannten Steine</h2>
-<p>Datei <code>gates/G2-daylines-scans.json</code>, gerechnet 2026-10-23. Für 35 Kegeluhren mit eindeutigem Flächenfit und Note A oder B sagt das Modell aus ihrem gefitteten Öffnungswinkel α und dem Nodusabstand d (gemessen als Abstand der Äquinoktiallinie) die Lage der Solstitiallinien voraus. Die Schiefe der Ekliptik ist 23.7138° für das Jahr 150 v. Chr. Über 60 gemessene Solstitiallinien beträgt der Median der relativen Abweichung 3.2%, das 90-%-Quantil 17.4%. Die Grenze lag bei 5% im Median. Das Gate ist bestanden.</p>
-<p>Das Gate misst die Steine ebenso wie das Modell. Große Abweichungen einzelner Steine können von der Messung kommen oder von der Arbeit des Steinmetzen; das Gate trennt beides nicht.</p>
+<section id="catalogues" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="catalogues"><span class="header-section-number">4</span> Catalogues</h2>
+<p>The star tables match the CDS ReadMe counts: Ptolemy 1028, Ulugh Beg 1018, Kepler’s 1627 edition of Tycho 1007, variants 82, Hevelius 1564. The IAU boundary file <code>bound_18.dat</code> has 1565 records. Hipparcos <code>I/239</code> is loaded at the ReadMe count, 118218 records. Two hundred and sixty-three of them leave the decimal right ascension blank, and those places are read from the sexagesimal columns of the same record.</p>
 </section>
-<section id="zitate" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="zitate"><span class="header-section-number">3</span> Zitate</h2>
-<p>34 von 34 Zitaten der Typologie sind wörtlich im OCR-Text der genannten Seite gefunden worden.</p>
-</section>
-<section id="offen" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="offen"><span class="header-section-number">4</span> Offen</h2>
-<ul>
-<li>G3: Rückrechnung der Breite aus Stunden- und Tageslinien der Scans gegen <code>joint_latitude.py</code>.</li>
-<li>3-D-Modelle der Kugel-, Zylinder- und ebenen Uhren.</li>
-<li>Schaldach nennt sechs Grundformen mit Buchstaben; die Liste selbst fehlt im OCR-Text. Gelesen sind K, S, O, R und die Formvariante U; der sechste Buchstabe ist nicht belegt (Abb. 131 nennt eine Form S₁L).</li>
-<li>Maße des rhodischen Körpers (Vorkragung des Limbus, Pfeilerbreite, Rundung der Seitenwände) sind in den gelesenen Stellen nicht angegeben; das 3-D-Modell setzt sie als Modellannahme.</li>
-</ul>
+<section id="animations" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="animations"><span class="header-section-number">5</span> Animations</h2>
+<p>Six animations are computed: Mars with both readings, the equant construction, Jupiter and Saturn from the Almagest, precession of one catalogue longitude, the elongation of Sirius, and the hippopede drawn with equal radii. Four frames are gaps: Copernicus, Kepler, the nova of 1572, and the Babylonian step functions. A gap frame names the missing source and draws no curve.</p>
 
 
 </section>

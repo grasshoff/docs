@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.11.1">
+<meta name="generator" content="quarto-1.11.6">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Measured gates – Astronomical expert</title>
+<title>Table reading and sky reading – Astronomy expert</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -38,14 +38,15 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-d5b4e69c7e37b49c6591bcc5116dd748.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-35fc0813589bbfbfa0b8ec974497eeb2.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-ba8f7c244c1f50cbf6c6a3aa3874339a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-261bca7ed27e50c5e513ac7e3369e0da.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -73,62 +74,36 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Astronomical expert</span>
+    <span class="navbar-title">Astronomy expert</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">Readings</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./status.html" aria-current="page"> 
+    <a class="nav-link" href="./status.html"> 
 <span class="menu-text">Gates</span></a>
   </li>  
 </ul>
@@ -142,25 +117,15 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#almagest-against-van-gents-calculator" id="toc-almagest-against-van-gents-calculator" class="nav-link active" data-scroll-target="#almagest-against-van-gents-calculator"><span class="header-section-number">1</span> Almagest against van Gent’s calculator</a></li>
-  <li><a href="#de441-against-horizons" id="toc-de441-against-horizons" class="nav-link" data-scroll-target="#de441-against-horizons"><span class="header-section-number">2</span> DE441 against Horizons</a></li>
-  <li><a href="#table-reading-against-the-sky" id="toc-table-reading-against-the-sky" class="nav-link" data-scroll-target="#table-reading-against-the-sky"><span class="header-section-number">3</span> Table reading against the sky</a></li>
-  <li><a href="#catalogues" id="toc-catalogues" class="nav-link" data-scroll-target="#catalogues"><span class="header-section-number">4</span> Catalogues</a></li>
-  <li><a href="#animations" id="toc-animations" class="nav-link" data-scroll-target="#animations"><span class="header-section-number">5</span> Animations</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content" id="quarto-document-content" tabindex="-1">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Measured gates</h1>
+<h1 class="title">Table reading and sky reading</h1>
 </div>
 
 
@@ -177,68 +142,31 @@ window.Quarto = {
 </header>
 
 
-<p>A gate is a comparison that was run and written to a file. A registry row is not a gate.</p>
-<section id="almagest-against-van-gents-calculator" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="almagest-against-van-gents-calculator"><span class="header-section-number">1</span> Almagest against van Gent’s calculator</h2>
-<p>File <code>gates/almagest.json</code>. Two hundred Egyptian dates, seven bodies, fourteen hundred longitudes. The equation of time in his calculator was left off, and the same choice is made here. The worst difference was <span class="math inline">\(6.8 \times 10^{-12}\)</span> arcminutes. The limit was one arcminute. The gate passed.</p>
-</section>
-<section id="de441-against-horizons" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="de441-against-horizons"><span class="header-section-number">2</span> DE441 against Horizons</h2>
-<p>File <code>gates/horizons.json</code>. Fifty Julian Dates, the Sun, apparent ecliptic longitude of date, UT1 on both sides. The kernel is DE441 part 1, 1,651,119,104 bytes. The worst difference was 0.035 arcminutes. The gate passed.</p>
-<p>An earlier comparison by calendar date was about nine degrees off before 1582, because Horizons reads those dates as Julian and a proleptic Gregorian date is a different instant. The gate uses one Julian Date for both sides.</p>
-</section>
-<section id="table-reading-against-the-sky" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="table-reading-against-the-sky"><span class="header-section-number">3</span> Table reading against the sky</h2>
-<p>File <code>gates/table_vs_sky.json</code>. The same two hundred Egyptian dates. The Julian Date is the expression transcribed from van Gent’s calculator. The largest difference, in degrees:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Body</th>
-<th>Worst difference</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Sun</td>
-<td>8.02</td>
-</tr>
-<tr class="even">
-<td>Moon</td>
-<td>8.76</td>
-</tr>
-<tr class="odd">
-<td>Mercury</td>
-<td>12.03</td>
-</tr>
-<tr class="even">
-<td>Venus</td>
-<td>10.73</td>
-</tr>
-<tr class="odd">
-<td>Mars</td>
-<td>8.87</td>
-</tr>
-<tr class="even">
-<td>Jupiter</td>
-<td>4.92</td>
-</tr>
-<tr class="odd">
-<td>Saturn</td>
-<td>7.30</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="catalogues" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="catalogues"><span class="header-section-number">4</span> Catalogues</h2>
-<p>The star tables match the CDS ReadMe counts: Ptolemy 1028, Ulugh Beg 1018, Kepler’s 1627 edition of Tycho 1007, variants 82, Hevelius 1564. The IAU boundary file <code>bound_18.dat</code> has 1565 records. Hipparcos <code>I/239</code> is loaded at the ReadMe count, 118218 records. Two hundred and sixty-three of them leave the decimal right ascension blank, and those places are read from the sexagesimal columns of the same record.</p>
-</section>
-<section id="animations" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="animations"><span class="header-section-number">5</span> Animations</h2>
-<p>Six animations are computed: Mars with both readings, the equant construction, Jupiter and Saturn from the Almagest, precession of one catalogue longitude, the elongation of Sirius, and the hippopede drawn with equal radii. Four frames are gaps: Copernicus, Kepler, the nova of 1572, and the Babylonian step functions. A gap frame names the missing source and draws no curve.</p>
+<p>A position question is answered twice. The table reading is what a named historical model gives for that date. The sky reading is what DE441 gives for the same instant. The difference is kept beside the two numbers. It is evidence about the text, because many ancient records were computed from the tables then current.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  vg["van Gent mirror, cited source"] --&gt; models["model registry"]
+  cds["CDS catalogues"] --&gt; cat["catalogue database"]
+  eph["DE441 and UT1"] --&gt; api["astronomy-expert, port 5142"]
+  models --&gt; api
+  cat --&gt; api
+  api --&gt; js["sky charts, D3 version 7"]
+  js --&gt; anim["animations"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The service listens on <code>127.0.0.1:5142</code>. A position is <code>model_position</code>. The pair of readings is <code>table_vs_sky</code>. Catalogue rows are <code>catalogue_star</code> and <code>catalogue_compare</code>. Charts and animations are <code>render_map</code> and <code>render_animation</code>. The same seven names are the tools of the MCP interface. <code>render_map</code> and <code>render_animation</code> are invoked over HTTP, because they write files.</p>
+<p>The Almagest model is a reimplementation from the sexagesimal parameters in <code>params/almagest.yaml</code>. Those parameters are R. H. van Gent’s transcription. His JavaScript is not part of this library. It is run, headless, only to produce the comparison fixtures. The pages of Toomer’s translation in the PDAI collection <code>greek-astronomy/Ptolemy1984</code> were not re-read for this transcription, and the parameter file says so.</p>
+<p>Models whose parameters have not been read off a page are <code>pending</code>. A pending model raises an error. It does not borrow a number from another model.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -640,6 +568,9 @@ window.Quarto = {
       }
     }
   });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
   </script>
 </div> <!-- /content -->
 

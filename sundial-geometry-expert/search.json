@@ -37,28 +37,28 @@
  {
   "objectID": "index.html",
   "href": "index.html",
-  "title": "Famulus-Spezialist Sonnenuhr-Geometrie",
+  "title": "Famulus-Experte Sonnenuhr-Geometrie",
   "section": "",
-  "text": "Der Spezialist beantwortet Fragen zur Gestalt antiker Sonnenuhren. Jede Antwort trägt ihre Begründung: Quelle mit Fundstelle, Methode, das Gate, auf dem die Methode steht, Annahmen und Lücken."
+  "text": "Der Experte beantwortet Fragen zur Gestalt antiker Sonnenuhren. Jede Antwort trägt ihre Begründung: Quelle mit Fundstelle, Methode, das Gate, auf dem die Methode steht, Annahmen und Lücken."
  },
  {
   "objectID": "index.html#typologie-auf-zwei-achsen",
   "href": "index.html#typologie-auf-zwei-achsen",
-  "title": "Famulus-Spezialist Sonnenuhr-Geometrie",
+  "title": "Famulus-Experte Sonnenuhr-Geometrie",
   "section": "1 Typologie auf zwei Achsen",
   "text": "1 Typologie auf zwei Achsen\nDie Empfangsfläche ist die Form der Schattenfläche: Kegel, Kugel, Zylinder, Globus, Ebene (horizontal, vertikal), Äquatorial, Vielfach, Meridian. Die Definitionen stehen wörtlich bei Schaldach, Die antiken Sonnenuhren Griechenlands Bd. II, S. 307–308.\nDie Körperform gilt für Hohlsonnenuhren. Schaldach unterscheidet Uhrkörper und Basis und ordnet die Uhren nach Limbus und Basis (Bd. II, S. 309–310): Tatzen (K), stilisierte Füße (S), abfallende Basis (O), die rhodische Form (R) und ungewöhnliche Basen (U). K, S und O sind Varianten der Kastenform, des Quaders. Die rhodische Form hat einen stark vorkragenden Limbus, eine pfeilerähnliche Basis und gerundete Seitenwände. Schaldach nennt sechs Grundformen; der OCR-Text lässt die Liste aus. Gelesen sind K, S, O und R sowie die Variante U. Der sechste Buchstabe steht als Lücke."
  },
  {
   "objectID": "index.html#die-kegelsonnenuhr-als-3-d-modell",
   "href": "index.html#die-kegelsonnenuhr-als-3-d-modell",
-  "title": "Famulus-Spezialist Sonnenuhr-Geometrie",
+  "title": "Famulus-Experte Sonnenuhr-Geometrie",
   "section": "2 Die Kegelsonnenuhr als 3-D-Modell",
   "text": "2 Die Kegelsonnenuhr als 3-D-Modell\nDie Empfangsfläche folgt aus den Bedingungen des Begleitaufsatzes conic-sundial-geometry: Die Kegelachse ist die Polachse, der Nodus liegt auf der Achse in der Ebene der Deckfläche, der Kegel öffnet nach Süden. Die Tageslinien sind Kreise senkrecht zur Achse. Die Stundenlinien teilen den Tagbogen in zwölf gleiche Teile.\n\nKastenform. Ein Quader mit waagrechter Deckfläche und senkrechter Rückseite. Die Südfront ist geteilt. Ihr oberer Teil ist eine Ebene senkrecht zur Kegelachse, parallel zur Äquatorebene. Der untere Teil ist eine zweite geneigte Ebene (Rinner 2017, S. 166–167). Die Kante zwischen Kegel und Deckfläche ist ein Kegelschnitt: eine Ellipse, wenn die Breite φ größer ist als der halbe Öffnungswinkel α, eine Hyperbel, wenn φ kleiner ist.\nRhodische Form. Dieselbe Kegelfläche, aber ein gerundeter Körper, der dem Kegel folgt. Dazu kommen ein vorkragender Limbus in der Randebene und ein kleiner Pfeiler als Basis (Schaldach Bd. I, S. 261–262).\n\nDie gelesenen Stellen nennen die Merkmale der Körper, nicht ihre Maße. Wandstärke, Höhe der Basis, Vorkragung des Limbus und Pfeilerbreite sind deshalb Parameter in Einheiten von d. Jede Antwort weist sie als Modellannahme aus."
  },
  {
   "objectID": "index.html#werkzeuge",
   "href": "index.html#werkzeuge",
-  "title": "Famulus-Spezialist Sonnenuhr-Geometrie",
+  "title": "Famulus-Experte Sonnenuhr-Geometrie",
   "section": "3 Werkzeuge",
   "text": "3 Werkzeuge\n\n\n\n\n\n\n\nWerkzeug\nAntwort\n\n\n\n\nsun_typology\nTypen beider Achsen mit Zitat und Fundstelle\n\n\nsun_type_of\nTyp eines Objekts: Repositoriumskategorie, Flächenfit des Scans, Körperform, wo belegt\n\n\nsun_lines\nTages- und Stundenlinien, Abstände vom Apex, Art der Kante\n\n\nsun_model_conic\nGLB-Modell in Kastenform oder rhodischer Form, mit Viewer\n\n\nsun_compare_object\nModell gegen einen gescannten Stein\n\n\nsun_about\nGebiet, Gates, Metriken, Quellen, Lücken\n\n\n\nMCP: http://127.0.0.1:5145/mcp, im Gateway als Namensraum sundial_geometry."
  }

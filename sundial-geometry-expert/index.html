@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Famulus-Spezialisten</title>
+<title>Famulus-Experte Sonnenuhr-Geometrie – Sonnenuhr-Geometrie</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -30,6 +30,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
@@ -47,11 +48,11 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-261bca7ed27e50c5e513ac7e3369e0da.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
+  "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
+  "panel-placement": "end",
+  "type": "overlay",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
@@ -75,14 +76,43 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="famulus-specialists.css">
+<link rel="stylesheet" href="famulus-experts.css">
 </head>
 
-<body class="quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+<body class="nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
 
 <div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Sonnenuhr-Geometrie</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Spezialist</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./status.html"> 
+<span class="menu-text">Gates</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -90,12 +120,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#astronomy" id="toc-astronomy" class="nav-link active" data-scroll-target="#astronomy">Astronomischer Spezialist</a></li>
-  <li><a href="#calendar" id="toc-calendar" class="nav-link" data-scroll-target="#calendar">Kalender-Spezialist</a></li>
-  <li><a href="#sundial-geometry" id="toc-sundial-geometry" class="nav-link" data-scroll-target="#sundial-geometry">Sonnenuhr-Geometrie</a></li>
-  <li><a href="#viz-reference" id="toc-viz-reference" class="nav-link" data-scroll-target="#viz-reference">Visualisierungs-Referenz</a></li>
-  <li><a href="#astronomy-mcp" id="toc-astronomy-mcp" class="nav-link" data-scroll-target="#astronomy-mcp">Astronomie-MCP (Prototyp)</a></li>
-  <li><a href="#aufnahme-in-den-katalog" id="toc-aufnahme-in-den-katalog" class="nav-link" data-scroll-target="#aufnahme-in-den-katalog">Aufnahme in den Katalog</a></li>
+  <li><a href="#typologie-auf-zwei-achsen" id="toc-typologie-auf-zwei-achsen" class="nav-link active" data-scroll-target="#typologie-auf-zwei-achsen"><span class="header-section-number">1</span> Typologie auf zwei Achsen</a></li>
+  <li><a href="#die-kegelsonnenuhr-als-3-d-modell" id="toc-die-kegelsonnenuhr-als-3-d-modell" class="nav-link" data-scroll-target="#die-kegelsonnenuhr-als-3-d-modell"><span class="header-section-number">2</span> Die Kegelsonnenuhr als 3-D-Modell</a></li>
+  <li><a href="#werkzeuge" id="toc-werkzeuge" class="nav-link" data-scroll-target="#werkzeuge"><span class="header-section-number">3</span> Werkzeuge</a></li>
   </ul>
 </nav>
     </div>
@@ -104,8 +131,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Famulus-Spezialisten</h1>
-<p class="subtitle lead">Katalog, Stand 2026-10-23</p>
+<h1 class="title">Famulus-Experte Sonnenuhr-Geometrie</h1>
 </div>
 
 
@@ -122,223 +148,62 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Famulus-Spezialisten sind offene Bibliotheken mit geprüftem Fachwissen eines Gebiets. Jeder Spezialist hat einen eigenen Wissensspeicher, beantwortet Fragen über eine einheitliche Schnittstelle (Model Context Protocol) und gibt mit jedem Wert seine Begründung: Quellen mit Fundstelle, Methode, das gemessene Gate, auf dem die Methode steht, Annahmen und Lücken. Dieser Katalog nennt für jeden Spezialisten sein Gebiet, seinen Stand, seine Gates und seine offenen Lücken.</p>
-<p><em>Läuft</em> heißt: im eigenen Rechnerverbund in Gebrauch. <em>Entwurf</em> heißt: gebaut, einige Gates offen. <em>Abgelöst</em> heißt: durch einen anderen Spezialisten ersetzt. Ein Gate ist ein Vergleich, der gerechnet und in eine Datei geschrieben wurde; eine Zahl steht hier nur, wenn es ein Gate für sie gibt. Der Betriebszustand wurde am 2026-10-23 abgefragt.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Spezialist</th>
-<th>Gebiet</th>
-<th>Stand</th>
-<th>Gates</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="#astronomy">Astronomischer Spezialist</a></td>
-<td>Historische Planetenmodelle (Almagest, aus van Gents Transkription der Parameter neu implementiert), Himmelslesung nach DE441, historische S…</td>
-<td>läuft</td>
-<td>3</td>
-</tr>
-<tr class="even">
-<td><a href="#calendar">Kalender-Spezialist</a></td>
-<td>Kalenderumrechnungen (julianisch, gregorianisch, JDN, Wochentag, Ostern) für die Normalisierung; kein Datum wird geraten.</td>
-<td>läuft</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td><a href="#sundial-geometry">Sonnenuhr-Geometrie</a></td>
-<td>3-D-Geometrie und Typologie antiker Sonnenuhren. Kegelsonnenuhr in Kastenform (Quader mit geteilter Südfront) und in rhodischer Form (vorkra…</td>
-<td>Entwurf</td>
-<td>2</td>
-</tr>
-<tr class="even">
-<td><a href="#viz-reference">Visualisierungs-Referenz</a></td>
-<td>Gelöste Gestaltungs- und Formataufgaben von Famulus-Abbildungen (Typst, D3, 3-D), jede Lösung durch ein echtes Rendering geprüft.</td>
-<td>läuft</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-<section id="astronomy" class="level2">
-<h2 class="anchored" data-anchor-id="astronomy">Astronomischer Spezialist</h2>
-<p>Historische Planetenmodelle (Almagest, aus van Gents Transkription der Parameter neu implementiert), Himmelslesung nach DE441, historische Sternkataloge (Ptolemaios, Ulugh Beg, Tycho in Keplers Ausgabe 1627, Hevelius, Hipparcos), Karten und Animationen; babylonische Erstsichtbarkeiten.</p>
-<p>Stand: läuft; Dienst am 2026-10-23 erreichbar. Im Famulus-MCP-Gateway als Namensraum <code>astronomy</code>, Werkzeuge <code>astro_…</code>.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Gate</th>
-<th>Vergleich mit</th>
-<th>Maß</th>
-<th>Wert</th>
-<th>Grenze</th>
-<th>Ergebnis</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>almagest</td>
-<td>van Gent, almagest.js (200 Daten, 7 Körper)</td>
-<td>worst_arcmin</td>
-<td>6,82e-12</td>
-<td>1</td>
-<td>bestanden</td>
-</tr>
-<tr class="even">
-<td>horizons</td>
-<td>JPL Horizons, Sonne, 50 Julianische Daten</td>
-<td>worst_arcmin</td>
-<td>0,0349</td>
-<td>–</td>
-<td>bestanden</td>
-</tr>
-<tr class="odd">
-<td>table_vs_sky</td>
-<td>Almagest-Tafel gegen DE441</td>
-<td>worst_deg</td>
-<td>12</td>
-<td>–</td>
-<td>–</td>
-</tr>
-</tbody>
-</table>
-<p>Lücken:</p>
-<ul>
-<li>Modelle ohne belegte Parameter (Kopernikus, Kepler, babylonische Schrittfunktionen) antworten nicht.</li>
-</ul>
+<p>Der Experte beantwortet Fragen zur Gestalt antiker Sonnenuhren. Jede Antwort trägt ihre Begründung: Quelle mit Fundstelle, Methode, das Gate, auf dem die Methode steht, Annahmen und Lücken.</p>
+<section id="typologie-auf-zwei-achsen" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="typologie-auf-zwei-achsen"><span class="header-section-number">1</span> Typologie auf zwei Achsen</h2>
+<p>Die <strong>Empfangsfläche</strong> ist die Form der Schattenfläche: Kegel, Kugel, Zylinder, Globus, Ebene (horizontal, vertikal), Äquatorial, Vielfach, Meridian. Die Definitionen stehen wörtlich bei Schaldach, <em>Die antiken Sonnenuhren Griechenlands</em> Bd. II, S. 307–308.</p>
+<p>Die <strong>Körperform</strong> gilt für Hohlsonnenuhren. Schaldach unterscheidet Uhrkörper und Basis und ordnet die Uhren nach Limbus und Basis (Bd. II, S. 309–310): Tatzen (K), stilisierte Füße (S), abfallende Basis (O), die rhodische Form (R) und ungewöhnliche Basen (U). K, S und O sind Varianten der Kastenform, des Quaders. Die rhodische Form hat einen stark vorkragenden Limbus, eine pfeilerähnliche Basis und gerundete Seitenwände. Schaldach nennt sechs Grundformen; der OCR-Text lässt die Liste aus. Gelesen sind K, S, O und R sowie die Variante U. Der sechste Buchstabe steht als Lücke.</p>
 </section>
-<section id="calendar" class="level2">
-<h2 class="anchored" data-anchor-id="calendar">Kalender-Spezialist</h2>
-<p>Kalenderumrechnungen (julianisch, gregorianisch, JDN, Wochentag, Ostern) für die Normalisierung; kein Datum wird geraten.</p>
-<p>Stand: läuft; Dienst am 2026-10-23 erreichbar. Im Famulus-MCP-Gateway als Namensraum <code>calendar</code>, Werkzeuge <code>cal_…</code>.</p>
-<p>Noch kein gemessenes Gate.</p>
-<p>Lücken:</p>
+<section id="die-kegelsonnenuhr-als-3-d-modell" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="die-kegelsonnenuhr-als-3-d-modell"><span class="header-section-number">2</span> Die Kegelsonnenuhr als 3-D-Modell</h2>
+<p>Die Empfangsfläche folgt aus den Bedingungen des Begleitaufsatzes <code>conic-sundial-geometry</code>: Die Kegelachse ist die Polachse, der Nodus liegt auf der Achse in der Ebene der Deckfläche, der Kegel öffnet nach Süden. Die Tageslinien sind Kreise senkrecht zur Achse. Die Stundenlinien teilen den Tagbogen in zwölf gleiche Teile.</p>
 <ul>
-<li>Kein gemessenes Gate; Wochentag gegen datetime geprüft, nicht als Gate-Datei.</li>
+<li><strong>Kastenform.</strong> Ein Quader mit waagrechter Deckfläche und senkrechter Rückseite. Die Südfront ist geteilt. Ihr oberer Teil ist eine Ebene senkrecht zur Kegelachse, parallel zur Äquatorebene. Der untere Teil ist eine zweite geneigte Ebene (Rinner 2017, S. 166–167). Die Kante zwischen Kegel und Deckfläche ist ein Kegelschnitt: eine Ellipse, wenn die Breite φ größer ist als der halbe Öffnungswinkel α, eine Hyperbel, wenn φ kleiner ist.</li>
+<li><strong>Rhodische Form.</strong> Dieselbe Kegelfläche, aber ein gerundeter Körper, der dem Kegel folgt. Dazu kommen ein vorkragender Limbus in der Randebene und ein kleiner Pfeiler als Basis (Schaldach Bd. I, S. 261–262).</li>
 </ul>
+<p>Die gelesenen Stellen nennen die Merkmale der Körper, nicht ihre Maße. Wandstärke, Höhe der Basis, Vorkragung des Limbus und Pfeilerbreite sind deshalb Parameter in Einheiten von d.&nbsp;Jede Antwort weist sie als Modellannahme aus.</p>
 </section>
-<section id="sundial-geometry" class="level2">
-<h2 class="anchored" data-anchor-id="sundial-geometry">Sonnenuhr-Geometrie</h2>
-<p>3-D-Geometrie und Typologie antiker Sonnenuhren. Kegelsonnenuhr in Kastenform (Quader mit geteilter Südfront) und in rhodischer Form (vorkragender Limbus, pfeilerähnliche Basis, gerundete Seitenwände) als 3-D-Modell; Tages- und Stundenlinien; Typologie nach Empfangsfläche (Kegel, Kugel, Zylinder, Ebene …) und Körperform (Schaldach K/S/O/R/U), jede Definition mit geprüftem Zitat.</p>
-<p>Stand: Entwurf; Dienst am 2026-10-23 erreichbar. Im Famulus-MCP-Gateway als Namensraum <code>sundial_geometry</code>, Werkzeuge <code>sun_…</code>.</p>
+<section id="werkzeuge" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="werkzeuge"><span class="header-section-number">3</span> Werkzeuge</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Gate</th>
-<th>Vergleich mit</th>
-<th>Maß</th>
-<th>Wert</th>
-<th>Grenze</th>
-<th>Ergebnis</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Kegelmodell gegen das Rechenbeispiel Rhodos</td>
-<td>conic-sundial-geometry.qmd, Abschnitt ‘Worked example: Rhodes’</td>
-<td>max</td>
-<td>Δ</td>
-<td>(Einheiten von d)</td>
-<td>8,72e-04</td>
-</tr>
-<tr class="even">
-<td>Tageslinien aus (α, d) gegen gemessene Solstitiallinien der Scans</td>
-<td>/Users/friedrichstr/ai-mac-studio/scholarly/research/ai-sundial3d/db/sundials.duckdb (decisive cones, grade A/B)</td>
-<td>Median</td>
-<td>relative Abweichung</td>
-<td></td>
-<td>0,0318</td>
-</tr>
-</tbody>
-</table>
-<p>Was man wofür bekommt:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Werkzeug</th>
-<th>Maß</th>
-<th>Wert</th>
-<th>Einheit</th>
-<th>Grundlage</th>
+<th>Antwort</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>sun_day_lines</code></td>
-<td>accuracy</td>
-<td>8,72e-04</td>
-<td>d</td>
-<td>G1-worked-example</td>
+<td><code>sun_typology</code></td>
+<td>Typen beider Achsen mit Zitat und Fundstelle</td>
 </tr>
 <tr class="even">
-<td><code>sun_day_lines</code></td>
-<td>accuracy_on_stones</td>
-<td>0,0318</td>
-<td>relative</td>
-<td>G2-daylines-scans</td>
+<td><code>sun_type_of</code></td>
+<td>Typ eines Objekts: Repositoriumskategorie, Flächenfit des Scans, Körperform, wo belegt</td>
 </tr>
 <tr class="odd">
-<td><code>sun_model_conic</code></td>
-<td>cost_eur</td>
-<td>0,00e+00</td>
-<td>EUR</td>
-<td>local computation, no model call</td>
+<td><code>sun_lines</code></td>
+<td>Tages- und Stundenlinien, Abstände vom Apex, Art der Kante</td>
 </tr>
 <tr class="even">
 <td><code>sun_model_conic</code></td>
-<td>latency_ms</td>
-<td>508</td>
-<td>ms</td>
-<td>one block body on mac-studio</td>
+<td>GLB-Modell in Kastenform oder rhodischer Form, mit Viewer</td>
+</tr>
+<tr class="odd">
+<td><code>sun_compare_object</code></td>
+<td>Modell gegen einen gescannten Stein</td>
+</tr>
+<tr class="even">
+<td><code>sun_about</code></td>
+<td>Gebiet, Gates, Metriken, Quellen, Lücken</td>
 </tr>
 </tbody>
 </table>
-<p>Lücken:</p>
-<ul>
-<li>Kugel-, Zylinder- und ebene Uhren nur als Typologie, noch nicht als 3-D-Modell.</li>
-<li>Maße des rhodischen Körpers sind in den gelesenen Quellen nicht angegeben (Modellannahme).</li>
-<li>Breitenrückrechnung aus den Scans (Gate G3) offen.</li>
-<li>Schaldach nennt sechs Grundformen mit Buchstaben; die Liste selbst fehlt im OCR-Text. Gelesen sind K, S, O, R und die Formvariante U; der sechste Buchstabe ist nicht belegt (Abb. 131 nennt eine Form S₁L).</li>
-<li>Maße des rhodischen Körpers (Vorkragung des Limbus, Pfeilerbreite, Rundung der Seitenwände) sind in den gelesenen Stellen nicht angegeben; das 3-D-Modell setzt sie als Modellannahme.</li>
-</ul>
-</section>
-<section id="viz-reference" class="level2">
-<h2 class="anchored" data-anchor-id="viz-reference">Visualisierungs-Referenz</h2>
-<p>Gelöste Gestaltungs- und Formataufgaben von Famulus-Abbildungen (Typst, D3, 3-D), jede Lösung durch ein echtes Rendering geprüft.</p>
-<p>Stand: läuft; Dienst am 2026-10-23 erreichbar. Im Famulus-MCP-Gateway als Namensraum <code>visualization</code>, Werkzeuge <code>viz_…</code>.</p>
-<p>Noch kein gemessenes Gate.</p>
-</section>
-<section id="astronomy-mcp" class="level2">
-<h2 class="anchored" data-anchor-id="astronomy-mcp">Astronomie-MCP (Prototyp)</h2>
-<p>Horizontpositionen von Planeten und Sternen (DE421), Sternkarte.</p>
-<p>Stand: abgelöst durch <em>astronomy</em>.</p>
-</section>
-<section id="aufnahme-in-den-katalog" class="level2">
-<h2 class="anchored" data-anchor-id="aufnahme-in-den-katalog">Aufnahme in den Katalog</h2>
-<p>Die Aufnahme ist offen und kuratiert. Ein Spezialist kommt in den Katalog, wenn er seine Antworten nach den Standards seines Fachs begründet, seine Gates als Dateien vorlegt und Fachleute das geprüft haben. Jeder Eintrag hat einen Lebenszyklus: aktiv, revidiert, zurückgezogen. Beiträge und Einwände aus der Fachgemeinschaft werden als Reviews gesammelt und gelten erst nach Prüfung. Spezialisten anderer Einrichtungen: noch keiner aufgenommen.</p>
+<p>MCP: <code>http://127.0.0.1:5145/mcp</code>, im Gateway als Namensraum <code>sundial_geometry</code>.</p>
 
 
 </section>
