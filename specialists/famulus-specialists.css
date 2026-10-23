@@ -1,0 +1,9 @@
+/* Famulus palette: Oxford blue and gold */
+:root { --oxford: #002147; --gold: #b08d57; }
+.navbar { background-color: var(--oxford) !important; border-bottom: 3px solid var(--gold); }
+.navbar-title, .navbar .nav-link { color: #fff !important; }
+h1, h2, h3, .title { color: var(--oxford); }
+h2 { border-bottom: 1px solid var(--gold) !important; }
+a { color: var(--oxford); text-decoration-color: var(--gold); }
+table thead th { border-bottom: 2px solid var(--gold) !important; }
+code { color: var(--oxford); }
