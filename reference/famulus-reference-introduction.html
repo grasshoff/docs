@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.19">
+<meta name="generator" content="quarto-1.11.6">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -38,14 +38,15 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-35fc0813589bbfbfa0b8ec974497eeb2.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2afdf05d6a1987abdfa5afcd0e3ab0c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-b7358335dd6a489e570fe89fe18ba688.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -79,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed quarto-light">
+<body class="nav-sidebar docked nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
 
 <div id="quarto-search-results"></div>
   
@@ -90,7 +91,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
@@ -105,9 +106,9 @@ ul.task-list li input[type="checkbox"] {
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content" id="quarto-document-content" tabindex="-1">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="https://lettre.ngrok.dev/platform/landings2026/famulus/">Famulus</a></li><li class="breadcrumb-item"><a href="./famulus-reference-introduction.html">famulus-reference (introduction)</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./famulus.html">Famulus</a></li><li class="breadcrumb-item"><a href="./famulus-reference-introduction.html">famulus-reference (introduction)</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">famulus-reference</h1>
 <p class="subtitle lead">A citable, local and trustworthy ground for AI in the humanities</p>
@@ -140,20 +141,20 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="the-concept" class="level2">
 <h2 class="anchored" data-anchor-id="the-concept">The concept</h2>
-<p>famulus-reference treats every collection as a <em>reference data source in need of famulus proof</em>.</p>
+<p>Famulus Reference is the shared, citable knowledge ground of Famulus: the collections whose elements carry an address, a citation, provenance and validation records, the service that opens them, and the community of reference points that bring in their own collections under the same rules. Famulus Proof is the justification library that judges on this ground. The canonical account of Famulus as a whole is <a href="./famulus.html">Famulus</a>.</p>
 <ul>
 <li><strong>An address for everything.</strong> <code>fr:&lt;collection&gt;/&lt;document&gt;/&lt;page&gt;/&lt;segment&gt;</code>, persistent and used verbatim in every claim the system makes.</li>
 <li><strong>Citations that are never invented.</strong> BibTeX and citation text are generated only from recorded bibliographic data. Where data is missing, the gap is stated.</li>
-<li><strong>Graded evidence.</strong> Each statement carries a grade: <em>documented</em>, <em>inferred</em>, <em>hypothesis</em> or <em>gap</em>, together with the checks that produced it.</li>
+<li><strong>Graded evidence.</strong> Each validation record carries a grade: <em>documented</em>, <em>inferred</em> or <em>hypothesis</em>; where the evidence is missing, it records a <em>gap</em>, together with the checks that produced it.</li>
 <li><strong>Full provenance.</strong> Which tool, which model, which instruction and which input produced which output is recorded, and every query leaves a trace.</li>
 <li><strong>One universal service.</strong> All collections live in one DuckLake and are served by one MCP server, so any AI assistant, notebook or search tool reaches them in the same way. The same data can be harvested by standard catalogues (OAI-PMH, JSON-LD/DCAT, IIIF) and federated between institutions without giving up control.</li>
 </ul>
 </section>
 <section id="local-confidential-european" class="level2">
 <h2 class="anchored" data-anchor-id="local-confidential-european">Local, confidential, European</h2>
-<p>famulus-reference is built to run <strong>on the institution’s own hardware</strong>.</p>
+<p>Famulus Reference is built so that <strong>the owner of a collection chooses its level of protection</strong>.</p>
 <ul>
-<li><strong>Models and data stay local.</strong> Inference, indexing and storage run on our own machines (Mac Studio, private network). No document and no query is sent to a cloud service.</li>
+<li><strong>Your data, your level.</strong> Each collection works at one of three levels: EU services under contract, the institution’s own private network, or strict local enclosure, in which neither documents nor queries leave the institution’s machines. Indexing and storage always run on the institution’s own machines; at the first level, page images and text excerpts go to contracted model services for transcription and formulation, and the record of each step names the model.</li>
 <li><strong>Confidential by design.</strong> The collection is written by exactly one machine and served read-only. Rights holder and licence are recorded per collection, and access is by explicit grant.</li>
 <li><strong>Traceable by design.</strong> Every answer can be reconstructed from its trace. This matches the transparency, documentation and data-minimisation duties of the GDPR and the EU AI Act. These are design properties of the system, not a certification.</li>
 <li><strong>Culturally autonomous.</strong> A collection can be shared, harvested or federated on its owner’s terms, and it can be removed again.</li>
@@ -633,6 +634,9 @@ ul.task-list li input[type="checkbox"] {
       }
     }
   });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
   </script>
 </div> <!-- /content -->
 

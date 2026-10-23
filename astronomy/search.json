@@ -1,0 +1,51 @@
+[
+ {
+  "objectID": "status.html",
+  "href": "status.html",
+  "title": "Measured gates",
+  "section": "",
+  "text": "A gate is a comparison that was run and written to a file. A registry row is not a gate."
+ },
+ {
+  "objectID": "status.html#almagest-against-van-gents-calculator",
+  "href": "status.html#almagest-against-van-gents-calculator",
+  "title": "Measured gates",
+  "section": "1 Almagest against van Gent’s calculator",
+  "text": "1 Almagest against van Gent’s calculator\nFile gates/almagest.json. Two hundred Egyptian dates, seven bodies, fourteen hundred longitudes. The equation of time in his calculator was left off, and the same choice is made here. The worst difference was \\(6.8 \\times 10^{-12}\\) arcminutes. The limit was one arcminute. The gate passed."
+ },
+ {
+  "objectID": "status.html#de441-against-horizons",
+  "href": "status.html#de441-against-horizons",
+  "title": "Measured gates",
+  "section": "2 DE441 against Horizons",
+  "text": "2 DE441 against Horizons\nFile gates/horizons.json. Fifty Julian Dates, the Sun, apparent ecliptic longitude of date, UT1 on both sides. The kernel is DE441 part 1, 1,651,119,104 bytes. The worst difference was 0.035 arcminutes. The gate passed.\nAn earlier comparison by calendar date was about nine degrees off before 1582, because Horizons reads those dates as Julian and a proleptic Gregorian date is a different instant. The gate uses one Julian Date for both sides."
+ },
+ {
+  "objectID": "status.html#table-reading-against-the-sky",
+  "href": "status.html#table-reading-against-the-sky",
+  "title": "Measured gates",
+  "section": "3 Table reading against the sky",
+  "text": "3 Table reading against the sky\nFile gates/table_vs_sky.json. The same two hundred Egyptian dates. The Julian Date is the expression transcribed from van Gent’s calculator. The largest difference, in degrees:\n\n\n\nBody\nWorst difference\n\n\n\n\nSun\n8.02\n\n\nMoon\n8.76\n\n\nMercury\n12.03\n\n\nVenus\n10.73\n\n\nMars\n8.87\n\n\nJupiter\n4.92\n\n\nSaturn\n7.30"
+ },
+ {
+  "objectID": "status.html#catalogues",
+  "href": "status.html#catalogues",
+  "title": "Measured gates",
+  "section": "4 Catalogues",
+  "text": "4 Catalogues\nThe star tables match the CDS ReadMe counts: Ptolemy 1028, Ulugh Beg 1018, Kepler’s 1627 edition of Tycho 1007, variants 82, Hevelius 1564. The IAU boundary file bound_18.dat has 1565 records. Hipparcos I/239 is loaded at the ReadMe count, 118218 records. Two hundred and sixty-three of them leave the decimal right ascension blank, and those places are read from the sexagesimal columns of the same record."
+ },
+ {
+  "objectID": "status.html#animations",
+  "href": "status.html#animations",
+  "title": "Measured gates",
+  "section": "5 Animations",
+  "text": "5 Animations\nSix animations are computed: Mars with both readings, the equant construction, Jupiter and Saturn from the Almagest, precession of one catalogue longitude, the elongation of Sirius, and the hippopede drawn with equal radii. Four frames are gaps: Copernicus, Kepler, the nova of 1572, and the Babylonian step functions. A gap frame names the missing source and draws no curve."
+ },
+ {
+  "objectID": "index.html",
+  "href": "index.html",
+  "title": "Table reading and sky reading",
+  "section": "",
+  "text": "A position question is answered twice. The table reading is what a named historical model gives for that date. The sky reading is what DE441 gives for the same instant. The difference is kept beside the two numbers. It is evidence about the text, because many ancient records were computed from the tables then current.\n\n\n\n\n\nflowchart LR\n  vg[\"van Gent mirror, cited source\"] --&gt; models[\"model registry\"]\n  cds[\"CDS catalogues\"] --&gt; cat[\"catalogue database\"]\n  eph[\"DE441 and UT1\"] --&gt; api[\"astronomical expert, port 5142\"]\n  models --&gt; api\n  cat --&gt; api\n  api --&gt; js[\"sky charts, D3 version 7\"]\n  js --&gt; anim[\"animations\"]\n\n\n\n\n\n\nThe service listens on 127.0.0.1:5142. A position is model_position. The pair of readings is table_vs_sky. Catalogue rows are catalogue_star and catalogue_compare. Charts and animations are render_map and render_animation. The same seven names are the tools of the MCP interface. render_map and render_animation are invoked over HTTP, because they write files.\nThe Almagest model is a reimplementation from the sexagesimal parameters in params/almagest.yaml. Those parameters are R. H. van Gent’s transcription. His JavaScript is not part of this library. It is run, headless, only to produce the comparison fixtures. The pages of Toomer’s translation in the PDAI collection greek-astronomy/Ptolemy1984 were not re-read for this transcription, and the parameter file says so.\nModels whose parameters have not been read off a page are pending. A pending model raises an error. It does not borrow a number from another model."
+ }
+]

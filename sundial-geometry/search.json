@@ -1,0 +1,65 @@
+[
+ {
+  "objectID": "status.html",
+  "href": "status.html",
+  "title": "Gemessene Gates",
+  "section": "",
+  "text": "Ein Gate ist ein Vergleich, der gerechnet und in eine Datei geschrieben wurde. Eine Zeile im Register ist kein Gate. Diese Seite wird von sundial-geometry-build aus den Gate-Dateien erzeugt."
+ },
+ {
+  "objectID": "status.html#g1-kegelmodell-gegen-das-rechenbeispiel-rhodos",
+  "href": "status.html#g1-kegelmodell-gegen-das-rechenbeispiel-rhodos",
+  "title": "Gemessene Gates",
+  "section": "1 G1 – Kegelmodell gegen das Rechenbeispiel Rhodos",
+  "text": "1 G1 – Kegelmodell gegen das Rechenbeispiel Rhodos\nDatei gates/G1-worked-example.json, gerechnet 2026-10-23. Verglichen wird mit dem Rechenbeispiel des Begleitaufsatzes conic-sundial-geometry.qmd (φ = 36°, α = 45°, ε = 23,44°). Der Aufsatz rundet auf drei Stellen. Die größte Abweichung beträgt 0.000872 Einheiten von d. Die Grenze lag bei 0.0015. Das Gate ist bestanden.\n\n\n\nMarke\nℓ/d Aufsatz\nℓ/d Modell\nL/d Aufsatz\nL/d Modell\n\n\n\n\nSummer\n1.765\n1.76544\n2.497\n2.4967\n\n\nEquinox\n1.0\n1.0\n1.414\n1.41421\n\n\nWinter\n0.698\n0.69756\n0.987\n0.9865\n\n\nL_S/L_W\n2.53\n2.53087\n\n\n\n\n\nIm selben Abschnitt nennt der Aufsatz in der Tabelle der synthetischen Rückrechnung L_S/L_W = 2,514. Das Rechenbeispiel und das Modell ergeben 2,53. Die Abweichung liegt im Aufsatz."
+ },
+ {
+  "objectID": "status.html#g2-tageslinien-gegen-die-gescannten-steine",
+  "href": "status.html#g2-tageslinien-gegen-die-gescannten-steine",
+  "title": "Gemessene Gates",
+  "section": "2 G2 – Tageslinien gegen die gescannten Steine",
+  "text": "2 G2 – Tageslinien gegen die gescannten Steine\nDatei gates/G2-daylines-scans.json, gerechnet 2026-10-23. Für 35 Kegeluhren mit eindeutigem Flächenfit und Note A oder B sagt das Modell aus ihrem gefitteten Öffnungswinkel α und dem Nodusabstand d (gemessen als Abstand der Äquinoktiallinie) die Lage der Solstitiallinien voraus. Die Schiefe der Ekliptik ist 23.7138° für das Jahr -150. Über 60 gemessene Solstitiallinien beträgt die mittlere (Median) relative Abweichung 3.2%, das 90-%-Quantil 17.4%. Die Grenze lag bei 5% im Median. Das Gate ist bestanden.\nDas Gate misst die Steine ebenso wie das Modell. Große Abweichungen einzelner Steine können von der Messung kommen oder von der Arbeit des Steinmetzen; das Gate trennt beides nicht."
+ },
+ {
+  "objectID": "status.html#zitate",
+  "href": "status.html#zitate",
+  "title": "Gemessene Gates",
+  "section": "3 Zitate",
+  "text": "3 Zitate\n34 von 34 Zitaten der Typologie sind wörtlich im OCR-Text der genannten Seite gefunden worden."
+ },
+ {
+  "objectID": "status.html#offen",
+  "href": "status.html#offen",
+  "title": "Gemessene Gates",
+  "section": "4 Offen",
+  "text": "4 Offen\n\nG3: Rückrechnung der Breite aus Stunden- und Tageslinien der Scans gegen joint_latitude.py.\n3-D-Modelle der Kugel-, Zylinder- und ebenen Uhren.\nSchaldach nennt sechs Grundformen mit Buchstaben; die Liste selbst fehlt im OCR-Text. Gelesen sind K, S, O, R und die Formvariante U; der sechste Buchstabe ist nicht belegt (Abb. 131 nennt eine Form S₁L).\nMaße des rhodischen Körpers (Vorkragung des Limbus, Pfeilerbreite, Rundung der Seitenwände) sind in den gelesenen Stellen nicht angegeben; das 3-D-Modell setzt sie als Modellannahme."
+ },
+ {
+  "objectID": "index.html",
+  "href": "index.html",
+  "title": "Famulus-Spezialist Sonnenuhr-Geometrie",
+  "section": "",
+  "text": "Der Spezialist beantwortet Fragen zur Gestalt antiker Sonnenuhren. Jede Antwort trägt ihre Begründung: Quelle mit Fundstelle, Methode, das Gate, auf dem die Methode steht, Annahmen und Lücken."
+ },
+ {
+  "objectID": "index.html#typologie-auf-zwei-achsen",
+  "href": "index.html#typologie-auf-zwei-achsen",
+  "title": "Famulus-Spezialist Sonnenuhr-Geometrie",
+  "section": "1 Typologie auf zwei Achsen",
+  "text": "1 Typologie auf zwei Achsen\nDie Empfangsfläche ist die Form der Schattenfläche: Kegel, Kugel, Zylinder, Globus, Ebene (horizontal, vertikal), Äquatorial, Vielfach, Meridian. Die Definitionen stehen wörtlich bei Schaldach, Die antiken Sonnenuhren Griechenlands Bd. II, S. 307–308.\nDie Körperform gilt für Hohlsonnenuhren. Schaldach unterscheidet Uhrkörper und Basis und ordnet die Uhren nach Limbus und Basis (Bd. II, S. 309–310): Tatzen (K), stilisierte Füße (S), abfallende Basis (O), die rhodische Form (R) und ungewöhnliche Basen (U). K, S und O sind Varianten der Kastenform, des Quaders. Die rhodische Form hat einen stark vorkragenden Limbus, eine pfeilerähnliche Basis und gerundete Seitenwände. Schaldach nennt sechs Grundformen; der OCR-Text lässt die Liste aus. Gelesen sind K, S, O und R sowie die Variante U. Der sechste Buchstabe steht als Lücke."
+ },
+ {
+  "objectID": "index.html#die-kegelsonnenuhr-als-3-d-modell",
+  "href": "index.html#die-kegelsonnenuhr-als-3-d-modell",
+  "title": "Famulus-Spezialist Sonnenuhr-Geometrie",
+  "section": "2 Die Kegelsonnenuhr als 3-D-Modell",
+  "text": "2 Die Kegelsonnenuhr als 3-D-Modell\nDie Empfangsfläche folgt aus den Bedingungen des Begleitaufsatzes conic-sundial-geometry: Die Kegelachse ist die Polachse, der Nodus liegt auf der Achse in der Ebene der Deckfläche, der Kegel öffnet nach Süden. Die Tageslinien sind Kreise senkrecht zur Achse. Die Stundenlinien teilen den Tagbogen in zwölf gleiche Teile.\n\nKastenform. Ein Quader mit waagrechter Deckfläche und senkrechter Rückseite. Die Südfront ist geteilt. Ihr oberer Teil ist eine Ebene senkrecht zur Kegelachse, parallel zur Äquatorebene. Der untere Teil ist eine zweite geneigte Ebene (Rinner 2017, S. 166–167). Die Kante zwischen Kegel und Deckfläche ist ein Kegelschnitt: eine Ellipse, wenn die Breite φ größer ist als der halbe Öffnungswinkel α, eine Hyperbel, wenn φ kleiner ist.\nRhodische Form. Dieselbe Kegelfläche, aber ein gerundeter Körper, der dem Kegel folgt. Dazu kommen ein vorkragender Limbus in der Randebene und ein kleiner Pfeiler als Basis (Schaldach Bd. I, S. 261–262).\n\nDie gelesenen Stellen nennen die Merkmale der Körper, nicht ihre Maße. Wandstärke, Höhe der Basis, Vorkragung des Limbus und Pfeilerbreite sind deshalb Parameter in Einheiten von d. Jede Antwort weist sie als Modellannahme aus."
+ },
+ {
+  "objectID": "index.html#werkzeuge",
+  "href": "index.html#werkzeuge",
+  "title": "Famulus-Spezialist Sonnenuhr-Geometrie",
+  "section": "3 Werkzeuge",
+  "text": "3 Werkzeuge\n\n\n\n\n\n\n\nWerkzeug\nAntwort\n\n\n\n\nsun_typology\nTypen beider Achsen mit Zitat und Fundstelle\n\n\nsun_type_of\nTyp eines Objekts: Repositoriumskategorie, Flächenfit des Scans, Körperform, wo belegt\n\n\nsun_lines\nTages- und Stundenlinien, Abstände vom Apex, Art der Kante\n\n\nsun_model_conic\nGLB-Modell in Kastenform oder rhodischer Form, mit Viewer\n\n\nsun_compare_object\nModell gegen einen gescannten Stein\n\n\nsun_about\nGebiet, Gates, Metriken, Quellen, Lücken\n\n\n\nMCP: http://127.0.0.1:5145/mcp, im Gateway als Namensraum sundial_geometry."
+ }
+]

@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.6">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Famulus – AI Platform</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-35fc0813589bbfbfa0b8ec974497eeb2.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-b7358335dd6a489e570fe89fe18ba688.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Keine Treffer",
+    "search-matching-documents-text": "Treffer",
+    "search-copy-link-title": "Link in die Suche kopieren",
+    "search-hide-matches-text": "Zusätzliche Treffer verbergen",
+    "search-more-match-text": "weitere Treffer in diesem Dokument",
+    "search-more-matches-text": "weitere Treffer in diesem Dokument",
+    "search-clear-button-title": "Zurücksetzen",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Abbrechen",
+    "search-submit-button-title": "Abschicken",
+    "search-label": "Suchen"
+  }
+}</script>
+<link rel="stylesheet" href="_assets/tokens.css">
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Zum Hauptinhalt springen</a>
+
+<div id="quarto-search-results"></div>
+  
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">Auf dieser Seite</h2>
+   
+  <ul>
+  <li><a href="#leitsatz" id="toc-leitsatz" class="nav-link active" data-scroll-target="#leitsatz">Leitsatz</a></li>
+  <li><a href="#der-kern-die-standards-der-disziplin" id="toc-der-kern-die-standards-der-disziplin" class="nav-link" data-scroll-target="#der-kern-die-standards-der-disziplin">Der Kern: die Standards der Disziplin</a></li>
+  <li><a href="#was-famulus-neu-macht" id="toc-was-famulus-neu-macht" class="nav-link" data-scroll-target="#was-famulus-neu-macht">Was Famulus neu macht</a></li>
+  <li><a href="#die-merkmale-in-ihrer-rangordnung" id="toc-die-merkmale-in-ihrer-rangordnung" class="nav-link" data-scroll-target="#die-merkmale-in-ihrer-rangordnung">Die Merkmale in ihrer Rangordnung</a>
+  <ul class="collapse">
+  <li><a href="#stufe-i-der-epistemische-kern" id="toc-stufe-i-der-epistemische-kern" class="nav-link" data-scroll-target="#stufe-i-der-epistemische-kern">Stufe I – Der epistemische Kern</a></li>
+  <li><a href="#stufe-ii-methodische-kompetenz" id="toc-stufe-ii-methodische-kompetenz" class="nav-link" data-scroll-target="#stufe-ii-methodische-kompetenz">Stufe II – Methodische Kompetenz</a></li>
+  <li><a href="#stufe-iii-wissensgrund-und-arbeitsmedium" id="toc-stufe-iii-wissensgrund-und-arbeitsmedium" class="nav-link" data-scroll-target="#stufe-iii-wissensgrund-und-arbeitsmedium">Stufe III – Wissensgrund und Arbeitsmedium</a></li>
+  <li><a href="#stufe-iv-dienst-und-maß" id="toc-stufe-iv-dienst-und-maß" class="nav-link" data-scroll-target="#stufe-iv-dienst-und-maß">Stufe IV – Dienst und Maß</a></li>
+  </ul></li>
+  <li><a href="#begriffe" id="toc-begriffe" class="nav-link" data-scroll-target="#begriffe">Begriffe</a></li>
+  <li><a href="#bestandteile-und-stand" id="toc-bestandteile-und-stand" class="nav-link" data-scroll-target="#bestandteile-und-stand">Bestandteile und Stand</a></li>
+  <li><a href="#abgrenzungen" id="toc-abgrenzungen" class="nav-link" data-scroll-target="#abgrenzungen">Abgrenzungen</a></li>
+  <li><a href="#bausteine" id="toc-bausteine" class="nav-link" data-scroll-target="#bausteine">Bausteine</a></li>
+  <li><a href="#famulus-ai-that-shows-its-grounds-english" id="toc-famulus-ai-that-shows-its-grounds-english" class="nav-link" data-scroll-target="#famulus-ai-that-shows-its-grounds-english">Famulus – AI that shows its grounds (English)</a>
+  <ul class="collapse">
+  <li><a href="#tier-i-the-epistemic-core" id="toc-tier-i-the-epistemic-core" class="nav-link" data-scroll-target="#tier-i-the-epistemic-core">Tier I – the epistemic core</a></li>
+  <li><a href="#tiers-iiiv" id="toc-tiers-iiiv" class="nav-link" data-scroll-target="#tiers-iiiv">Tiers II–IV</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="Pfad"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./famulus.html">Famulus</a></li><li class="breadcrumb-item"><a href="./famulus.html">Famulus: the canonical account</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Famulus</h1>
+<p class="subtitle lead">KI, die ihre Gründe zeigt – die kanonische Darstellung</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Veröffentlichungsdatum</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">23. Oktober 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- KANON. Diese Seite ist die eine maßgebliche Kurzdarstellung von Famulus (Owner-Entscheidung 23.10.2026).
+     Langfassung: publication/arxiv/papers/famulus-plattform/famulus-plattform.qmd.
+     Abgeleitet sind: die Famulus News (Grundsätze, Reference-Ausgabe), die Website famulus.lettre.ai,
+     der Forschungsantrag (Agenda/2026/Forschungsantrag) und die Skizze Forschungsplattform (Agenda/2026/Forschungsplattform).
+     Wer dort etwas über Famulus im Allgemeinen ändert, ändert es zuerst hier. -->
+<section id="leitsatz" class="level2">
+<h2 class="anchored" data-anchor-id="leitsatz">Leitsatz</h2>
+<p><strong>Famulus – KI, die ihre Gründe zeigt.</strong> Famulus ist ein neuer Typ wissenschaftlicher Assistenz: kein Antwortgenerator, sondern ein Wissensgrund. Jede Antwort ist die Konklusion eines Arguments aus adressierten Belegen; was die Belege nicht tragen, wird als nicht validiert ausgewiesen. Famulus steht im Dienst der Wissenschaft, des kulturellen Erbes und des gesellschaftlichen Selbstverständnisses.</p>
+<p>Der Name kommt aus der Gelehrtengeschichte: Der Famulus bereitet Material vor, zählt, ordnet, prüft – und urteilt nicht. Das Urteil bleibt beim Forscher.</p>
+</section>
+<section id="der-kern-die-standards-der-disziplin" class="level2">
+<h2 class="anchored" data-anchor-id="der-kern-die-standards-der-disziplin">Der Kern: die Standards der Disziplin</h2>
+<p><strong>Die Validierung richtet sich nach den Standards der besten Erklärung und Rechtfertigung der jeweiligen Disziplin.</strong> Das ist der notwendige Kern von allem in Famulus – der Fachkräfte, der Regelsätze, der Referenzsammlungen und jedes Spezialisten. Famulus setzt keinen eigenen Wahrheitsmaßstab; es macht die Standards eines Fachs explizit, prüfbar und revidierbar und wendet sie Aussage für Aussage an. Was in der Philologie als Beleg gilt, in der Astronomie als Messung mit Fehlermodell, in der Archäologie als Befund am Objekt, gilt in Famulus in derselben Weise.</p>
+</section>
+<section id="was-famulus-neu-macht" class="level2">
+<h2 class="anchored" data-anchor-id="was-famulus-neu-macht">Was Famulus neu macht</h2>
+<p>Sprachmodelle antworten flüssig, aber nicht begründet: Ihre Aussagen stammen aus trainierten Gewichten, ihre Zitate können erfunden sein, und ein Retrieval-Schritt (RAG) liefert ähnliche Textstellen, aber keine Rechtfertigung. Famulus legt die Substanz der Forschung außerhalb des Modells: Regeln des Sprachgebrauchs, erschlossene Bestände mit dauerhaften Adressen, einen Apparat wissenschaftlicher Methoden und die Spur jedes Schritts. Das Modell ist austauschbar; Belege, Adressen und Rechtfertigungen behalten ihre Geltung.</p>
+</section>
+<section id="die-merkmale-in-ihrer-rangordnung" class="level2">
+<h2 class="anchored" data-anchor-id="die-merkmale-in-ihrer-rangordnung">Die Merkmale in ihrer Rangordnung</h2>
+<section id="stufe-i-der-epistemische-kern" class="level3">
+<h3 class="anchored" data-anchor-id="stufe-i-der-epistemische-kern">Stufe I – Der epistemische Kern</h3>
+<p>Die sieben Merkmale sind die Grundsätze der Famulus News in derselben Reihenfolge.</p>
+<ol type="1">
+<li><p><strong>Begründet.</strong> Eine Antwort ist die Konklusion eines Arguments: adressierte Belege, eine deklarierte Schlusskette und ihre Validierung. Validierung ist ein Rechtfertigungsstatus, kein Wahrheitsprädikat. Die Regeln dafür stammen aus der computational epistemology, dem methodisch reflektierten Apparat wissenschaftlicher Methode, und folgen den Standards der besten Erklärung und Rechtfertigung der Disziplin, um die es geht.</p></li>
+<li><p><strong>Nachvollziehbar.</strong> Alle Gründe sind einsehbar. Jede Antwort zeigt die Stellen, Registerzeilen und Regeln, auf denen sie beruht, jede mit ihrer Adresse; das Protokoll hält fest, welches Werkzeug, welches Modell und welche Instruktion welchen Schritt getan hat.</p></li>
+<li><p><strong>Satz für Satz validiert.</strong> Ein Satz ist sachlich validiert, wenn die Aussagen, die er ausdrückt, aus registrierten Belegen folgen, keine widerlegt ist und keine einem früheren Satz oder einem Register widerspricht. Jeder andere Satz mit Sachgehalt ist nicht validiert – das ist die kontradiktorische Negation, kein Urteil über Falschheit. Eine falsche Prämisse macht ein Argument nicht stichhaltig; seine Konklusion verliert die Rechtfertigung, falsch wird sie dadurch nicht.</p></li>
+<li><p><strong>Ihre Daten, Ihre Stufe.</strong> Jede Sammlung arbeitet auf einer von drei Stufen: vertraglich gebundene EU-Dienste, das eigene private Netz, strikte lokale Einhegung. Die Eigentümerin oder der Eigentümer wählt die Stufe; Zugang gibt es nur durch ausdrückliche Freigabe. Die eigenen Geräte – Rechner, Tablet, Smartphone – bilden ein privates, verschlüsseltes Netz. Das sind Eigenschaften des Entwurfs, keine Zertifizierung.</p></li>
+<li><p><strong>Verankert.</strong> Jedes Dokument, jede Seite, jedes Segment hat eine dauerhafte <code>fr:</code>-Adresse. Eine Zitation entsteht nur aus erfassten bibliographischen Daten; fehlt eine Angabe, nennt die Zitation die Lücke. Die Belege bilden einen Evidenzraum aus Dokumenten, Editionen, Objekten und Messdaten. Retrieval liefert Kandidaten, nie Geltung.</p></li>
+<li><p><strong>Kollaborativ und kritisch.</strong> Famulus organisiert Forschung so, wie Wissenschaft sich selbst organisiert: offen in der Teilnahme, kritisch im Urteil. Jeder Beitrag zum gemeinsamen Wissensgrund steht unter einer Rechtfertigungsbedingung; Prüfung und Qualitätssicherung folgen den Verfahren der Wissenschaft, nicht einer Autorität ohne Grund; verschiedene Methoden sind zugelassen und bleiben selbst der Methodenkritik ausgesetzt. Die Fachkräfte (Agents) arbeiten nach lesbaren, geteilten Partituren mit den Forschern zusammen. Das Urteil bleibt beim Fachmann.</p></li>
+<li><p><strong>Offenes Netz der Famulus-Spezialisten.</strong> Famulus-Spezialisten sind Dienste mit geprüftem Fachwissen eines Gebiets, die jede Fachkraft und jedes Notebook über eine einheitliche Schnittstelle (Model Context Protocol) befragen kann. Der erste ist die astronomische Modellierung historischer Himmelsbewegungen: Für ein Datum gibt er die Lesung eines benannten historischen Modells – etwa des Almagest – und die Lesung des Himmels nach heutiger Ephemeride, mit ihrer Differenz als Evidenz über den Text; dazu historische Sternkataloge von Ptolemaios bis Hevelius. Geprüft heißt gemessen: Jede Rechnung ist an dokumentierten Vergleichen geprüft, jede Antwort nennt Annahmen, Unsicherheit, Quellen und Herkunft, und ein Modell ohne belegte Parameter antwortet nicht, statt eine Zahl zu borgen.</p>
+<p>Spezialisten sind multimodal: Sie arbeiten mit Text, Bild, Stimme und Ton, 3D-Modellen und jeder weiteren Form, in der ein Fach sein Wissen hält; die Antwortform bleibt dieselbe. Die folgenden Gattungen sind Beispiele, das Netz ist offen für ein breites Spektrum:</p>
+<ul>
+<li><em>Sprachen</em> – etwa Nahuatl für den Codex Florentinus und vergleichbare Codices;</li>
+<li><em>Fachterminologien in LWgrammar-Notation</em> – die lateinische Terminologie der Astronomie, der Geometrie und der Wissenschaften überhaupt, jeder Terminus mit seinen Bedeutungen und belegten Stellen;</li>
+<li><em>Gazetteers</em> – Ortsnamen mit ihren historischen Formen und Lagen;</li>
+<li><em>antike Geographie</em> – die Ortsangaben der Geographie des Ptolemaios (Edition von Gerd Graßhoff), die Rekonstruktion antiker Wege, etwa auf der Iberischen Halbinsel (Arbeiten mit Olivier Defaux und Elisabeth Rinner), und Wegemonumente wie der Stadiasmus von Patara – Orte, Koordinaten und Distanzen mit ihren Quellen;</li>
+<li><em>disziplinäre Terminologien</em> – Thesauri und Normvokabulare der Fächer, wie sie die Nationale Forschungsdateninfrastruktur (etwa NFDI4Memory, NFDI4Objects) pflegt;</li>
+<li><em>Spezialdatenbanken</em> – etwa für Keilschrifttexte;</li>
+<li><em>Spezialrepositorien und digitalisierte Sammlungen</em> – etwa antike Münzen;</li>
+<li><em>das Fachwissen kleiner Fächer</em> – Ägyptologie, Altorientalistik, Numismatik, vergleichende Sprachwissenschaft, Wissenschaftsgeschichte und viele andere, deren Sondersammlungen so allen Fachkräften zugänglich werden.</li>
+</ul>
+<p><strong>Registrierung: offen, schnell, kuratiert.</strong> Jede Einrichtung und jeder Fachmann kann einen Spezialisten anmelden. Die Aufnahme ist schnell, weil Schnittstelle und Antwortform festliegen: Wert, Unsicherheit, Annahmen, Quellen, Herkunft. Sie ist kuratiert: Ins Register kommt ein Spezialist, wenn er seine Antworten nach den Standards seiner Disziplin rechtfertigt – mit dokumentierten Vergleichen, Prüffällen und Quellen –, und Fachleute des Gebiets haben das geprüft. Jeder Eintrag hat einen Lebenszyklus (aktiv, revidiert, widerrufen) mit Begründung. So wächst das Netz als Gemeinschaft mit jedem Gebiet, das hinzukommt.</p></li>
+</ol>
+</section>
+<section id="stufe-ii-methodische-kompetenz" class="level3">
+<h3 class="anchored" data-anchor-id="stufe-ii-methodische-kompetenz">Stufe II – Methodische Kompetenz</h3>
+<ol start="8" type="1">
+<li><strong>Die Methodeninstitution.</strong> Die methodischen Kompetenzen sind nicht Teil der Vortrainierung eines Modells, sondern eigens aufgebaute, registrierte Regelsätze: Schlussformen, Rekonstruktion und Bewertung von Argumenten, Prüfung von Hypothesen, kausale Analyse nach der Regularitätstheorie, Messung mit Fehlermodell, Rekonstruktion von Entdeckungen. Für Disziplin, Gegenstand und Anwendung werden sie eigens spezifiziert, nach den Standards der besten Erklärung und Rechtfertigung des jeweiligen Fachs. Jeder Nutzer kann Regelsätze ergänzen, ändern oder abschalten; jede Revision trägt ihre Begründung und kann zurückgenommen werden.</li>
+<li><strong>Die Sprachinstitution.</strong> Die Regeln des Sprachgebrauchs sind registriert, zitierbar und revidierbar – relativ zu Autor, Werk und Zeit. Ausdrücke historischer Texte werden begründet normalisiert: Jede Lesart nennt Textstelle, Regel, Evidenzgrad und Gründe, wie eine prüfbare editorische Fußnote.</li>
+</ol>
+</section>
+<section id="stufe-iii-wissensgrund-und-arbeitsmedium" class="level3">
+<h3 class="anchored" data-anchor-id="stufe-iii-wissensgrund-und-arbeitsmedium">Stufe III – Wissensgrund und Arbeitsmedium</h3>
+<ol start="10" type="1">
+<li><strong>Erschlossene Bestände.</strong> Sammlungen werden in das PDAI-Format überführt: seitengetreu, strukturiert, mit Satz-, Lemma- und Namensindizes. Personen, Orte, Zeiten und Begriffe sind in Millisekunden abfragbar; jede Form führt zu ihren Sätzen. Editionen und Archive – Kármán, Kepler, Euler, Pirckheimer, Hevelius, die Sammlungen des Topoi Repository und weitere – sind so ein gemeinsamer, zitierbarer Grund.</li>
+<li><strong>Das Arbeitsmedium.</strong> Im Famulus Notebook stellt der Forscher eine Frage; eine Fachkraft spielt die Partitur, und der Block hält Antwort, Prüfung und Herkunft zusammen fest. Notebooks bleiben privat, werden in einer Gruppe geteilt oder veröffentlicht. Der Lektor prüft Texte Satz für Satz; aus einem Notebook wird ein Aufsatz, in dem jede Zahl auf den Block verweist, der sie erzeugt hat.</li>
+</ol>
+</section>
+<section id="stufe-iv-dienst-und-maß" class="level3">
+<h3 class="anchored" data-anchor-id="stufe-iv-dienst-und-maß">Stufe IV – Dienst und Maß</h3>
+<ol start="12" type="1">
+<li><strong>Im Dienst, gemessen.</strong> Famulus dient der Wissenschaft, dem kulturellen Erbe und dem gesellschaftlichen Selbstverständnis einer Wissensgesellschaft. Seine Ansprüche werden gemessen, nicht behauptet: an goldenen Anfragen mit Orakel, an Abfragezeiten, an der Zahl der validierten und nicht validierten Sätze. Wo Famulus an eine Grenze kommt, nennt es die Grenze.</li>
+</ol>
+</section>
+</section>
+<section id="begriffe" class="level2">
+<h2 class="anchored" data-anchor-id="begriffe">Begriffe</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Begriff</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Famulus Reference</strong></td>
+<td>Der gemeinsame, zitierfähige Wissensgrund: die Sammlungen, deren Elemente <code>fr:</code>-Adresse, Zitation, Herkunft und Prüfeinträge tragen (Schema <code>famulus-reference/1</code>), der Dienst, der sie Fachkräften und Notebooks zugänglich macht, und die Gemeinschaft der Reference-Punkte, die eigene Sammlungen nach denselben Regeln einbringen.</td>
+</tr>
+<tr class="even">
+<td><strong>Famulus Proof</strong></td>
+<td>Die Rechtfertigungsbibliothek: Sie bestimmt den Evidenzraum einer Frage, entfaltet das Ziel im Validitätsbaum und leitet die Antwort aus adressierten Belegen und Regeln ab. Proof urteilt über das, was Reference bereitstellt.</td>
+</tr>
+<tr class="odd">
+<td><strong>Evidenzraum</strong></td>
+<td>Der kleinste Raum möglicher Belege einer Frage, gefiltert aus den Sammlungen.</td>
+</tr>
+<tr class="even">
+<td><strong>Validitätsbaum</strong></td>
+<td>Die Entfaltung einer Frage in Teilziele bis zu den Belegen, die sie tragen.</td>
+</tr>
+<tr class="odd">
+<td><strong>FQL</strong></td>
+<td>Die Abfragesprache, in der Fragen als Belegprobleme gestellt und Antworten als Schlussketten ausgegeben werden.</td>
+</tr>
+<tr class="even">
+<td><strong>Status einer Aussage</strong></td>
+<td><em>sachlich validiert</em> oder <em>nicht validiert</em> (kontradiktorisch).</td>
+</tr>
+<tr class="odd">
+<td><strong>Grad eines Prüfeintrags</strong></td>
+<td><em>dokumentiert</em> (eine Quelle sagt es), <em>erschlossen</em>, <em>Hypothese</em>; fehlt der Beleg: <em>Lücke</em>.</td>
+</tr>
+<tr class="even">
+<td><strong>Evidenzstufe</strong></td>
+<td>Grundlagenevidenz (Fundort in der Quelle), Sekundärevidenz (Kommentar, Auswertung), Referenzautorität (Lexikon, Norm). Eine Klassifikation der Herkunft, keine Rangordnung.</td>
+</tr>
+<tr class="odd">
+<td><strong>Partitur</strong></td>
+<td>Die lesbare, versionierte Beschreibung, wie eine Fachkraft eine Frage beantwortet; ein Notebook-Block ruft sie beim Namen auf.</td>
+</tr>
+<tr class="even">
+<td><strong>Famulus-Spezialist</strong></td>
+<td>Ein Dienst mit geprüftem Fachwissen eines Gebiets (z. B. historische Astronomie, Kalender), der Antworten mit Wert, Unsicherheit, Annahmen, Quellen und Herkunft gibt und dessen Rechenwege an dokumentierten Vergleichen gemessen sind.</td>
+</tr>
+<tr class="odd">
+<td><strong>Fachkraft (Agent)</strong></td>
+<td>Eine spezialisierte Einheit, die eine wissenschaftliche Arbeitsweise ausführt: finden, lesen, datieren, zählen, vergleichen, rekonstruieren, prüfen. Sie urteilt nicht.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="bestandteile-und-stand" class="level2">
+<h2 class="anchored" data-anchor-id="bestandteile-und-stand">Bestandteile und Stand</h2>
+<p>Stand 23. Oktober 2026. <em>Läuft</em> heißt: im eigenen Rechnerverbund in Gebrauch. <em>Ausbau</em> heißt: beschrieben und beabsichtigt, nicht gebaut – es wird nie als vorhandene Funktion dargestellt.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Bestandteil</th>
+<th>Rolle</th>
+<th>Stufe</th>
+<th>Stand</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Famulus Proof</td>
+<td>Rechtfertigung, Evidenzraum, Validitätsbaum, FQL</td>
+<td>I</td>
+<td>läuft</td>
+</tr>
+<tr class="even">
+<td>Famulus Reference</td>
+<td>Wissensgrund, <code>fr:</code>-Adressen, Zitation, Herkunft; gemeinsamer Speicher (DuckLake) und Referenzdienst</td>
+<td>I, III</td>
+<td>läuft (acht Sammlungen im gemeinsamen Speicher)</td>
+</tr>
+<tr class="odd">
+<td>Reference-Punkte anderer Einrichtungen</td>
+<td>Föderation desselben Dienstes über Einrichtungen hinweg</td>
+<td>I</td>
+<td>Ausbau (Verzeichnis angelegt, leer)</td>
+</tr>
+<tr class="even">
+<td>Famulus Notebook</td>
+<td>Arbeitsmedium: Frage, Partitur, Antwort, Prüfung, Herkunft</td>
+<td>III</td>
+<td>läuft</td>
+</tr>
+<tr class="odd">
+<td>Famulus Lektor</td>
+<td>Satzweise Prüfung der sachlichen Validität eines Textes</td>
+<td>I, III</td>
+<td>läuft</td>
+</tr>
+<tr class="even">
+<td>Sprachinstitution (LWgrammar)</td>
+<td>Register der Gebrauchsregeln, begründete Normalisierung</td>
+<td>II</td>
+<td>läuft</td>
+</tr>
+<tr class="odd">
+<td>Methodeninstitution</td>
+<td>Schlussketten (FQL), Kausalanalysator, Nadelaudit für Widersprüche, goldene Anfragen</td>
+<td>II</td>
+<td>läuft</td>
+</tr>
+<tr class="even">
+<td>Argumentrekonstruktion beliebiger Texte</td>
+<td>Rekonstruktion, Lücken- und Stringenzprüfung, Argumentationsschemata nach Stilvorlagen</td>
+<td>II</td>
+<td>Entwurf (Relationsbenchmark vorhanden)</td>
+</tr>
+<tr class="odd">
+<td>Statistik, Labor- und Experimentsettings, Befundbewertung</td>
+<td>weitere Regelsätze der Methodeninstitution</td>
+<td>II</td>
+<td>Ausbau</td>
+</tr>
+<tr class="even">
+<td>Partituren und Orchester</td>
+<td>lesbare Orchestrierung der Fachkräfte</td>
+<td>I</td>
+<td>läuft; öffentliches Repositorium: Ausbau</td>
+</tr>
+<tr class="odd">
+<td>Astronomischer Spezialist</td>
+<td>historische Planetenmodelle (Almagest, aus van Gents Transkription der Parameter neu implementiert), Himmelslesung nach DE441, Sternkataloge (Ptolemaios, Ulugh Beg, Tycho in Keplers Ausgabe 1627, Hevelius, Hipparcos), Karten und Animationen</td>
+<td>I</td>
+<td>gebaut, Vergleiche gemessen (Almagest gegen van Gents Rechner: größte Abweichung 6,8·10⁻¹² Bogenminuten; DE441 gegen Horizons: 0,035 Bogenminuten); Dienst nicht dauerhaft in Betrieb; Modelle ohne belegte Parameter (Kopernikus, Kepler, babylonische Schrittfunktionen) stehen als Lücke</td>
+</tr>
+<tr class="even">
+<td>Kalender-Spezialist</td>
+<td>Kalenderumrechnungen für die Normalisierung, ohne geratene Daten</td>
+<td>I</td>
+<td>gebaut</td>
+</tr>
+<tr class="odd">
+<td>Visualisierungs-Referenz</td>
+<td>gelöste Abbildungsaufgaben als Referenz für neue Abbildungen</td>
+<td>I</td>
+<td>läuft</td>
+</tr>
+<tr class="even">
+<td>Lateinische Fachterminologie (LWgrammar)</td>
+<td>Sondersammlung „Kepler: A Finding Dictionary of Geometrical and Astronomical Terms“ – 129 Termini, 146 Bedeutungen, 708 Belege mit Fundort; Register zur Geschichte der Astronomie und zur Kausalität</td>
+<td>I, II</td>
+<td>gebaut</td>
+</tr>
+<tr class="odd">
+<td>Keilschrift-Datenbank</td>
+<td>Astronomische Tagebücher: 2 036 Tafeln, 57 414 Zeilen, mit Tafel-Browser; das Himmels-Panel fragt den astronomischen Spezialisten</td>
+<td>I</td>
+<td>läuft</td>
+</tr>
+<tr class="even">
+<td>Gazetteer</td>
+<td>Ortslemmata je Sammlung vorhanden; Spezialist mit historischen Namensformen und Lagen</td>
+<td>I</td>
+<td>Ausbau</td>
+</tr>
+<tr class="odd">
+<td>Antike Geographie</td>
+<td>Ptolemaios’ Geographie, antike Wege und Itinerare, Stadiasmus von Patara</td>
+<td>I</td>
+<td>Ausbau (Edition und Literatur noch nicht als Sammlung erschlossen)</td>
+</tr>
+<tr class="even">
+<td>Sprachspezialisten (z. B. Nahuatl, Codex Florentinus)</td>
+<td>Lexik, Grammatik und Lesarten einer Sprache</td>
+<td>I</td>
+<td>Ausbau</td>
+</tr>
+<tr class="odd">
+<td>Disziplinäre Terminologien, Münzdatenbanken, weitere Sondersammlungen</td>
+<td>Anbindung externer Thesauri, Repositorien und Datenbanken</td>
+<td>I</td>
+<td>Ausbau</td>
+</tr>
+<tr class="even">
+<td>Register der Spezialisten</td>
+<td>offene, schnelle, kuratierte Aufnahme mit Lebenszyklus</td>
+<td>I</td>
+<td>Ausbau</td>
+</tr>
+<tr class="odd">
+<td>Famulus Repro</td>
+<td>Erfassung mit Smartphone und Tablet, Verarbeitung auf dem eigenen Rechner</td>
+<td>III</td>
+<td>läuft</td>
+</tr>
+<tr class="even">
+<td>Famulus Visualization</td>
+<td>Abbildungen aus ihren Daten, mit lernender Formwahl</td>
+<td>III</td>
+<td>läuft</td>
+</tr>
+<tr class="odd">
+<td>Literaturbeobachtung</td>
+<td>nächtliche Analyse neuer Publikationen eines Gebiets mit Relevanzbericht am Morgen</td>
+<td>III</td>
+<td>Ausbau</td>
+</tr>
+<tr class="even">
+<td>Publikationsvorbereitung</td>
+<td>vom Notebook zum Aufsatz nach etablierten Qualitätsstandards</td>
+<td>III</td>
+<td>läuft (Export), Prüfstandards im Ausbau</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="abgrenzungen" class="level2">
+<h2 class="anchored" data-anchor-id="abgrenzungen">Abgrenzungen</h2>
+<ul>
+<li><strong>Kein Geltungsanspruch aus Retrieval.</strong> Ein gefundener Satz belegt, dass er in der Sammlung steht – nicht, dass wahr ist, was er behauptet.</li>
+<li><strong>„Nicht validiert“ heißt nicht „falsch“.</strong> Ein fehlender Beleg rechtfertigt nichts und widerlegt nichts.</li>
+<li><strong>Kein eigener Wahrheitsmaßstab.</strong> Famulus macht die Standards der besten Erklärung und Rechtfertigung eines Fachs explizit, prüfbar und revidierbar; es ersetzt sie nicht.</li>
+<li><strong>Nur Aussagen sind wahr oder falsch.</strong> Folgerung und Widerspruch bestehen zwischen Aussagen, nicht zwischen Sätzen.</li>
+<li><strong>Keine Zusicherung ohne Grundlage.</strong> Datenschutz und Rechtskonformität sind Eigenschaften des Entwurfs, keine Zertifizierung; Föderation, externe Spezialisten, Literaturbeobachtung und weitere Methodenmodule sind Ausbau, nicht Bestand.</li>
+<li><strong>Das Urteil bleibt beim Fachmann.</strong> Famulus bereitet vor, prüft und nennt Grenzen; es entscheidet nicht.</li>
+</ul>
+</section>
+<section id="bausteine" class="level2">
+<h2 class="anchored" data-anchor-id="bausteine">Bausteine</h2>
+<p>Die abgeleiteten Texte übernehmen diese Bausteine wörtlich oder kürzen sie, ohne ihnen zu widersprechen.</p>
+<p><strong>Ein Satz.</strong> Famulus ist KI, die ihre Gründe zeigt: Jede Antwort ist die Konklusion eines Arguments aus adressierten Belegen, und was die Belege nicht tragen, wird als nicht validiert ausgewiesen.</p>
+<p><strong>Ein Absatz.</strong> Famulus ist ein neuer Typ wissenschaftlicher Assistenz. Spezialisierte Fachkräfte führen erprobte Arbeitsweisen der Forschung aus – finden, lesen, datieren, zählen, vergleichen, rekonstruieren, prüfen – auf erschlossenen Beständen, in denen jedes Dokument, jede Seite und jede Stelle eine dauerhafte Adresse hat. Eine Antwort ist die Konklusion eines Arguments aus diesen Belegen; ihre Gründe sind einsehbar, und jeder Satz eines Textes wird daraufhin geprüft, ob er sachlich validiert ist. Die Regeln des Schließens und des Sprachgebrauchs sind registriert und revidierbar, nicht in den Gewichten eines Modells verborgen. Die Daten bleiben auf der Schutzstufe, die ihre Eigentümer wählen. Famulus organisiert Forschung offen und kritisch, wie Wissenschaft es tut, und zieht ein offenes Netz von Spezialisten mit geprüftem Fachwissen hinzu – das Urteil bleibt beim Forscher.</p>
+<p><strong>Eine Seite.</strong> Die sieben Merkmale der Stufe I mit je zwei Sätzen, danach Stufe II bis IV mit je einem Satz, danach die Abgrenzungen. Die Fassung für die News steht in der Reference-Ausgabe Oktober 2026 („Was Famulus ist – in sieben Gründen“).</p>
+<hr>
+</section>
+<section id="famulus-ai-that-shows-its-grounds-english" class="level2">
+<h2 class="anchored" data-anchor-id="famulus-ai-that-shows-its-grounds-english">Famulus – AI that shows its grounds (English)</h2>
+<p><strong>Famulus is AI that shows its grounds.</strong> It is a new kind of scholarly assistance: not an answer generator but a knowledge ground. Every answer is the conclusion of an argument from addressed evidence; what the evidence does not carry is marked as not validated. Famulus serves science, cultural heritage and a society’s understanding of itself. The name comes from the history of scholarship: the famulus prepares material, counts, orders and checks – and does not judge. Judgement stays with the scholar.</p>
+<p><strong>The core: the standards of the discipline.</strong> Validation follows the standards of best explanation and justification of the discipline concerned. This is the necessary core of everything in Famulus – agents, rule sets, reference collections and every specialist. Famulus sets no truth standard of its own; it makes a field’s standards explicit, checkable and revisable, and applies them proposition by proposition.</p>
+<section id="tier-i-the-epistemic-core" class="level3">
+<h3 class="anchored" data-anchor-id="tier-i-the-epistemic-core">Tier I – the epistemic core</h3>
+<ol type="1">
+<li><strong>Justified.</strong> An answer is the conclusion of an argument: addressed evidence, a declared chain of reasoning and its validation. Validation is a justification status, not a truth predicate; its rules come from computational epistemology.</li>
+<li><strong>Traceable.</strong> Every ground is open to view, each with its address; the record names the tool, model and instruction of every step.</li>
+<li><strong>Validated sentence by sentence.</strong> A sentence is factually validated when the propositions it expresses follow from registered grounds, none is refuted and none contradicts an earlier sentence or a register. Every other sentence is not validated – no verdict of falsity.</li>
+<li><strong>Your data, your level.</strong> Each collection works at one of three levels: EU services under contract, one’s own private network, strict local enclosure. The owner chooses; access is by explicit grant. Design properties, not a certification.</li>
+<li><strong>Grounded.</strong> Every document, page and segment has a permanent <code>fr:</code> address; citations are composed only from recorded bibliographic data. Retrieval supplies candidates, never validity.</li>
+<li><strong>Collaborative and critical.</strong> Famulus organises research the way science organises itself: open to participation, critical in judgement. Every contribution to the shared ground is subject to a justification condition; review follows the procedures of science, not authority without reasons; methods are plural and open to methodological criticism. Agents work with researchers through readable, shared scores. Judgement stays with the expert.</li>
+<li><strong>An open network of Famulus specialists.</strong> Specialists are services with certified knowledge of a domain that every agent and notebook can consult through one interface (Model Context Protocol). The first is the astronomical modelling of historical celestial motions: for a date it gives the reading of a named historical model, such as the Almagest, and the reading of the sky from a modern ephemeris, with their difference as evidence about the text. Certified means measured: every computation is checked against documented comparisons, every answer names its assumptions, uncertainty, sources and provenance, and a model without sourced parameters does not answer. Specialists are multimodal – text, image, voice and sound, 3D models and any further medium in which a field holds its knowledge. Examples, open to a wide spectrum: languages such as Nahuatl for the Florentine Codex; Latin terminologies of astronomy, geometry and the sciences in LWgrammar notation; gazetteers of place names; ancient geography – Ptolemy’s Geography, ancient roads such as those of the Iberian Peninsula, the Stadiasmus of Patara; disciplinary thesauri such as those maintained in the NFDI; special databases such as those of cuneiform texts; repositories of ancient coins and other digitised collections; and the knowledge of small disciplines. <strong>Registration is open, fast and curated</strong>: anyone can register a specialist; the fixed interface and answer form make admission fast; a specialist enters the registry when it justifies its answers by the standards of its discipline and experts of the field have checked this; each entry has a life cycle (active, revised, revoked).</li>
+</ol>
+</section>
+<section id="tiers-iiiv" class="level3">
+<h3 class="anchored" data-anchor-id="tiers-iiiv">Tiers II–IV</h3>
+<ol start="8" type="1">
+<li><strong>Method institution</strong> – competences built beyond pre-training as registered rule sets: inference forms, argument reconstruction and assessment, hypothesis testing, causal analysis, measurement with error model, reconstruction of discovery; configurable, extensible, switchable per user.</li>
+<li><strong>Language institution</strong> – registered, citable, revisable rules of usage relative to author, work and time; justified normalisation with footnote-like grounds.</li>
+<li><strong>Opened holdings</strong> – collections in the PDAI format with sentence, lemma and name indices answering in milliseconds.</li>
+<li><strong>Working medium</strong> – Famulus Notebook (private, group, public), the Lektor’s sentence-by-sentence check, and the path from notebook to paper.</li>
+<li><strong>In service, measured</strong> – claims are measured with golden queries and their oracles; where Famulus reaches a limit, it names the limit.</li>
+</ol>
+<p><strong>Famulus Reference</strong> is the shared, citable knowledge ground: collections with <code>fr:</code> addresses, citation, provenance and validation records, the service that opens them, and the community of reference points. <strong>Famulus Proof</strong> is the justification library that judges on that ground.</p>
+<p><strong>One sentence.</strong> Famulus is AI that shows its grounds: every answer is the conclusion of an argument from addressed evidence, and what the evidence does not carry is marked as not validated.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Kopiert");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Kopiert");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollbarer Code","output":"Scrollbare Ausgabe"};
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

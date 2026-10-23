@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.11.5">
+<meta name="generator" content="quarto-1.11.6">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -38,14 +38,15 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-3b9ea68436acb9022c2fbce6dbb58b06.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-35fc0813589bbfbfa0b8ec974497eeb2.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3539258d83e02f63d0acd0d18fda38b6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-5d02ac2d3cf50130516b246f194c327a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -144,6 +145,14 @@ ul.task-list li input[type="checkbox"] {
         <li>
     <span class="dropdown-item">
  <span class="dropdown-text">Hevelius befragen: Register, Briefe, Kommentar</span></span>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/karman-nachlass/dossiers.html">
+ <span class="dropdown-text">Korrespondenz befragen: Kármán und Euler–Goldbach: Dossiers als Belege</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lesen/karman-nachlass/figuren.html">
+ <span class="dropdown-text">Korrespondenz befragen: Kármán und Euler–Goldbach: Figuren als Belege</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./lesen/karman-nachlass/hitler.html">
@@ -416,6 +425,18 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./lesen/karman-nachlass/dossiers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Korrespondenz befragen: Kármán und Euler–Goldbach: Dossiers als Belege</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lesen/karman-nachlass/figuren.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Korrespondenz befragen: Kármán und Euler–Goldbach: Figuren als Belege</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./lesen/karman-nachlass/hitler.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Korrespondenz befragen: Kármán und Euler–Goldbach: Nannte Kármán Hitler? Protokoll einer Zielentfaltung</span></a>
   </div>
@@ -613,7 +634,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="Pfad"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./begruendung.html">Begründete Antworten</a></li><li class="breadcrumb-item"><a href="./zitieren-fr.html">Zitieren mit fr:-Adressen</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Zitieren mit fr:-Adressen</h1>
-<p class="subtitle lead">Wie erzeugter Text Items einer Famulus-Referenz nennt und wie die Prüfung sie auflöst</p>
+<p class="subtitle lead">Wie erzeugter Text Items einer Referenzsammlung nennt und wie die Prüfung sie auflöst</p>
 </div>
 
 
@@ -646,7 +667,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Ein erzeugter Text nennt ein Item einer Famulus-Referenz mit seiner fr:-Adresse; die Prüfung <code>guard:</code> löst jede genannte Adresse im DuckLake auf und legt das Ergebnis in die Belege, sodass eine Adresse ohne Item als Zitat ohne Beleg erkannt wird.</p>
+<p>Ein erzeugter Text nennt ein Item einer Referenzsammlung mit seiner fr:-Adresse; die Prüfung <code>guard:</code> löst jede genannte Adresse im DuckLake auf und legt das Ergebnis in die Belege, sodass eine Adresse ohne Item als Zitat ohne Beleg erkannt wird.</p>
 </div>
 </div>
 <section id="die-fr-adresse-im-text" class="level2" data-number="1">
@@ -656,7 +677,7 @@ ul.task-list li input[type="checkbox"] {
 <blockquote class="blockquote">
 <p>Der Holzschnitt auf Blatt 137 zeigt ein Astrolabium (fr:hartmann/bsb00028171/0137/print1).</p>
 </blockquote>
-<p>Ein Satzzeichen unmittelbar nach der Adresse gehört nicht zu ihr. Die fr:-Adresse unterscheidet sich von einem Verweis <code>fam:</code> (siehe <a href="./referenzen.html">Referenzen</a>): <code>fam:</code> nennt ein Artefakt eines Blocks, <code>fr:</code> ein Item einer Collection. Was eine Famulus-Referenz ist und wie Famulus Proof die Adresse als Fundstelle einer Klausel verwendet, beschreibt die Seite <em>Famulus-Referenz</em> der Dokumentation von Famulus Proof (<code>famulus-proof/docs/referenz.qmd</code>).</p>
+<p>Ein Satzzeichen unmittelbar nach der Adresse gehört nicht zu ihr. Die fr:-Adresse unterscheidet sich von einem Verweis <code>fam:</code> (siehe <a href="./referenzen.html">Referenzen</a>): <code>fam:</code> nennt ein Artefakt eines Blocks, <code>fr:</code> ein Item einer Collection. Was eine Referenzsammlung ist und wie Famulus Proof die Adresse als Fundstelle einer Klausel verwendet, beschreibt die Seite <em>Referenzsammlung</em> der Dokumentation von Famulus Proof (<code>famulus-proof/docs/referenz.qmd</code>).</p>
 </section>
 <section id="wie-die-prüfung-die-adressen-auflöst" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="wie-die-prüfung-die-adressen-auflöst"><span class="header-section-number">2</span> Wie die Prüfung die Adressen auflöst</h2>
@@ -1133,6 +1154,9 @@ ul.task-list li input[type="checkbox"] {
       }
     }
   });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollbarer Code","output":"Scrollbare Ausgabe"};
   </script>
 </div> <!-- /content -->
 <script>
