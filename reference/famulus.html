@@ -176,7 +176,7 @@ ul.task-list li input[type="checkbox"] {
 <li><p><strong>Ihre Daten, Ihre Stufe.</strong> Jede Sammlung arbeitet auf einer von drei Stufen: vertraglich gebundene EU-Dienste, das eigene private Netz, strikte lokale Einhegung. Die Eigentümerin oder der Eigentümer wählt die Stufe; Zugang gibt es nur durch ausdrückliche Freigabe. Die eigenen Geräte – Rechner, Tablet, Smartphone – bilden ein privates, verschlüsseltes Netz. Das sind Eigenschaften des Entwurfs, keine Zertifizierung.</p></li>
 <li><p><strong>Verankert.</strong> Jedes Dokument, jede Seite, jedes Segment hat eine dauerhafte <code>fr:</code>-Adresse. Eine Zitation entsteht nur aus erfassten bibliographischen Daten; fehlt eine Angabe, nennt die Zitation die Lücke. Die Belege bilden einen Evidenzraum aus Dokumenten, Editionen, Objekten und Messdaten. Retrieval liefert Kandidaten, nie Geltung.</p></li>
 <li><p><strong>Kollaborativ und kritisch.</strong> Famulus organisiert Forschung so, wie Wissenschaft sich selbst organisiert: offen in der Teilnahme, kritisch im Urteil. Jeder Beitrag zum gemeinsamen Wissensgrund steht unter einer Rechtfertigungsbedingung; Prüfung und Qualitätssicherung folgen den Verfahren der Wissenschaft, nicht einer Autorität ohne Grund; verschiedene Methoden sind zugelassen und bleiben selbst der Methodenkritik ausgesetzt. Die Fachkräfte (Agents) arbeiten nach lesbaren, geteilten Partituren mit den Forschern zusammen. Das Urteil bleibt beim Fachmann.</p></li>
-<li><p><strong>Offenes Netz der Famulus-Spezialisten.</strong> Famulus-Spezialisten sind Dienste mit geprüftem Fachwissen eines Gebiets, die jede Fachkraft und jedes Notebook über eine einheitliche Schnittstelle (Model Context Protocol) befragen kann. Der erste ist die astronomische Modellierung historischer Himmelsbewegungen: Für ein Datum gibt er die Lesung eines benannten historischen Modells – etwa des Almagest – und die Lesung des Himmels nach heutiger Ephemeride, mit ihrer Differenz als Evidenz über den Text; dazu historische Sternkataloge von Ptolemaios bis Hevelius. Geprüft heißt gemessen: Jede Rechnung ist an dokumentierten Vergleichen geprüft, jede Antwort nennt Annahmen, Unsicherheit, Quellen und Herkunft, und ein Modell ohne belegte Parameter antwortet nicht, statt eine Zahl zu borgen.</p>
+<li><p><strong>Offenes Netz der Famulus-Spezialisten.</strong> Famulus-Spezialisten sind Dienste mit geprüftem Fachwissen eines Gebiets, die jede Fachkraft und jedes Notebook über eine einheitliche Schnittstelle (Model Context Protocol) befragen kann. Der erste ist die astronomische Modellierung historischer Himmelsbewegungen: Für ein Datum gibt er die Lesung eines benannten historischen Modells – etwa des Almagest – und die Lesung des Himmels nach heutiger Ephemeride, mit ihrer Differenz als Evidenz über den Text; dazu historische Sternkataloge von Ptolemaios bis Hevelius. Geprüft heißt gemessen: Jede Rechnung ist an dokumentierten Vergleichen geprüft, jede Antwort nennt Annahmen, Unsicherheit, Quellen und Herkunft, und ein Modell ohne belegte Parameter antwortet nicht, statt eine Zahl zu borgen. Jeder Spezialist ist eine offene Bibliothek mit eigenem Wissensspeicher; ein gemeinsamer Katalog nennt für jeden Gebiet, Stand, gemessene Vergleiche und Lücken. Zum Netz gehören der Kalender-Spezialist, die Visualisierungs-Referenz und die Sonnenuhr-Geometrie, die antike Sonnenuhren nach Schattenfläche und Körperform ordnet und als 3D-Modell baut.</p>
 <p>Spezialisten sind multimodal: Sie arbeiten mit Text, Bild, Stimme und Ton, 3D-Modellen und jeder weiteren Form, in der ein Fach sein Wissen hält; die Antwortform bleibt dieselbe. Die folgenden Gattungen sind Beispiele, das Netz ist offen für ein breites Spektrum:</p>
 <ul>
 <li><em>Sprachen</em> – etwa Nahuatl für den Codex Florentinus und vergleichbare Codices;</li>
@@ -356,81 +356,87 @@ ul.task-list li input[type="checkbox"] {
 <td>Astronomischer Spezialist</td>
 <td>historische Planetenmodelle (Almagest, aus van Gents Transkription der Parameter neu implementiert), Himmelslesung nach DE441, Sternkataloge (Ptolemaios, Ulugh Beg, Tycho in Keplers Ausgabe 1627, Hevelius, Hipparcos), Karten und Animationen</td>
 <td>I</td>
-<td>gebaut, Vergleiche gemessen (Almagest gegen van Gents Rechner: größte Abweichung 6,8·10⁻¹² Bogenminuten; DE441 gegen Horizons: 0,035 Bogenminuten); Dienst nicht dauerhaft in Betrieb; Modelle ohne belegte Parameter (Kopernikus, Kepler, babylonische Schrittfunktionen) stehen als Lücke</td>
+<td>läuft, Vergleiche gemessen (Almagest gegen van Gents Rechner: größte Abweichung 6,8·10⁻¹² Bogenminuten; DE441 gegen Horizons: 0,035 Bogenminuten); Modelle ohne belegte Parameter (Kopernikus, Kepler, babylonische Schrittfunktionen) stehen als Lücke</td>
 </tr>
 <tr class="even">
 <td>Kalender-Spezialist</td>
 <td>Kalenderumrechnungen für die Normalisierung, ohne geratene Daten</td>
 <td>I</td>
-<td>gebaut</td>
+<td>läuft; noch kein gemessener Vergleich</td>
 </tr>
 <tr class="odd">
+<td>Spezialist Sonnenuhr-Geometrie</td>
+<td>Typologie antiker Sonnenuhren nach Schattenfläche und Körperform, jede Definition mit geprüftem Zitat; 3-D-Modelle der Kegelsonnenuhr in Kastenform und rhodischer Form mit Tages- und Stundenlinien</td>
+<td>I</td>
+<td>Entwurf; zwei Vergleiche gemessen (Rechenbeispiel Rhodos: größte Abweichung 0,0009 d; Solstitiallinien von 35 gescannten Kegeluhren: Median 3,2 %); Kugel-, Zylinder- und ebene Uhren nur als Typologie</td>
+</tr>
+<tr class="even">
 <td>Visualisierungs-Referenz</td>
 <td>gelöste Abbildungsaufgaben als Referenz für neue Abbildungen</td>
 <td>I</td>
 <td>läuft</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Lateinische Fachterminologie (LWgrammar)</td>
 <td>Sondersammlung „Kepler: A Finding Dictionary of Geometrical and Astronomical Terms“ – 129 Termini, 146 Bedeutungen, 708 Belege mit Fundort; Register zur Geschichte der Astronomie und zur Kausalität</td>
 <td>I, II</td>
 <td>gebaut</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Keilschrift-Datenbank</td>
 <td>Astronomische Tagebücher: 2 036 Tafeln, 57 414 Zeilen, mit Tafel-Browser; das Himmels-Panel fragt den astronomischen Spezialisten</td>
 <td>I</td>
 <td>läuft</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Gazetteer</td>
 <td>Ortslemmata je Sammlung vorhanden; Spezialist mit historischen Namensformen und Lagen</td>
 <td>I</td>
 <td>Ausbau</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Antike Geographie</td>
 <td>Ptolemaios’ Geographie, antike Wege und Itinerare, Stadiasmus von Patara</td>
 <td>I</td>
 <td>Quellen in PDAI erschlossen (Edition der Geographie 2006, Defaux 2017, Of Paths and Places 2017, Longitude 2016, Berggren/Jones 2000); Spezialist: Ausbau; Stadiasmus von Patara: Literatur fehlt</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Sprachspezialisten (z. B. Nahuatl, Codex Florentinus)</td>
 <td>Lexik, Grammatik und Lesarten einer Sprache</td>
 <td>I</td>
 <td>Ausbau</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Disziplinäre Terminologien, Münzdatenbanken, weitere Sondersammlungen</td>
 <td>Anbindung externer Thesauri, Repositorien und Datenbanken</td>
 <td>I</td>
 <td>Ausbau</td>
 </tr>
-<tr class="even">
-<td>Register der Spezialisten</td>
-<td>offene, schnelle, kuratierte Aufnahme mit Lebenszyklus</td>
-<td>I</td>
-<td>Ausbau</td>
-</tr>
 <tr class="odd">
+<td>Register und Katalog der Spezialisten</td>
+<td>offene, schnelle, kuratierte Aufnahme mit Lebenszyklus; Katalog mit Gebiet, Stand, Gates, Metriken und Lücken je Spezialist</td>
+<td>I</td>
+<td>Entwurf (Register und Katalog angelegt, die eigenen Spezialisten eingetragen; Spezialisten anderer Einrichtungen: noch keiner; Aufnahme durch Fachgutachten: Ausbau)</td>
+</tr>
+<tr class="even">
 <td>Famulus Repro</td>
 <td>Erfassung mit Smartphone und Tablet, Verarbeitung auf dem eigenen Rechner</td>
 <td>III</td>
 <td>läuft</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Famulus Visualization</td>
 <td>Abbildungen aus ihren Daten, mit lernender Formwahl</td>
 <td>III</td>
 <td>läuft</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Literaturbeobachtung</td>
 <td>nächtliche Analyse neuer Publikationen eines Gebiets mit Relevanzbericht am Morgen</td>
 <td>III</td>
 <td>Ausbau</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Publikationsvorbereitung</td>
 <td>vom Notebook zum Aufsatz nach etablierten Qualitätsstandards</td>
 <td>III</td>
@@ -471,7 +477,7 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Your data, your level.</strong> Each collection works at one of three levels: EU services under contract, one’s own private network, strict local enclosure. The owner chooses; access is by explicit grant. Design properties, not a certification.</li>
 <li><strong>Grounded.</strong> Every document, page and segment has a permanent <code>fr:</code> address; citations are composed only from recorded bibliographic data. Retrieval supplies candidates, never validity.</li>
 <li><strong>Collaborative and critical.</strong> Famulus organises research the way science organises itself: open to participation, critical in judgement. Every contribution to the shared ground is subject to a justification condition; review follows the procedures of science, not authority without reasons; methods are plural and open to methodological criticism. Agents work with researchers through readable, shared scores. Judgement stays with the expert.</li>
-<li><strong>An open network of Famulus specialists.</strong> Specialists are services with certified knowledge of a domain that every agent and notebook can consult through one interface (Model Context Protocol). The first is the astronomical modelling of historical celestial motions: for a date it gives the reading of a named historical model, such as the Almagest, and the reading of the sky from a modern ephemeris, with their difference as evidence about the text. Certified means measured: every computation is checked against documented comparisons, every answer names its assumptions, uncertainty, sources and provenance, and a model without sourced parameters does not answer. Specialists are multimodal – text, image, voice and sound, 3D models and any further medium in which a field holds its knowledge. Examples, open to a wide spectrum: languages such as Nahuatl for the Florentine Codex; Latin terminologies of astronomy, geometry and the sciences in LWgrammar notation; gazetteers of place names; ancient geography – Ptolemy’s Geography, ancient roads such as those of the Iberian Peninsula, the Stadiasmus of Patara; disciplinary thesauri such as those maintained in the NFDI; special databases such as those of cuneiform texts; repositories of ancient coins and other digitised collections; and the knowledge of small disciplines. <strong>Registration is open, fast and curated</strong>: anyone can register a specialist; the fixed interface and answer form make admission fast; a specialist enters the registry when it justifies its answers by the standards of its discipline and experts of the field have checked this; each entry has a life cycle (active, revised, revoked).</li>
+<li><strong>An open network of Famulus specialists.</strong> Specialists are services with certified knowledge of a domain that every agent and notebook can consult through one interface (Model Context Protocol). The first is the astronomical modelling of historical celestial motions: for a date it gives the reading of a named historical model, such as the Almagest, and the reading of the sky from a modern ephemeris, with their difference as evidence about the text. Certified means measured: every computation is checked against documented comparisons, every answer names its assumptions, uncertainty, sources and provenance, and a model without sourced parameters does not answer. Each specialist is an open library with its own knowledge store; one catalogue lists for each its domain, status, measured comparisons and gaps. The network includes the calendar specialist, the visualisation reference and the sundial-geometry specialist, which classifies ancient sundials by shadow surface and body form and builds them as 3D models. Specialists are multimodal – text, image, voice and sound, 3D models and any further medium in which a field holds its knowledge. Examples, open to a wide spectrum: languages such as Nahuatl for the Florentine Codex; Latin terminologies of astronomy, geometry and the sciences in LWgrammar notation; gazetteers of place names; ancient geography – Ptolemy’s Geography, ancient roads such as those of the Iberian Peninsula, the Stadiasmus of Patara; disciplinary thesauri such as those maintained in the NFDI; special databases such as those of cuneiform texts; repositories of ancient coins and other digitised collections; and the knowledge of small disciplines. <strong>Registration is open, fast and curated</strong>: anyone can register a specialist; the fixed interface and answer form make admission fast; a specialist enters the registry when it justifies its answers by the standards of its discipline and experts of the field have checked this; each entry has a life cycle (active, revised, revoked).</li>
 </ol>
 </section>
 <section id="tiers-iiiv" class="level3">
